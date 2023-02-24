@@ -5,6 +5,7 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 map("n", "<C-c>", ":normal gcc<CR>", opts)
+map("i", "jk", "<ESC>", opts)
 
 map("i", "<M-p>", [[<ESC>"+p]], opts)
 map("i", "<M-e>", [[g$$]], opts)
