@@ -3,9 +3,22 @@
 -- Add any additional keymaps here
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
+local nor = { noremap = true }
+
+map("n", "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
+map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
+map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
+map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
+
+map("n", "<M-J>", "<C-w>-", nor)
+map("n", "<M-K>", "<C-w>+", nor)
+map("n", "<M-H>", "<C-w><", nor)
+map("n", "<M-L>", "<C-w>>", nor)
 
 map("n", "<C-c>", ":normal gcc<CR>", opts)
 map("i", "jk", "<ESC>", opts)
+
+map("n", "<leader>h", ":noh<cr>", opts)
 
 map("i", "<M-p>", [[<ESC>"+p]], opts)
 map("i", "<M-e>", [[g$$]], opts)

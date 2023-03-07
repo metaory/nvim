@@ -7,7 +7,7 @@ require("lspconfig").tflint.setup({})
 -- require("lspconfig").terraformls.setup({})
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*.tf", "*.tfvars" },
+  pattern = { "*.tf", "*.tfvars", "*.js" },
   callback = function()
     vim.lsp.buf.format()
   end,
