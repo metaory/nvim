@@ -10,6 +10,16 @@ map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
 map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
 map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
 
+--[[
+]]
+
+map("c", "<C-f>", "<Right>", nor)
+map("c", "<C-a>", "<Home>", nor)
+map("c", "<C-b>", "<Left>", nor)
+map("c", "<M-b>", "<C-b>", nor)
+map("c", "<M-k>", "<Up>", nor)
+map("c", "<M-j>", "<Down>", nor)
+
 map("n", "<M-J>", "<C-w>-", nor)
 map("n", "<M-K>", "<C-w>+", nor)
 map("n", "<M-H>", "<C-w><", nor)
@@ -34,6 +44,7 @@ map("", "<M-r>", ":Telescope frecency<CR>", opts)
 map("", "<M-m>", ":Telescope keymaps<CR>", opts)
 map("n", "<M-b>", ":Telescope buffers<CR>", opts)
 map("n", "<M-c>", ":Telescope commands<CR>", opts)
+map("n", "<M-d>", "<ESC>:", nor)
 
 map("n", "<M-k>", "<CMD>BufferLineCycleNext<CR>", opts)
 map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opts)

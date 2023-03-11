@@ -1,8 +1,8 @@
 local base16 = {
-  base00="#121316"; base01="#24252e"; base02="#3a2c33"; base03="#484257";
-  base04="#786f90"; base05="#a58d9a"; base06="#aaacbb"; base07="#d1c7cc";
-  base08="#c35677"; base09="#e08d4d"; base0A="#e08d4d"; base0B="#795ebe";
-  base0C="#30bf8d"; base0D="#2c76e6"; base0E="#a34175"; base0F="#3e4262";
+  base00="#121416"; base01="#24292e"; base02="#3a2c34"; base03="#575742";
+  base04="#90906f"; base05="#a58d9b"; base06="#aab3bb"; base07="#d1c7cd";
+  base08="#b5486b"; base09="#d29c5e"; base0A="#d29c5e"; base0B="#7866c8";
+  base0C="#27c696"; base0D="#2575e4"; base0E="#e651a8"; base0F="#2d6192";
 }
 return base16
 
@@ -357,9 +357,9 @@ return base16
 --   base0C; base0D; base0E; base0F;
 -- }
 -- local base16 = {
---   "1b1c22"; "424457"; "6f7390"; "c35677";
---   "7760b2"; "a34175"; "c35677"; "e08d4d";
---   "3e4262"; "a34175"; "7760b2"; "795ebe";
---   "e42b62"; "0cd991"; "ff8324"; "096bff";
+--   "1b1f22"; "424d57"; "6f8090"; "b5486b";
+--   "d7d319"; "e651a8"; "b5486b"; "d29c5e";
+--   "2d6192"; "e651a8"; "d7d319"; "7866c8";
+--   "d22159"; "03e09e"; "f09936"; "006aff";
 -- }
 

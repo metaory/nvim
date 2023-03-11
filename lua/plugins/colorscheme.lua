@@ -6,7 +6,7 @@ return {
 
   -- { "ray-x/aurora" },
   -- { "ray-x/starry.nvim" }, colorscheme = "middlenight_blue",
-  { "tiagovla/tokyodark.nvim" },
+  -- { "tiagovla/tokyodark.nvim" },
 
   {
     "LazyVim/LazyVim",
