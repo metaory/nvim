@@ -25,6 +25,9 @@ map("n", "<M-K>", "<C-w>+", nor)
 map("n", "<M-H>", "<C-w><", nor)
 map("n", "<M-L>", "<C-w>>", nor)
 
+map("n", "<M-w>", "<cmd>BufferLineCloseLeft<cr>", nor)
+map("n", "<M-e>", "<cmd>BufferLineCloseRight<cr>", nor)
+
 map("n", "<C-c>", ":normal gcc<CR>", opts)
 map("i", "jk", "<ESC>", opts)
 
@@ -40,7 +43,8 @@ map("n", "Y", [[y$]], opts)
 
 map("", "<M-f>", ":Telescope find_files<CR>", opts)
 map("", "<M-o>", ":Telescope oldfiles<CR>", opts)
-map("", "<M-r>", ":Telescope frecency<CR>", opts)
+map("", "<M-r>", "<cmd>TroubleToggle<CR>", opts)
+-- map("", "<M-r>", ":Telescope frecency<CR>", opts)
 map("", "<M-m>", ":Telescope keymaps<CR>", opts)
 map("n", "<M-b>", ":Telescope buffers<CR>", opts)
 map("n", "<M-c>", ":Telescope commands<CR>", opts)

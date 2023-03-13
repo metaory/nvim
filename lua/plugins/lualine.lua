@@ -10,7 +10,7 @@ return {
       local colors = {
         red = XC.c01,
         grey = XC.c07,
-        black = XC.c08,
+        black = XC.c01,
         white = XC.sk3,
         light_green = XC.c10,
         orange = XC.c03,
@@ -22,7 +22,7 @@ return {
           a = { fg = XC.sfg, bg = XC.sbg },
           b = { fg = XC.wbg, bg = XC.sk3 },
           c = { fg = XC.ebg, bg = XC.sk2 },
-          z = { fg = XC.efg, bg = XC.ebg },
+          z = { fg = XC.sfg, bg = XC.sbg },
         },
         insert = { a = { fg = XC.wfg, bg = XC.wbg } },
         visual = { a = { fg = XC.efg, bg = XC.ebg } },
@@ -170,7 +170,7 @@ return {
               function() return require("noice").api.status.mode.get() end,
               cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
               -- color = fg("Constant") ,
-              color = { fg = "#f0f0f0", bg = "#f00f00" }
+              -- color = { fg = "#f0f0f0", bg = "#f00f00" }
             },
             { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = fg("Special") },
             {
@@ -181,6 +181,7 @@ return {
                 removed = icons.git.removed,
               },
             },
+            -- { "mode" },
           },
           lualine_y = { search_result, "filetype" },
           lualine_z = { "%l:%c", "%p%%/%L" },
