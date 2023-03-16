@@ -6,6 +6,7 @@ return {
   { "numToStr/Navigator.nvim" },
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
   { "norcalli/nvim-colorizer.lua" },
+  -- { "ron-rs/ron.vim" },
   -- { "niuiic/divider.nvim" },
   -- { "s1n7ax/nvim-search-and-replace" },
 }

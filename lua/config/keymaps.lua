@@ -5,6 +5,16 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local nor = { noremap = true }
 
+-- local Util = require("lazyvim.util")
+-- local function zmap(mode, lhs, rhs, opts)
+--   local keys = require("lazy.core.handler").handlers.keys
+--   if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+--     opts = opts or {}
+--     opts.silent = opts.silent ~= false
+--     vim.keymap.set(mode, lhs, rhs, opts)
+--   end
+-- end
+
 map("n", "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
 map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
 map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
@@ -27,6 +37,8 @@ map("n", "<M-L>", "<C-w>>", nor)
 
 map("n", "<M-w>", "<cmd>BufferLineCloseLeft<cr>", nor)
 map("n", "<M-e>", "<cmd>BufferLineCloseRight<cr>", nor)
+map("n", "<M-Left>", "<cmd>BufferLineMovePrev<cr>", nor)
+map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
 
 map("n", "<C-c>", ":normal gcc<CR>", opts)
 map("i", "jk", "<ESC>", opts)
@@ -43,11 +55,16 @@ map("n", "Y", [[y$]], opts)
 
 map("", "<M-f>", ":Telescope find_files<CR>", opts)
 map("", "<M-o>", ":Telescope oldfiles<CR>", opts)
-map("", "<M-r>", "<cmd>TroubleToggle<CR>", opts)
+map("", "<M-t>", "<cmd>TroubleToggle<CR>", opts)
 -- map("", "<M-r>", ":Telescope frecency<CR>", opts)
 map("", "<M-m>", ":Telescope keymaps<CR>", opts)
 map("n", "<M-b>", ":Telescope buffers<CR>", opts)
-map("n", "<M-c>", ":Telescope commands<CR>", opts)
+map("n", "<M-C>", ":Telescope commands<CR>", opts)
+map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opts)
+-- map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
+-- function()
+--   require("notify").dismiss({ silent = true, pending = true })
+-- end,
 map("n", "<M-d>", "<ESC>:", nor)
 
 map("n", "<M-k>", "<CMD>BufferLineCycleNext<CR>", opts)
@@ -56,3 +73,10 @@ map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opts)
 map("n", "<M-s>", ":w<CR>", opts)
 map("n", "<M-q>", ":q<CR>", opts)
 map("n", "<M-Q>", ":qall!<CR>", opts)
+
+-- zmap("n", "<leader>gg", function()
+--   Util.float_term({ "gitui" }, { cwd = Util.get_root() })
+-- end, { desc = "GitUI (root dir)" })
+-- zmap("n", "<leader>gG", function()
+--   Util.float_term({ "gitui" })
+-- end, { desc = "GitUI (cwd)" })
