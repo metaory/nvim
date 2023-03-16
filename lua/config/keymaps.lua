@@ -44,6 +44,10 @@ map("n", "<C-c>", ":normal gcc<CR>", opts)
 map("i", "jk", "<ESC>", opts)
 
 map("n", "<leader>h", ":noh<cr>", opts)
+map("n", "<leader>uhh", "<cmd>ColorizerToggle<cr>", opts)
+map("n", "<leader>uhf", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", opts)
+map("n", "<leader>uhb", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'background'})<cr>", opts)
+map("n", "<leader>uhv", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", opts)
 
 map("i", "<M-p>", [[<ESC>"+p]], opts)
 map("i", "<M-e>", [[g$$]], opts)
