@@ -22,6 +22,8 @@ map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
 
 --[[
 ]]
+map("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
+map("n", "<leader>l", "<cmd>:LspInfo<cr>", { desc = "LSP Info" })
 
 map("c", "<C-f>", "<Right>", nor)
 map("c", "<C-a>", "<Home>", nor)

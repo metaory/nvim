@@ -21,7 +21,7 @@ return {
         normal = {
           a = { fg = XC.sfg, bg = XC.sbg },
           b = { fg = XC.wbg, bg = XC.sk3 },
-          c = { fg = XC.ebg, bg = XC.sk2 },
+          c = { fg = XC.ebg, bg = "none" },
           z = { fg = XC.sfg, bg = XC.sbg },
         },
         insert = { a = { fg = XC.wfg, bg = XC.wbg } },
