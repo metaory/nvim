@@ -7,3 +7,5 @@ opt.scrolloff = 0 -- Lines of context
 opt.cursorcolumn = true
 opt.laststatus = 3
 opt.colorcolumn = "80"
+opt.foldmethod = "indent"
+opt.foldenable = false
