@@ -3,7 +3,7 @@ return {
   { "f-person/git-blame.nvim", ft = "*" },
   { "hashivim/vim-terraform", ft = "terraform" },
   -- { "norcalli/nvim-colorizer.lua" },
-  { "numToStr/Navigator.nvim" },
+  { "numToStr/Navigator.nvim", cmd = { "NavigatorRight", "NavigatorLeft" } },
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
   {
     "NvChad/nvim-colorizer.lua",
