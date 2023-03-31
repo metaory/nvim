@@ -14,12 +14,16 @@ local nor = { noremap = true }
 --     vim.keymap.set(mode, lhs, rhs, opts)
 --   end
 -- end
-
+map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opts)
+map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opts)
+map("n", "<C-j>", "<CMD>NavigatorDown<CR>", opts)
+map("n", "<C-k>", "<CMD>NavigatorUp<CR>", opts)
+--[[
 map("n", "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opts)
 map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opts)
 map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opts)
 map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
-
+]]
 --[[
 ]]
 map("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
@@ -79,6 +83,8 @@ map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opts)
 map("n", "<M-s>", ":w<CR>", opts)
 map("n", "<M-q>", ":q<CR>", opts)
 map("n", "<M-Q>", ":qall!<CR>", opts)
+
+map("c", "<C-f>", "<Right>", nor)
 
 -- zmap("n", "<leader>gg", function()
 --   Util.float_term({ "gitui" }, { cwd = Util.get_root() })
