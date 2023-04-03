@@ -9,15 +9,15 @@ return {
 
       local bubbles_theme = {
         normal = {
-          a = { fg = XC.c00, bg = XC.sbg },
+          a = { fg = XC.sfg, bg = XC.sbg },
           b = { fg = XC.c15, bg = XC.c08 },
           c = { fg = XC.c03, bg = "none" },
         },
         command = { a = { fg = XC.c00, bg = XC.c03 } },
         -- opending = { a = { fg = XC.c00, bg = XC.c04 } },
         -- confirm = { a = { fg = XC.c00, bg = XC.c01 } },
-        insert = { a = { fg = XC.c00, bg = XC.wbg } },
-        visual = { a = { fg = XC.c00, bg = XC.ebg } },
+        insert = { a = { fg = XC.wfg, bg = XC.wbg } },
+        visual = { a = { fg = XC.efg, bg = XC.ebg } },
         replace = { a = { fg = XC.c00, bg = XC.c01 } },
 
         inactive = {
