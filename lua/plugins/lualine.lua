@@ -2,8 +2,9 @@ return {
   {
     "nvim-lualine/lualine.nvim",
     event = "VeryLazy",
+    ---@diagnostic disable-next-line: unused-local
     opts = function(plugin)
-      local icons = require("lazyvim.config").icons
+      -- local icons = require("lazyvim.config").icons
 
       local XC = require("mxc.palette")
 

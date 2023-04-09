@@ -1,7 +1,7 @@
 # 💤 LazyVim
 <p align="center">
   <picture>
-    <img width="90%" alt="mxcolr" src="https://cdn.discordapp.com/attachments/1073200734125969438/1077184621269221456/metaory_cyberpunk_text_editor_0b496b40-489c-4476-b789-ea48bdede958.png">
+    <img width="90%" alt="mxcolr" src="./assets/2023-04-09-162932_2562x1079_scrot.png">
   </picture>
 </p>
 

@@ -4,16 +4,28 @@ require("config.setups")
 
 local XC = require("mxc.palette")
 
-vim.cmd([[hi Normal            guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi NormalNC          guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi SignColumn        guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi NeoTreeNormal     guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi NeoTreeNormalNC   guibg=NONE ctermbg=NONE]])
-vim.cmd([[hi NeoTreeSignColumn guibg=NONE ctermbg=NONE]])
-vim.cmd('hi NotifyBackground   guibg=' .. XC.xbg ..' ctermbg=NONE')
-vim.cmd('hi CursorLine         guibg=' .. XC.sk1 ..' ctermbg=NONE')
-vim.cmd('hi CursorColumn       guibg=' .. XC.sk1 ..' ctermbg=NONE')
-vim.cmd('hi gitblame           guibg=' .. XC.sk1 ..' guifg=' .. XC.xfg)
+vim.cmd([[
+  hi Normal                      guibg=NONE ctermbg=NONE
+  hi NormalNC                    guibg=NONE ctermbg=NONE
+  hi SignColumn                  guibg=NONE ctermbg=NONE
+  hi NeoTreeNormal               guibg=NONE ctermbg=NONE
+  hi NeoTreeNormalNC             guibg=NONE ctermbg=NONE
+  hi NeoTreeSignColumn           guibg=NONE ctermbg=NONE
+  hi BufferLineSeparator         guibg=NONE ctermbg=NONE
+  hi BufferLineIndicatorVisible  guibg=NONE ctermbg=NONE
+  " hi BufferLineIndicatorSelected guibg=NONE ctermbg=NONE
+]])
+vim.cmd("hi NotifyBackground   guibg=" .. XC.xbg .. " ctermbg=NONE")
+vim.cmd("hi CursorLine         guibg=" .. XC.sk1 .. " ctermbg=NONE")
+vim.cmd("hi CursorColumn       guibg=" .. XC.sk1 .. " ctermbg=NONE")
+vim.cmd("hi gitblame           guibg=" .. XC.sk1 .. " guifg=" .. XC.xfg)
+vim.cmd("hi BufferLineIndicatorSelected guibg=" .. XC.wbg .. " guifg=" .. XC.wfg)
+
+
+
+
+-- vim.cmd("hi BufferLineIndicatorVisible         guibg=" .. XC.ebg .. " guifg=" .. XC.efg)
+-- vim.cmd("hi BufferLineSeparator         guibg=" .. XC.ebg .. " guifg=" .. XC.efg)
 
 -- vim.cmd([[hi CursorLine   guibg=XC.sk2]])
 -- vim.cmd([[hi CursorColumn guibg=XC.sk2]])

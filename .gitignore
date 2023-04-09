@@ -7,3 +7,6 @@ debug
 foo.*
 *.log
 data
+./lua/mxc/mxc-nvim-base16.lua
+./lua/mxc/mxc-nvim-colors.lua
+spell/*
