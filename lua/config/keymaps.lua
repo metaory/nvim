@@ -4,6 +4,17 @@
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local nor = { noremap = true }
+-- local rt = require("rust-tools")
+-- rt.setup({
+--   server = {
+--     on_attach = function(_, bufnr)
+--       -- Hover actions
+--       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
+--       -- Code action groups
+--       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+--     end,
+--   },
+-- })
 
 -- local Util = require("lazyvim.util")
 -- local function zmap(mode, lhs, rhs, opts)

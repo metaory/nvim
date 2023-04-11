@@ -83,6 +83,31 @@ return {
       --   end
       --   return ""
       -- end
+      --[[
+%F – Display the full path of the current file.
+%M – Modified flag shows if file is unsaved.
+%Y – Type of file in the buffer.
+%R – Displays the read-only flag.
+%b – Shows the ASCII/Unicode character under cursor.
+0x%B – Shows the hexadecimal character under cursor.
+%l – Display the row number.
+%c – Display the column number.
+%p%% – Show the cursor percentage from the top of the file.
+      ]]
+      local function keymap()
+        if vim.opt.iminsert:get() > 0 and vim.b.keymap_name then
+          return "⌨ " .. vim.b.keymap_name
+        end
+        return ""
+      end
+      local function show_macro_recording()
+        local recording_register = vim.fn.reg_recording()
+        if recording_register == "" then
+          return ""
+        else
+          return "Recording @" .. recording_register
+        end
+      end
 
       return {
         options = {
@@ -94,11 +119,41 @@ return {
           lualine_a = {
             { "mode", separator = { left = "" }, right_padding = 2 },
           },
-          lualine_b = { "filename", "branch" },
+          lualine_b = {
+            "filename",
+            "branch",
+            {
+              "%M",
+              cond = function()
+                return vim.bo.modified
+              end,
+            },
+            {
+              "%q",
+              cond = function()
+                return vim.bo.buftype == "quickfix"
+              end,
+            },
+            { keymap },
+            { show_macro_recording },
+            { "%S" }, -- incomplete - https://github.com/nvim-lualine/lualine.nvim/issues/949
+            {
+              "diff",
+              -- color = { bg = XC.c01 },
+            },
+            -- "%Y",
+          },
           lualine_c = { "fileformat" },
           lualine_x = {},
           lualine_y = { "filetype", "progress" },
           lualine_z = {
+            {
+              "%r", -- %R – Displays the read-only flag.
+
+              -- cond = function()
+              --   return vim.bo.readonly
+              -- end,
+            },
             { "location", separator = { right = "" }, left_padding = 2 }, -- █
           },
         },

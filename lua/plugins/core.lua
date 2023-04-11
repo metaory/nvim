@@ -1,5 +1,7 @@
 return {
   -- { "ellisonleao/gruvbox.nvim" },
+  -- TODO: base16
+  -- { "simrat39/rust-tools.nvim" },
   { "f-person/git-blame.nvim", ft = "*" },
   { "hashivim/vim-terraform", ft = "terraform" },
   -- { "norcalli/nvim-colorizer.lua" },
