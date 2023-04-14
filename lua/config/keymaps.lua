@@ -93,7 +93,9 @@ map("n", "<M-d>", "<ESC>:", nor)
 map("n", "<M-k>", "<CMD>BufferLineCycleNext<CR>", opts)
 map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opts)
 
-map("n", "<M-s>", ":w<CR>", opts)
+map("n", "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', opts)
+map("n", "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', opts)
+-- map("n", "<M-s>", ":w<CR>", opts)
 map("n", "<M-q>", ":q<CR>", opts)
 map("n", "<M-Q>", ":qall!<CR>", opts)
 

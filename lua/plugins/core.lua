@@ -4,6 +4,7 @@ return {
   -- { "simrat39/rust-tools.nvim" },
   { "f-person/git-blame.nvim", ft = "*" },
   { "hashivim/vim-terraform", ft = "terraform" },
+  { "imsnif/kdl.vim", ft = "kdl" },
   -- { "norcalli/nvim-colorizer.lua" },
   { "numToStr/Navigator.nvim", cmd = { "NavigatorRight", "NavigatorLeft" } },
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
