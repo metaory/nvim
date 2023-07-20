@@ -108,6 +108,15 @@ return {
           return "Recording @" .. recording_register
         end
       end
+      -- local ns = vim.api.nvim_create_namespace("showcmd_msg")
+      -- local showcmd_msg = "x"
+      -- vim.ui_attach(ns, { ext_messages = true }, function(event, ...)
+      --   if event == "msg_showcmd" then
+      --     local content = ...
+      --     showcmd_msg = #content > 0 and content[1][2] or "y"
+      --   end
+      -- end)
+      -- require("lualine").setup({ lualine_c = { function() return showcmd_msg end, }, })
 
       return {
         options = {

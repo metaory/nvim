@@ -1,4 +1,5 @@
 return {
+  -- { "williamboman/mason-lspconfig.nvim", },
   {
     "neovim/nvim-lspconfig",
     opts = {
@@ -6,11 +7,12 @@ return {
       setup = {
         eslint = function()
           require("lazyvim.util").on_attach(function(client)
-            if client.name == "eslint" then
-              client.server_capabilities.documentFormattingProvider = true
-            elseif client.name == "tsserver" then
-              client.server_capabilities.documentFormattingProvider = false
-            end
+            client.server_capabilities.documentFormattingProvider = true
+            -- if client.name == "eslint" then
+            --   client.server_capabilities.documentFormattingProvider = true
+            -- elseif client.name == "tsserver" then
+            --   client.server_capabilities.documentFormattingProvider = false
+            -- end
           end)
         end,
       },

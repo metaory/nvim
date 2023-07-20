@@ -4,6 +4,7 @@
 
 require("lspconfig").terraformls.setup({})
 require("lspconfig").tflint.setup({})
+
 -- require("lspconfig").terraformls.setup({})
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {

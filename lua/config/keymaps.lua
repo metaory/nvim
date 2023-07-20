@@ -1,9 +1,12 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
+local which_key = require("which-key")
+local Util = require("lazyvim.util")
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local nor = { noremap = true }
+vim.g.maplocalleader = "\\"
 -- local rt = require("rust-tools")
 -- rt.setup({
 --   server = {
@@ -39,8 +42,7 @@ map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opts)
 ]]
 --[[
 ]]
-map("n", "<leader>L", "<cmd>:Lazy<cr>", { desc = "Lazy" })
-map("n", "<leader>l", "<cmd>:LspInfo<cr>", { desc = "LSP Info" })
+-- map("n", "<leader>li", "<cmd>:LspInfo<cr>", { desc = "LSP Info" })
 
 map("c", "<C-f>", "<Right>", nor)
 map("c", "<C-a>", "<Home>", nor)
@@ -61,12 +63,6 @@ map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
 
 map("n", "<C-c>", ":normal gcc<CR>", opts)
 map("i", "jk", "<ESC>", opts)
-
-map("n", "<leader>h", ":noh<cr>", opts)
-map("n", "<leader>uhh", "<cmd>ColorizerToggle<cr>", opts)
-map("n", "<leader>uhf", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", opts)
-map("n", "<leader>uhb", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'background'})<cr>", opts)
-map("n", "<leader>uhv", "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", opts)
 
 map("i", "<M-p>", [[<ESC>"+p]], opts)
 map("i", "<M-e>", [[g$$]], opts)
@@ -99,7 +95,41 @@ map("n", "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', opts)
 map("n", "<M-q>", ":q<CR>", opts)
 map("n", "<M-Q>", ":qall!<CR>", opts)
 
-map("c", "<C-f>", "<Right>", nor)
+which_key.register({
+  t = {
+    name = "Tabs",
+    n = { "<cmd>tabnew<CR>", "New Tab" },
+    c = { "<cmd>tabclose<CR>", "Close Tab" },
+  },
+}, { prefix = "<leader>" })
+
+which_key.register({
+  f = {
+    name = "File",
+    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
+  },
+  l = {
+    name = "LSP",
+    L = { "<cmd>:Lazy<cr>", "Lazy" },
+  },
+}, { prefix = "<LocalLeader>" })
+
+which_key.register({
+  -- ["<leader>u"] = {
+  h = {
+    name = "color",
+    h = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
+    f = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", "Foreground Colorizer" },
+    v = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", "Virtual Colorizer" },
+  },
+}, { prefix = "<leader>u" })
+
+-- COMMANDS -->
+map("n", "gh", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
+
+-- local bufopts = { noremap = true, silent = true, buffer = vim.fn.expand("%") }
+-- map("n", "<leader>lr", "<cmd>vim.lsp.buf.rename", bufopts)
+-- map("n", "<leader>lr", "nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>", opts)
 
 -- zmap("n", "<leader>gg", function()
 --   Util.float_term({ "gitui" }, { cwd = Util.get_root() })

@@ -2,9 +2,12 @@ return {
   -- { "ellisonleao/gruvbox.nvim" },
   -- TODO: base16
   -- { "simrat39/rust-tools.nvim" },
+  -- { 'mhartington/formatter.nvim' },
+  { "vito-c/jq.vim", ft = "jq" },
   { "f-person/git-blame.nvim", ft = "*" },
   { "hashivim/vim-terraform", ft = "terraform" },
   { "imsnif/kdl.vim", ft = "kdl" },
+  { "mustache/vim-mustache-handlebars", ft = "hbs" },
   -- { "norcalli/nvim-colorizer.lua" },
   { "numToStr/Navigator.nvim", cmd = { "NavigatorRight", "NavigatorLeft" } },
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },

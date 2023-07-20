@@ -9,3 +9,4 @@ opt.laststatus = 3
 opt.colorcolumn = "80"
 opt.foldmethod = "indent"
 opt.foldenable = false
+opt.filetype = "on"
