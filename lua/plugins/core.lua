@@ -1,32 +1,46 @@
 return {
+  -- ○ nvim-navic      ■ already up to date
+  -- ○ nvim-peekup      ■ already up to date
+  -- ○ nvim-spectre   Spectre   <leader>sr     ■ already up to date
+  -- ○ nvim-treesitter   TSUpdateSync  BufReadPost BufNewFile   <c-space> <bs> <c-space> <bs>     ■ already up to date
+  -- ○ nvim-treesitter-context      ■ already up to date
+  -- ○ nvim-ts-context-commentstring      ■ already up to date
+
   -- { "ellisonleao/gruvbox.nvim" },
   -- TODO: base16
   -- { "simrat39/rust-tools.nvim" },
   -- { 'mhartington/formatter.nvim' },
+  -- { "hjson/vim-hjson", ft = "hjson" },
   { "vito-c/jq.vim", ft = "jq" },
-  { "f-person/git-blame.nvim", ft = "*" },
+  -- { "f-person/git-blame.nvim", ft = "*" },
   { "hashivim/vim-terraform", ft = "terraform" },
   { "imsnif/kdl.vim", ft = "kdl" },
   { "mustache/vim-mustache-handlebars", ft = "hbs" },
-  -- { "norcalli/nvim-colorizer.lua" },
-  { "numToStr/Navigator.nvim", cmd = { "NavigatorRight", "NavigatorLeft" } },
-  { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
+  -- { "lukas-reineke/indent-blankline.nvim", -- enabled = false, },
+  -- { "echasnovski/mini.indentscope", -- enabled = false, },
   {
-    "NvChad/nvim-colorizer.lua",
-    cmd = "ColorizerToggle",
-    opts = {
-      filetypes = {
-        html = { mode = "foreground" },
-      },
-    },
+    "catppuccin/nvim",
+    optional = true,
+    enabled = false,
   },
-  -- { "ron-rs/ron.vim" },
-  -- { "niuiic/divider.nvim" },
-  -- { "s1n7ax/nvim-search-and-replace" },
-  -- { "chipsenkbeil/vimwiki-server.nvim" },
-  -- { "jim-fx/sudoku.nvim", opts = {}, cmd = "Sudoku" },
-  -- {
-  --[[
+  -- { "norcalli/nvim-colorizer.lua" },
+  -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
+  {
+    "numToStr/Navigator.nvim",
+    cmd = { "NavigatorRight", "NavigatorLeft" },
+    opts = {},
+  },
+  { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
+}
+-- { "NvChad/nvim-colorizer.lua", cmd = "ColorizerToggle", opts = { filetypes = { html = { mode = "foreground" }, }, }, },
+-- { "ron-rs/ron.vim" },
+-- { "niuiic/divider.nvim" },
+-- { "s1n7ax/nvim-search-and-replace" },
+-- { "chipsenkbeil/vimwiki-server.nvim" },
+-- { "jim-fx/sudoku.nvim", opts = {}, cmd = "Sudoku" },
+-- {
+
+--[[
      │  20 │  --   "nvim-orgmode/orgmode",
      │  21 │  --   config = function()
      │  22 │  --     require("orgmode").setup({})
@@ -54,4 +68,3 @@ return {
      │  44 │  --   dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
      │  45 │  -- },
 ]]
-}

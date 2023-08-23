@@ -2,8 +2,8 @@
 -- Default autocmds that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/autocmds.lua
 -- Add any additional autocmds here
 
-require("lspconfig").terraformls.setup({})
-require("lspconfig").tflint.setup({})
+-- require("lspconfig").terraformls.setup({})
+-- require("lspconfig").tflint.setup({})
 
 -- require("lspconfig").terraformls.setup({})
 

@@ -1,3 +1,3 @@
 return {
-  "gennaro-tedesco/nvim-peekup",
+  -- "gennaro-tedesco/nvim-peekup",
 }

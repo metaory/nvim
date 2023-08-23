@@ -1,0 +1,85 @@
+{
+  "neodev": {
+    "library": {
+      "enabled": true,
+      "plugins": ["nvim-lspconfig", "neoconf.nvim", "lsp"]
+    }
+  },
+  "neoconf": {
+    "plugins": {
+      //    "jsonls": { "settings": { "json": { "format": { "enable": true, }, "schemas": "require"("schemastore").json.schemas(), "validate": { "enable": true }, }, },
+      // "docker-compose-language-service": { "enabled": true },
+      "bash-language-server": { "enabled": true },
+      "lua_ls": { "enabled": true, "enabled_for_neovim_config": true },
+      "markdownlint": { "enabled": true }
+    }
+  },
+  "lspconfig": {
+    "lua_ls": {
+      "Lua.completion.callSnippet": "Replace"
+    },
+    // "docker-compose-language-service": {},
+    "bash-language-server": {},
+    "cssls": {
+      "css.lint.unknownAtRules": "ignore",
+      "less.lint.unknownAtRules": "ignore",
+      "scss.lint.unknownAtRules": "ignore"
+    },
+    "tsserver": {
+      "javascript.updateImportsOnFileMove.enabled": "always",
+      "javascript.inlayHints.includeInlayEnumMemberValueHints": true,
+      "javascript.inlayHints.includeInlayFunctionLikeReturnTypeHints": true,
+      "javascript.inlayHints.includeInlayFunctionParameterTypeHints": true,
+      "javascript.inlayHints.includeInlayParameterNameHints": "all",
+      "javascript.inlayHints.includeInlayParameterNameHintsWhenArgumentMatchesName": true,
+      "javascript.inlayHints.includeInlayPropertyDeclarationTypeHints": true,
+      "javascript.inlayHints.includeInlayVariableTypeHints": true,
+      "typescript.updateImportsOnFileMove.enabled": "always",
+      "typescript.inlayHints.includeInlayEnumMemberValueHints": true,
+      "typescript.inlayHints.includeInlayFunctionLikeReturnTypeHints": true,
+      "typescript.inlayHints.includeInlayFunctionParameterTypeHints": true,
+      "typescript.inlayHints.includeInlayParameterNameHints": "all",
+      "typescript.inlayHints.includeInlayParameterNameHintsWhenArgumentMatchesName": true,
+      "typescript.inlayHints.includeInlayPropertyDeclarationTypeHints": true,
+      "typescript.inlayHints.includeInlayVariableTypeHints": true
+    },
+    "pylsp": {
+      "pylsp.plugins.rope_autoimport.enabled": true,
+      "pylsp.plugins.rope_autoimport.memory": true,
+      "pylsp.plugins.rope_completion.enabled": true,
+      "pylsp.plugins.rope_completion.eager": true,
+      "pylsp.plugins.jedi.auto_import_modules": [
+        "numpy",
+        "pandas",
+        "matplotlib"
+      ],
+      "pylsp.plugins.jedi_completion.eager": true,
+      "pylsp.plugins.jedi_completion.fuzzy": true,
+      "pylsp.plugins.jedi_completion.include_class_objects": true,
+      "pylsp.plugins.jedi_completion.include_function_objects": true
+    },
+    "pyright": {
+      "python.pythonPath": "~/miniconda3/envs/python38/bin/python",
+      "python.analysis.autoSearchPaths": true,
+      "python.analysis.diagnosticMode": "workspace",
+      "python.analysis.useLibraryCodeForTypes": true,
+      "python.analysis.typeCheckingMode": "off"
+    },
+    "tailwindcss": {
+      "tailwindCSS.classAttributes": ["class", "className", "ngClass"],
+      "tailwindCSS.experimental.classRegex": [
+        "cva\\(([^)]*)\\)",
+        "[\"'`]([^\"'`]*).*?[\"'`]"
+      ],
+      "tailwindCSS.emmetCompletions": false,
+      "tailwindCSS.lint.cssConflict": "warning",
+      "tailwindCSS.lint.invalidApply": "error",
+      "tailwindCSS.lint.invalidConfigPath": "error",
+      "tailwindCSS.lint.invalidScreen": "error",
+      "tailwindCSS.lint.invalidTailwindDirective": "error",
+      "tailwindCSS.lint.invalidVariant": "error",
+      "tailwindCSS.lint.recommendedVariantOrder": "warning",
+      "tailwindCSS.validate": true
+    }
+  }
+}

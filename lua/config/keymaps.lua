@@ -2,7 +2,7 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 local which_key = require("which-key")
-local Util = require("lazyvim.util")
+-- local Util = require("lazyvim.util")
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local nor = { noremap = true }
@@ -104,6 +104,17 @@ which_key.register({
 }, { prefix = "<leader>" })
 
 which_key.register({
+  -- d = {
+  --   name = "Debug",
+  --   s = {
+  --     name = "+Search",
+  --     c = { ":Telescope dap commands<CR>", "Dap Commands" },
+  --     C = { ":Telescope dap configurations<CR>", "Dap Configurations" },
+  --     v = { ":Telescope dap variables<CR>", "Dap Variables" },
+  --     l = { ":Telescope dap list_breakpoints<CR>", "Dap Breakpoints" },
+  --     f = { ":Telescope dap frames<CR>", "Dap Frames" },
+  --   },
+  -- },
   f = {
     name = "File",
     s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
@@ -114,15 +125,14 @@ which_key.register({
   },
 }, { prefix = "<LocalLeader>" })
 
-which_key.register({
-  -- ["<leader>u"] = {
-  h = {
-    name = "color",
-    h = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
-    f = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", "Foreground Colorizer" },
-    v = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", "Virtual Colorizer" },
-  },
-}, { prefix = "<leader>u" })
+-- which_key.register({
+--   h = {
+--     name = "color",
+--     h = { "<cmd>ColorizerToggle<cr>", "Toggle Colorizer" },
+--     f = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", "Foreground Colorizer" },
+--     v = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", "Virtual Colorizer" },
+--   },
+-- }, { prefix = "<leader>u" })
 
 -- COMMANDS -->
 map("n", "gh", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
@@ -137,3 +147,10 @@ map("n", "gh", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github R
 -- zmap("n", "<leader>gG", function()
 --   Util.float_term({ "gitui" })
 -- end, { desc = "GitUI (cwd)" })
+
+vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
+vim.keymap.set({ "n", "x" }, "P", "<Plug>(YankyPutBefore)")
+vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
+vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
+vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
+vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")

@@ -68,6 +68,13 @@ return {
         layout_config = { prompt_position = "top" },
         sorting_strategy = "ascending",
         winblend = 0,
+        file_ignore_patterns = {
+          -- "node_modules",
+          "%.d.ts",
+          "build",
+          "dist",
+          "yarn.lock",
+        },
       },
     },
   },
@@ -221,6 +228,7 @@ return {
       return {}
     end,
   },
+  { "roobert/tailwindcss-colorizer-cmp.nvim", config = true },
   -- then: setup supertab in cmp
   {
     "hrsh7th/nvim-cmp",
@@ -237,6 +245,12 @@ return {
 
       local luasnip = require("luasnip")
       local cmp = require("cmp")
+
+      local format_kinds = opts.formatting.format
+      opts.formatting.format = function(entry, item)
+        format_kinds(entry, item) -- add icons
+        return require("tailwindcss-colorizer-cmp").formatter(entry, item)
+      end
 
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
