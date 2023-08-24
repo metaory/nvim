@@ -1,585 +1,241 @@
--- if true then return {} end
-
 return {
-  { "wesleimp/stylua.nvim" },
+  -- neodev
   {
-
-    "williamboman/mason.nvim",
+    "folke/neodev.nvim",
     opts = {
-      ensure_installed = {
-        "stylua",
-        "shfmt",
-        "shellcheck",
-        "bash-language-server",
-        "editorconfig-checker",
-        "diagnostic-languageserver",
-        -- "docker-compose-language-service",
-
-        -- "rust-analyzer",
-        -- "lua-language-server",
-        -- "luaformatter",
-        -- "eslint_d",
-        -- "flake8",
-        -- "dockerls",
+      debug = true,
+      experimental = {
+        pathStrict = true,
+      },
+      library = {
+        --        runtime = "~/projects/neovim/runtime/",
       },
     },
   },
-  -- {
-  --   "folke/neoconf.nvim",
-  --   cmd = "Neoconf",
-  --   lazy = false,
-  --   config = false,
-  --   dependencies = { "nvim-lspconfig" },
-  --   opts = {
-  --     import = {
-  --       vscode = true, -- local .vscode/settings.json
-  --       coc = false, -- global/local coc-settings.json
-  --       nlsp = false, -- global/local nlsp-settings.nvim json settings
-  --     },
-  --   },
-  -- },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     servers = {
-  -- ["editorconfig-checker"] = { ["*"] = function(server, opts) end },
-  -- json = {
-  --   format = { enable = true },
-  --   schemas = require("schemastore").json.schemas(),
-  --   validate = { enable = true },
-  -- },
-  -- ["diagnostic-languageserver"] = { ["*"] = function(server, opts) end },
-  -- ["terraformls"] = { ["*"] = function(server, opts) end },
-  -- ["cfn-lint"] = { ["*"] = function(server, opts) end },
-  -- ["vimls"] = { ["*"] = function(server, opts) end },
-  -- actionlint = { ["*"] = function(server, opts) end },
-  -- sqlls = { ["*"] = function(server, opts) end },
-  -- bashls = { ["*"] = function(server, opts) end },
-  -- shfmt = { ["*"] = function(server, opts) end },
-  -- shellcheck = { ["*"] = function(server, opts) end },
-  -- textlint = { ["*"] = function(server, opts) end },
-  -- markdownlint = { ["*"] = function(server, opts) end },
 
-  -- ["rust-analyzer"] = { ["*"] = function(server, opts) end },
-  -- ["lua-language-server"] = { ["*"] = function(server, opts) end },
-  -- ["luaformatter"] = { ["*"] = function(server, opts) end },
-  -- ["eslint_d"] = { ["*"] = function(server, opts) end },
-  -- ["dockerls"] = { ["*"] = function(server, opts) end },
-  -- cssls = { ["*"] = function(server, opts) end },
-  -- html = { ["*"] = function(server, opts) end },
-  -- ["efm"] = { ["*"] = function(server, opts) end },
-  -- ["yaml"] = { ["*"] = function(server, opts) end },
-  -- ["rust-analyzer"] = { ["*"] = function(server, opts) end },
-  -- stylua = { ["*"] = function(server, opts) end },
-  -- standardjs = { ["*"] = function(server, opts) end },
-  -- prettierd = {},
-  -- rome = { ["*"] = function(server, opts) end },
-  -- ["js-debug-adapter"] = { ["*"] = function(server, opts) end },
-  -- ["node-debug2-adapter"] = { ["*"] = function(server, opts) end },
-  -- ['typescript-language-server'] = { ["*"] = function(server, opts) end },
-  -- ["ts-standard"] = { ["*"] = function(server, opts) end },
-  -- ['quick-lint-js'] = { ["*"] = function(server, opts) end },
-  -- yamlfmt =  { ["*"] = function(server, opts) end },
-  -- yamlfix =  { ["*"] = function(server, opts) end },
-  -- yamllint = { ["*"] = function(server, opts) end },
-  --     },
-  --   },
-  -- },
+  -- tools
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "stylua",
+        "selene",
+        "luacheck",
+        "shellcheck",
+        "shfmt",
+      })
+    end,
+  },
+
+  -- lsp servers
+  {
+    "neovim/nvim-lspconfig",
+    init = function()
+      -- disable lsp watcher. Too slow on linux
+      local ok, wf = pcall(require, "vim.lsp._watchfiles")
+      if ok then
+        wf._watchfunc = function()
+          return function() end
+        end
+      end
+    end,
+    opts = {
+      inlay_hints = { enabled = true },
+      ---@type lspconfig.options
+      servers = {
+        -- rome = {
+        --   root_dir = function(fname)
+        --     return require("lspconfig").util.root_pattern("rome.json")(fname)
+        --   end,
+        --   mason = false,
+        --   settings = {
+        --     rome = {
+        --       rename = true,
+        --       -- requireConfiguration = true,
+        --     },
+        --   },
+        -- },
+        ansiblels = {},
+        bashls = {},
+        clangd = {},
+        -- denols = {},
+        cssls = {},
+        dockerls = {},
+        ruff_lsp = {},
+        tailwindcss = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+        },
+        tsserver = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+          single_file_support = false,
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "literal",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = false,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+            javascript = {
+              inlayHints = {
+                includeInlayParameterNameHints = "all",
+                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+            },
+          },
+        },
+        -- svelte = {},
+        html = {},
+        gopls = {},
+        marksman = {},
+        pyright = {
+          enabled = false,
+        },
+        rust_analyzer = {
+          -- settings = {
+          --   ["rust-analyzer"] = {
+          --     procMacro = { enable = true },
+          --     cargo = { allFeatures = true },
+          --     checkOnSave = {
+          --       command = "clippy",
+          --       extraArgs = { "--no-deps" },
+          --     },
+          --   },
+          -- },
+        },
+        yamlls = {
+          settings = {
+            yaml = {
+              keyOrdering = false,
+            },
+          },
+        },
+        lua_ls = {
+          -- enabled = false,
+          -- cmd = { "/home/folke/projects/lua-language-server/bin/lua-language-server" },
+          single_file_support = true,
+          settings = {
+            Lua = {
+              workspace = {
+                checkThirdParty = false,
+              },
+              completion = {
+                workspaceWord = true,
+                callSnippet = "Both",
+              },
+              misc = {
+                parameters = {
+                  -- "--log-level=trace",
+                },
+              },
+              hint = {
+                enable = true,
+                setType = false,
+                paramType = true,
+                paramName = "Disable",
+                semicolon = "Disable",
+                arrayIndex = "Disable",
+              },
+              doc = {
+                privateName = { "^_" },
+              },
+              type = {
+                castNumberToInteger = true,
+              },
+              diagnostics = {
+                disable = { "incomplete-signature-doc", "trailing-space" },
+                -- enable = false,
+                groupSeverity = {
+                  strong = "Warning",
+                  strict = "Warning",
+                },
+                groupFileStatus = {
+                  ["ambiguity"] = "Opened",
+                  ["await"] = "Opened",
+                  ["codestyle"] = "None",
+                  ["duplicate"] = "Opened",
+                  ["global"] = "Opened",
+                  ["luadoc"] = "Opened",
+                  ["redefined"] = "Opened",
+                  ["strict"] = "Opened",
+                  ["strong"] = "Opened",
+                  ["type-check"] = "Opened",
+                  ["unbalanced"] = "Opened",
+                  ["unused"] = "Opened",
+                },
+                unusedLocalExclude = { "_*" },
+              },
+              format = {
+                enable = false,
+                defaultConfig = {
+                  indent_style = "space",
+                  indent_size = "2",
+                  continuation_indent_size = "2",
+                },
+              },
+            },
+          },
+        },
+        vimls = {},
+      },
+      setup = {},
+    },
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      diagnostics = { virtual_text = { prefix = "icons" } },
+      setup = {
+        clangd = function(_, opts)
+          opts.capabilities.offsetEncoding = { "utf-16" }
+        end,
+      },
+    },
+  },
+
+  -- null-ls
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    -- dev = true,
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      vim.list_extend(opts.sources, {
+        nls.builtins.formatting.dprint.with({
+          condition = function(utils)
+            return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json")
+          end,
+        }),
+        nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
+        nls.builtins.diagnostics.markdownlint,
+        nls.builtins.diagnostics.deno_lint,
+        nls.builtins.diagnostics.selene.with({
+          condition = function(utils)
+            return utils.root_has_file({ "selene.toml" })
+          end,
+        }),
+        nls.builtins.formatting.isort,
+        nls.builtins.formatting.black,
+        nls.builtins.diagnostics.flake8,
+        nls.builtins.diagnostics.luacheck.with({
+          condition = function(utils)
+            return utils.root_has_file({ ".luacheckrc" })
+          end,
+        }),
+      })
+    end,
+  },
 }
---   {
---     "williamboman/mason.nvim",
---     cmd = "Mason",
---     build = ":MasonUpdate",
---     opts = { ensure_installed = { "stylua", "shfmt" } },
---   },
---   {
---     "neovim/nvim-lspconfig",
---     lazy = false,
---     event = { "BufReadPre", "BufNewFile" },
---     dependencies = {
---       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
---       { "folke/neodev.nvim", opts = {} },
---       {
---         "williamboman/mason.nvim",
---         lazy = false,
---         build = ":MasonUpdate",
---         opts = { ensure_installed = { "lua-language-server", "rust-analyzer", "stylua", "shfmt" } },
---       },
---       {
---         "williamboman/mason-lspconfig.nvim",
---         lazy = false,
---         opts = { ensure_installed = { "lua-language-server", "rust-analyzer" } },
---       },
---       {
---         "hrsh7th/cmp-nvim-lsp",
---         cond = function()
---           return require("lazyvim.util").has("nvim-cmp")
---         end },
---       },
---     },
---     opts = {
---       diagnostics = {
---         underline = true,
---         update_in_insert = false,
---         virtual_text = { spacing = 4, source = "if_many", prefix = "●" },
---         severity_sort = true,
---       },
---       capabilities = {},
---       autoformat = true,
---       format_notify = false,
---       format = { formatting_options = nil, timeout_ms = nil },
---       servers = {
---         jsonls = {},
---         lua_ls = {
---           settings = {
---             ["lua-language-server"] = {
---               hint = { arrayIndex = "Auto", enable = true },
---               format = { enable = true },
---               diagnostics = { globals = { "vim" } },
---               telemetry = { enable = false },
---               workspace = { checkThirdParty = false },
---               completion = { enable = true, callSnippet = "Both", autoRequire = true, displayContext = 1 },
---             },
---           },
---         },
---         rust_analyzer = {
---           settings = {
---             ["rust-analyzer"] = {
---               cargo = { allFeatures = true, loadOutDirsFromCheck = true, runBuildScripts = true },
---               -- Add clippy lints for Rust.
---               checkOnSave = { allFeatures = true, command = "clippy", extraArgs = { "--no-deps" } },
---               procMacro = {
---                 enable = true,
---                 ignored = {
---                   ["async-trait"] = { "async_trait" },
---                   ["napi-derive"] = { "napi" },
---                   ["async-recursion"] = { "async_recursion" },
---                 },
---               },
---             },
---           },
---         },
---       },
---       ---@type table<string, fun(server:string, opts:_.lspconfig.options):boolean?>
---       setup = {
---         rust_analyzer = function(_, opts)
---           local rust_tools_opts = require("lazyvim.util").opts("rust-tools.nvim")
---           require("rust-tools").setup(vim.tbl_deep_extend("force", rust_tools_opts or {}, { server = opts }))
---           return true
---         end },
---         ["lua_ls"] = function(opts)
---           require("lazyvim.util").on_attach(function(client, buffer)
---             if client.server_capabilities.documentSymbolProvider then
---               require("nvim-navic").attach(client, buffer)
---             end
---           end)
---           require("lspconfig")["lua_ls"].setup({
---             settings = {
---               ["lua-language-server"] = {
---                 runtime = { version = "LuaJIT" },
---                 telemetry = { enable = false },
---               },
---             },
---           })
---         end },
---       },
---       config = function(_, opts)
---         local Util = require("lazyvim.util")
---
---         if Util.has("neoconf.nvim") then
---           local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
---           require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
---         end
---         require("lazyvim.plugins.lsp.format").setup(opts)
---         Util.on_attach(function(client, buffer)
---           require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
---         end)
---
---         local register_capability = vim.lsp.handlers["client/registerCapability"]
---
---         vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
---           local ret = register_capability(err, res, ctx)
---           local client_id = ctx.client_id
---           ---@type lsp.Client
---           local client = vim.lsp.get_client_by_id(client_id)
---           local buffer = vim.api.nvim_get_current_buf()
---           require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
---           return ret
---         end
---
---         for name, icon in pairs(require("lazyvim.config").icons.diagnostics) do
---           name = "DiagnosticSign" .. name
---           vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
---         end
---
---         local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
---
---         if opts.inlay_hints.enabled and inlay_hint then
---           Util.on_attach(function(client, buffer)
---             if client.supports_method("textDocument/inlayHint") then
---               inlay_hint(buffer, true)
---             end
---           end)
---         end
---
---         if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
---           opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
---             or function(diagnostic)
---               local icons = require("lazyvim.config").icons.diagnostics
---               for d, icon in pairs(icons) do
---                 if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
---                   return icon
---                 end
---               end
---             end
---         end
---
---         vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
---
---         local servers = opts.servers
---         local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
---         local capabilities = vim.tbl_deep_extend(
---           "force",
---           {},
---           vim.lsp.protocol.make_client_capabilities(),
---           has_cmp and cmp_nvim_lsp.default_capabilities() or {},
---           opts.capabilities or {}
---         )
---         local function setup(server)
---           print("[LSP] SETUP server: " .. server)
---           local server_opts = vim.tbl_deep_extend("force", {
---             capabilities = vim.deepcopy(capabilities),
---           }, servers[server] or {})
---
---           if opts.setup[server] then
---             if opts.setup[server](server, server_opts) then
---               return
---             end
---           elseif opts.setup["*"] then
---             if opts.setup["*"](server, server_opts) then
---               return
---             end
---           end
---           require("lspconfig")[server].setup(server_opts)
---         end
---
---         local have_mason, mlsp = pcall(require, "mason-lspconfig")
---         local all_mslp_servers = {}
---         if have_mason then
---           print("HAVE MASON !!!!!!!!!!!!!!")
---           all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
---         end
---
---         local ensure_installed = {} ---@type string[]
---         for server, server_opts in pairs(servers) do
---           if server_opts then
---             server_opts = server_opts == true and {} or server_opts
---             if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
---               setup(server)
---             else
---               ensure_installed[#ensure_installed + 1] = server
---             end
---           end
---         end
---
---         if have_mason then
---           mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
---         end
---
---         if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
---           local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
---           Util.lsp_disable("tsserver", is_deno)
---           Util.lsp_disable("denols", function(root_dir)
---             return not is_deno(root_dir)
---           end)
---         end
---       end },
---     },
---   },
--- }
-
--- #############################################################################
--- ---@param opts PluginLspOpts
--- config = function(_, opts)
---   local Util = require("lazyvim.util")
---
---   if Util.has("neoconf.nvim") then
---     local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
---     require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
---   end
---   -- setup autoformat
---   require("lazyvim.plugins.lsp.format").setup(opts)
---   -- setup formatting and keymaps
---   Util.on_attach(function(client, buffer)
---     require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
---   end)
---
---   local register_capability = vim.lsp.handlers["client/registerCapability"]
---
---   vim.lsp.handlers["client/registerCapability"] = function(err, res, ctx)
---     local ret = register_capability(err, res, ctx)
---     local client_id = ctx.client_id
---     ---@type lsp.Client
---     local client = vim.lsp.get_client_by_id(client_id)
---     local buffer = vim.api.nvim_get_current_buf()
---     require("lazyvim.plugins.lsp.keymaps").on_attach(client, buffer)
---     return ret
---   end
---
---   -- diagnostics
---   for name, icon in pairs(require("lazyvim.config").icons.diagnostics) do
---     name = "DiagnosticSign" .. name
---     vim.fn.sign_define(name, { text = icon, texthl = name, numhl = "" })
---   end
---
---   local inlay_hint = vim.lsp.buf.inlay_hint or vim.lsp.inlay_hint
---
---   if opts.inlay_hints.enabled and inlay_hint then
---     Util.on_attach(function(client, buffer)
---       if client.supports_method("textDocument/inlayHint") then
---         inlay_hint(buffer, true)
---       end
---     end)
---   end
---
---   if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
---     opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
---       or function(diagnostic)
---         local icons = require("lazyvim.config").icons.diagnostics
---         for d, icon in pairs(icons) do
---           if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
---             return icon
---           end
---         end
---       end
---   end
---
---   vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
---
---   local servers = opts.servers
---   local has_cmp, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
---   local capabilities = vim.tbl_deep_extend(
---     "force",
---     {},
---     vim.lsp.protocol.make_client_capabilities(),
---     has_cmp and cmp_nvim_lsp.default_capabilities() or {},
---     opts.capabilities or {}
---   )
---
---   local function setup(server)
---     local server_opts = vim.tbl_deep_extend("force", {
---       capabilities = vim.deepcopy(capabilities),
---     }, servers[server] or {})
---
---     if opts.setup[server] then
---       if opts.setup[server](server, server_opts) then
---         return
---       end
---     elseif opts.setup["*"] then
---       if opts.setup["*"](server, server_opts) then
---         return
---       end
---     end
---     require("lspconfig")[server].setup(server_opts)
---   end
---
---   -- get all the servers that are available thourgh mason-lspconfig
---   local have_mason, mlsp = pcall(require, "mason-lspconfig")
---   local all_mslp_servers = {}
---   if have_mason then
---     all_mslp_servers = vim.tbl_keys(require("mason-lspconfig.mappings.server").lspconfig_to_package)
---   end
---
---   local ensure_installed = {} ---@type string[]
---   for server, server_opts in pairs(servers) do
---     if server_opts then
---       server_opts = server_opts == true and {} or server_opts
---       -- run manual setup if mason=false or if this is a server that cannot be installed with mason-lspconfig
---       if server_opts.mason == false or not vim.tbl_contains(all_mslp_servers, server) then
---         setup(server)
---       else
---         ensure_installed[#ensure_installed + 1] = server
---       end
---     end
---   end
---
---   if have_mason then
---     mlsp.setup({ ensure_installed = ensure_installed, handlers = { setup } })
---   end
---
---   if Util.lsp_get_config("denols") and Util.lsp_get_config("tsserver") then
---     local is_deno = require("lspconfig.util").root_pattern("deno.json", "deno.jsonc")
---     Util.lsp_disable("tsserver", is_deno)
---     Util.lsp_disable("denols", function(root_dir)
---       return not is_deno(root_dir)
---     end)
---   end
--- end },
--- require'lspconfig'.lua_ls.setup {
--- on_init = function(client)
---   local path = client.workspace_folders[1].name
---   if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
---     client.config.settings = vim.tbl_deep_extend('force', client.config.settings.Lua, {
---       runtime = {
---         -- Tell the language server which version of Lua you're using (most likely LuaJIT in the case of Neovim)
---         version = 'LuaJIT'
---       },
---       -- Make the server aware of Neovim runtime files
---       workspace = {
---         library = { vim.env.VIMRUNTIME }
---         -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
---         -- library = vim.api.nvim_get_runtime_file("", true)
---       }
---     })
---
---     client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
---   end
---   return true
--- end
--- },
--- {
---   "L3MON4D3/LuaSnip",
---   dependencies = {
---     "hrsh7th/nvim-cmp",
---     {
---       "rafamadriz/friendly-snippets",
---       config = function()
---         require("luasnip.loaders.from_vscode").lazy_load()
---       end },
---     },
---   },
---   event = "VeryLazy",
---   lazy = true,
--- },
--- {
---   "hrsh7th/cmp-nvim-lsp",
---   event = "VeryLazy",
---   lazy = true,
---   dependencies = {
---     "hrsh7th/cmp-emoji",
---     "hrsh7th/cmp-buffer",
---     "hrsh7th/cmp-path",
---     "saadparwaiz1/cmp_luasnip",
---   },
---   opts = function(_, opts)
---     local has_words_before = function()
---       unpack = unpack or table.unpack
---       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
---       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
---     end
---
---     local luasnip = require("luasnip")
---     local cmp = require("cmp")
---
---     local format_kinds = opts.formatting.format
---     opts.formatting.format = function(entry, item)
---       format_kinds(entry, item) -- add icons
---       return require("tailwindcss-colorizer-cmp").formatter(entry, item)
---     end
---
---     opts.mapping = vim.tbl_extend("force", opts.mapping, {
---       ["<Tab>"] = cmp.mapping(function(fallback)
---         if cmp.visible() then
---           cmp.select_next_item()
---         -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
---         -- they way you will only jump inside the snippet region
---         elseif luasnip.expand_or_jumpable() then
---           luasnip.expand_or_jump()
---         elseif has_words_before() then
---           cmp.complete()
---         else
---           fallback()
---         end
---       end }, { "i", "s" }),
---       ["<S-Tab>"] = cmp.mapping(function(fallback)
---         if cmp.visible() then
---           cmp.select_prev_item()
---         elseif luasnip.jumpable(-1) then
---           luasnip.jump(-1)
---         else
---           fallback()
---         end
---       end }, { "i", "s" }),
---     })
---   end },
---   cond = function()
---     return require("lazyvim.util").has("nvim-cmp")
---   end },
--- },
--- require("lspconfig").lua_ls.setup({
---   settings = {
---     [server] = opts,
---   },
--- })
--- example to setup with typescript.nvim
--- tsserver = function(_, opts)
---   require("typescript").setup({ server = opts })
---   return true
--- end },
--- Specify * to use this function as a fallback for any server
--- ["*"] = function(server, opts) end },
-
--- eslint = function()
---   require("lazyvim.util").on_attach(function(client)
---     client.server_capabilities.documentFormattingProvider = true
---     -- if client.name == "eslint" then
---     --   client.server_capabilities.documentFormattingProvider = true
---     -- elseif client.name == "tsserver" then
---     --   client.server_capabilities.documentFormattingProvider = false
---     -- end
---   end)
--- end },
--- tailwindcss = function(_, opts)
---   local tw = require("lspconfig.server_configurations.tailwindcss")
---   --- @param ft string
---   opts.filetypes = vim.tbl_filter(function(ft)
---     return not vim.tbl_contains(opts.filetypes_exclude or {}, ft)
---   end }, tw.default_config.filetypes)
--- end },
--- ["rust-analyzer"] = { checkOnSave = { allFeatures = true, overrideCommand = { "cargo", "clippy", "--workspace", "--message-format=json", "--all-targets", "--all-features", }, }, },
--- jsonls = {},
--- lua_ls = {
---   settings = {
---     Lua = {
---       diagnostics = { globals = { "vim" } },
---       workspace = { checkThirdParty = false },
---       completion = { callSnippet = "Replace" },
---     },
---   },
--- },
--- ["*"] = function(server, opts)
---   local capabilities = require("cmp_nvim_lsp").default_capabilities()
--- end },
--- ["lua-language-server"] = {
---   -- mason = false, -- set to false if you don't want this server to be installed with mason
---   -- Use this to add any additional keymaps
---   -- for specific lsp servers
---   ---@type LazyKeys[]
---   -- keys = {},
---   settings = {
---     Lua = {
---       hint = { arrayIndex = "Auto", enable = true },
---       format = { enable = true },
---       diagnostics = { globals = { "vim" } },
---       telemetry = { enable = false },
---       workspace = { checkThirdParty = false },
---       completion = { enable = true, callSnippet = "Both", autoRequire = true, displayContext = 1 },
---     },
---   },
--- },
-
--- foo = "bar",
--- eslint = {},
--- jsonls = {},
--- lua_ls = {
---   ---@type LazyKeys[]
---   -- keys = {},
---   settings = {
---     Lua = {
---       workspace = { checkThirdParty = false },
---       completion = { callSnippet = "Replace" },
---     },
---   },
--- },
--- tailwindcss = { filetypes_exclude = { "markdown" } },
--- { "jose-elias-alvarez/null-ls.nvim", enable = false, },

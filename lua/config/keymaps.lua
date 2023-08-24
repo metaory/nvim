@@ -1,24 +1,10 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-local which_key = require("which-key")
+--local util = require("util")
 -- local Util = require("lazyvim.util")
+local which_key = require("which-key")
 local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 local nor = { noremap = true }
 vim.g.maplocalleader = "\\"
--- local rt = require("rust-tools")
--- rt.setup({
---   server = {
---     on_attach = function(_, bufnr)
---       -- Hover actions
---       vim.keymap.set("n", "<C-space>", rt.hover_actions.hover_actions, { buffer = bufnr })
---       -- Code action groups
---       vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
---     end,
---   },
--- })
-
 -- local Util = require("lazyvim.util")
 -- local function zmap(mode, lhs, rhs, opts)
 --   local keys = require("lazy.core.handler").handlers.keys
@@ -154,3 +140,11 @@ vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
 vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
 vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+
+vim.keymap.set("n", "<leader>sr", "<ESC>")
+-- vim.keymap.set("n", "<left>", "<C-w>h")
+-- vim.keymap.set("n", "<down>", "<C-w>j")
+-- vim.keymap.set("n", "<up>", "<C-w>k")
+-- vim.keymap.set("n", "<right>", "<C-w>l")
+-- vim.keymap.set("n", "<C-c>", "<cmd>normal! ciw<cr>a")
+-- vim.keymap.set("n", "<leader>cR", util.runlua, { desc = "Run Lua" })

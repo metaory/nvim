@@ -1,9 +1,10 @@
 return {
   {
-    -- enabled = false,
     "nvim-neo-tree/neo-tree.nvim",
+    cmd = "Neotree",
     -- ft = "*",
-    -- lazy = true,
+    lazy = true,
+    enabled = true,
     opts = {
       filesystem = {
         bind_to_cwd = false,
