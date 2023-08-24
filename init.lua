@@ -1,4 +1,29 @@
 vim.g.vscode = false
+vim.g.debug_treesitter = false
+
+vim.filetype.add({
+  extension = {
+    cconf = "python",
+    frag = "glsl",
+    -- jsx = "javascript.jsx",
+    ["js.flow"] = "javascript.jsx",
+    norg = "norg",
+    rbi = "ruby",
+    tmux = "tmux",
+    tmuxtheme = "tmux",
+    -- tsx = "typescript.tsx",
+  },
+  filename = {
+    [".nvimrc"] = "lua",
+    ["picom.conf"] = "toml",
+    ["kitty.conf"] = "toml",
+    ["tsconfig.json"] = "jsonc",
+  },
+  pattern = {
+    -- [".*/%.vscode/.*%.json"] = "json5",
+    [".*/%.vscode/.*%.json"] = "json5",
+  },
+})
 
 -- vim.loader = false
 if vim.loader then
@@ -22,8 +47,9 @@ end
 --   end,
 -- })
 
-require("config.lazy")
 require("user.commands")
+require("user.filetypes")
+require("config.lazy")
 
 -- vim.g.profile_loaders = true
 --[[require("config.lazy")({

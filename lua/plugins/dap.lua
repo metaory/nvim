@@ -6,6 +6,13 @@ return {
     },
   },
 
+  {
+    "stevearc/overseer.nvim",
+    cmd = { "OverseerInfo" },
+    config = true,
+    dependencies = { "nvim-dap" },
+  },
+
   -- {
   --   "sainnhe/gruvbox-material",
   --   priority = 10000,

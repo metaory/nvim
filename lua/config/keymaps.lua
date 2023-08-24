@@ -121,7 +121,7 @@ which_key.register({
 -- }, { prefix = "<leader>u" })
 
 -- COMMANDS -->
-map("n", "gh", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
+map("n", "gG", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
 
 -- local bufopts = { noremap = true, silent = true, buffer = vim.fn.expand("%") }
 -- map("n", "<leader>lr", "<cmd>vim.lsp.buf.rename", bufopts)
@@ -140,6 +140,21 @@ vim.keymap.set({ "n", "x" }, "gp", "<Plug>(YankyGPutAfter)")
 vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
 vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
+
+-- OverseerOpen[!]
+-- OverseerClose
+-- OverseerToggle[!]
+-- OverseerSaveBundle
+-- OverseerLoadBundle[!]
+-- OverseerDeleteBundle
+-- OverseerRunCmd
+-- OverseerRun
+-- OverseerInfo
+-- OverseerBuild
+-- OverseerQuickAction
+-- OverseerTaskAction
+-- OverseerClearCache
+vim.keymap.set("n", "<leader>di", ":OverseerInfo<CR>")
 
 vim.keymap.set("n", "<leader>sr", "<ESC>")
 -- vim.keymap.set("n", "<left>", "<C-w>h")
