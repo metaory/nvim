@@ -18,6 +18,8 @@ return {
     "williamboman/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
+        "vale",
+        "rome",
         "stylua",
         "selene",
         "luacheck",
@@ -62,41 +64,6 @@ return {
         cssls = {},
         dockerls = {},
         ruff_lsp = {},
-        tailwindcss = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
-        },
-        tsserver = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
-          single_file_support = false,
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "literal",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-            javascript = {
-              inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-            },
-          },
-        },
         -- svelte = {},
         html = {},
         gopls = {},
@@ -179,7 +146,7 @@ return {
                 unusedLocalExclude = { "_*" },
               },
               format = {
-                enable = false,
+                enable = true,
                 defaultConfig = {
                   indent_style = "space",
                   indent_size = "2",
@@ -189,6 +156,7 @@ return {
             },
           },
         },
+        vale_ls = {},
         vimls = {},
       },
       setup = {},
@@ -207,9 +175,31 @@ return {
     },
   },
 
+  -- {
+  --   "mfussenegger/nvim-lint",
+  --   lazy = false,
+  --   config = function ()
+  --     local lint = require('lint')
+  --     lint.linters_by_ft = {
+  --       markdown = {'markdownlint'},
+  --       -- htmldjango = {'curlylint'},
+  --       lua = {'codespell', 'luacheck'},
+  --       -- ['yaml.ansible'] = {'ansible_lint'},
+  --       yaml = {'yamllint'},
+  --       gitcommit = {'codespell'},
+  --       dockerfile = {'hadolint'},
+  --       ghaction = {"actionlint"},
+  --     }
+  --   end,
+  -- },
+  -- create_autocmd({'BufWritePost', 'BufEnter'}, {
+  --   group = api.nvim_create_augroup('lint', { clear = true }),
+  --   callback = function() lint.try_lint() end,
+  -- })
   -- null-ls
   {
     "jose-elias-alvarez/null-ls.nvim",
+    -- enabled = false,
     -- dev = true,
     opts = function(_, opts)
       local nls = require("null-ls")
@@ -239,3 +229,38 @@ return {
     end,
   },
 }
+-- tailwindcss = {
+--   root_dir = function(...)
+--     return require("lspconfig.util").root_pattern(".git")(...)
+--   end,
+-- },
+-- tsserver = {
+--   root_dir = function(...)
+--     return require("lspconfig.util").root_pattern(".git")(...)
+--   end,
+--   single_file_support = false,
+--   settings = {
+--     typescript = {
+--       inlayHints = {
+--         includeInlayParameterNameHints = "literal",
+--         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+--         includeInlayFunctionParameterTypeHints = true,
+--         includeInlayVariableTypeHints = false,
+--         includeInlayPropertyDeclarationTypeHints = true,
+--         includeInlayFunctionLikeReturnTypeHints = true,
+--         includeInlayEnumMemberValueHints = true,
+--       },
+--     },
+--     javascript = {
+--       inlayHints = {
+--         includeInlayParameterNameHints = "all",
+--         includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+--         includeInlayFunctionParameterTypeHints = true,
+--         includeInlayVariableTypeHints = true,
+--         includeInlayPropertyDeclarationTypeHints = true,
+--         includeInlayFunctionLikeReturnTypeHints = true,
+--         includeInlayEnumMemberValueHints = true,
+--       },
+--     },
+--   },
+-- },
