@@ -5,7 +5,7 @@ return {
       ensure_installed = { "python" },
     },
   },
-
+  { "mfussenegger/nvim-dap-python", enabled = false },
   {
     "stevearc/overseer.nvim",
     cmd = { "OverseerInfo" },

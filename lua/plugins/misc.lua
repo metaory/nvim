@@ -1,21 +1,22 @@
 return {
-  "folke/twilight.nvim",
-
+  {
+    "folke/twilight.nvim",
+    cmd = "Twilight",
+  },
   {
     "echasnovski/mini.splitjoin",
-    enabled = false,
-    opts = { mappings = { toggle = "J" } },
+    opts = { mappings = { toggle = "<C-c>" } },
     keys = {
-      { "J", desc = "Split/Join" },
+      { "gj", desc = "Split/Join" },
     },
   },
-  {
-    "Wansmer/treesj",
-    keys = {
-      { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-    },
-    opts = { use_default_keymaps = false, max_join_length = 150 },
-  },
+  -- {
+  --   "Wansmer/treesj",
+  --   keys = {
+  --     { "gj", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+  --   },
+  --   opts = { use_default_keymaps = false, max_join_length = 150 },
+  -- },
 
   {
     "nvim-pack/nvim-spectre",
@@ -53,16 +54,16 @@ return {
     keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
-  {
-    "andymass/vim-matchup",
-    event = "BufReadPost",
-    enabled = false,
-    init = function()
-      vim.o.matchpairs = "(:),{:},[:],<:>"
-    end,
-    config = function()
-      vim.g.matchup_matchparen_deferred = 1
-      vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
-    end,
-  },
+  -- {
+  --   "andymass/vim-matchup",
+  --   event = "BufReadPost",
+  --   enabled = false,
+  --   init = function()
+  --     vim.o.matchpairs = "(:),{:},[:],<:>"
+  --   end,
+  --   config = function()
+  --     vim.g.matchup_matchparen_deferred = 1
+  --     vim.g.matchup_matchparen_offscreen = { method = "status_manual" }
+  --   end,
+  -- },
 }

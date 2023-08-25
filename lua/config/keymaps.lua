@@ -58,6 +58,10 @@ map("v", "<M-y>", [["+y]], opts)
 map("n", "<M-p>", [["+p]], opts)
 map("n", "Y", [[y$]], opts)
 
+vim.keymap.set("n", "_", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+-- vim.keymap.set("n", "_", "<CMD>lua require('oil').open_float()<CR>", { desc = "Open FT" })
+
+map("n", "<leader>sT", "<CMD>lua require'telescope.builtin'.builtin{}<CR>", opts)
 map("", "<M-f>", ":Telescope find_files<CR>", opts)
 map("", "<M-o>", ":Telescope oldfiles<CR>", opts)
 map("", "<M-t>", "<cmd>TroubleToggle<CR>", opts)
