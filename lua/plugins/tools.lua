@@ -28,7 +28,22 @@ return {
         },
         ["core.autocommands"] = {},
         ["core.syntax"] = {},
-        ["core.concealer"] = {},
+        -- ["core.concealer"] = {},
+        ["core.concealer"] = { -- Adds pretty icons to your documents
+          config = {
+            -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/concealer/module.lua#L655
+            icons = {
+              todo = {
+                pending = {
+                  icon = "",
+                },
+                done = {
+                  icon = "",
+                },
+              },
+            },
+          },
+        },
         ["core.highlights"] = {},
         ["core.integrations.nvim-cmp"] = {},
         ["core.integrations.treesitter"] = {},
@@ -50,6 +65,7 @@ return {
               keybinds.remap_event("presenter", "n", "<C-k>", "core.presenter.previous_page")
               keybinds.remap_event("presenter", "n", "<Down>", "core.presenter.close")
               keybinds.map("norg", "n", "<Up>", "<CMD>Neorg presenter start<CR>")
+              keybinds.map("norg", "n", "<leader>uc", "<CMD>Neorg toggle-concealer<CR>")
             end,
           },
         },

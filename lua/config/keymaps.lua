@@ -98,17 +98,22 @@ which_key.register({
     n = { "<cmd>tabnew<CR>", "New Tab" },
     c = { "<cmd>tabclose<CR>", "Close Tab" },
   },
-  f = {
-    name = "File",
-    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
-  },
   l = {
     name = "LSP",
     L = { "<cmd>:Lazy<cr>", "Lazy" },
   },
 }, { prefix = "<LocalLeader>" })
 
--- }, { prefix = "<leader>" })
+which_key.register({
+  f = {
+    name = "File",
+    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
+  },
+  n = {
+    name = "Org",
+    i = { "<CMD>Neorg workspace mx<CR>", "Org Index" },
+  },
+}, { prefix = "<leader>" })
 -- which_key.register({
 -- d = {
 --   name = "Debug",
