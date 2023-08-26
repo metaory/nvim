@@ -48,7 +48,7 @@ end
 -- })
 
 require("user.commands")
-require("user.filetypes")
+-- require("user.filetypes")
 require("config.lazy")
 
 -- vim.g.profile_loaders = true
