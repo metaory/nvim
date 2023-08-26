@@ -58,10 +58,11 @@ map("v", "<M-y>", [["+y]], opts)
 map("n", "<M-p>", [["+p]], opts)
 map("n", "Y", [[y$]], opts)
 
-vim.keymap.set("n", "_", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+-- vim.keymap.set("n", "_", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 -- vim.keymap.set("n", "_", "<CMD>lua require('oil').open_float()<CR>", { desc = "Open FT" })
 
 map("n", "<leader>sT", "<CMD>lua require'telescope.builtin'.builtin{}<CR>", opts)
+map("n", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opts)
 map("", "<M-f>", ":Telescope find_files<CR>", opts)
 map("", "<M-o>", ":Telescope oldfiles<CR>", opts)
 map("", "<M-t>", "<cmd>TroubleToggle<CR>", opts)
@@ -82,6 +83,7 @@ map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opts)
 map("n", "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', opts)
 map("n", "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', opts)
 -- map("n", "<M-s>", ":w<CR>", opts)
+--
 map("n", "<M-q>", ":q<CR>", opts)
 map("n", "<M-Q>", ":qall!<CR>", opts)
 
@@ -126,6 +128,7 @@ which_key.register({
 
 -- COMMANDS -->
 map("n", "gG", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
+map("n", "gL", "<CMD>OpenWebUrl<CR>", { silent = true, desc = "Open URL" })
 
 -- local bufopts = { noremap = true, silent = true, buffer = vim.fn.expand("%") }
 -- map("n", "<leader>lr", "<cmd>vim.lsp.buf.rename", bufopts)

@@ -31,12 +31,12 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.lang.rust" },
     -- { import = "lazyvim.plugins.extras.lang.tailwind" },
     -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
-    { import = "lazyvim.plugins.extras.ui.edgy" },
+    -- { import = "lazyvim.plugins.extras.ui.edgy" },
     { import = "lazyvim.plugins.extras.dap.core" },
     { import = "lazyvim.plugins.extras.vscode" },
     { import = "lazyvim.plugins.extras.dap.nlua" },
     { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-    { import = "lazyvim.plugins.extras.test.core" },
+    -- { import = "lazyvim.plugins.extras.test.core" },
     -- { import = "lazyvim.plugins.extras.editor.flash" },
     { import = "lazyvim.plugins.extras.coding.yanky" },
     { import = "lazyvim.plugins.extras.editor.mini-files" },
@@ -46,7 +46,7 @@ require("lazy").setup({
   defaults = { lazy = true },
   -- dev = { patterns = {} },
   -- dev = { patterns = { "folke", "LazyVim" } },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "tokyonight" } },
   change_detection = {
     enabled = false,
     notify = false,
@@ -59,6 +59,7 @@ require("lazy").setup({
       -- disable_events = {},
     },
     rtp = {
+      reset = true,
       disabled_plugins = {
         "gzip",
         -- "matchit",

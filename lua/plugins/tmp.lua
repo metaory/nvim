@@ -1,4 +1,7 @@
-if true then return {} end
+if true then
+  return {}
+end
+
 return {
   { "nvim-telescope/telescope.nvim", dev = true },
   {
