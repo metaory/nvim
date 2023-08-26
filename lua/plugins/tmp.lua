@@ -14,10 +14,12 @@ return {
     },
     cmd = "MurenToggle",
   },
+  -- https://github.com/vhyrro/hologram.nvim
   { "3rd/image.nvim", opts = {}, ft = "markdown", lazy = false, enabled = true },
   {
     "folke/flash.nvim",
     enabled = true,
+    vscode = nil,
     build = function() end,
     init = function()
       -- vim.opt.keymap = "emoji"

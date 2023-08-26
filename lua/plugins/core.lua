@@ -13,6 +13,7 @@ return {
   -- { "hjson/vim-hjson", ft = "hjson" },
   { "vito-c/jq.vim", ft = "jq" },
   -- { "f-person/git-blame.nvim", ft = "*" },
+  { "fladson/vim-kitty", ft = "kitty" },
   { "hashivim/vim-terraform", ft = "terraform" },
   { "imsnif/kdl.vim", ft = "kdl" },
   { "mustache/vim-mustache-handlebars", ft = "hbs" },
@@ -30,6 +31,23 @@ return {
     cmd = { "NavigatorRight", "NavigatorLeft" },
     opts = {},
   },
+  {
+    "gbprod/yanky.nvim",
+    opts = function(_, opts)
+      return vim.list_extend({
+        ring = { storage = "shada" }, --"sqlite"
+      }, opts)
+    end,
+    keys = function(_, keys)
+      local mappings = {
+        { "d", "d", mode = { "n", "x" }, desc = "Delete pending" },
+      }
+      return vim.list_extend(mappings, keys)
+    end,
+  },
+  -- https://github.com/nvim-neorg/neorg
+  -- https://github.com/nvim-orgmode/orgmode
+  -- https://github.com/MunifTanjim/nui.nvim/wiki
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
 }
 -- { "NvChad/nvim-colorizer.lua", cmd = "ColorizerToggle", opts = { filetypes = { html = { mode = "foreground" }, }, }, },

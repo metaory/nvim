@@ -81,41 +81,41 @@ return {
         desc = "Open mini.files (cwd)",
       },
     },
-    config = function(_, opts)
-      require("mini.files").setup(opts)
-
-      local show_dotfiles = true
-      local filter_show = function(fs_entry)
-        return true
-      end
-      local filter_hide = function(fs_entry)
-        return not vim.startswith(fs_entry.name, ".")
-      end
-
-      local toggle_dotfiles = function()
-        show_dotfiles = not show_dotfiles
-        local new_filter = show_dotfiles and filter_show or filter_hide
-        require("mini.files").refresh({ content = { filter = new_filter } })
-      end
-
-      local files_set_cwd = function()
-        local cur_entry_path = require("mini.files").get_fs_entry().path
-        local cur_directory = vim.fs.dirname(cur_entry_path)
-        vim.fn.chdir(cur_directory)
-      end
-
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "MiniFilesBufferCreate",
-        callback = function(args)
-          local buf_id = args.data.buf_id
-          vim.keymap.set("n", "<M-q>", function()
-            require("mini.files").close()
-          end, { buffer = buf_id })
-          vim.keymap.set("n", "gl", files_set_cwd, { buffer = buf_id })
-          vim.keymap.set("n", "gh", toggle_dotfiles, { buffer = buf_id })
-        end,
-      })
-    end,
+    -- config = function(_, opts)
+    --   require("mini.files").setup(opts)
+    --
+    --   local show_dotfiles = true
+    --   local filter_show = function(fs_entry)
+    --     return true
+    --   end
+    --   local filter_hide = function(fs_entry)
+    --     return not vim.startswith(fs_entry.name, ".")
+    --   end
+    --
+    --   local toggle_dotfiles = function()
+    --     show_dotfiles = not show_dotfiles
+    --     local new_filter = show_dotfiles and filter_show or filter_hide
+    --     require("mini.files").refresh({ content = { filter = new_filter } })
+    --   end
+    --
+    --   local files_set_cwd = function()
+    --     local cur_entry_path = require("mini.files").get_fs_entry().path
+    --     local cur_directory = vim.fs.dirname(cur_entry_path)
+    --     vim.fn.chdir(cur_directory)
+    --   end
+    --
+    --   vim.api.nvim_create_autocmd("User", {
+    --     pattern = "MiniFilesBufferCreate",
+    --     callback = function(args)
+    --       local buf_id = args.data.buf_id
+    --       vim.keymap.set("n", "<M-q>", function()
+    --         require("mini.files").close()
+    --       end, { buffer = buf_id })
+    --       -- vim.keymap.set("n", "gl", files_set_cwd, { buffer = buf_id })
+    --       -- vim.keymap.set("n", "gh", toggle_dotfiles, { buffer = buf_id })
+    --     end,
+    --   })
+    -- end,
   },
   -- {
   --   "stevearc/oil.nvim",

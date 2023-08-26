@@ -37,3 +37,13 @@
 --     vim.wo.conceallevel = 0
 --   end,
 -- })
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = { "javascript" },
+--   callback = function()
+--     -- vim.cmd([[ setlocal ai et sta sw=2 sts=2 ts=2 cin isk+=$ ]])
+--     vim.cmd([[ set makeprg=node\ % >out.log\ 2>&1 ]])
+--     -- vim.cmd( [[ set errorformat=%-P-----\ FILE\ \ :\ \ %f\ -----,Line\ %l\\,\ E:%n:\ %m,%-Q,%-GFound\ %s,%-GSome\ %s,%-Gfixjsstyle%s,%-Gscript\ can\ %s,%-G ]])
+--   end,
+-- })
+-- au BufNewFile,BufRead *.js set makeprg=gjslint\ %
+-- au BufNewFile,BufRead *.js set errorformat=%-P-----\ FILE\ \ :\ \ %f\ -----,Line\ %l\\,\ E:%n:\ %m,%-Q,%-GFound\ %s,%-GSome\ %s,%-Gfixjsstyle%s,%-Gscript\ can\ %s,%-G

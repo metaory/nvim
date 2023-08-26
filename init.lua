@@ -1,36 +1,35 @@
 vim.g.vscode = false
-vim.g.debug_treesitter = false
+vim.g.debug_treesitter = true
 
 vim.filetype.add({
   extension = {
     cconf = "python",
     frag = "glsl",
     -- jsx = "javascript.jsx",
-    ["js.flow"] = "javascript.jsx",
+    -- ["js.flow"] = "javascript.jsx",
     norg = "norg",
-    rbi = "ruby",
+    -- rbi = "ruby",
     tmux = "tmux",
     tmuxtheme = "tmux",
     -- tsx = "typescript.tsx",
   },
   filename = {
+    [".zalias"] = "zsh",
     [".nvimrc"] = "lua",
+    ["kitty.conf"] = "kitty",
     ["picom.conf"] = "toml",
-    ["kitty.conf"] = "toml",
     ["tsconfig.json"] = "jsonc",
   },
   pattern = {
     -- [".*/%.vscode/.*%.json"] = "json5",
+    ["Dockerfile-.*"] = "dockerfile",
     [".*/%.vscode/.*%.json"] = "json5",
   },
 })
 
--- vim.loader = false
 if vim.loader then
   vim.loader.enable()
-  -- vim.schedule(function()
-  --   vim.notify("nvim loader is enabled")
-  -- end)
+  -- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 end
 
 -- _G.dd = function(...) require("util.debug").dump(...) end

@@ -1,4 +1,62 @@
 return {
+  {
+    "williamboman/mason.nvim",
+    opts = function(_, opts)
+      vim.list_extend(opts.ensure_installed, {
+        "vale",
+        "rome",
+        "stylua",
+        "selene",
+        "luacheck",
+        "shellcheck",
+        "shfmt",
+      })
+    end,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      local nls = require("null-ls")
+      vim.list_extend(opts.sources, {
+        nls.builtins.formatting.dprint.with({
+          condition = function(utils)
+            return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json")
+          end,
+        }),
+        nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
+        nls.builtins.diagnostics.markdownlint,
+        nls.builtins.diagnostics.deno_lint,
+        nls.builtins.diagnostics.selene.with({
+          condition = function(utils)
+            return utils.root_has_file({ "selene.toml" })
+          end,
+        }),
+        nls.builtins.formatting.isort,
+        nls.builtins.formatting.black,
+        nls.builtins.diagnostics.flake8,
+        nls.builtins.diagnostics.luacheck.with({
+          condition = function(utils)
+            return utils.root_has_file({ ".luacheckrc" })
+          end,
+        }),
+      })
+
+      return opts
+      -- return {
+      --   root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+      --   sources = opts.sources,
+      --   -- nls.builtins.formatting.fish_indent,
+      --   -- nls.builtins.diagnostics.fish,
+      --   -- nls.builtins.formatting.stylua,
+      --   -- nls.builtins.formatting.shfmt,
+      --   -- nls.builtins.diagnostics.flake8,
+      -- }
+    end,
+  },
+}
+--[[
+
+return {
   -- neodev
   {
     "folke/neodev.nvim",
@@ -163,17 +221,17 @@ return {
     },
   },
 
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      diagnostics = { virtual_text = { prefix = "icons" } },
-      setup = {
-        clangd = function(_, opts)
-          opts.capabilities.offsetEncoding = { "utf-16" }
-        end,
-      },
-    },
-  },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     diagnostics = { virtual_text = { prefix = "icons" } },
+  --     setup = {
+  --       clangd = function(_, opts)
+  --         opts.capabilities.offsetEncoding = { "utf-16" }
+  --       end,
+  --     },
+  --   },
+  -- },
 
   -- {
   --   "mfussenegger/nvim-lint",
@@ -239,6 +297,7 @@ return {
     end,
   },
 }
+--]]
 -- tailwindcss = {
 --   root_dir = function(...)
 --     return require("lspconfig.util").root_pattern(".git")(...)
