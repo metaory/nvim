@@ -11,6 +11,7 @@ return {
           a.operator(a.align_to_char, { length = 1, reverse = true })
         end,
         mode = "n",
+        desc = "Align to char",
         noremap = true,
         silent = true,
         expr = false,
@@ -22,6 +23,7 @@ return {
           a.operator(a.align_to_string, { is_pattern = false, reverse = true, preview = true })
         end,
         mode = "n",
+        desc = "Align to str",
         noremap = true,
         silent = true,
         expr = false,

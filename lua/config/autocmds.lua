@@ -1,3 +1,20 @@
+vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
+  callback = function()
+    vim.cmd([[ TSBufDisable highlight ]])
+    -- vim.cmd([[ set syntax=vim ]])
+    vim.keymap.set("n", "q", ":q<CR>", { buffer = true })
+  end,
+})
+-- vim.api.nvim_create_user_command("TSHighlightsUnderCursor", function()
+--   require("nvim-treesitter-playground.hl-info").get_syntax_hl()
+-- end, {})
+
+-- vim.cmd([[ :autocmd CmdwinEnter * setf vim<CR> ]])
+-- vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
+--   callback = function()
+--     vim.cmd([[ setlocal filetype=vim ]])
+--   end,
+-- })
 -- show cursor line only in active window
 -- vim.api.nvim_create_autocmd({ "InsertLeave", "WinEnter" }, {
 --   callback = function()

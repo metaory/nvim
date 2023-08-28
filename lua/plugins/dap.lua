@@ -1,6 +1,14 @@
-if true then
-  return {}
-end
+return {
+  -- {
+  --   "sbulav/nredir.nvim",
+  --   cmd = "Nredir",
+  --   opts = {},
+  -- },
+}
+
+-- if true then
+--   return {}
+-- end
 
 --[[
 return {

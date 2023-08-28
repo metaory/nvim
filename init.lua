@@ -1,3 +1,6 @@
+--[[
+https://jacobsimpson.github.io/nvim-lua-manual/docs/communicating/
+--]]
 vim.g.vscode = false
 vim.g.debug_treesitter = true
 
@@ -22,8 +25,8 @@ vim.filetype.add({
   },
   pattern = {
     -- [".*/%.vscode/.*%.json"] = "json5",
-    ["Dockerfile-.*"] = "dockerfile",
-    [".*/%.vscode/.*%.json"] = "json5",
+    -- ["Dockerfile-.*"] = "dockerfile",
+    -- [".*/%.vscode/.*%.json"] = "json5",
   },
 })
 
@@ -47,8 +50,12 @@ end
 -- })
 
 require("user.commands")
--- require("user.filetypes")
 require("config.lazy")
+
+-- require("user.filetypes")
+require("user.plugins.xredir")
+
+-- vim.cmd([[ hi VimwikiLink guibg=#fff000 ]])
 
 -- vim.g.profile_loaders = true
 --[[require("config.lazy")({
@@ -74,3 +81,14 @@ require("config.lazy")
 --     require("util").version()
 --   end,
 -- })
+
+MxDump = function(t, f)
+  local p = "/tmp/mx_lua_" .. f .. ".lua"
+  local file, err = io.open(p, "a")
+  if file then
+    file:write(t) -- file:write(tostring(t))
+    file:close()
+  else
+    print("error:", err)
+  end
+end

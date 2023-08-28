@@ -1,4 +1,5 @@
 return {
+
   -- v ~/dev/forks/dotfiles-steve/.config/nvim/lua/plugins/neorg.lua
   -- https://github.com/nvim-orgmode/orgmode
   -- https://github.com/nvim-neorg/neorg
@@ -8,7 +9,11 @@ return {
   --   ft = { "org" },
   --   config = true,
   -- },
-
+  {
+    "max397574/colortils.nvim",
+    cmd = "Colortils",
+    config = true,
+  },
   {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",

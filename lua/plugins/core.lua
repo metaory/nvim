@@ -28,26 +28,30 @@ return {
   -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
   {
     "numToStr/Navigator.nvim",
-    cmd = { "NavigatorRight", "NavigatorLeft" },
-    opts = {},
+    cmd = { "NavigatorRight", "NavigatorLeft", "NavigatorUp", "NavigatorDown" },
+    opts = {
+      disable_on_zoom = true,
+    },
   },
   {
     "gbprod/yanky.nvim",
+    event = "VimEnter",
     opts = function(_, opts)
       return vim.list_extend({
         ring = { storage = "shada" }, --"sqlite"
       }, opts)
     end,
-    keys = function(_, keys)
-      local mappings = {
-        { "d", "d", mode = { "n", "x" }, desc = "Delete pending" },
-      }
-      return vim.list_extend(mappings, keys)
-    end,
+    -- keys = function(_, keys)
+    --   local mappings = {
+    --     { "d", "d", mode = { "n", "x" }, desc = "Delete pending" },
+    --   }
+    --   return vim.list_extend(mappings, keys)
+    -- end,
   },
   -- https://github.com/nvim-neorg/neorg
   -- https://github.com/nvim-orgmode/orgmode
   -- https://github.com/MunifTanjim/nui.nvim/wiki
+  -- syn match Statement "^> .*"
   { "vimwiki/vimwiki", cmd = { "VimwikiDiaryIndex", "VimwikiIndex" } },
 }
 -- { "NvChad/nvim-colorizer.lua", cmd = "ColorizerToggle", opts = { filetypes = { html = { mode = "foreground" }, }, }, },

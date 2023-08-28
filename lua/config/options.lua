@@ -1,3 +1,6 @@
+-- set wildignore=*.o,*.a,__pycache__
+-- vim.opt.wildignore = { '*.o', '*.a', '__pycache__' }
+
 vim.g.mapleader = " "
 
 vim.opt.fillchars = {
@@ -44,10 +47,10 @@ vim.g.loaded_node_provider = 0
 -- require("util.status")
 
 -- make all keymaps silent by default
-local keymap_set = vim.keymap.set
----@diagnostic disable-next-line: duplicate-set-field
-vim.keymap.set = function(mode, lhs, rhs, opts)
-  opts = opts or {}
-  opts.silent = opts.silent ~= false
-  return keymap_set(mode, lhs, rhs, opts)
-end
+-- local keymap_set = vim.keymap.set
+-- ---@diagnostic disable-next-line: duplicate-set-field
+-- vim.keymap.set = function(mode, lhs, rhs, opts)
+--   opts = opts or {}
+--   opts.silent = opts.silent ~= false
+--   return keymap_set(mode, lhs, rhs, opts)
+-- end

@@ -3,7 +3,7 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
     -- ft = "*",
-    lazy = true,
+    -- lazy = true,
     -- enabled = true,
     opts = {
       filesystem = {
@@ -69,7 +69,8 @@ return {
       {
         "<leader>fm",
         function()
-          require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+          require("mini.files").open()
+          -- require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
         end,
         desc = "Open mini.files (directory of current file)",
       },
@@ -81,6 +82,7 @@ return {
         desc = "Open mini.files (cwd)",
       },
     },
+    -- https://neovimcraft.com/plugin/is0n/fm-nvim
     -- config = function(_, opts)
     --   require("mini.files").setup(opts)
     --
@@ -243,3 +245,11 @@ return {
   --   dependencies = { "nvim-tree/nvim-web-devicons" },
   -- },
 }
+
+-- ██  ██  ██ █│E5108: Error executing lua: (mini.files) `path` is not a valid path ("/home/meta/.config/nvim/Starter")        │
+-- ██  ██ ██   │stack traceback:                                                                                               │
+--   ██ █        │  [C]: in function 'error'                                                                                     │
+-- █           │  ...eta/.local/share/nvim/lazy/mini.files/lua/mini/files.lua:2490: in function 'error'                        │
+-- █ shared @ m│  ...eta/.local/share/nvim/lazy/mini.files/lua/mini/files.lua:667: in function 'open'                          │
+-- │  /home/meta/.config/nvim/lua/plugins/tree.lua:72: in function </home/meta/.config/nvim/lua/plugins/tree.lua:71│
+--
