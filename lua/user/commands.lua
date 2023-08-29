@@ -1,3 +1,9 @@
+vim.api.nvim_create_user_command(
+  "Xdir",
+  "lua require'noice'.redirect('lua =' .. <q-args>)",
+  { nargs = "+", complete = "command" }
+)
+
 vim.api.nvim_create_user_command("OpenGithubRepo", function(_)
   local ghpath = vim.api.nvim_eval("shellescape(expand('<cfile>'))")
   local formatpath = ghpath:sub(2, #ghpath - 1)

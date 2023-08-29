@@ -17,6 +17,15 @@ return {
   { "hashivim/vim-terraform", ft = "terraform" },
   { "imsnif/kdl.vim", ft = "kdl" },
   { "mustache/vim-mustache-handlebars", ft = "hbs" },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    -- event = "VeryLazy",
+    event = "VimEnter",
+    -- event = { "BufReadPost", "BufNewFile" },
+    -- dependencies = { "nvim-telescope/telescope.nvim" },
+
+    -- cmd = "Telescope",
+  },
   -- { "lukas-reineke/indent-blankline.nvim", -- enabled = false, },
   -- { "echasnovski/mini.indentscope", -- enabled = false, },
   {

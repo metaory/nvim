@@ -10,7 +10,7 @@ vim.filetype.add({
     frag = "glsl",
     -- jsx = "javascript.jsx",
     -- ["js.flow"] = "javascript.jsx",
-    norg = "norg",
+    -- norg = "norg",
     -- rbi = "ruby",
     tmux = "tmux",
     tmuxtheme = "tmux",
@@ -19,7 +19,7 @@ vim.filetype.add({
   filename = {
     [".zalias"] = "zsh",
     [".nvimrc"] = "lua",
-    ["kitty.conf"] = "kitty",
+    -- ["kitty.conf"] = "kitty",
     ["picom.conf"] = "toml",
     ["tsconfig.json"] = "jsonc",
   },
@@ -53,8 +53,9 @@ require("user.commands")
 require("config.lazy")
 
 -- require("user.filetypes")
-require("user.plugins.xredir")
-
+-- require("user.plugins.xredir")
+-- require("user.plugins.qtoggle")
+-- require('user.plugins.qtoggle').toggle_qf
 -- require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
 -- require("luasnip.loaders.from_vscode").load()
 

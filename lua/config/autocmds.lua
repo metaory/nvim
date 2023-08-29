@@ -10,11 +10,17 @@ vim.api.nvim_create_autocmd("BufEnter", {
 
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   callback = function()
-    vim.cmd([[ TSBufDisable highlight ]])
-    -- vim.cmd([[ set syntax=vim ]])
+    vim.api.nvim_exec2([[ TSBufDisable highlight ]], {})
     vim.keymap.set("n", "q", ":q<CR>", { buffer = true })
   end,
 })
+
+-- when passed a string vim.cmd(·)  is the same as vim.api.nvim_exec(·, false)
+-- when passed a table  vim.cmd({}) it behaves like vim.api.nvim_cmd({}, {})
+-- vim.cmd { cmd = 'write', args = { "myfile.txt" }, bang = true }
+
+-- vim.cmd([[ TSBufDisable highlight ]])
+-- vim.cmd([[ set syntax=vim ]])
 -- vim.api.nvim_create_user_command("TSHighlightsUnderCursor", function()
 --   require("nvim-treesitter-playground.hl-info").get_syntax_hl()
 -- end, {})
