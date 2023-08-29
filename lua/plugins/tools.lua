@@ -20,6 +20,10 @@ return {
     dependencies = "folke/zen-mode.nvim",
     cmd = "Neorg",
     ft = "norg",
+    -- keys = {
+    --   { "<leader>ni", "<CMD>Neorg workspace mx<CR>", desc = "Org Index" },
+    --   { "<leader>nm", "<CMD>Neorg index<CR>", desc = "Org Menu" },
+    -- },
     opts = {
       load = {
         ["core.defaults"] = {},
@@ -56,19 +60,23 @@ return {
         ["core.presenter"] = { config = { zen_mode = "zen-mode" } },
         ["core.keybinds"] = {
           config = {
+            neorg_leader = "<leader>",
             hook = function(keybinds)
-              keybinds.unmap("norg", "n", "<CR>")
+              keybinds.unmap("norg", "n", "<leader>nn")
+              -- keybinds.unmap("norg", "n", "<CR>")
 
-              keybinds.unmap("presenter", "n", "l")
-              keybinds.unmap("presenter", "n", "h")
-              keybinds.unmap("presenter", "n", "<CR>")
-              keybinds.unmap("presenter", "n", "q")
+              -- keybinds.unmap("presenter", "n", "l")
+              -- keybinds.unmap("presenter", "n", "h")
+              -- keybinds.unmap("presenter", "n", "<CR>")
+              -- keybinds.unmap("presenter", "n", "q")
 
-              keybinds.remap_event("presenter", "n", "<Right>", "core.presenter.next_page")
-              keybinds.remap_event("presenter", "n", "<C-j>", "core.presenter.next_page")
-              keybinds.remap_event("presenter", "n", "<Left>", "core.presenter.previous_page")
-              keybinds.remap_event("presenter", "n", "<C-k>", "core.presenter.previous_page")
-              keybinds.remap_event("presenter", "n", "<Down>", "core.presenter.close")
+              -- keybinds.remap_event("presenter", "n", "<Right>", "core.presenter.next_page")
+              -- keybinds.remap_event("presenter", "n", "<C-j>", "core.presenter.next_page")
+              -- keybinds.remap_event("presenter", "n", "<Left>", "core.presenter.previous_page")
+              -- keybinds.remap_event("presenter", "n", "<C-k>", "core.presenter.previous_page")
+              -- keybinds.remap_event("presenter", "n", "<Down>", "core.presenter.close")
+              -- { leader .. "nn", "core.dirman.new.note", opts = { desc = "Create New Note" } },
+              keybinds.remap_event("norg", "n", "<leader>on", "core.dirman.new.note")
               keybinds.map("norg", "n", "<Up>", "<CMD>Neorg presenter start<CR>")
               keybinds.map("norg", "n", "<leader>uc", "<CMD>Neorg toggle-concealer<CR>")
             end,

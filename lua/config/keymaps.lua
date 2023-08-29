@@ -102,9 +102,13 @@ which_key.register({
     name = "File",
     s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
   },
-  n = {
+  o = {
     name = "Org",
-    i = { "<CMD>Neorg workspace mx<CR>", "Org Index" },
+    i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
+    w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
+    j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
+    t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
+    y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
   },
 }, { prefix = "<leader>" })
 
