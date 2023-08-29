@@ -7,6 +7,7 @@ return {
         "rome",
         "stylua",
         "selene",
+        -- "proselint",
         "luacheck",
         "shellcheck",
         "shfmt",
@@ -24,9 +25,11 @@ return {
         --     return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json")
         --   end,
         -- }),
-        nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
+        -- nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
         nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
-        nls.builtins.diagnostics.deno_lint.with({ filetypes = { "javascript", "typescript" } }),
+        -- nls.builtins.code_actions.proselint.with({ filetypes = { "markdown" } }),
+
+        -- nls.builtins.diagnostics.deno_lint.with({ filetypes = { "javascript", "typescript" } }),
         -- nls.builtins.diagnostics.selene.with({
         --   filetypes = { "lua" },
         --   condition = function(utils) return utils.root_has_file({ "selene.toml" }) end,
@@ -45,6 +48,8 @@ return {
 
       -- MxDump(vim.inspect(nls.builtins), "null-ls-sources")
       -- MxDump(vim.inspect(opts), "null-ls-opt")
+      -- MxDump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
+      --
       return opts
       -- return {
       --   root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),

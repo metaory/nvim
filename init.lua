@@ -55,6 +55,9 @@ require("config.lazy")
 -- require("user.filetypes")
 require("user.plugins.xredir")
 
+-- require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
+-- require("luasnip.loaders.from_vscode").load()
+
 -- vim.cmd([[ hi VimwikiLink guibg=#fff000 ]])
 
 -- vim.g.profile_loaders = true

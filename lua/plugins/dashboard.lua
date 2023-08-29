@@ -2,19 +2,14 @@
 -- (mini.starter) `buf_id` in `refresh()` is not an identi
 
 return {
-  {
-    "goolord/alpha-nvim",
-    enabled = false,
-  },
+  { "goolord/alpha-nvim", enabled = false },
 
   {
     "echasnovski/mini.starter",
+    cond = function()
+      return next(vim.fn.argv()) == nil
+    end,
     opts = function()
-      if next(vim.fn.argv()) ~= nil then
-        -- neovim was opened with files
-        return
-      end
-
       local logo = [[
     █    █  █   ██
     ██  ██  ██ ██    █████          Z
@@ -64,30 +59,30 @@ return {
     --   -- vim.api.nvim_buf_set_name(0, "/tmp")
     -- end,
   },
-  -- {
-  --   "goolord/alpha-nvim",
-  --   event = "VimEnter",
-  --   opts = function(_, dashboard)
-  --     local button = dashboard.button("p", " " .. " Projects", ":Telescope projects <CR>")
-  --     button.opts.hl = "AlphaButtons"
-  --     button.opts.hl_shortcut = "AlphaShortcut"
-  --     table.insert(dashboard.section.buttons.val, 4, button)
-  --     local logo = [[
-  --   █    █  █   ██
-  --   ██  ██  ██ ██    █████          Z
-  --   ██████   ███    ██  ██      Z
-  --   ██████   ███    ██       z
-  --   ██  ██  ██ ██   ██     z
-  --   ██  ██ ██   █    ██████
-  --   ██ █
-  --   █
-  --   █ shared @ mxc-v1.9.0
-  --       ]]
-  --
-  --     dashboard.section.header.val = vim.split(logo, "\n")
-  --   end,
-  -- },
 }
+-- {
+--   "goolord/alpha-nvim",
+--   event = "VimEnter",
+--   opts = function(_, dashboard)
+--     local button = dashboard.button("p", " " .. " Projects", ":Telescope projects <CR>")
+--     button.opts.hl = "AlphaButtons"
+--     button.opts.hl_shortcut = "AlphaShortcut"
+--     table.insert(dashboard.section.buttons.val, 4, button)
+--     local logo = [[
+--   █    █  █   ██
+--   ██  ██  ██ ██    █████          Z
+--   ██████   ███    ██  ██      Z
+--   ██████   ███    ██       z
+--   ██  ██  ██ ██   ██     z
+--   ██  ██ ██   █    ██████
+--   ██ █
+--   █
+--   █ shared @ mxc-v1.9.0
+--       ]]
+--
+--     dashboard.section.header.val = vim.split(logo, "\n")
+--   end,
+-- },
 
 -- MxDebug(opts, 'alpha')
 -- return vim.list_extend({

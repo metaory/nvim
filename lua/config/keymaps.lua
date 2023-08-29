@@ -143,6 +143,7 @@ which_key.register({
   i = {
     name = "Info",
     l = { ":LspInfo<CR>", "LSP Info" },
+    n = { ":NullLsInfo<CR>", "Null-ls Info" },
     f = { ":verbose set filetype?<CR>", "FileType Info" },
   },
   f = {
