@@ -142,7 +142,7 @@ return {
 -- ["<C-s>"] = false,
 --   "add_selection",
 -- ["<C-u>"] = function(prompt_bufnr)
---   -- MxDump("c-u", "telescope")
+--   -- mxdump("c-u", "telescope")
 --   -- require("telescope.actions.state").get_selected_entry()
 --   return false
 -- end,
@@ -162,7 +162,7 @@ return {
 --   "send_selected_to_qflist",
 -- ["<C-d>"] = "scroll_results",
 -- ["<C-d"] = function(prompt_bufnr)
---   MxDump("umm", "telescope")
+--   mxdump("umm", "telescope")
 --   -- require("telescope.actions").action_set.scroll_results(prompt_bufnr, 1)
 --   -- require("telescope.actions.state").get_selected_entry()
 --   return false

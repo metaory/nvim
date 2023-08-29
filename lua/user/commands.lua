@@ -35,7 +35,7 @@ end, {
 vim.api.nvim_create_user_command("Redir", function(ctx)
   -- lua=vim.tbl_keys(vim.api)
   local lines = vim.split(vim.api.nvim_exec("lua=" .. ctx.args, true), "\n", { plain = true })
-  -- MxDump(ctx.args, "ctx")
+  -- mxdump(ctx.args, "ctx")
   vim.cmd("new")
   local bufnr = vim.api.nvim_get_current_buf()
   -- local bufnr = vim.api.nvim_create_buf(true, false)

@@ -3,6 +3,32 @@
 
 vim.g.mapleader = " "
 
+vim.filetype.add({
+  extension = {
+    cconf = "python",
+    frag = "glsl",
+    -- jsx = "javascript.jsx",
+    -- ["js.flow"] = "javascript.jsx",
+    -- norg = "norg",
+    -- rbi = "ruby",
+    tmux = "tmux",
+    tmuxtheme = "tmux",
+    -- tsx = "typescript.tsx",
+  },
+  filename = {
+    [".zalias"] = "zsh",
+    [".nvimrc"] = "lua",
+    -- ["kitty.conf"] = "kitty",
+    ["picom.conf"] = "toml",
+    ["tsconfig.json"] = "jsonc",
+  },
+  pattern = {
+    -- [".*/%.vscode/.*%.json"] = "json5",
+    -- ["Dockerfile-.*"] = "dockerfile",
+    -- [".*/%.vscode/.*%.json"] = "json5",
+  },
+})
+
 vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",

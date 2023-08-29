@@ -46,6 +46,9 @@ return {
                 pending = {
                   icon = "",
                 },
+                undone = {
+                  icon = " ",
+                },
                 done = {
                   icon = "",
                 },
@@ -77,14 +80,26 @@ return {
               -- keybinds.remap_event("presenter", "n", "<Down>", "core.presenter.close")
               -- { leader .. "nn", "core.dirman.new.note", opts = { desc = "Create New Note" } },
               keybinds.remap_event("norg", "n", "<leader>on", "core.dirman.new.note")
-              keybinds.map("norg", "n", "<leader>j", ":Neorg journal toc open<CR>", { silent = true })
-              keybinds.map("norg", "n", "<leader>t", "<CMD>Neorg journal today<CR>", { desc = "Org Journal Today" })
               keybinds.map(
                 "norg",
                 "n",
-                "<leader>y",
-                "<CMD>Neorg journal yesterday<CR>",
-                { desc = "Org Journal Yesterday" }
+                "<leader>j",
+                ":Neorg journal toc open<CR>",
+                { silent = true, desc = "Org Journal Index" }
+              )
+              keybinds.map(
+                "norg",
+                "n",
+                "<leader>k",
+                ":Neorg journal tomorrow<CR>",
+                { silent = true, desc = "Journal Tomorrow" }
+              )
+              keybinds.map(
+                "norg",
+                "n",
+                "<leader>n",
+                ":Neorg journal today<CR>",
+                { silent = true, desc = "Journal Today" }
               )
 
               keybinds.map("norg", "n", "<BS>", ":bw<CR>", { silent = true })

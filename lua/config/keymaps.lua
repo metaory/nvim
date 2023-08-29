@@ -49,11 +49,12 @@ map("n", "cp", [[:let @+ = expand("%:p")<cr>]], { noremap = true, silent = true,
 -- map("n", "Q", [[ :q<CR> ]], opt)
 --
 
+-- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
 map(
   "n",
-  "<leader>uC",
+  "<leader>uh",
   "<CMD>lua require('mini.hipatterns').enable()<CR>",
-  { noremap = true, silent = true, desc = "Toggle Color" }
+  { noremap = true, silent = true, desc = "Toggle Color Highlight" }
 )
 
 map(
@@ -62,6 +63,20 @@ map(
   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
   { noremap = true, silent = true, desc = "Search Telescope" }
 )
+
+-- TODO: Telescope search: >>
+-- lua require("persistence").list()
+
+-- | f           | \<c-f\>     | find\_project\_files       |
+-- | b           | \<c-b\>     | browse\_project\_files     |
+-- | d           | \<c-d\>     | delete\_project            |
+-- | s           | \<c-s\>     | search\_in\_project\_files |
+-- | r           | \<c-r\>     | recent\_project\_files     |
+-- | w           | \<c-w\>     | change\_working\_directory |
+-- project
+-- lua =require("project_nvim").get_recent_projects()
+-- lua =require("project_nvim").delete_project()
+-- /home/meta/dev/forks/dotfiles-steve/vimplugins/aerial.nvim/lua/telescope/_extensions/aerial.lua
 
 map("n", "<M-g>", "<CMD>lua require'telescope.builtin'.live_grep{}<CR>", opt)
 map("n", "<M-f>", ":Telescope find_files<CR>", opt)
@@ -123,6 +138,8 @@ which_key.register({
 }, { prefix = "<leader>" })
 
 -- echo 'foo'
+-- lua require("util.debug").dump(vim.opt.completeopt)
+-- lua dd(vim.opt.completeopt)
 map(
   "n",
   "<leader>rr",

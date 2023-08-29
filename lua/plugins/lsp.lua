@@ -46,9 +46,9 @@ return {
         -- table.remove()
       })
 
-      -- MxDump(vim.inspect(nls.builtins), "null-ls-sources")
-      -- MxDump(vim.inspect(opts), "null-ls-opt")
-      -- MxDump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
+      -- mxdump(vim.inspect(nls.builtins), "null-ls-sources")
+      -- mxdump(vim.inspect(opts), "null-ls-opt")
+      -- mxdump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
       --
       return opts
       -- return {

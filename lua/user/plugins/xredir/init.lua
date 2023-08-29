@@ -7,15 +7,15 @@
 -- return M
 -- vim.api.nvim_create_user_command("Xdir", M.redirect, { nargs = "+", complete = "command" })
 
--- MxDump(vim.inspect(cmd), "xdir-dat")
--- MxDump(cmd.args, "xdir-datx")
+-- mxdump(vim.inspect(cmd), "xdir-dat")
+-- mxdump(cmd.args, "xdir-datx")
 -- print(vim.inspect(vim.tbl_keys(require 'tokyonight')))
--- MxDump(cmd, "xdir-raw")
+-- mxdump(cmd, "xdir-raw")
 -- echo 'xx'
 
 -- local data = vim.api.nvim_exec2("lua =vim.opt.completeopt._value", {})
 
--- MxDump(vim.inspect(data), "xdir-dat")
+-- mxdump(vim.inspect(data), "xdir-dat")
 
 -- lua require("noice").redirect("lua =vim.opt.completeopt._value")
 -- lua require("noice").redirect("lua print(vim.inspect(vim.opt.completeopt))")

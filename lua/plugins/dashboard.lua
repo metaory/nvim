@@ -1,9 +1,5 @@
--- BUG:
--- (mini.starter) `buf_id` in `refresh()` is not an identi
-
 return {
   { "goolord/alpha-nvim", enabled = false },
-
   {
     "echasnovski/mini.starter",
     cond = function()
@@ -21,45 +17,39 @@ return {
     █
     █ shared @ mxc-v1.9.0
         ]]
-      local pad = string.rep(" ", 22)
-      local new_section = function(name, action, section)
-        return { name = name, action = action, section = pad .. section }
-      end
+      local pad = string.rep(" ", 10)
+      -- local new_section = function(name, action, section)
+      --   return { name = name, action = action, section = pad .. section }
+      -- end
 
       local starter = require("mini.starter")
-      --stylua: ignore
       local config = {
         evaluate_single = true,
         header = logo,
         items = {
-          -- starter.sections.builtin_actions(),
           starter.sections.recent_files(2),
-          new_section("Find file",   "Telescope find_files", "Telescope"),
-          new_section("Old files",   "Telescope oldfiles",   "Telescope"),
-          new_section("Grep text",    "Telescope live_grep",  "Telescope"),
-          new_section("Help tags",    "Telescope help_tags",  "Telescope"),
-          new_section("init.lua",     "e $MYVIMRC",           "Config"),
-          new_section("Lazy",         "Lazy",                 "Config"),
-          new_section("New file",     "ene | startinsert",    "Built-in"),
-          new_section("Quit",         "qa",                   "Built-in"),
-          new_section("Session restore", [[lua require("persistence").load()]], "Session"),
+          starter.sections.telescope(),
+          { name = "init.lua", action = "e $MYVIMRC", section = "Config" },
+          { name = "Lazy", action = "Lazy", section = "Config" },
+          { name = "Session restore", action = [[lua require("persistence").load()]], section = "Session" },
+          starter.sections.builtin_actions(),
         },
         content_hooks = {
           starter.gen_hook.adding_bullet(pad .. "░ ", false),
           starter.gen_hook.aligning("center", "center"),
         },
       }
-      -- MxDump(vim.inspect(config), "dashx")
-      -- nvim_buf_set_name({buffer}, {name})                      *nvim_buf_set_name()*
       return config
     end,
     -- config = function(_, opts)
-    --   -- MxDebug(opts, "mini")
+    --   -- mxdebug(opts, "mini")
     --   require("mini.starter").setup(opts)
     --   -- vim.api.nvim_buf_set_name(0, "/tmp")
     -- end,
   },
 }
+      -- mxdump(vim.inspect(config), "dashx")
+      -- nvim_buf_set_name({buffer}, {name})                      *nvim_buf_set_name()*
 -- {
 --   "goolord/alpha-nvim",
 --   event = "VimEnter",
@@ -84,7 +74,7 @@ return {
 --   end,
 -- },
 
--- MxDebug(opts, 'alpha')
+-- mxdebug(opts, 'alpha')
 -- return vim.list_extend({
 --     header = logo,
 -- }, opts)
@@ -99,3 +89,13 @@ return {
 --   dashboard.button("l", "Z " .. " Lazy", ":Lazy<CR>"),
 --   dashboard.button("q", " " .. " Quit", ":qa<CR>"),
 -- }
+-- BUG:
+-- (mini.starter) `buf_id` in `refresh()` is not an identi
+
+-- new_section("Find file",   "Telescope find_files", "Telescope"),
+-- new_section("Old files",   "Telescope oldfiles",   "Telescope"),
+-- new_section("Grep text",    "Telescope live_grep",  "Telescope"),
+-- new_section("Help tags",    "Telescope help_tags",  "Telescope"),
+-- { name = "New file", action = "ene | startinsert", section = "Built-in" },
+-- { name = "Quit", action = "qa", section = "Built-in" },
+--stylua: ignore

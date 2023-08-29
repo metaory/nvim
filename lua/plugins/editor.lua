@@ -1,41 +1,40 @@
-return {
+return {}
 
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     capabilities = {
-  --       textDocument = {
-  --         foldingRange = {
-  --           dynamicRegistration = false,
-  --           lineFoldingOnly = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+-- {
+--   "neovim/nvim-lspconfig",
+--   opts = {
+--     capabilities = {
+--       textDocument = {
+--         foldingRange = {
+--           dynamicRegistration = false,
+--           lineFoldingOnly = true,
+--         },
+--       },
+--     },
+--   },
+-- },
 
-  -- {
-  --   "folke/which-key.nvim",
-  --   event = "VeryLazy",
-  --   lazy = true,
-  --   cmd = "WhichKey",
-  -- },
-  -- add nvim-ufo
-  -- {
-  --   "kevinhwang91/nvim-ufo",
-  --   dependencies = "kevinhwang91/promise-async",
-  --   event = "BufReadPost",
-  --   enabled = false,
-  --   opts = {},
-  --
-  --   init = function()
-  --     -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
-  --     vim.keymap.set("n", "zR", function()
-  --       require("ufo").openAllFolds()
-  --     end)
-  --     vim.keymap.set("n", "zM", function()
-  --       require("ufo").closeAllFolds()
-  --     end)
-  --   end,
-  -- },
-}
+-- {
+--   "folke/which-key.nvim",
+--   event = "VeryLazy",
+--   lazy = true,
+--   cmd = "WhichKey",
+-- },
+-- add nvim-ufo
+-- {
+--   "kevinhwang91/nvim-ufo",
+--   dependencies = "kevinhwang91/promise-async",
+--   event = "BufReadPost",
+--   enabled = false,
+--   opts = {},
+--
+--   init = function()
+--     -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
+--     vim.keymap.set("n", "zR", function()
+--       require("ufo").openAllFolds()
+--     end)
+--     vim.keymap.set("n", "zM", function()
+--       require("ufo").closeAllFolds()
+--     end)
+--   end,
+-- },

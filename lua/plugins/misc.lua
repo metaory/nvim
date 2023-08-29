@@ -1,86 +1,14 @@
 return {
-  -- {
-  --   "akinsho/toggleterm.nvim",
-  --   config = function()
-  --     require("configs.terminal.toggleterm")
-  --   end,
-  -- },
-  -- https://github.com/willothy/flatten.nvim
-  -- v ~/dev/forks/dotfiles-steve/.config/nvim/lua/plugins/misc.lua
-  -- {
-  --   "willothy/flatten.nvim",
-  --   -- ft = { "org" },
-  --   lazy = false,
-  --   opts = function()
-  --     -- local saved_terminal
-  --
-  --     return {
-  --       window = {
-  --         open = "alternate",
-  --       },
-  --       callbacks = {
-  --         should_block = require("flatten").default_should_block,
-  --         -- should_block = function(argv)
-  --         --   -- In this case, we would block if we find the `-b` flag
-  --         --   -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
-  --         --   return vim.tbl_contains(argv, "-b")
-  --         --   -- Alternatively, we can block if we find the diff-mode option
-  --         --   -- return vim.tbl_contains(argv, "-d")
-  --         -- end,
-  --         pre_open = function()
-  --
-  --           -- local term = require("toggleterm.terminal")
-  --           -- local termid = term.get_focused_id()
-  --           -- saved_terminal = term.get(termid)
-  --         end,
-  --         post_open = function(bufnr, winnr, ft, is_blocking)
-  --           -- if is_blocking and saved_terminal then
-  --           --   saved_terminal:close()
-  --           -- else
-  --           --   vim.api.nvim_set_current_win(winnr)
-  --           -- end
-  --
-  --           -- if ft == "gitcommit" or ft == "gitrebase" then
-  --           --   vim.api.nvim_create_autocmd("BufWritePost", {
-  --           --     buffer = bufnr,
-  --           --     once = true,
-  --           --     callback = vim.schedule_wrap(function()
-  --           --       vim.api.nvim_buf_delete(bufnr, {})
-  --           --     end),
-  --           --   })
-  --           -- end
-  --         end,
-  --         -- block_end = function(filetype) end,
-  --         -- block_end = function()
-  --         --   vim.schedule(function()
-  --         --     if saved_terminal then
-  --         --       saved_terminal:open()
-  --         --       saved_terminal = nil
-  --         --     end
-  --         --   end)
-  --         -- end,
-  --       },
-  --     }
-  --   end,
-  --   config = true,
-  -- },
   {
     "folke/twilight.nvim",
     cmd = "Twilight",
+    keys = { { "<leader>Z", "<cmd>Twilight<cr>", desc = "Twilight Mode" } },
   },
   {
     "echasnovski/mini.splitjoin",
     opts = { mappings = { toggle = "<C-c>" } },
     keys = { { "gj", desc = "Split/Join" } },
   },
-  -- {
-  --   "Wansmer/treesj",
-  --   keys = {
-  --     { "gj", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
-  --   },
-  --   opts = { use_default_keymaps = false, max_join_length = 150 },
-  -- },
-
   {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
@@ -177,3 +105,75 @@ return {
 --     },
 --   }
 -- end,
+-- {
+--   "akinsho/toggleterm.nvim",
+--   config = function()
+--     require("configs.terminal.toggleterm")
+--   end,
+-- },
+-- https://github.com/willothy/flatten.nvim
+-- v ~/dev/forks/dotfiles-steve/.config/nvim/lua/plugins/misc.lua
+-- {
+--   "willothy/flatten.nvim",
+--   -- ft = { "org" },
+--   lazy = false,
+--   opts = function()
+--     -- local saved_terminal
+--
+--     return {
+--       window = {
+--         open = "alternate",
+--       },
+--       callbacks = {
+--         should_block = require("flatten").default_should_block,
+--         -- should_block = function(argv)
+--         --   -- In this case, we would block if we find the `-b` flag
+--         --   -- This allows you to use `nvim -b file1` instead of `nvim --cmd 'let g:flatten_wait=1' file1`
+--         --   return vim.tbl_contains(argv, "-b")
+--         --   -- Alternatively, we can block if we find the diff-mode option
+--         --   -- return vim.tbl_contains(argv, "-d")
+--         -- end,
+--         pre_open = function()
+--
+--           -- local term = require("toggleterm.terminal")
+--           -- local termid = term.get_focused_id()
+--           -- saved_terminal = term.get(termid)
+--         end,
+--         post_open = function(bufnr, winnr, ft, is_blocking)
+--           -- if is_blocking and saved_terminal then
+--           --   saved_terminal:close()
+--           -- else
+--           --   vim.api.nvim_set_current_win(winnr)
+--           -- end
+--
+--           -- if ft == "gitcommit" or ft == "gitrebase" then
+--           --   vim.api.nvim_create_autocmd("BufWritePost", {
+--           --     buffer = bufnr,
+--           --     once = true,
+--           --     callback = vim.schedule_wrap(function()
+--           --       vim.api.nvim_buf_delete(bufnr, {})
+--           --     end),
+--           --   })
+--           -- end
+--         end,
+--         -- block_end = function(filetype) end,
+--         -- block_end = function()
+--         --   vim.schedule(function()
+--         --     if saved_terminal then
+--         --       saved_terminal:open()
+--         --       saved_terminal = nil
+--         --     end
+--         --   end)
+--         -- end,
+--       },
+--     }
+--   end,
+--   config = true,
+-- },
+-- {
+--   "Wansmer/treesj",
+--   keys = {
+--     { "gj", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+--   },
+--   opts = { use_default_keymaps = false, max_join_length = 150 },
+-- },
