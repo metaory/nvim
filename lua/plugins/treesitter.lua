@@ -2,7 +2,7 @@ return {
   { "nvim-treesitter/playground", cmd = "TSPlaygroundToggle" },
   -- { "nvim-treesitter/nvim-treesitter-context", cmd = "TSContextToggle" },
   { "echasnovski/mini.ai", enabled = false },
-  -- { "RRethy/vim-illuminate", enabled = false },
+  { "RRethy/vim-illuminate", enabled = false },
 }
 -- { "RRethy/vim-illuminate", event = nil },
 -- { "RRethy/vim-illuminate", dependencies = { "nvim-treesitter/nvim-treesitter" } },
