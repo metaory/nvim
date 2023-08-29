@@ -84,7 +84,7 @@ map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("
 map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
 map("n", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opt)
 map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
-map("n", "<M-b>", ":Telescope buffers<CR>", opt)
+map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
 map("n", "<M-C>", ":Telescope commands<CR>", opt)
 map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
 map("n", "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", { desc = "Quickfix Toggle" })
