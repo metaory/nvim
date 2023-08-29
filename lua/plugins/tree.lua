@@ -35,7 +35,15 @@ return {
         group_empty_dirs = false,
         hijack_netrw_behavior = "open_default",
         use_libuv_file_watcher = false,
-        window = { mappings = { ["o"] = "system_open" } },
+        window = {
+          mappings = {
+            ["o"] = "system_open",
+            ["l"] = "open",
+            ["h"] = "close_node",
+            ["L"] = "focus_preview",
+            ["<space>"] = "toggle_node",
+          },
+        },
         commands = {
           system_open = function(state)
             local node = state.tree:get_node()
@@ -46,7 +54,11 @@ return {
         },
       },
       mapping_options = { noremap = true, nowait = true },
-      window = { position = "right", editor = "win" },
+      window = {
+        position = "right",
+        editor = "win",
+        -- mappings = { ["<space>"] = "none", },
+      },
     },
   },
   {

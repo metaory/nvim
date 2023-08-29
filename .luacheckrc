@@ -15,4 +15,4 @@ read_globals = {
   "vim",
 }
 
-globals = { "MxDebug", "MxDump" }
+globals = { "H", "MxDebug", "MxDump" }

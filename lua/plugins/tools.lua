@@ -77,6 +77,8 @@ return {
               -- keybinds.remap_event("presenter", "n", "<Down>", "core.presenter.close")
               -- { leader .. "nn", "core.dirman.new.note", opts = { desc = "Create New Note" } },
               keybinds.remap_event("norg", "n", "<leader>on", "core.dirman.new.note")
+              keybinds.map("norg", "n", "q", ":Neorg journal toc open<CR>", { silent = true })
+              keybinds.map("norg", "n", "Q", ":q<CR>", { silent = true })
               keybinds.map("norg", "n", "<Up>", "<CMD>Neorg presenter start<CR>")
               keybinds.map("norg", "n", "<leader>uc", "<CMD>Neorg toggle-concealer<CR>")
             end,

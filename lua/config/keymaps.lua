@@ -41,6 +41,11 @@ map("n", "<M-y>", [["+y$]], opt)
 map("v", "<M-y>", [["+y]], opt)
 map("n", "<M-p>", [["+p]], opt)
 map("n", "Y", [[y$]], opt)
+map("n", "cp", [[:let @+ = expand("%:p")<cr>]], { noremap = true, silent = true, desc = "Copy Path" })
+
+-- map("n", "Y", [[y$]], opt)
+-- map("n", "Q", [[ :q<CR> ]], opt)
+--
 
 map(
   "n",
@@ -103,7 +108,7 @@ which_key.register({
     s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
   },
   o = {
-    name = "Org",
+    xname = "Org",
     i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
     w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
     j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
