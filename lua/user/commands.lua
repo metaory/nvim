@@ -1,8 +1,5 @@
-vim.api.nvim_create_user_command(
-  "Xdir",
-  "lua require'noice'.redirect('lua =' .. <q-args>)",
-  { nargs = "+", complete = "command" }
-)
+vim.api.nvim_create_user_command("Xdir", "lua require'noice'.redirect(<q-args>)", { nargs = "+", complete = "command" })
+-- "lua require'noice'.redirect('lua =' .. <q-args>)",
 
 vim.api.nvim_create_user_command("OpenGithubRepo", function(_)
   local ghpath = vim.api.nvim_eval("shellescape(expand('<cfile>'))")

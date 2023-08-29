@@ -42,6 +42,15 @@ return {
       disable_on_zoom = true,
     },
   },
+  -- {
+  --   "echasnovski/mini.hipatterns",
+  --   event = { "SpellFileMissing" },
+  --   cmd = "MiniHi",
+  --   -- event = { "Signal" },
+  --   -- lazy = true,
+  --   -- enabled = false,
+  --   -- optional = true,
+  -- },
   {
     "gbprod/yanky.nvim",
     event = "VimEnter",

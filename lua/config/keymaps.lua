@@ -42,6 +42,8 @@ map("v", "<M-y>", [["+y]], opt)
 map("n", "<M-p>", [["+p]], opt)
 map("n", "Y", [[y$]], opt)
 map("n", "cp", [[:let @+ = expand("%:p")<cr>]], { noremap = true, silent = true, desc = "Copy Path" })
+-- vim.cmd([[ nnoremap qq :let @q = '^'<cr>^qQ ]])
+-- map("n", "qq", [[<ESC>:q<cr>]], { noremap = false, silent = true, desc = "Quit" })
 
 -- map("n", "Y", [[y$]], opt)
 -- map("n", "Q", [[ :q<CR> ]], opt)
@@ -54,7 +56,7 @@ map(
   { noremap = true, silent = true, desc = "Toggle Color" }
 )
 
-vim.keymap.set(
+map(
   "n",
   "<leader>sT",
   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
@@ -62,11 +64,11 @@ vim.keymap.set(
 )
 
 map("n", "<M-g>", "<CMD>lua require'telescope.builtin'.live_grep{}<CR>", opt)
-map("", "<M-f>", ":Telescope find_files<CR>", opt)
-map("", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
-map("", "<M-o>", ":Telescope oldfiles<CR>", opt)
-map("", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opt)
-map("", "<M-m>", ":Telescope keymaps<CR>", opt)
+map("n", "<M-f>", ":Telescope find_files<CR>", opt)
+map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
+map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
+map("n", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opt)
+map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
 map("n", "<M-b>", ":Telescope buffers<CR>", opt)
 map("n", "<M-C>", ":Telescope commands<CR>", opt)
 map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
@@ -82,6 +84,7 @@ map("n", "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', opt)
 -- map("n", "<M-s>", ":w<CR>", opt)
 --
 map("n", "<M-q>", ":q<CR>", opt)
+-- map("n", "<M-q>", ":bw<CR>", opt)
 map("n", "<M-Q>", ":qall!<CR>", opt)
 
 which_key.register({
@@ -101,7 +104,9 @@ which_key.register({
     name = "Info",
     l = { ":LspInfo<CR>", "LSP Info" },
     n = { ":NullLsInfo<CR>", "Null-ls Info" },
-    f = { ":verbose set filetype?<CR>", "FileType Info" },
+    -- f = { ":verbose set filetype?<CR>", "FileType Info" },
+    -- f = { ":lua require('noice').redirect('verbose set filetype?')<CR>", "FileType Info" },
+    f = { ":Xdir verbose set filetype?<CR>", "FileType Info" },
   },
   f = {
     name = "File",
@@ -117,25 +122,27 @@ which_key.register({
   },
 }, { prefix = "<leader>" })
 
-vim.keymap.set(
+-- echo 'foo'
+map(
   "n",
   "<leader>rr",
-  ":lua require('noice').redirect('@*')<CR>",
+  "<CMD>lua require('noice').redirect('@*')<CR>",
   { silent = true, noremap = true, desc = "Inspect Recent" }
 )
 
-vim.keymap.set("c", "<S-Enter>", function()
-  require("noice").redirect(vim.fn.getcmdline())
-end, { desc = "Redirect Cmdline" })
+map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", { desc = "Redirect Cmdline" })
+-- vim.keymap.set("c", "<S-Enter>", function()
+--   require("noice").redirect(vim.fn.getcmdline())
+-- end, { desc = "Redirect Cmdline" })
 
 map("n", "gG", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
 map("n", "gL", "<CMD>OpenWebUrl<CR>", { silent = true, desc = "Open URL" })
 
-vim.keymap.set("n", "<leader>di", ":OverseerInfo<CR>", { desc = "OverSeer Info" })
+map("n", "<leader>di", ":OverseerInfo<CR>", { desc = "OverSeer Info" })
 
-vim.keymap.set("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
-vim.keymap.set("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
-vim.keymap.set("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
+map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
+map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
+map("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
 
 -- ////////////////////////////////////////////////////////////////////////////
 
