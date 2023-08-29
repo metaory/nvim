@@ -1,4 +1,4 @@
-vim.api.nvim_create_autocmd("BufEnter", {
+vim.api.nvim_create_autocmd("BufReadPost", {
   callback = function(args)
     if vim.g.mx_snip_loaded == 1 then
       return
