@@ -9,6 +9,13 @@ return {
     },
   },
   -- {
+  --   "stevearc/dressing.nvim",
+  --   opts = {
+  --     input = { enabled = true, default_prompt = "OOOOInput:" },
+  --     select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
+  --   },
+  -- },
+  -- {
   --   "nvim-lualine/lualine.nvim",
   --   opts = function(_, opts)
   --     table.insert(opts.sections.lualine_x, {

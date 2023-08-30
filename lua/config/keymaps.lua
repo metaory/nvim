@@ -1,3 +1,7 @@
+-- BUG:
+-- - WARNING conflicting keymap exists for mode **"n"**, lhs: **"y"**
+-- - rhs: `<Plug>(YankyYank)`
+
 --local util = require("util")
 -- local Util = require("lazyvim.util")
 local which_key = require("which-key")
@@ -8,6 +12,87 @@ local nor = { noremap = true }
 vim.g.maplocalleader = "\\"
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
+
+vim.keymap.del("n", "<leader>l")
+vim.keymap.del("n", "<leader>e")
+
+which_key.register({
+  t = {
+    name = "Tabs",
+    n = { "<cmd>tabnew<CR>", "New Tab" },
+    c = { "<cmd>tabclose<CR>", "Close Tab" },
+  },
+  l = {
+    name = "LSP",
+    L = { "<cmd>:Lazy<cr>", "Lazy" },
+  },
+}, { prefix = "<LocalLeader>" })
+
+which_key.register({
+  -- t = { name = "EXEC", },
+  r = { name = "Replace" },
+  e = { name = "Exec", x = { name = "Experiments" } },
+  -- d = { x = { name = "CMD", }, },
+  i = {
+    name = "Info",
+    l = { ":LspInfo<CR>", "LSP Info" },
+    n = { ":NullLsInfo<CR>", "Null-ls Info" },
+    -- f = { ":verbose set filetype?<CR>", "FileType Info" },
+    -- f = { ":lua require('noice').redirect('verbose set filetype?')<CR>", "FileType Info" },
+    f = { ":Xdir verbose set filetype?<CR>", "FileType Info" },
+  },
+  f = {
+    name = "File",
+    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
+  },
+  o = {
+    name = "Org",
+    i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
+    w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
+    j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
+    t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
+    y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
+  },
+}, { prefix = "<leader>" })
+
+map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+
+vim.keymap.set("n", "<leader>fr", function()
+  local default = vim.fn.expand("%:t")
+  vim.ui.input({
+    prompt = "File Rename:",
+    default = default,
+  }, function(choice)
+    if choice == nil then
+      return
+    end
+    vim.notify(choice)
+    vim.api.nvim_exec2(":w " .. choice, {})
+    vim.api.nvim_exec2(":e#", {})
+    vim.api.nvim_exec2(":!rm " .. default, {})
+  end)
+end, { noremap = true, desc = "File Rename" })
+
+vim.keymap.set("n", "<leader>er", function()
+  vim.ui.select({ "node", "lua" }, {
+    prompt = "Runner",
+  }, function(selected)
+    local cmd = selected .. " " .. vim.fn.expand("%:p")
+    vim.notify(cmd)
+  end)
+end, { noremap = true, desc = "Exec Run" })
+
+vim.keymap.set("n", "<leader>ef", function()
+  vim.ui.select(vim.fn.getcompletion("*", "filetype"), {
+    prompt = "Select Filetype:",
+  }, function(choice)
+    if choice == nil then
+      return
+    end
+    vim.notify(choice)
+    vim.o.filetype = choice
+  end)
+end, { desc = "Set File Type" })
 
 map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
 map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)
@@ -36,12 +121,19 @@ map("i", "jk", "<ESC>", opt)
 
 map("i", "<M-p>", [[<ESC>"+p]], opt)
 map("i", "<M-e>", [[g$$]], opt)
-map("n", "<M-Y>", [[gg"+yG]], opt)
+map("n", "<M-Y>", [[gg"+yG]], opt) -- %y *
 map("n", "<M-y>", [["+y$]], opt)
 map("v", "<M-y>", [["+y]], opt)
 map("n", "<M-p>", [["+p]], opt)
 map("n", "Y", [[y$]], opt)
-map("n", "cp", [[:let @+ = expand("%:p")<cr>]], { noremap = true, silent = true, desc = "Copy Path" })
+map(
+  "n",
+  "cp",
+  [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]],
+  -- [[:let @+ = expand("%:p") .. expand("<slnum>")<cr>]],
+  -- echo expand("<cfile>")
+  { noremap = true, silent = true, desc = "Copy Path" }
+)
 -- vim.cmd([[ nnoremap qq :let @q = '^'<cr>^qQ ]])
 -- map("n", "qq", [[<ESC>:q<cr>]], { noremap = false, silent = true, desc = "Quit" })
 
@@ -77,7 +169,6 @@ map(
 -- lua =require("project_nvim").get_recent_projects()
 -- lua =require("project_nvim").delete_project()
 -- /home/meta/dev/forks/dotfiles-steve/vimplugins/aerial.nvim/lua/telescope/_extensions/aerial.lua
-
 map("n", "<M-g>", "<CMD>lua require'telescope.builtin'.live_grep{}<CR>", opt)
 map("n", "<M-f>", ":Telescope find_files<CR>", opt)
 map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
@@ -102,50 +193,25 @@ map("n", "<M-q>", ":q<CR>", opt)
 -- map("n", "<M-q>", ":bw<CR>", opt)
 map("n", "<M-Q>", ":qall!<CR>", opt)
 
-which_key.register({
-  t = {
-    name = "Tabs",
-    n = { "<cmd>tabnew<CR>", "New Tab" },
-    c = { "<cmd>tabclose<CR>", "Close Tab" },
-  },
-  l = {
-    name = "LSP",
-    L = { "<cmd>:Lazy<cr>", "Lazy" },
-  },
-}, { prefix = "<LocalLeader>" })
-
-which_key.register({
-  i = {
-    name = "Info",
-    l = { ":LspInfo<CR>", "LSP Info" },
-    n = { ":NullLsInfo<CR>", "Null-ls Info" },
-    -- f = { ":verbose set filetype?<CR>", "FileType Info" },
-    -- f = { ":lua require('noice').redirect('verbose set filetype?')<CR>", "FileType Info" },
-    f = { ":Xdir verbose set filetype?<CR>", "FileType Info" },
-  },
-  f = {
-    name = "File",
-    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
-  },
-  o = {
-    xname = "Org",
-    i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
-    w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
-    j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
-    t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
-    y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
-  },
-}, { prefix = "<leader>" })
-
 -- echo 'foo'
 -- lua require("util.debug").dump(vim.opt.completeopt)
 -- lua dd(vim.opt.completeopt)
-map(
-  "n",
-  "<leader>rr",
-  "<CMD>lua require('noice').redirect('@*')<CR>",
-  { silent = true, noremap = true, desc = "Inspect Recent" }
-)
+-- map(
+--   "n",
+--   "<leader>Dd",
+--   "<CMD>lua require('noice').redirect('@*')<CR>",
+--   { silent = true, noremap = true, desc = "Inspect Yank" }
+-- )
+-- require("noice").redirect(function() print("test") end)
+
+map("n", "<leader>ed", ":Xdir <C-R>: <C-y>", { noremap = true, desc = "Inspect Previous" })
+
+map("n", "<leader>exy", ":lua <C-R>* <C-y>", { noremap = true, desc = "Inspect Yank (CMD)" })
+map("n", "<leader>exx", ":Xdir lua =<C-R>: <C-y>", { noremap = true, desc = "Inspect Redirect (CMD)" })
+map("n", "<leader>exe", ":Xdir <C-R>=", { noremap = true, desc = "Inspect Expand (Redirect)" })
+map("n", "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", { noremap = true, desc = "Inspect Expand Line (Redirect)" })
+-- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
+-- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
 
 map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", { desc = "Redirect Cmdline" })
 -- vim.keymap.set("c", "<S-Enter>", function()

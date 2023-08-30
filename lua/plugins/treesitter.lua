@@ -3,8 +3,16 @@ return {
   -- { "nvim-treesitter/nvim-treesitter-context", cmd = "TSContextToggle" },
   { "echasnovski/mini.ai", enabled = false },
   { "RRethy/vim-illuminate", enabled = false },
+  --   {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     opts = function(_, opts)
+  --       vim.list_extend(opts.ensure_installed, {
+  --         -- "bashls",
+  --       })
+  --     end,
+  --   },
 }
--- { "RRethy/vim-illuminate", event = nil },
+-- -- { "RRethy/vim-illuminate", event = nil },
 -- { "RRethy/vim-illuminate", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 -- { "windwp/nvim-ts-autotag", },
 -- {

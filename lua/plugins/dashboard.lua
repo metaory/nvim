@@ -1,3 +1,5 @@
+local header = require("user.header")
+
 return {
   { "goolord/alpha-nvim", enabled = false },
   {
@@ -6,32 +8,19 @@ return {
       return next(vim.fn.argv()) == nil
     end,
     opts = function()
-      local logo = [[
-    █    █  █   ██
-    ██  ██  ██ ██    █████          Z
-    ██████   ███    ██  ██      Z
-    ██████   ███    ██       z
-    ██  ██  ██ ██   ██     z
-    ██  ██ ██   █    ██████
-    ██ █
-    █
-    █ shared @ mxc-v1.9.0
-        ]]
+      local logo = table.concat(header, "\n")
       local pad = string.rep(" ", 10)
-      -- local new_section = function(name, action, section)
-      --   return { name = name, action = action, section = pad .. section }
-      -- end
-
       local starter = require("mini.starter")
       local config = {
         evaluate_single = true,
+        auto_open = false,
         header = logo,
         items = {
           starter.sections.recent_files(2),
           starter.sections.telescope(),
           { name = "init.lua", action = "e $MYVIMRC", section = "Config" },
           { name = "Lazy", action = "Lazy", section = "Config" },
-          { name = "Session restore", action = [[lua require("persistence").load()]], section = "Session" },
+          { name = "Restore", action = [[lua require("persistence").load()]], section = "Session" },
           starter.sections.builtin_actions(),
         },
         content_hooks = {

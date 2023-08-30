@@ -11,8 +11,9 @@ return {
   -- { "simrat39/rust-tools.nvim" },
   -- { 'mhartington/formatter.nvim' },
   -- { "hjson/vim-hjson", ft = "hjson" },
-  { "vito-c/jq.vim", ft = "jq" },
   -- { "f-person/git-blame.nvim", ft = "*" },
+
+  { "vito-c/jq.vim", ft = "jq" },
   { "fladson/vim-kitty", ft = "kitty" },
   { "hashivim/vim-terraform", ft = "terraform" },
   { "imsnif/kdl.vim", ft = "kdl" },
@@ -30,7 +31,7 @@ return {
   -- { "echasnovski/mini.indentscope", -- enabled = false, },
   {
     "catppuccin/nvim",
-    optional = true,
+    -- optional = true,
     enabled = false,
   },
   -- { "norcalli/nvim-colorizer.lua" },
@@ -51,9 +52,7 @@ return {
       }, opts)
     end,
     -- keys = function(_, keys)
-    --   local mappings = {
-    --     { "d", "d", mode = { "n", "x" }, desc = "Delete pending" },
-    --   }
+    --   local mappings = { { "d", "d", mode = { "n", "x" }, desc = "Delete pending" }, }
     --   return vim.list_extend(mappings, keys)
     -- end,
   },

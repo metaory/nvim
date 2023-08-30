@@ -1,4 +1,22 @@
 return {
+  -- {
+  --   "mason.nvim",
+  --   opts = function(_, opts)
+  --     opts.ensure_installed = opts.ensure_installed or {}
+  --     vim.list_extend(opts.ensure_installed, { "hadolint" })
+  --   end,
+  -- },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  --   opts = {
+  --     diagnostics = { virtual_text = { prefix = "icons" } },
+  --     setup = {
+  --       bash = {},
+  --       bashls = {},
+  --     },
+  --   },
+  -- },
+
   {
     "williamboman/mason.nvim",
     opts = function(_, opts)
@@ -7,6 +25,8 @@ return {
         "rome",
         "stylua",
         "selene",
+        -- "bash",
+        -- "bashls",
         -- "proselint",
         "luacheck",
         "shellcheck",
@@ -229,18 +249,6 @@ return {
       setup = {},
     },
   },
-
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     diagnostics = { virtual_text = { prefix = "icons" } },
-  --     setup = {
-  --       clangd = function(_, opts)
-  --         opts.capabilities.offsetEncoding = { "utf-16" }
-  --       end,
-  --     },
-  --   },
-  -- },
 
   -- {
   --   "mfussenegger/nvim-lint",

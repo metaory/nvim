@@ -1,3 +1,5 @@
+-- :enew|put=execute('lua =package.loaded')
+-- :enew|put=execute('lua =package.loaded')|setf lua
 return {
   -- { "folke/which-key.nvim", enabled = false, },
   {
@@ -52,7 +54,6 @@ return {
     },
     opts = {},
   },
-
   {
     "monaqa/dial.nvim",
     -- stylua: ignore
@@ -62,37 +63,71 @@ return {
     },
     config = function()
       local augend = require("dial.augend")
-      require("dial.config").augends:register_group({
-        default = {
-          augend.integer.alias.decimal,
-          augend.integer.alias.hex,
-          augend.date.alias["%Y/%m/%d"],
-          augend.constant.alias.bool,
-          augend.semver.alias.semver,
-          augend.constant.new({ elements = { "let", "const" } }),
-        },
+      local default = {
+        augend.case.new({
+          types = {
+            "camelCase",
+            "snake_case",
+            "kebab-case",
+            "PascalCase",
+            "SCREAMING_SNAKE_CASE",
+          },
+        }),
+        augend.constant.new({
+          elements = { "&&", "||" },
+          word = false,
+        }),
+        augend.paren.alias.quote,
+        -- augend.paren.alias.brackets,
+        -- augend.constant.alias.weekday,
+        -- augend.constant.alias.weekday_full,
+        -- Saturday
+        augend.integer.alias.decimal,
+        augend.constant.alias.bool,
+        augend.integer.alias.hex,
+        -- augend.date.alias["%Y/%m/%d"],
+        -- augend.date.alias["%Y-%m-%d"],
+
+        augend.date.new({ pattern = "%Y/%m/%d", default_kind = "day" }),
+        augend.date.new({ pattern = "%Y_%m_%d", default_kind = "day" }),
+        -- only_valid = true, word = true,
+        -- augend.semver.alias.semver,
+      }
+      require("dial.config").augends:register_group({ default = default })
+      local javascriptTypescript = vim.list_extend({
+        augend.constant.new({ elements = { "let", "const" } }),
+        augend.constant.new({ elements = { "foo", "bar" } }),
+        augend.constant.new({ elements = { "console.log", "info" } }),
+      }, default)
+      require("dial.config").augends:on_filetype({
+        typescript = javascriptTypescript,
+        javascript = javascriptTypescript,
+        lua = vim.list_extend({
+          augend.constant.new({ elements = { "and", "or" }, word = true }),
+          augend.paren.alias.lua_str_literal,
+        }, default),
+        rust = vim.list_extend({ augend.paren.alias.rust_str_literal }, default),
+        markdown = vim.list_extend({ augend.misc.alias.markdown_header }, default),
       })
     end,
   },
-
   {
     "simrat39/symbols-outline.nvim",
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
     cmd = "SymbolsOutline",
     opts = {},
   },
-
-  -- {
-  --   "nvim-cmp",
-  --   dependencies = { "hrsh7th/cmp-emoji" },
-  --   ---@param opts cmp.ConfigSchema
-  --   opts = function(_, opts)
-  --     local cmp = require("cmp")
-  --     opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
-  --     return opts
-  --   end,
-  -- },
 }
+-- {
+--   "nvim-cmp",
+--   dependencies = { "hrsh7th/cmp-emoji" },
+--   ---@param opts cmp.ConfigSchema
+--   opts = function(_, opts)
+--     local cmp = require("cmp")
+--     opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "emoji" } }))
+--     return opts
+--   end,
+-- },
 -- {
 --   "huggingface/hfcc.nvim",
 --   opts = {
@@ -166,3 +201,61 @@ return {
 --     })
 --   end,
 -- },
+-- augend.constant.alias.ja_weekday_full,
+-- augend.constant.alias.alpha,
+-- augend.constant.alias.Alpha,
+
+-- require("dial.config").augends:on_filetype({
+--   typescript = {
+--     augend.integer.alias.decimal,
+--     augend.integer.alias.hex,
+--     augend.constant.new({ elements = { "let", "const" } }),
+--   },
+--   javascript = {
+--     augend.integer.alias.decimal,
+--     augend.constant.new({ elements = { "let", "const" } }),
+--     augend.constant.alias.bool,
+--   },
+--   lua = {
+--     augend.integer.alias.decimal,
+--     augend.constant.alias.bool,
+--   },
+--   markdown = {
+--     augend.integer.alias.decimal,
+--     augend.misc.alias.markdown_header,
+--   },
+-- })
+-- local augend = require("dial.augend")
+-- require("dial.config").augends:register_group({
+--   default = {
+--     augend.integer.alias.decimal,
+--     augend.integer.alias.hex,
+--     augend.date.alias["%Y/%m/%d"],
+--     augend.constant.alias.bool,
+--     augend.semver.alias.semver,
+--     augend.constant.new({ elements = { "let", "const" } }),
+--   },
+-- })
+-- augend.date.alias["%Y/%m/%d"],
+-- 2020/11/04
+-- 2025_12_02
+-- 1234
+-- false
+--   s
+-- * n-ary (`3 <= n <= 36`) integers
+-- * date
+-- * constant (toggle a specific string, such as a keyword or operator)
+--   * `true` ⇄ `true`
+--   * `&&` ⇄ `||`
+--   * `a` ⇄ `c` ⇄ ... ⇄ `z`
+--   const foo = 'fvb'
+--   sunday
+--
+-- augend.date.new({
+--   pattern = "%Y/%m/%d",
+--   default_kind = "day",
+--   only_valid = false,
+--   word = false,
+-- }),
+-- augend.constant.alias.alpha,
+-- augend.constant.alias.Alpha,

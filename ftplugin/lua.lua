@@ -1,0 +1,6 @@
+-- /home/meta/dev/forks/dotfiles-steve/vimplugins/pair-ls.nvim/lua/pair-ls/client.lua:51
+-- vim.lsp.start({
+--   name = "lua-lsp",
+--   cmd = { "lua-language-server" },
+--   root_dir = vim.fs.dirname(vim.fs.find({ "init.lua" }, { upward = true })[1]),
+-- })
