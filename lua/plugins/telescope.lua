@@ -1,16 +1,14 @@
-::foo::
-
 return {
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    -- cmd = "Telescope file_browser",
-    -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    -- opt = true,
-    -- config = function()
-    --   require("telescope").load_extension("file_browser")
-    -- end,
-  },
-
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   -- cmd = "Telescope file_browser",
+  --   -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  --   -- opt = true,
+  --   -- config = function()
+  --   --   require("telescope").load_extension("file_browser")
+  --   -- end,
+  -- },
+  --
   {
     "telescope.nvim",
     dependencies = {
@@ -23,7 +21,18 @@ return {
     },
     keys = {
       {
-        "<leader>fP",
+        "<leader>fc",
+        function()
+          require("telescope.builtin").find_files({
+            cwd = vim.fn.stdpath("config"),
+            -- cwd = "~/.config/nvim",
+            -- echo stdpath('config')
+          })
+        end,
+        desc = "Find Config File",
+      },
+      {
+        "<leader>fx",
         function()
           require("telescope.builtin").find_files({
             cwd = require("lazy.core.config").options.root,

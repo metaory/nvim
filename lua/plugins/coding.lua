@@ -1,5 +1,8 @@
 -- :enew|put=execute('lua =package.loaded')
 -- :enew|put=execute('lua =package.loaded')|setf lua
+--  map <expr> (:h map-<expr>)
+-- nnoremap <expr> Q yourConditionExpression ? ':q!<cr>':':bd<cr>'
+
 return {
   -- { "folke/which-key.nvim", enabled = false, },
   {
@@ -38,28 +41,28 @@ return {
     config = true,
   },
 
-  {
-    "ThePrimeagen/refactoring.nvim",
-    keys = {
-      {
-        "<leader>r",
-        function()
-          require("refactoring").select_refactor()
-        end,
-        mode = "v",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-    opts = {},
-  },
+  -- {
+  --   "ThePrimeagen/refactoring.nvim",
+  --   keys = {
+  --     {
+  --       "<leader>lx",
+  --       function()
+  --         require("refactoring").select_refactor()
+  --       end,
+  --       mode = "v",
+  --       noremap = true,
+  --       silent = true,
+  --       expr = false,
+  --     },
+  --   },
+  --   opts = {},
+  -- },
   {
     "monaqa/dial.nvim",
     -- stylua: ignore
     keys = {
-      { "<C-a>", function() return require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
-      { "<C-x>", function() return require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
+      { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
+      { "<C-x>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
     },
     config = function()
       local augend = require("dial.augend")
@@ -73,31 +76,21 @@ return {
             "SCREAMING_SNAKE_CASE",
           },
         }),
-        augend.constant.new({
-          elements = { "&&", "||" },
-          word = false,
-        }),
+        augend.constant.new({ elements = { "&&", "||" }, word = false }),
         augend.paren.alias.quote,
         -- augend.paren.alias.brackets,
-        -- augend.constant.alias.weekday,
-        -- augend.constant.alias.weekday_full,
-        -- Saturday
         augend.integer.alias.decimal,
         augend.constant.alias.bool,
         augend.integer.alias.hex,
-        -- augend.date.alias["%Y/%m/%d"],
-        -- augend.date.alias["%Y-%m-%d"],
-
         augend.date.new({ pattern = "%Y/%m/%d", default_kind = "day" }),
         augend.date.new({ pattern = "%Y_%m_%d", default_kind = "day" }),
-        -- only_valid = true, word = true,
         -- augend.semver.alias.semver,
       }
       require("dial.config").augends:register_group({ default = default })
       local javascriptTypescript = vim.list_extend({
         augend.constant.new({ elements = { "let", "const" } }),
         augend.constant.new({ elements = { "foo", "bar" } }),
-        augend.constant.new({ elements = { "console.log", "info" } }),
+        augend.constant.new({ elements = { "console.log", "bar" } }),
       }, default)
       require("dial.config").augends:on_filetype({
         typescript = javascriptTypescript,
@@ -259,3 +252,68 @@ return {
 -- }),
 -- augend.constant.alias.alpha,
 -- augend.constant.alias.Alpha,
+-- keys = {
+-- vim.bo[vim.api.nvim_win_get_buf(0)].modifiable
+-- {
+--   "<C-c>",
+--   function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("mini.comment").operator("visual") end,
+--   expr = true,
+--   desc = "Comment",
+-- },
+-- {
+--   "<C-c>",
+--   -- ":normal gcc<CR>",
+--   -- (g == 0 ? ':undo' : ':redo')
+--   -- ":(g == 0 ? ':undo' : ':redo') normal gcc<CR>",
+--   -- "if &modifiable | ':normal gcc<cr>' | endif",
+--   -- [[:lua MiniComment.operator('visual')<cr>]],
+--   [[:<c-u>lua MiniComment.operator('visual')<cr>]],
+--   -- function()
+--   --   -- vim.cmd(":lua MiniComment.operator('visual')<cr>")
+--   --   return require("mini.comment").operator("visual")
+--   -- end,
+--   -- expr = true,
+--   --silent = true,
+--   mode = "x",
+-- },
+-- },
+-- {
+--   "echasnovski/mini.comment",
+-- opts = {
+--   mappings = {
+--     -- Toggle comment (like `gcip` - comment inner paragraph) for both
+--     -- Normal and Visual modes
+--     comment = "gc",
+--     -- Toggle comment on current line
+--     comment_line = "gcc",
+--     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
+--     textobject = "gc",
+--   },
+--   -- options = {
+--   --   custom_commentstring = function()
+--   --     return require("ts_context_commentstring.internal").calculate_commentstring() or vim.bo.commentstring
+--   --   end,
+--   -- },
+-- },
+-- event = "VeryLazy",
+--   cond = function()
+--     local buf = vim.api.nvim_win_get_buf(0)
+--     if vim.bo[buf].modifiable then
+--       return true
+--     end
+--     vim.notify("NOT MODIFIABLE", vim.log.levels.WARN, { title = "OYXXX" })
+--     return false
+--   end,
+-- },
+-- cond = function()
+--   -- lua =vim.bo[vim.api.nvim_win_get_buf(0)].modifiable
+--   local buf = vim.api.nvim_win_get_buf(0)
+--   local modifiable = vim.bo[buf].modifiable
+--   vim.notify(tostring(modifiable), vim.log.levels.WARN, { title = "is modifiable?" })
+--   return modifiable
+--   --   if vim.bo[buf].modifiable then
+--   --     return true
+--   --   end
+--   --   vim.notify("NOT MODIFIABLE")
+--   --   return false
+-- end,

@@ -31,7 +31,7 @@ which_key.register({
 which_key.register({
   -- t = { name = "EXEC", },
   r = { name = "Replace" },
-  e = { name = "Exec", x = { name = "Experiments" } },
+  e = { name = "Exec", x = { name = "Experiments" }, h = { name = "DevDocs" } },
   -- d = { x = { name = "CMD", }, },
   i = {
     name = "Info",
@@ -89,10 +89,15 @@ vim.keymap.set("n", "<leader>ef", function()
     if choice == nil then
       return
     end
-    vim.notify(choice)
+    vim.notify(choice, vim.log.levels.INFO, { title = "Filetype Updated" })
     vim.o.filetype = choice
   end)
 end, { desc = "Set File Type" })
+
+map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current (float)" })
+map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current (buffer)" })
+map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index (float)" })
+map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index (buffer)" })
 
 map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
 map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)
@@ -116,7 +121,13 @@ map("n", "<M-e>", "<cmd>BufferLineCloseRight<cr>", nor)
 map("n", "<M-Left>", "<cmd>BufferLineMovePrev<cr>", nor)
 map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
 
-map("n", "<C-c>", ":normal gcc<CR>", opt)
+-- map("n", "<C-c>", ":normal gcc<CR>", opt)
+-- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
+vim.keymap.set("n", "<C-c>", function()
+  if vim.bo[vim.api.nvim_win_get_buf(0)].modifiable then
+    vim.cmd(":normal gcc<CR>")
+  end
+end, opt)
 map("i", "jk", "<ESC>", opt)
 
 map("i", "<M-p>", [[<ESC>"+p]], opt)
@@ -155,6 +166,13 @@ map(
   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
   { noremap = true, silent = true, desc = "Search Telescope" }
 )
+
+-- map(
+--   "n",
+--   "<leader>sx",
+--   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
+--   { noremap = true, silent = true, desc = "Search Telescope" }
+-- )
 
 -- TODO: Telescope search: >>
 -- lua require("persistence").list()
