@@ -2,138 +2,29 @@
 
 return {
   "folke/noice.nvim",
-  opts = {
-    lsp = {
-      override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
+  opts = function(_, opts)
+    -- mxdump(vim.inspect(opts), "noice_pre")
+    opts.lsp = vim.tbl_extend("force", {
+      message = {
+        enabled = true,
+        view = "mini",
       },
-    },
-    -- format = {
-    --   notify = { "{kind}", "{message}" },
-    -- },
+      progress = {
+        enabled = true,
+        view = "mini",
+      },
+    }, opts.lsp)
 
-    cmdline = {
-      enabled = true, -- enables the Noice cmdline UI
-      -- config.presets.cmdline_output_to_split
-      view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
-      -- opts = {}, -- global options for the cmdline. See section on views
-      ---@type table<string, CmdlineFormat>
-      format = {
-        -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
-        -- view: (default is cmdline view)
-        -- opts: any options passed to the view
-        -- icon_hl_group: optional hl_group for the icon
-        -- title: set to anything or empty string to hide
-        cmdline = { pattern = "^:", icon = "", lang = "vim" },
-        search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
-        search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
-        filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
-        lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+    opts.commands = {
+      all = {
+        view = "split",
+        opts = { enter = true, format = "details" },
+        filter = {},
       },
-    },
-
-    -- views = {
-    -- cmdline_popup = {
-    --   border = { style = "none", padding = { 0, 1 } },
-    --   filter_options = {},
-    --   win_options = { winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder" },
-    -- },
-    -- notify = { filter_options = { title = "zz" }, },
-    -- },
-    -- format = { notify = { "{level}" }, },
-    -- notify = { opts = { filter_options = { title = "zz" }, }, },
-    markdown = {
-      hover = {
-        ["|(%S-)|"] = vim.cmd.help, -- vim help links
-        ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
-      },
-      highlights = {
-        ["|%S-|"] = "@text.reference",
-        ["@%S+"] = "@parameter",
-        ["^%s*(Parameters:)"] = "@text.title",
-        ["^%s*(Return:)"] = "@text.title",
-        ["^%s*(See also:)"] = "@text.title",
-        ["{%S-}"] = "@parameter",
-      },
-    },
-    health = { checker = true },
-    -- redirect = { view = "popup", filter = { event = "msg_show" }, },
-    messages = {
-      enabled = true,
-      -- opts = { format = { "{kind}" } },
-      view = "mini",
-      view_error = "notify",
-      view_warn = "notify",
-      view_history = "messages", -- view for :messages
-      view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
-    },
-    routes = {
-      -- { view = "notify", filter = { event = "msg_show" }, },
-      -- {
-      --   filter = {
-      --     event = "msg_show",
-      --     any = {
-      --       { find = "%d+L, %d+B" },
-      --       { find = "; after #%d+" },
-      --       { find = "; before #%d+" },
-      --     },
-      --   },
-      --   view = "mini",
-      -- },
-    },
-    --     view = "notify",
-    --     filter = {
-    --       event = "msg_show",
-    --       -- error = true,
-    --       -- warning = false,
-    --       -- kind = {},
-    --       -- ["not"] = { kind = { "search_count" } },
-    --     },
-    --   },
-    -- },
-    --   {
-    --     view = "split",
-    --     filter = { event = "msg_show", min_height = 2 },
-    --   },
-    -- {
-    --   filter = {
-    --     event = "msg_show",
-    --     -- max_length = 10,
-    --     -- max_height = 10,
-    --     -- max_width = 2,
-    --     -- has = true,
-    --     -- any = {
-    --     --   { find = "%d+L, %d+B" },
-    --     --   { find = "; after #%d+" },
-    --     --   { find = "; before #%d+" },
-    --     -- },
-    --     ["not"] = { kind = { "search_count", "echo" } },
-    --   },
-    --   view = "mini",
-    -- },
-    -- {
-    --   filter = {
-    --     event = "msg_show",
-    --     -- min_width = 1,
-    --     min_length = 2,
-    --     -- min_length = 1,
-    --     ["not"] = { kind = { "echoerr" } },
-    --   },
-    --   view = "split",
-    -- },
-    -- },
-    presets = {
-      bottom_search = true,
-      command_palette = true,
-      long_message_to_split = true,
-      -- inc_rename = true,
-      -- lsp_doc_border = true,
-    },
-    -- views = { cmdline_popup = { border = { style = "none", padding = { 0, 1 }, }, filter_options = {}, win_options = { winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder", }, }, },
-  },
+    }
+    -- mxdump(vim.inspect(opts), "noice_post")
+    return opts
+  end,
 }
 -- opts = function(_, opts)
 --   table.insert(opts.routes, {
@@ -313,3 +204,153 @@ return {
     },
 --
 --]]
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "lsp",
+--     kind = "progress",
+--     cond = function(message)
+--       local client = vim.tbl_get(message.opts, "progress", "client")
+--       return client == "lua_ls"
+--     end,
+--   },
+--   opts = { skip = true },
+-- })
+
+-- opts = {
+--   lsp = {
+--     override = {
+--       ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+--       ["vim.lsp.util.stylize_markdown"] = true,
+--       ["cmp.entry.get_documentation"] = true,
+--     },
+--   },
+--   -- format = {
+--   --   notify = { "{kind}", "{message}" },
+--   -- },
+--
+--   cmdline = {
+--     enabled = true, -- enables the Noice cmdline UI
+--     -- config.presets.cmdline_output_to_split
+--     view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+--     -- opts = {}, -- global options for the cmdline. See section on views
+--     ---@type table<string, CmdlineFormat>
+--     format = {
+--       -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
+--       -- view: (default is cmdline view)
+--       -- opts: any options passed to the view
+--       -- icon_hl_group: optional hl_group for the icon
+--       -- title: set to anything or empty string to hide
+--       cmdline = { pattern = "^:", icon = "", lang = "vim" },
+--       search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+--       search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+--       filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
+--       lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
+--       help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+--     },
+--   },
+--
+--   -- views = {
+--   -- cmdline_popup = {
+--   --   border = { style = "none", padding = { 0, 1 } },
+--   --   filter_options = {},
+--   --   win_options = { winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder" },
+--   -- },
+--   -- notify = { filter_options = { title = "zz" }, },
+--   -- },
+--   -- format = { notify = { "{level}" }, },
+--   -- notify = { opts = { filter_options = { title = "zz" }, }, },
+--   markdown = {
+--     hover = {
+--       ["|(%S-)|"] = vim.cmd.help, -- vim help links
+--       ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
+--     },
+--     highlights = {
+--       ["|%S-|"] = "@text.reference",
+--       ["@%S+"] = "@parameter",
+--       ["^%s*(Parameters:)"] = "@text.title",
+--       ["^%s*(Return:)"] = "@text.title",
+--       ["^%s*(See also:)"] = "@text.title",
+--       ["{%S-}"] = "@parameter",
+--     },
+--   },
+--   health = { checker = true },
+--   -- redirect = { view = "popup", filter = { event = "msg_show" }, },
+--   messages = {
+--     enabled = true,
+--     -- opts = { format = { "{kind}" } },
+--     view = "mini",
+--     view_error = "notify",
+--     view_warn = "notify",
+--     view_history = "messages", -- view for :messages
+--     view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+--   },
+--   routes = {
+--     {
+--       view = "split",
+--       filter = { event = "msg_show", min_height = 2 },
+--     },
+--     -- { view = "notify", filter = { event = "msg_show" } },
+--     -- { view = "notify", filter = { event = "msg_show", kind = "" } },
+--     -- { opts = { stop = true }, filter = { event = "msg_show" } },
+--     -- {
+--     --   filter = {
+--     --     event = "msg_show",
+--     --     any = {
+--     --       { find = "%d+L, %d+B" },
+--     --       { find = "; after #%d+" },
+--     --       { find = "; before #%d+" },
+--     --     },
+--     --   },
+--     --   view = "mini",
+--     -- },
+--   },
+--   --     view = "notify",
+--   --     filter = {
+--   --       event = "msg_show",
+--   --       -- error = true,
+--   --       -- warning = false,
+--   --       -- kind = {},
+--   --       -- ["not"] = { kind = { "search_count" } },
+--   --     },
+--   --   },
+--   -- },
+--   --   {
+--   --     view = "split",
+--   --     filter = { event = "msg_show", min_height = 2 },
+--   --   },
+--   -- {
+--   --   filter = {
+--   --     event = "msg_show",
+--   --     -- max_length = 10,
+--   --     -- max_height = 10,
+--   --     -- max_width = 2,
+--   --     -- has = true,
+--   --     -- any = {
+--   --     --   { find = "%d+L, %d+B" },
+--   --     --   { find = "; after #%d+" },
+--   --     --   { find = "; before #%d+" },
+--   --     -- },
+--   --     ["not"] = { kind = { "search_count", "echo" } },
+--   --   },
+--   --   view = "mini",
+--   -- },
+--   -- {
+--   --   filter = {
+--   --     event = "msg_show",
+--   --     -- min_width = 1,
+--   --     min_length = 2,
+--   --     -- min_length = 1,
+--   --     ["not"] = { kind = { "echoerr" } },
+--   --   },
+--   --   view = "split",
+--   -- },
+--   -- },
+--   presets = {
+--     bottom_search = true,
+--     command_palette = true,
+--     long_message_to_split = true,
+--     -- inc_rename = true,
+--     -- lsp_doc_border = true,
+--   },
+--   -- views = { cmdline_popup = { border = { style = "none", padding = { 0, 1 }, }, filter_options = {}, win_options = { winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder", }, }, },
+-- },

@@ -4,56 +4,60 @@
 
 --local util = require("util")
 -- local Util = require("lazyvim.util")
-local which_key = require("which-key")
+-- local which_key = require("which-key")
 local map = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
 local nor = { noremap = true }
 
 vim.g.maplocalleader = "\\"
+vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
-vim.keymap.del("n", "<leader>l")
-vim.keymap.del("n", "<leader>e")
+vim.keymap.del("n", "<Leader>l")
+vim.keymap.del("n", "<Leader>e")
+vim.keymap.del("n", "<Leader>E")
+vim.keymap.del("n", "<Leader>K")
+vim.keymap.del("n", "<Leader><Space>")
 
-which_key.register({
-  t = {
-    name = "Tabs",
-    n = { "<cmd>tabnew<CR>", "New Tab" },
-    c = { "<cmd>tabclose<CR>", "Close Tab" },
-  },
-  l = {
-    name = "LSP",
-    L = { "<cmd>:Lazy<cr>", "Lazy" },
-  },
-}, { prefix = "<LocalLeader>" })
-
-which_key.register({
-  -- t = { name = "EXEC", },
-  r = { name = "Replace" },
-  e = { name = "Exec", x = { name = "Experiments" }, h = { name = "DevDocs" } },
-  -- d = { x = { name = "CMD", }, },
-  i = {
-    name = "Info",
-    l = { ":LspInfo<CR>", "LSP Info" },
-    n = { ":NullLsInfo<CR>", "Null-ls Info" },
-    -- f = { ":verbose set filetype?<CR>", "FileType Info" },
-    -- f = { ":lua require('noice').redirect('verbose set filetype?')<CR>", "FileType Info" },
-    f = { ":Xdir verbose set filetype?<CR>", "FileType Info" },
-  },
-  f = {
-    name = "File",
-    s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
-  },
-  o = {
-    name = "Org",
-    i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
-    w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
-    j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
-    t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
-    y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
-  },
-}, { prefix = "<leader>" })
+-- which_key.register({
+--   t = {
+--     name = "Tabs",
+--     n = { "<cmd>tabnew<CR>", "New Tab" },
+--     c = { "<cmd>tabclose<CR>", "Close Tab" },
+--   },
+--   l = {
+--     name = "LSP",
+--     L = { "<cmd>:Lazy<cr>", "Lazy" },
+--   },
+-- }, { prefix = "<LocalLeader>" })
+--
+-- which_key.register({
+--   -- t = { name = "EXEC", },
+--   r = { name = "Replace" },
+--   e = { name = "Exec", x = { name = "Experiments" }, h = { name = "DevDocs" } },
+--   -- d = { x = { name = "CMD", }, },
+--   i = {
+--     name = "Info",
+--     l = { ":LspInfo<CR>", "LSP Info" },
+--     n = { ":NullLsInfo<CR>", "Null-ls Info" },
+--     -- f = { ":verbose set filetype?<CR>", "FileType Info" },
+--     -- f = { ":lua require('noice').redirect('verbose set filetype?')<CR>", "FileType Info" },
+--     f = { ":Xdir verbose set filetype?<CR>", "FileType Info" },
+--   },
+--   f = {
+--     name = "File",
+--     s = { ':set buftype=""<cr> :w<CR><Esc>', "Save File" },
+--   },
+--   o = {
+--     name = "Org",
+--     i = { "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Org Index" },
+--     w = { "<CMD>Neorg workspace mx<CR>", "Org Workspace" },
+--     j = { "<CMD>Neorg journal toc update<CR>", "Org Journal Index" },
+--     t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
+--     y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
+--   },
+-- }, { prefix = "<leader>" })
 
 map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 

@@ -168,9 +168,22 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      require("neorg").setup(opts)
+      table.insert(require("mini.clue").config.clues, {
+        { mode = "n", keys = "<leader>l", desc = "+List" },
+        { mode = "n", keys = "<leader>m", desc = "+Mode" },
+        { mode = "n", keys = "<leader>i", desc = "+Insert" },
+        { mode = "n", keys = "<leader>t", desc = "+Todo" },
+      })
+    end,
   },
 }
 -- { "pwntester/octo.nvim", opts = {}, cmd = "Octo" },
+
+-- require("mini.clue").config.clues = vim.tbl_deep_extend("force", require("mini.clue").config.clues, { { mode = "n", keys = "<leader>l", desc = "+List" }, })
+-- local miniclue = require("mini.clue")
+-- miniclue.setup({ clues = { }, })
 
 -- neorg
 -- {

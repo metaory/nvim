@@ -45,7 +45,16 @@ return {
   },
   {
     "gbprod/yanky.nvim",
-    event = "VimEnter",
+    event = "BufReadPost",
+    keys = {
+      {
+        "<leader>p",
+        function()
+          require("telescope").extensions.yank_history.yank_history({})
+        end,
+        desc = "Yank history",
+      },
+    },
     opts = function(_, opts)
       return vim.list_extend({
         ring = { storage = "shada" }, --"sqlite"

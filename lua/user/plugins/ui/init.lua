@@ -7,6 +7,45 @@ module.required["core.ui"].create_prompt("NeorgNewNote", "New Note: ", function(
 -- local M = {}
 -- return M
 
+vim.keymap.set("n", "<leader>et", function()
+  -- local Hydra = require("hydra")
+  --
+  -- Hydra({
+  --   name = "Change / Resize Window",
+  --   mode = { "n" },
+  --   body = "<C-w>",
+  --   config = {
+  --     -- color = "pink",
+  --   },
+  --   heads = {
+  --     -- move between windows
+  --     { "<C-h>", "<C-w>h" },
+  --     { "<C-j>", "<C-w>j" },
+  --     { "<C-k>", "<C-w>k" },
+  --     { "<C-l>", "<C-w>l" },
+  --
+  --     -- resizing window
+  --     { "H", "<C-w>3<" },
+  --     { "L", "<C-w>3>" },
+  --     { "K", "<C-w>2+" },
+  --     { "J", "<C-w>2-" },
+  --
+  --     -- equalize window sizes
+  --     { "e", "<C-w>=" },
+  --
+  --     -- close active window
+  --     { "Q", ":q<cr>" },
+  --     { "<C-q>", ":q<cr>" },
+  --
+  --     -- exit this Hydra
+  --     { "q", nil, { exit = true, nowait = true } },
+  --     { ";", nil, { exit = true, nowait = true } },
+  --     { "<Esc>", nil, { exit = true, nowait = true } },
+  --   },
+  -- })
+  -- Hydra:activate()
+end, { desc = "Testing" })
+
 -- vim.keymap.set("n", "<leader>ed", function()
 --   vim.ui.select({ "apple", "banana", "mango" }, {
 --     prompt = "Title",
@@ -26,3 +65,13 @@ module.required["core.ui"].create_prompt("NeorgNewNote", "New Note: ", function(
 --     vim.notify(choice)
 --   end)
 -- end, { desc = "Update Input" })
+
+-- XXX:
+-- function input(prompt, key, inputs)
+--     vim.ui.input({ prompt = prompt }, function(msg)
+--         inputs[key] = msg
+--     end)
+-- end
+-- local inputs = {}
+-- input("Is there a scope ? (optional) ", "scope", inputs)
+-- input("Enter commit message: ", "msg", inputs)

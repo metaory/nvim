@@ -15,16 +15,6 @@ return {
   --     select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
   --   },
   -- },
-  -- {
-  --   "nvim-lualine/lualine.nvim",
-  --   opts = function(_, opts)
-  --     table.insert(opts.sections.lualine_x, {
-  --       function()
-  --         return require("util.dashboard").status()
-  --       end,
-  --     })
-  --   end,
-  -- },
 }
 --  { "j-hui/fidget.nvim", tag = "legacy", event = "LspAttach", opts = {} },
 -- floating winbar

@@ -38,7 +38,7 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     opts = function(_, opts)
       local nls = require("null-ls")
-      opts.debug = true
+      opts.debug = false
       vim.list_extend(opts.sources, {
         -- nls.builtins.formatting.dprint.with({
         --   condition = function(utils)

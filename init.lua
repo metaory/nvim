@@ -3,7 +3,7 @@ https://jacobsimpson.github.io/nvim-lua-manual/docs/communicating/
 --]]
 
 vim.g.vscode = false
-vim.g.debug_treesitter = true
+vim.g.debug_treesitter = false
 
 if vim.loader then
   vim.loader.enable()

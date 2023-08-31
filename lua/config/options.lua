@@ -1,8 +1,6 @@
 -- set wildignore=*.o,*.a,__pycache__
 -- vim.opt.wildignore = { '*.o', '*.a', '__pycache__' }
 
-vim.g.mapleader = " "
-
 vim.filetype.add({
   extension = {
     cconf = "python",

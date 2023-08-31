@@ -83,18 +83,18 @@ return {
         augend.constant.alias.bool,
         augend.integer.alias.hex,
         augend.date.new({ pattern = "%Y/%m/%d", default_kind = "day" }),
+        augend.date.new({ pattern = "%Y-%m-%d", default_kind = "day" }),
         augend.date.new({ pattern = "%Y_%m_%d", default_kind = "day" }),
         -- augend.semver.alias.semver,
       }
       require("dial.config").augends:register_group({ default = default })
-      local javascriptTypescript = vim.list_extend({
+      local javascript = vim.list_extend({
         augend.constant.new({ elements = { "let", "const" } }),
         augend.constant.new({ elements = { "foo", "bar" } }),
-        augend.constant.new({ elements = { "console.log", "bar" } }),
       }, default)
       require("dial.config").augends:on_filetype({
-        typescript = javascriptTypescript,
-        javascript = javascriptTypescript,
+        typescript = javascript,
+        javascript = javascript,
         lua = vim.list_extend({
           augend.constant.new({ elements = { "and", "or" }, word = true }),
           augend.paren.alias.lua_str_literal,
