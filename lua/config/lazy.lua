@@ -53,7 +53,10 @@ require("lazy").setup({
     { import = "lazyvim.plugins.extras.util.project" },
     { import = "plugins" },
   },
-  defaults = { lazy = true },
+  defaults = {
+    -- colorscheme = nil,
+    lazy = true,
+  },
   -- dev = { patterns = {} },
   -- dev = { patterns = { "folke", "LazyVim" } },
   install = { colorscheme = { "tokyonight" } },

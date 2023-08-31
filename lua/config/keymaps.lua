@@ -14,7 +14,10 @@ vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
+-- vim.keymap.del("n", "gc")
+vim.keymap.del("n", "<Leader>p")
 vim.keymap.del("n", "<Leader>l")
+vim.keymap.del("n", "<Leader>L")
 vim.keymap.del("n", "<Leader>e")
 vim.keymap.del("n", "<Leader>E")
 vim.keymap.del("n", "<Leader>K")
@@ -59,7 +62,20 @@ vim.keymap.del("n", "<Leader><Space>")
 --   },
 -- }, { prefix = "<leader>" })
 
-map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
+vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
+vim.keymap.set("n", "<leader>in", ":NullLsInfo<CR>", { desc = "Null-ls Info" })
+vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
+
+vim.keymap.set("n", "<leader>oi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Org Index" })
+vim.keymap.set("n", "<leader>ow", "<CMD>Neorg workspace mx<CR>", { desc = "Org Workspace" })
+vim.keymap.set("n", "<leader>oj", "<CMD>Neorg journal toc update<CR>", { desc = "Org Journal Index" })
+vim.keymap.set("n", "<leader>ot", "<CMD>Neorg journal today<CR>", { desc = "Org Journal Today" })
+vim.keymap.set("n", "<leader>oy", "<CMD>Neorg journal yesterday<CR>", { desc = "Org Journal Yesterday" })
+
+-- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
 vim.keymap.set("n", "<leader>fr", function()
   local default = vim.fn.expand("%:t")
@@ -168,12 +184,12 @@ map(
   { noremap = true, silent = true, desc = "Toggle Color Highlight" }
 )
 
-map(
-  "n",
-  "<leader>sT",
-  "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
-  { noremap = true, silent = true, desc = "Search Telescope" }
-)
+-- map(
+--   "n",
+--   "<leader>sT",
+--   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
+--   { noremap = true, silent = true, desc = "Search Telescope" }
+-- )
 
 -- map(
 --   "n",
@@ -437,3 +453,5 @@ map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 -- require("noice").redirect(function() print("test") end)
 -- vim.o.cedit = "<C-f>"
 -- exe "set cedit=\<C-Y>"
+--     function() require("telescope").extensions.yank_history.yank_history({}) end,
+--     desc = "Yank history",

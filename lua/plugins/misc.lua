@@ -6,7 +6,7 @@ return {
   },
   {
     "echasnovski/mini.splitjoin",
-    opts = { mappings = { toggle = "<C-c>" } },
+    opts = { mappings = { toggle = "gj" } },
     keys = { { "gj", desc = "Split/Join" } },
   },
   {

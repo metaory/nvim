@@ -1,6 +1,58 @@
 return {
   { "folke/which-key.nvim", enabled = false },
   {
+    "echasnovski/mini.map",
+    cmd = "MiniMap",
+    keys = {
+      {
+        "<leader>um",
+        ":lua MiniMap.toggle()<CR>",
+        -- function() require("mini.map").toggle() end,
+        mode = "n",
+        desc = "Map",
+        noremap = true,
+        silent = true,
+        expr = false,
+      },
+    },
+    opts = {
+      -- No need to copy this inside `setup()`. Will be used automatically.
+      -- Highlight integrations (none by default)
+      integrations = nil,
+
+      -- Symbols used to display data
+      symbols = {
+        -- Encode symbols. See `:h MiniMap.config` for specification and
+        -- `:h MiniMap.gen_encode_symbols` for pre-built ones.
+        -- Default: solid blocks with 3x2 resolution.
+        encode = nil,
+
+        -- Scrollbar parts for view and line. Use empty string to disable any.
+        scroll_line = "█",
+        scroll_view = "┃",
+      },
+
+      -- Window options
+      window = {
+        -- Whether window is focusable in normal way (with `wincmd` or mouse)
+        focusable = false,
+
+        -- Side to stick ('left' or 'right')
+        side = "right",
+
+        -- Whether to show count of multiple integration highlights
+        show_integration_count = true,
+
+        -- Total width
+        width = 10,
+
+        -- Value of 'winblend' option
+        winblend = 25,
+      },
+    },
+    -- config = true,
+  },
+  {
     "echasnovski/mini.clue",
     lazy = false,
     -- enabled = false,
@@ -13,7 +65,9 @@ return {
         -- clues = {},
         -- triggers = {},
         window = {
-          config = { border = "none" },
+          config = {
+            -- border = "none",
+          },
           delay = 200,
           scroll_down = "<C-d>",
           scroll_up = "<C-u>",
@@ -29,6 +83,8 @@ return {
 
           { mode = "n", keys = "c" },
 
+          { mode = "n", keys = "[" },
+          { mode = "n", keys = "]" },
           { mode = "n", keys = "g" },
           { mode = "x", keys = "g" },
 
@@ -61,14 +117,27 @@ return {
           miniclue.gen_clues.z(),
           { mode = "n", keys = "<Leader>b", desc = "+Buffer" },
           { mode = "n", keys = "<Leader>c", desc = "+Code" },
+          { mode = "x", keys = "<Leader>c", desc = "+Code" },
+
           { mode = "n", keys = "<Leader>e", desc = "+Exec" },
+          { mode = "n", keys = "<Leader>eh", desc = "+Help" },
+          { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
+          { mode = "x", keys = "<Leader>d", desc = "+Debug" },
+
           { mode = "n", keys = "<Leader>f", desc = "+File" },
           { mode = "n", keys = "<Leader>g", desc = "+Git" },
+          { mode = "x", keys = "<Leader>g", desc = "+Git" },
+
           { mode = "n", keys = "<Leader>o", desc = "+Org" },
           { mode = "n", keys = "<Leader>q", desc = "+Quit" },
           { mode = "n", keys = "<Leader>r", desc = "+Replace" },
+          { mode = "x", keys = "<Leader>r", desc = "+Replace" },
+
+          { mode = "n", keys = "<Leader>i", desc = "+Info" },
           { mode = "n", keys = "<Leader>s", desc = "+Search" },
+          { mode = "x", keys = "<Leader>s", desc = "+Search" },
+
           { mode = "n", keys = "<Leader>sn", desc = "+Notification" },
           { mode = "n", keys = "<Leader>u", desc = "+UI" },
           { mode = "n", keys = "<Leader>w", desc = "+Window" },
@@ -76,6 +145,7 @@ return {
           { mode = "n", keys = "<Leader><Tab>", desc = "+Tab" },
           { mode = "n", keys = "gz", desc = "+Surround" },
           { mode = "n", keys = "ga", desc = "+Align" },
+          -- { mode = "n", keys = "gc", desc = "+Comment" },
         },
       })
     end,

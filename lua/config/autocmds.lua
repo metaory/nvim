@@ -11,15 +11,15 @@
 --   end,
 -- })
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  callback = function(args)
-    if vim.g.mx_snip_loaded == 1 then
-      return
-    end
-    require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
-    vim.g.mx_snip_loaded = 1
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   callback = function(args)
+--     if vim.g.mx_snip_loaded == 1 then
+--       return
+--     end
+--     require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
+--     vim.g.mx_snip_loaded = 1
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   callback = function()

@@ -5,9 +5,15 @@
 
 return {
   -- { "folke/which-key.nvim", enabled = false, },
+  -- http://vimcasts.org/episodes/aligning-text-with-tabular-vim
+  -- {
+  --   "echasnovski/mini.align",
+  --   opts = { mappings = { start = "ga", start_with_preview = "gA" } },
+  --   keys = { { "gA", nil } },
+  --   config = true,
+  -- },
   {
-    -- http://vimcasts.org/episodes/aligning-text-with-tabular-vim
-    "https://github.com/Vonr/align.nvim",
+    "Vonr/align.nvim",
     keys = {
       {
         "gaa",

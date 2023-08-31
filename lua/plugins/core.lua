@@ -46,24 +46,11 @@ return {
   {
     "gbprod/yanky.nvim",
     event = "BufReadPost",
-    keys = {
-      {
-        "<leader>p",
-        function()
-          require("telescope").extensions.yank_history.yank_history({})
-        end,
-        desc = "Yank history",
-      },
-    },
+    dependencies = { { "kkharji/sqlite.lua", enabled = false } },
+    keys = { { "<leader>p", nil, false } },
     opts = function(_, opts)
-      return vim.list_extend({
-        ring = { storage = "shada" }, --"sqlite"
-      }, opts)
+      return vim.list_extend({ ring = { storage = "shada" } }, opts)
     end,
-    -- keys = function(_, keys)
-    --   local mappings = { { "d", "d", mode = { "n", "x" }, desc = "Delete pending" }, }
-    --   return vim.list_extend(mappings, keys)
-    -- end,
   },
   -- https://github.com/nvim-neorg/neorg
   -- https://github.com/nvim-orgmode/orgmode
@@ -107,3 +94,7 @@ return {
      │  44 │  --   dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
      │  45 │  -- },
 ]]
+-- keys = function(_, keys)
+--   local mappings = { { "d", "d", mode = { "n", "x" }, desc = "Delete pending" }, }
+--   return vim.list_extend(mappings, keys)
+-- end,

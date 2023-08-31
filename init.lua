@@ -32,7 +32,7 @@ end
 require("user.commands")
 -- require("user.ui")
 require("config.lazy")
-require("user.plugins.ui")
+-- require("user.plugins.ui")
 -- U = require("util")
 -- require("user.filetypes")
 -- require("user.plugins.xredir")

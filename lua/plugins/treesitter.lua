@@ -4,6 +4,12 @@ return {
   { "echasnovski/mini.ai", enabled = false },
   { "RRethy/vim-illuminate", enabled = false },
   {
+    "echasnovski/mini.cursorword",
+    event = "VeryLazy",
+    opts = { delay = 100 },
+    config = true,
+  },
+  {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {

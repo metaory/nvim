@@ -75,12 +75,13 @@ return {
       },
     },
   },
-  {
-    "folke/todo-comments.nvim",
-    keys = {
-      { "<leader>sT", false },
-    },
-  },
+  -- {
+  --   "folke/todo-comments.nvim",
+  -- dependencies = { "nvim-telescope/telescope.nvim" },
+  -- keys = {
+  --   { "<leader>sT", false, { desc = "TODO Tel" } },
+  -- },
+  -- },
 }
 -- actions = {
 --   "cycle_previewers_next",
