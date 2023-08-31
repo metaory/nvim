@@ -11,13 +11,17 @@ return {
       local logo = table.concat(header, "\n")
       local pad = string.rep(" ", 10)
       local starter = require("mini.starter")
+      local telescope = starter.sections.telescope()()
+      table.remove(telescope, 1)
+      -- mxdump(vim.inspect(telescope), "telescope")
       local config = {
         evaluate_single = true,
         auto_open = false,
         header = logo,
         items = {
           starter.sections.recent_files(2),
-          starter.sections.telescope(),
+          telescope,
+          -- starter.sections.telescope(),
           { name = "init.lua", action = "e $MYVIMRC", section = "Config" },
           { name = "Lazy", action = "Lazy", section = "Config" },
           { name = "Restore", action = [[lua require("persistence").load()]], section = "Session" },

@@ -124,10 +124,14 @@ map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
 -- map("n", "<C-c>", ":normal gcc<CR>", opt)
 -- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
 vim.keymap.set("n", "<C-c>", function()
-  if vim.bo[vim.api.nvim_win_get_buf(0)].modifiable then
+  local modifiable = vim.bo[vim.api.nvim_win_get_buf(0)].modifiable
+  -- local lspAttached = #vim.lsp.get_active_clients() > 0
+  -- and lspAttached
+  -- else print("TODO")
+  if modifiable then
     vim.cmd(":normal gcc<CR>")
   end
-end, opt)
+end, { silent = true })
 map("i", "jk", "<ESC>", opt)
 
 map("i", "<M-p>", [[<ESC>"+p]], opt)
@@ -193,7 +197,7 @@ map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("
 map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
 map("n", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opt)
 map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
-map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
+-- map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
 map("n", "<M-C>", ":Telescope commands<CR>", opt)
 map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
 map("n", "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", { desc = "Quickfix Toggle" })

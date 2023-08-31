@@ -29,6 +29,8 @@ vim.filetype.add({
   },
 })
 
+vim.go.commentstring = "# %s"
+
 vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",

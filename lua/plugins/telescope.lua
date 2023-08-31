@@ -10,15 +10,27 @@ return {
   -- },
   --
   {
-    "telescope.nvim",
-    dependencies = {
+    "nvim-telescope/telescope-file-browser.nvim",
+    keys = {
       {
-        "nvim-telescope/telescope-file-browser.nvim",
-        config = function()
+        "<M-b>",
+        function()
           require("telescope").load_extension("file_browser")
+          require("telescope").extensions.file_browser.file_browser()
         end,
       },
     },
+  },
+  {
+    "telescope.nvim",
+    -- dependencies = {
+    --   {
+    --     "nvim-telescope/telescope-file-browser.nvim",
+    --     config = function()
+    --       require("telescope").load_extension("file_browser")
+    --     end,
+    --   },
+    -- },
     keys = {
       {
         "<leader>fc",
