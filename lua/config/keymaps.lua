@@ -33,12 +33,6 @@ vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileTy
 -- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
 -- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
 
-vim.keymap.set("n", "<leader>oi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Org Index" })
-vim.keymap.set("n", "<leader>ow", "<CMD>Neorg workspace mx<CR>", { desc = "Org Workspace" })
-vim.keymap.set("n", "<leader>oj", "<CMD>Neorg journal toc update<CR>", { desc = "Org Journal Index" })
-vim.keymap.set("n", "<leader>ot", "<CMD>Neorg journal today<CR>", { desc = "Org Journal Today" })
-vim.keymap.set("n", "<leader>oy", "<CMD>Neorg journal yesterday<CR>", { desc = "Org Journal Yesterday" })
-
 vim.keymap.set("n", "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", { desc = "Resume" })
 -- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
@@ -79,10 +73,17 @@ vim.keymap.set("n", "<leader>ef", function()
   end)
 end, { desc = "Set File Type" })
 
-map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current (float)" })
-map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current (buffer)" })
-map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index (float)" })
-map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index (buffer)" })
+map("n", "<leader>eoi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Org Index" })
+map("n", "<leader>eoo", "<CMD>Neorg workspace mx<CR>", { desc = "Org Workspace" })
+map("n", "<leader>eoj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", { desc = "Org Journal" })
+map("n", "<leader>eon", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", { desc = "Org Today" })
+-- stylua: ignore
+map("n", "<leader>eoy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Org Yesterday" })
+
+map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current [+f]" })
+map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current" })
+map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index [+f]" })
+map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index" })
 
 map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
 map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)

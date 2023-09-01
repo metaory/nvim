@@ -121,15 +121,21 @@ return {
 
           { mode = "n", keys = "<Leader>e", desc = "+Exec" },
           { mode = "n", keys = "<Leader>eh", desc = "+Help" },
+          { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
           { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
+          { mode = "n", keys = "<Leader>eo", desc = "+Org" },
+
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
           { mode = "x", keys = "<Leader>d", desc = "+Debug" },
 
           { mode = "n", keys = "<Leader>f", desc = "+File" },
+
           { mode = "n", keys = "<Leader>g", desc = "+Git" },
           { mode = "x", keys = "<Leader>g", desc = "+Git" },
+          { mode = "n", keys = "<Leader>gh", desc = "+Hunk" },
+          { mode = "x", keys = "<Leader>gh", desc = "+Hunk" },
 
-          { mode = "n", keys = "<Leader>o", desc = "+Org" },
+          -- { mode = "n", keys = "<Leader>o", desc = "+Org" },
           { mode = "n", keys = "<Leader>q", desc = "+Quit" },
           { mode = "n", keys = "<Leader>r", desc = "+Replace" },
           { mode = "x", keys = "<Leader>r", desc = "+Replace" },
@@ -152,36 +158,3 @@ return {
     -- opts = { }
   },
 }
-
--- {
---   "neovim/nvim-lspconfig",
---   opts = {
---     capabilities = {
---       textDocument = {
---         foldingRange = {
---           dynamicRegistration = false,
---           lineFoldingOnly = true,
---         },
---       },
---     },
---   },
--- },
-
--- add nvim-ufo
--- {
---   "kevinhwang91/nvim-ufo",
---   dependencies = "kevinhwang91/promise-async",
---   event = "BufReadPost",
---   enabled = false,
---   opts = {},
---
---   init = function()
---     -- Using ufo provider need remap `zR` and `zM`. If Neovim is 0.6.1, remap yourself
---     vim.keymap.set("n", "zR", function()
---       require("ufo").openAllFolds()
---     end)
---     vim.keymap.set("n", "zM", function()
---       require("ufo").closeAllFolds()
---     end)
---   end,
--- },
