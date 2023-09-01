@@ -1,5 +1,9 @@
--- vim.api.nvim_create_autocmd("User", {
---   pattern = "VeryLazy",
+vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
+  callback = function()
+    vim.api.nvim_exec2([[ TSBufDisable highlight ]], {})
+    vim.keymap.set("n", "q", ":q<CR>", { buffer = true })
+  end,
+})
 
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --   callback = function(args)
@@ -11,6 +15,12 @@
 --   end,
 -- })
 
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   group = "_luasnip_lazy_load",
+--   callback = function(_)
+--     require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
+--   end,
+-- })
 -- vim.api.nvim_create_autocmd("BufReadPost", {
 --   callback = function(args)
 --     if vim.g.mx_snip_loaded == 1 then
@@ -20,13 +30,6 @@
 --     vim.g.mx_snip_loaded = 1
 --   end,
 -- })
-
-vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
-  callback = function()
-    vim.api.nvim_exec2([[ TSBufDisable highlight ]], {})
-    vim.keymap.set("n", "q", ":q<CR>", { buffer = true })
-  end,
-})
 
 -- when passed a string vim.cmd(·)  is the same as vim.api.nvim_exec(·, false)
 -- when passed a table  vim.cmd({}) it behaves like vim.api.nvim_cmd({}, {})

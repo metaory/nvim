@@ -1,0 +1,24 @@
+{
+  "name": "meta-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "language": [
+          "all"
+        ],
+        "path": "snippets/global.jsonc"
+      },
+      {
+        "language": [
+          "javascript",
+          "typescript"
+        ],
+        "path": "snippets/javascript.jsonc"
+      },
+      {
+        "language": "norg",
+        "path": "snippets/norg.jsonc"
+      }
+    ]
+  }
+}
