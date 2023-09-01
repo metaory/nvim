@@ -53,6 +53,7 @@ require("lazy").setup({
 
     { import = "lazyvim.plugins.extras.util.project" },
     { import = "plugins" },
+    -- { import = "user.pllugins.telescope-starter" },
   },
   defaults = {
     -- colorscheme = function() end,

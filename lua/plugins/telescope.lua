@@ -1,5 +1,6 @@
 return {
   -- {
+  --
   --   "nvim-telescope/telescope-file-browser.nvim",
   --   -- cmd = "Telescope file_browser",
   --   -- dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
@@ -9,33 +10,74 @@ return {
   --   -- end,
   -- },
   --
+  -- {
+  --   "nat-418/telescope-color-names.nvim",
+  --   keys = {
+  --     {
+  --       "<M-i>",
+  --       function()
+  --         -- require("telescope").load_extension("tailiscope")
+  --         -- require("telescope").extensions.tailiscope.tailiscope()
+  --         require("telescope").load_extension("color_names")
+  --         require("telescope").extensions.color_names.color_names()
+  --         -- :Telescope color_names
+  --       end,
+  --     },
+  --   },
+  -- },
+  -- {
+  --   dir = "user.plugins.telescope-starter",
+  --   -- config = true,
+  --   -- dev = true,
+  --   keys = {
+  --     {
+  --       "<M-i>",
+  --       function()
+  --         -- require("telescope").load_extension("color_names")
+  --         -- require("telescope").extensions.color_names.color_names()
+  --       end,
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "debugloop/telescope-undo.nvim",
+  --   config = true,
+  --   keys = {
+  --     {
+  --       "<M-i>",
+  --       function()
+  --         -- require("telescope").setup({ extensions = { undo = {} } })
+  --         require("telescope").load_extension("undo")
+  --         vim.cmd([[ Telescope undo ]])
+  --         -- optional: vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
+  --         -- require("telescope").load_extension("color_names")
+  --         -- require("telescope").extensions.color_names.color_names()
+  --       end,
+  --     },
+  --   },
+  -- },
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   keys = {
+  --     {
+  --       "<M-b>",
+  --       function()
+  --         require("telescope").load_extension("file_browser")
+  --         require("telescope").extensions.file_browser.file_browser()
+  --       end,
+  --     },
+  --   },
+  -- },
   {
-    "nvim-telescope/telescope-file-browser.nvim",
-    keys = {
+    "telescope.nvim",
+    dependencies = {
       {
-        "<M-b>",
-        function()
+        "nvim-telescope/telescope-file-browser.nvim",
+        config = function()
           require("telescope").load_extension("file_browser")
-          require("telescope").extensions.file_browser.file_browser()
         end,
       },
     },
-  },
-  {
-    "telescope.nvim",
-    -- dependencies = {
-    --   {
-    --     "nvim-telescope/telescope-file-browser.nvim",
-    --     config = function()
-    --       require("telescope").load_extension("file_browser")
-    --     end,
-    --   },
-    -- },
-    -- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
-    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
-    -- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
-    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
-    -- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
     keys = {
       {
         "<leader>sH",
@@ -219,3 +261,8 @@ return {
 --     require("telescope").load_extension("fzf")
 --   end,
 -- },
+-- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+-- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+-- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+-- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+-- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },

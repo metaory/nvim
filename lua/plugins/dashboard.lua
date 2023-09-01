@@ -12,7 +12,7 @@ return {
       local pad = string.rep(" ", 10)
       local starter = require("mini.starter")
       local telescope = starter.sections.telescope()()
-      table.remove(telescope, 1)
+      -- table.remove(telescope, 1)
       -- mxdump(vim.inspect(telescope), "telescope")
       local config = {
         evaluate_single = true,

@@ -62,6 +62,8 @@ return {
             neorg_leader = "<leader>",
             hook = function(keybinds)
               keybinds.unmap("norg", "n", "<leader>nn")
+              -- keybinds.unmap("norg", "n", "<leader>mn")
+              -- keybinds.unmap("norg", "n", "<leader>mh")
               -- keybinds.unmap("norg", "n", "<CR>")
 
               -- keybinds.unmap("presenter", "n", "l")
@@ -77,13 +79,19 @@ return {
               -- { leader .. "nn", "core.dirman.new.note", opts = { desc = "Create New Note" } },
               -- keybinds.remap_event("norg", "n", "<leader>on", "core.dirman.new.note")
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>N", ":Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "Org New Note" })
+              keybinds.map("norg", "n", "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", { silent = true, desc = "Org Heading Mode" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>j", ":Neorg journal toc update<CR>", { silent = true, desc = "Org Journal Index" })
+              keybinds.map("norg", "n", "<leader>mn", "<CMD>Neorg mode norg<CR>", { silent = true, desc = "Org Norg Mode" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>y", ":Neorg journal tomorrow<CR>", { silent = true, desc = "Journal Tomorrow" })
+              keybinds.map("norg", "n", "<leader>N", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "Org New Note" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>n", ":Neorg journal today<CR>", { silent = true, desc = "Journal Today" })
+              keybinds.map("norg", "n", "<leader>j", "<CMD>Neorg journal toc update<CR>", { silent = true, desc = "Org Journal Index" })
+              -- stylua: ignore
+              keybinds.map("norg", "n", "<leader>t", "<CMD>Neorg journal tomorrow<CR>", { silent = true, desc = "Journal Tomorrow" })
+              -- stylua: ignore
+              keybinds.map("norg", "n", "<leader>y", "<CMD>Neorg journal yesterday<CR>", { silent = true, desc = "Journal Yesterday" })
+              -- stylua: ignore
+              keybinds.map("norg", "n", "<leader>n", "<CMD>Neorg journal today<CR>", { silent = true, desc = "Journal Today" })
 
               keybinds.map("norg", "n", "<BS>", ":bw<CR>", { silent = true })
               keybinds.map("norg", "n", "q", ":Neorg journal toc open<CR>", { silent = true })
