@@ -31,24 +31,28 @@ return {
     --     end,
     --   },
     -- },
+    -- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+    -- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+    -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+    -- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
     keys = {
+      {
+        "<leader>sH",
+        "<CMD>lua require'telescope.builtin'.highlights{}<CR>",
+        desc = "Highlights",
+      },
       {
         "<leader>fc",
         function()
-          require("telescope.builtin").find_files({
-            cwd = vim.fn.stdpath("config"),
-            -- cwd = "~/.config/nvim",
-            -- echo stdpath('config')
-          })
+          require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
         end,
         desc = "Find Config File",
       },
       {
         "<leader>fx",
         function()
-          require("telescope.builtin").find_files({
-            cwd = require("lazy.core.config").options.root,
-          })
+          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
         end,
         desc = "Find Plugin File",
       },
@@ -56,8 +60,12 @@ return {
     opts = {
       defaults = {
         layout_strategy = "horizontal",
-        layout_config = { prompt_position = "top" },
+        layout_config = { prompt_position = "bottom" },
+        wrap_results = false,
+        border = true,
         sorting_strategy = "ascending",
+        -- preview = {treesitter = true,},
+        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_ignore_patterns = { "^.git/", "^node_modules/" },
         -- A table of lua regex that define the files that should be ignored.
         -- Example: { "^scratch/" } -- ignore all files in scratch directory

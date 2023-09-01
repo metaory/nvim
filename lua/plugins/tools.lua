@@ -140,7 +140,7 @@ return {
                 "norg",
                 "n",
                 "<leader>j",
-                ":Neorg journal toc open<CR>",
+                ":Neorg journal toc update<CR>",
                 { silent = true, desc = "Org Journal Index" }
               )
               keybinds.map(

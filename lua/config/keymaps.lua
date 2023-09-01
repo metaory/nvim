@@ -16,6 +16,8 @@ vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
 -- vim.keymap.del("n", "gc")
 --
+pcall(vim.keymap.del, "n", "<Leader>sr")
+pcall(vim.keymap.del, "n", "<Leader>sR")
 pcall(vim.keymap.del, "n", "<Leader>p")
 pcall(vim.keymap.del, "n", "<Leader>l")
 pcall(vim.keymap.del, "n", "<Leader>L")
@@ -37,6 +39,7 @@ vim.keymap.set("n", "<leader>oj", "<CMD>Neorg journal toc update<CR>", { desc = 
 vim.keymap.set("n", "<leader>ot", "<CMD>Neorg journal today<CR>", { desc = "Org Journal Today" })
 vim.keymap.set("n", "<leader>oy", "<CMD>Neorg journal yesterday<CR>", { desc = "Org Journal Yesterday" })
 
+vim.keymap.set("n", "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", { desc = "Resume" })
 -- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
 vim.keymap.set("n", "<leader>fr", function()

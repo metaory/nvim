@@ -25,7 +25,8 @@ require("lazy").setup({
       import = "lazyvim.plugins",
       opts = {
         -- colorscheme = "rose-pine"
-        colorscheme = "tokyonight-night",
+        -- colorscheme = "tokyonight-night",
+        colorscheme = "mx-tokyo",
       },
     },
     -- { import = "lazyvim.plugins.extras.coding.copilot" },
@@ -54,12 +55,13 @@ require("lazy").setup({
     { import = "plugins" },
   },
   defaults = {
-    -- colorscheme = nil,
+    -- colorscheme = function() end,
     lazy = true,
   },
   -- dev = { patterns = {} },
   -- dev = { patterns = { "folke", "LazyVim" } },
   install = { colorscheme = { "tokyonight" } },
+  -- install = { colorscheme = nil },
   change_detection = {
     enabled = false,
     notify = false,
