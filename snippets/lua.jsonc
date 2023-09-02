@@ -1,4 +1,8 @@
 {
+  "tbl.insert": {
+    "prefix": "tblins",
+    "body": ["table.insert(${1:$TM_SELECTED_TEXT}, $2)"]
+  },
   "Print string": {
     "prefix": "ps",
     "body": ["print(string.format(\"$1\", $2))"]
@@ -6,6 +10,10 @@
   "string.format": {
     "prefix": "sf",
     "body": ["string.format(\"${1:$TM_SELECTED_TEXT}\", $2)"]
+  },
+  "mx.inspect": {
+    "prefix": "xi",
+    "body": ["mxdump(${1:$TM_SELECTED_TEXT}, '$1')"]
   },
   "vim.inspect": {
     "prefix": "vi",

@@ -18,19 +18,40 @@ return {
       -- { "<leader>sr", ":Telescope resume<CR>", desc = "Resume", },
       -- { "<M-m>", ":Telescope keymaps<CR>", mode = "n" },
       -- { "<M-C>", ":Telescope commands<CR>", mode = "n" },
+      { "<leader>fr", ":MxFileRename<CR>", desc = "File Rename" },
+-- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
       --stylua: ignore
       {"<leader>fc", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File",},
       --stylua: ignore
       {"<leader>fx", function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end, desc = "Find Plugin File",},
     },
+    -- XXX:
+    -- Telescope find_files theme=dropdown
+    -- Telescope find_files theme=ivy
+    -- Telescope find_files theme=cursor
     opts = {
       defaults = {
         layout_strategy = "horizontal",
-        layout_config = { prompt_position = "bottom" },
+        -- layout_strategy = "bottom_pane",
+
+        -- layout_strategy = "center",
+        -- sorting_strategy = "ascending",
+        sorting_strategy = "descending",
+        -- layout_config = { prompt_position = "bottom" },
+        -- layout_config = { height = 0.4 },
+
+        layout_config = {
+          horizontal = {
+            prompt_position = "bottom",
+            width = 0.9,
+            preview_width = 0.6,
+          },
+          center = { prompt_position = "top" },
+        },
+        -- layout_config = { bottom_pane = { prompt_position = "bottom" } },
         wrap_results = false,
         border = true,
-        sorting_strategy = "ascending",
-        -- preview = {treesitter = true,},
+        preview = { treesitter = true },
         -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_ignore_patterns = { "^.git/", "^node_modules/" },
         -- A table of lua regex that define the files that should be ignored.
@@ -38,11 +59,23 @@ return {
         -- Example: { "%.npz" } -- ignore all npz files
         mappings = {
           i = {
+            ["<esc>"] = "close",
+
             ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
             ["<C-o>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
-            ["<C-Space>"] = require("telescope.actions").toggle_selection
-              + require("telescope.actions").move_selection_worse,
-            ["<esc>"] = "close",
+            ["<C-Space>"] = require("telescope.actions").toggle_selection + require("telescope.actions").move_selection_worse,
+
+            ["<C-h>"] = require("telescope.actions").results_scrolling_left,
+            ["<C-l>"] = require("telescope.actions").results_scrolling_right,
+
+            ["<C-S-P>"] = require("telescope.actions").results_scrolling_up,
+            ["<C-S-N>"] = require("telescope.actions").results_scrolling_down,
+
+            ["<C-S-H>"] = require("telescope.actions").preview_scrolling_left,
+            ["<C-S-L>"] = require("telescope.actions").preview_scrolling_right,
+
+            -- ["<C-f>"] = function(...) return require("telescope.actions").preview_scrolling_down(...) end,
+            -- ["<C-b>"] = function(...) return require("telescope.actions").preview_scrolling_up(...) end,
           },
         },
         winblend = 0,

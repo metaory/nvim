@@ -11,9 +11,33 @@ return {
   -- {
   --   "stevearc/dressing.nvim",
   --   opts = {
-  --     input = { enabled = true, default_prompt = "OOOOInput:" },
-  --     select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
+  --     select = {
+  --       enabled = true,
+  --       backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+  --       trim_prompt = true,
+  --       -- telescope = require('telescope.themes').get_ivy()
+  --       -- telescope = nil,
+  --       telescope = {
+  --         layout_strategy = "dropdown",
+  --         sorting_strategy = "descending",
+  --         -- layout_config = { prompt_position = "bottom" },
+  --         layout_config = {
+  --           prompt_position = "bottom",
+  --           ivy = {
+  --             prompt_position = "bottom",
+  --             width = 0.9,
+  --             preview_width = 0.6,
+  --           },
+  --         },
+  --       },
+  --       -- format_item_override = {},
+  --       -- see :help dressing_get_config
+  --       -- get_config = nil,
+  --     },
   --   },
+  --   -- input = { enabled = true, default_prompt = "OOOOInput:" },
+  --   -- select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
+  -- },
   -- },
 }
 --  { "j-hui/fidget.nvim", tag = "legacy", event = "LspAttach", opts = {} },

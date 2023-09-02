@@ -1,4 +1,5 @@
 return {
+  -- { "kikito/inspect.lua", module = true, config = false, },
   -- { "echasnovski/mini.bufremove", lazy = false, opts = {} },
 }
 -- if true then end

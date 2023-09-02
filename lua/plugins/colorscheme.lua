@@ -12,7 +12,7 @@ return {
         function()
           -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hues.md
           -- require("mini.hues").setup({ background = "#2b1a33", foreground = "#c9c5cb" })
-          require("mini.hues").setup({ background = "#002734", foreground = "#c0c8cc", accent = "yellow" })
+          require("mini.hues").setup({ background = "#221b1c", foreground = "#c0c8cc", accent = "yellow" })
         end,
         mode = "n",
         desc = "Hues",

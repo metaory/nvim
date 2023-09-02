@@ -10,6 +10,8 @@ if vim.loader then
   -- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 end
 
+-- return next(vim.fn.argv()) == nil
+
 _G.dd = function(...)
   require("util.debug").dump(...)
 end
@@ -41,7 +43,7 @@ require("config.lazy")
 -- require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
 -- require("luasnip.loaders.from_vscode").load()
 
--- vim.cmd([[ hi VimwikiLink guibg=#fff000 ]])
+-- vim.cmd([[ hi VimnikiLink guibg=#fff000 ]])
 
 -- vim.g.profile_loaders = true
 --[[require("config.lazy")({
@@ -67,13 +69,28 @@ require("config.lazy")
 --     require("util").version()
 --   end,
 -- })
+-- local inspect = require("inspect")
 
-_G.mxdump = function(t, f)
+_G.mxdump = function(t, f, m)
+  assert(t == nil)
   local p = "/tmp/mx_lua_" .. f .. ".lua"
-  local file, err = io.open(p, "a")
+  local file, err = io.open(p, m or "w")
+
+  if type(t) ~= "string" then
+    t = vim.inspect(t)
+  end
+
+  local str = "local ___ = function() end\n\nreturn " .. t
+  str = string.gsub(str, "<%a+ %d+>", "___")
+  str = string.gsub(str, "<%a+>", "___")
+  str = string.gsub(str, "<%d+>", "___")
+
+  local _, lines = string.gsub(str, "\n", "\n")
+
   if file then
-    file:write(t) -- file:write(tostring(t))
+    file:write(str)
     file:close()
+    vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "mxdump" })
   else
     print("error:", err)
   end

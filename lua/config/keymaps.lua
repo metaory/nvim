@@ -25,6 +25,7 @@ pcall(vim.keymap.del, "n", "<Leader>e")
 pcall(vim.keymap.del, "n", "<Leader>E")
 pcall(vim.keymap.del, "n", "<Leader>K")
 pcall(vim.keymap.del, "n", "<Leader><Space>")
+-- pcall(vim.keymap.del, "n", "<Leader>fr")
 
 -- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
 
@@ -37,32 +38,42 @@ vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileTy
 
 -- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
-vim.keymap.set("n", "<leader>fr", function()
-  local default = vim.fn.expand("%:t")
-  vim.ui.input({
-    prompt = "File Rename:",
-    default = default,
-  }, function(choice)
-    if choice == nil then
-      return
-    end
-    vim.notify(choice)
-    vim.api.nvim_exec2(":w " .. choice, {})
-    vim.api.nvim_exec2(":e#", {})
-    vim.api.nvim_exec2(":!rm " .. default, {})
-  end)
-end, { noremap = true, desc = "File Rename" })
+-- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
+
+vim.keymap.set("n", "<leader>eov", function()
+  local old = vim.o.verbose
+  vim.o.verbose = old == 0 and 9 or 0
+  vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
+  vim.notify(
+    string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose),
+    vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN,
+    { title = "Verbose Level" }
+  )
+end, { desc = "Set Verbose Level" })
 
 vim.keymap.set("n", "<leader>er", function()
-  vim.ui.select({ "node", "lua" }, {
-    prompt = "Runner",
-  }, function(selected)
-    local cmd = selected .. " " .. vim.fn.expand("%:p")
-    vim.notify(cmd)
+  local defCommands = {
+    javascript = "node",
+  }
+  local cmd = defCommands[vim.bo.filetype] or vim.bo.filetype
+  local cwd = vim.fn.getcwd()
+  local path = vim.fn.expand("%:p")
+  local rel = string.gsub(path, cwd, ".")
+  vim.notify(rel)
+  vim.ui.input({
+    prompt = "command",
+    default = cmd .. " " .. rel,
+  }, function(input)
+    if not input then
+      return
+    end
+    vim.notify(input)
+    vim.cmd([[ enew | r ! ]] .. input)
+    vim.keymap.set("n", "q", "<CMD>bw<CR>", { buffer = 0 })
   end)
 end, { noremap = true, desc = "Exec Run" })
 
-vim.keymap.set("n", "<leader>ef", function()
+vim.keymap.set("n", "<leader>eof", function()
   vim.ui.select(vim.fn.getcompletion("*", "filetype"), {
     prompt = "Select Filetype:",
   }, function(choice)
@@ -74,17 +85,40 @@ vim.keymap.set("n", "<leader>ef", function()
   end)
 end, { desc = "Set File Type" })
 
-map("n", "<leader>eoi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Org Index" })
-map("n", "<leader>eoo", "<CMD>Neorg workspace mx<CR>", { desc = "Org Workspace" })
-map("n", "<leader>eoj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", { desc = "Org Journal" })
-map("n", "<leader>eon", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", { desc = "Org Today" })
--- stylua: ignore
-map("n", "<leader>eoy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Org Yesterday" })
+vim.keymap.set("n", "<leader>eow", function() -- 123 33 true false true true
+  vim.wo.wrap = not vim.wo.wrap -- "linebreak" 123454 33
+end, { desc = "Set Text Wrap" })
 
+vim.keymap.set("n", "<leader>ezr", "<CMD>MxReload<CR>", { desc = "Reload Lazy Plugin" })
+
+-- map("n", "<M-t>", ":TroubleToggle<CR>", { desc = "Trouble Toggle" })
+-- { mode = "n", keys = "<Leader>eo", desc = "+Org" },
+-- map("n", "<leader>eo", "", { desc = "+Org" })
+map("n", "<leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Wik Index" })
+map("n", "<leader>eww", "<CMD>Neorg workspace mx<CR>", { desc = "Wik Workspace" })
+map("n", "<leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", { desc = "Wik Journal" })
+map("n", "<leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", { desc = "Wik Today" })
+map("n", "<leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", { desc = "Wik Tomorrow" })
+map("n", "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Wiki Yesterday" })
+
+-- { mode = "n", keys = "<Leader>eh", desc = "+Help" },
+-- map("n", "<leader>eh", "", { desc = "+Help" })
 map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current [+f]" })
 map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current" })
 map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index [+f]" })
 map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index" })
+
+map("n", "<leader>ed", ":Xdir <C-R>: <C-y>", { noremap = true, desc = "Inspect Previous" })
+
+-- { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
+-- { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
+-- map("n", "<leader>ex", "", { desc = "+Inspect" })
+map("n", "<leader>exy", ":lua <C-R>* <C-y>", { noremap = true, desc = "Inspect Yank (CMD)" })
+map("n", "<leader>exx", ":Xdir lua =<C-R>: <C-y>", { noremap = true, desc = "Inspect Redirect (CMD)" })
+map("n", "<leader>exe", ":Xdir <C-R>=", { noremap = true, desc = "Inspect Expand (Redirect)" })
+map("n", "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", { noremap = true, desc = "Inspect Expand Line (Redirect)" })
+-- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
+-- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
 
 map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
 map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)
@@ -213,15 +247,6 @@ map("n", "<M-Q>", ":qall!<CR>", opt)
 --   { silent = true, noremap = true, desc = "Inspect Yank" }
 -- )
 -- require("noice").redirect(function() print("test") end)
-
-map("n", "<leader>ed", ":Xdir <C-R>: <C-y>", { noremap = true, desc = "Inspect Previous" })
-
-map("n", "<leader>exy", ":lua <C-R>* <C-y>", { noremap = true, desc = "Inspect Yank (CMD)" })
-map("n", "<leader>exx", ":Xdir lua =<C-R>: <C-y>", { noremap = true, desc = "Inspect Redirect (CMD)" })
-map("n", "<leader>exe", ":Xdir <C-R>=", { noremap = true, desc = "Inspect Expand (Redirect)" })
-map("n", "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", { noremap = true, desc = "Inspect Expand Line (Redirect)" })
--- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
--- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
 
 map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", { desc = "Redirect Cmdline" })
 -- vim.keymap.set("c", "<S-Enter>", function()

@@ -68,6 +68,7 @@ return {
     config = function()
       local miniclue = require("mini.clue")
 
+      -- lua require("mini.clue").set_mapping_desc('n', '<leader>eoo', 'zzzz')
       miniclue.setup({
         -- clues = {},
         -- triggers = {},
@@ -129,7 +130,9 @@ return {
           { mode = "n", keys = "<Leader>eh", desc = "+Help" },
           { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
           { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
-          { mode = "n", keys = "<Leader>eo", desc = "+Org" },
+          { mode = "n", keys = "<Leader>ew", desc = "+Wiki" },
+          { mode = "n", keys = "<Leader>eo", desc = "+Options" },
+          { mode = "n", keys = "<Leader>ez", desc = "+Lazy" },
 
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
           { mode = "x", keys = "<Leader>d", desc = "+Debug" },
