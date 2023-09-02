@@ -50,7 +50,16 @@ return {
         winblend = 25,
       },
     },
-    -- config = true,
+    config = function(_, opts)
+      local c = require("tokyonight.colors").default
+
+      vim.api.nvim_set_hl(0, "MiniMapNormal", { fg = c.bg_dark })
+      -- vim.api.nvim_set_hl(0, "MiniMapNormal") -- ,  basic highlight of whole window.
+      -- vim.api.nvim_set_hl(0, "MiniMapSymbolCount")  -- counts of per-line integration items.
+      -- vim.api.nvim_set_hl(0, "MiniMapSymbolLine") -- scrollbar part representing current line.
+      -- vim.api.nvim_set_hl(0, "MiniMapSymbolView") -- scrollbar part representing current view.
+      require("mini.map").setup(opts)
+    end,
   },
   {
     "echasnovski/mini.clue",
@@ -58,8 +67,6 @@ return {
     -- enabled = false,
     config = function()
       local miniclue = require("mini.clue")
-
-      -- vim.api.nvim_set_hl(0, "MiniClueBorder", { fg = "#906f71", bold = true })
 
       miniclue.setup({
         -- clues = {},
@@ -78,9 +85,6 @@ return {
           { mode = "n", keys = "<Leader>" },
           { mode = "x", keys = "<Leader>" },
 
-          -- Built-in completion
-          { mode = "i", keys = "<C-x>" },
-
           { mode = "n", keys = "c" },
 
           { mode = "n", keys = "[" },
@@ -97,6 +101,8 @@ return {
           -- Registers
           { mode = "n", keys = '"' },
           { mode = "x", keys = '"' },
+
+          { mode = "i", keys = "<C-x>" },
           { mode = "i", keys = "<C-r>" },
           { mode = "c", keys = "<C-r>" },
 
@@ -127,6 +133,7 @@ return {
 
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
           { mode = "x", keys = "<Leader>d", desc = "+Debug" },
+          { mode = "n", keys = "<Leader>da", desc = "+Adapter" },
 
           { mode = "n", keys = "<Leader>f", desc = "+File" },
 
@@ -155,6 +162,5 @@ return {
         },
       })
     end,
-    -- opts = { }
   },
 }

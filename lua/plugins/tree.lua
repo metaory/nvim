@@ -24,6 +24,13 @@ return {
     --   vim.cmd([[Neotree close]])
     -- end,
     opts = {
+      -- sync_root_with_cwd = true,
+      -- respect_buf_cwd = true,
+      -- update_focused_file = {
+      --   enable = true,
+      --   update_root = true,
+      -- },
+
       filesystem = {
         bind_to_cwd = false,
         follow_current_file = { enabled = true },

@@ -1,4 +1,76 @@
 return {
+  {
+    "telescope.nvim",
+    dependencies = {
+      --stylua: ignore
+      { "nvim-telescope/telescope-file-browser.nvim", config = function() require("telescope").load_extension("file_browser") end },
+    },
+    keys = {
+      { "<leader><space>", "<Space>" },
+      { "<leader>sH", ":Telescope highlights<CR>", desc = "Highlights" },
+      { "<leader>sx", ":Telescope builtin<CR>", desc = "Builtin" },
+      { "<M-g>", ":Telescope live_grep<CR>", mode = "n" },
+      { "<M-f>", ":Telescope find_files<CR>", mode = "n" },
+      { "<M-F>", ":Telescope find_files hidden=true<CR>", mode = "n" },
+      { "<M-o>", ":Telescope oldfiles<CR>", mode = "n" },
+      { "<M-r>", ":Telescope resume<CR>", mode = "n" },
+      { "<M-b>", ":Telescope file_browser<CR>", mode = "n" },
+      -- { "<leader>sr", ":Telescope resume<CR>", desc = "Resume", },
+      -- { "<M-m>", ":Telescope keymaps<CR>", mode = "n" },
+      -- { "<M-C>", ":Telescope commands<CR>", mode = "n" },
+      --stylua: ignore
+      {"<leader>fc", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File",},
+      --stylua: ignore
+      {"<leader>fx", function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end, desc = "Find Plugin File",},
+    },
+    opts = {
+      defaults = {
+        layout_strategy = "horizontal",
+        layout_config = { prompt_position = "bottom" },
+        wrap_results = false,
+        border = true,
+        sorting_strategy = "ascending",
+        -- preview = {treesitter = true,},
+        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
+        file_ignore_patterns = { "^.git/", "^node_modules/" },
+        -- A table of lua regex that define the files that should be ignored.
+        -- Example: { "^scratch/" } -- ignore all files in scratch directory
+        -- Example: { "%.npz" } -- ignore all npz files
+        mappings = {
+          i = {
+            ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
+            ["<C-o>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
+            ["<C-Space>"] = require("telescope.actions").toggle_selection
+              + require("telescope.actions").move_selection_worse,
+            ["<esc>"] = "close",
+          },
+        },
+        winblend = 0,
+      },
+    },
+  },
+  {
+    "ahmedkhalf/project.nvim",
+    opts = {},
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+      require("telescope").load_extension("projects")
+    end,
+    keys = {
+      { "<leader>fp", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+    },
+  },
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   keys = {
+  --     { "<M-b>", ":Telescope file_browser<CR>", desc = "Find Config File" },
+  --   },
+  --   opts = {},
+  --   config = function(_, opts)
+  --     require("file-browser.nvim").setup(opts)
+  --     require("telescope").load_extension("file_browser")
+  --   end,
+  -- },
   -- {
   --
   --   "nvim-telescope/telescope-file-browser.nvim",
@@ -68,71 +140,14 @@ return {
   --     },
   --   },
   -- },
-  {
-    "telescope.nvim",
-    dependencies = {
-      {
-        "nvim-telescope/telescope-file-browser.nvim",
-        config = function()
-          require("telescope").load_extension("file_browser")
-        end,
-      },
-    },
-    keys = {
-      {
-        "<leader>sH",
-        "<CMD>lua require'telescope.builtin'.highlights{}<CR>",
-        desc = "Highlights",
-      },
-      {
-        "<leader>fc",
-        function()
-          require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
-        end,
-        desc = "Find Config File",
-      },
-      {
-        "<leader>fx",
-        function()
-          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
-        end,
-        desc = "Find Plugin File",
-      },
-    },
-    opts = {
-      defaults = {
-        layout_strategy = "horizontal",
-        layout_config = { prompt_position = "bottom" },
-        wrap_results = false,
-        border = true,
-        sorting_strategy = "ascending",
-        -- preview = {treesitter = true,},
-        -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
-        file_ignore_patterns = { "^.git/", "^node_modules/" },
-        -- A table of lua regex that define the files that should be ignored.
-        -- Example: { "^scratch/" } -- ignore all files in scratch directory
-        -- Example: { "%.npz" } -- ignore all npz files
-        mappings = {
-          i = {
-            ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
-            ["<C-o>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
-            ["<C-Space>"] = require("telescope.actions").toggle_selection
-              + require("telescope.actions").move_selection_worse,
-            ["<esc>"] = "close",
-          },
-        },
-        winblend = 0,
-      },
-    },
-  },
-  -- {
-  --   "folke/todo-comments.nvim",
-  -- dependencies = { "nvim-telescope/telescope.nvim" },
-  -- keys = {
-  --   { "<leader>sT", false, { desc = "TODO Tel" } },
-  -- },
-  -- },
 }
+-- {
+--   "folke/todo-comments.nvim",
+-- dependencies = { "nvim-telescope/telescope.nvim" },
+-- keys = {
+--   { "<leader>sT", false, { desc = "TODO Tel" } },
+-- },
+-- },
 -- actions = {
 --   "cycle_previewers_next",
 --   "delete_buffer",

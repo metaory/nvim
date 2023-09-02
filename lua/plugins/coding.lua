@@ -44,6 +44,19 @@ return {
   {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
+    keys = {
+      {
+        "<leader>rw",
+        function()
+          return ":IncRename " .. vim.fn.expand("<cword>")
+        end,
+        mode = "n",
+        desc = "Rename Word",
+        noremap = true,
+        silent = true,
+        expr = true,
+      },
+    },
     config = true,
   },
 

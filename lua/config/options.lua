@@ -1,6 +1,9 @@
 -- set wildignore=*.o,*.a,__pycache__
 -- vim.opt.wildignore = { '*.o', '*.a', '__pycache__' }
 
+-- vim.opt.timeout = false
+-- vim.opt.timeoutlen = 300
+vim.opt.updatetime = 2000
 vim.opt.list = true
 -- vim.opt.listchars = {
 --   eol = "⌐",

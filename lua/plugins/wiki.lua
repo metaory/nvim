@@ -83,15 +83,15 @@ return {
               -- stylua: ignore
               keybinds.map("norg", "n", "<leader>mn", "<CMD>Neorg mode norg<CR>", { silent = true, desc = "Org Norg Mode" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>N", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "Org New Note" })
+              keybinds.map("norg", "n", "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "Org New Note" })
               -- stylua: ignore
               keybinds.map("norg", "n", "<leader>j", "<CMD>Neorg journal toc update<CR>", { silent = true, desc = "Org Journal Index" })
-              -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>t", "<CMD>Neorg journal tomorrow<CR>", { silent = true, desc = "Journal Tomorrow" })
               -- stylua: ignore
               keybinds.map("norg", "n", "<leader>y", "<CMD>Neorg journal yesterday<CR>", { silent = true, desc = "Journal Yesterday" })
               -- stylua: ignore
               keybinds.map("norg", "n", "<leader>n", "<CMD>Neorg journal today<CR>", { silent = true, desc = "Journal Today" })
+              -- stylua: ignore
+              keybinds.map("norg", "n", "<leader>N", "<CMD>Neorg journal tomorrow<CR>", { silent = true, desc = "Journal Tomorrow" })
 
               keybinds.map("norg", "n", "<BS>", ":bw<CR>", { silent = true })
               keybinds.map("norg", "n", "q", ":Neorg journal toc open<CR>", { silent = true })

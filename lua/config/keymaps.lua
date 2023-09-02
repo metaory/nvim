@@ -26,6 +26,8 @@ pcall(vim.keymap.del, "n", "<Leader>E")
 pcall(vim.keymap.del, "n", "<Leader>K")
 pcall(vim.keymap.del, "n", "<Leader><Space>")
 
+-- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
+
 vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
 vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
 vim.keymap.set("n", "<leader>in", ":NullLsInfo<CR>", { desc = "Null-ls Info" })
@@ -33,7 +35,6 @@ vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileTy
 -- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
 -- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
 
-vim.keymap.set("n", "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", { desc = "Resume" })
 -- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
 vim.keymap.set("n", "<leader>fr", function()
@@ -157,13 +158,6 @@ map(
 --   { noremap = true, silent = true, desc = "Search Telescope" }
 -- )
 
-map(
-  "n",
-  "<leader>sx",
-  "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
-  { noremap = true, silent = true, desc = "Search Telescope" }
-)
-
 -- TODO: Telescope search: >>
 -- lua require("persistence").list()
 
@@ -177,14 +171,22 @@ map(
 -- lua =require("project_nvim").get_recent_projects()
 -- lua =require("project_nvim").delete_project()
 -- /home/meta/dev/forks/dotfiles-steve/vimplugins/aerial.nvim/lua/telescope/_extensions/aerial.lua
-map("n", "<M-g>", "<CMD>lua require'telescope.builtin'.live_grep{}<CR>", opt)
+--lua require'telescope.builtin'.resume{}
+--lua require'telescope.builtin'.live_grep{}
+-- map("n", "<M-w>", ":Telescope grep_string<CR>", opt)
+--[[
+map("n", "<M-g>", ":Telescope live_grep<CR>", opt)
 map("n", "<M-f>", ":Telescope find_files<CR>", opt)
 map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
 map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
-map("n", "<M-r>", "<CMD>lua require'telescope.builtin'.resume{}<CR>", opt)
+map("n", "<M-r>", ":Telescope resume<CR>", opt)
 map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
--- map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
+map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
 map("n", "<M-C>", ":Telescope commands<CR>", opt)
+map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
+]]
+map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
+
 map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
 map("n", "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", { desc = "Quickfix Toggle" })
 
