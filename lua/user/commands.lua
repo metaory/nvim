@@ -48,7 +48,7 @@ vim.api.nvim_create_user_command("MxReload", function()
     require("lazy.core.loader").reload(require("lazy.core.config").plugins[choice])
     vim.g.mx_reloaded_plug = choice
   end)
-end, { nargs = "?", complete = "packadd" })
+end, { nargs = "?" })
 
 vim.api.nvim_create_user_command("MxFileRename", function()
   local default = vim.fn.expand("%:t")

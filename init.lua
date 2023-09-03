@@ -12,9 +12,8 @@ end
 
 -- return next(vim.fn.argv()) == nil
 
-_G.dd = function(...)
-  require("util.debug").dump(...)
-end
+_G.dd = require("util.debug").dump
+_G.ddwrite = require("util.debug").dumpwrite
 -- vim.print = _G.dd
 
 -- require("util.profiler").start()
@@ -71,28 +70,9 @@ require("config.lazy")
 -- })
 -- local inspect = require("inspect")
 
-_G.mxdump = function(t, f, m)
-  t = t or {}
-
-  local p = "/tmp/mx_lua_" .. f .. ".lua"
-  local file, err = io.open(p, m or "w")
-
-  if type(t) ~= "string" then
-    t = vim.inspect(t)
-  end
-
-  local str = "local ___ = function() end\n\nreturn " .. t
-  str = string.gsub(str, "<%a+ %d+>", "___")
-  str = string.gsub(str, "<%a+>", "___")
-  str = string.gsub(str, "<%d+>", "___")
-
-  local _, lines = string.gsub(str, "\n", "\n")
-
-  if file then
-    file:write(str)
-    file:close()
-    vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "mxdump" })
-  else
-    print("error:", err)
-  end
-end
+-- _G.dd = function(...)
+--   require("util.debug").dump(...)
+-- end
+-- _G.mxdump = function(...)
+--   require("util.debug").dumpwrite(...)
+-- end

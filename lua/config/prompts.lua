@@ -30,6 +30,10 @@ vim.keymap.set(
     end
     vim.notify(input)
     vim.cmd([[ enew | r ! ]] .. input)
+    local buf = vim.api.nvim_win_get_buf(0)
+    if not pcall(vim.treesitter.start, buf, "lua") then
+      vim.bo[buf].filetype = "lua"
+    end
     vim.keymap.set("n", "q", "<CMD>bw<CR>", { buffer = 0 })
   end),
   { noremap = true, desc = "Exec Run" }

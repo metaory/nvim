@@ -155,4 +155,30 @@ function M.get_upvalue(func, name)
   end
 end
 
+function M.dumpwrite(t, f, m)
+  t = t or {}
+  t = type(t) ~= "string" and vim.inspect(t)
+
+  local p = "/tmp/mx_lua_" .. f .. ".lua"
+  local file, err = io.open(p, m or "w")
+
+  local rpl = "___"
+  local str = "local "
+    .. rpl
+    .. " = function() end\n\nreturn "
+    .. tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
+  --
+
+  local _, lines = string.gsub(str, "\n", "\n")
+
+  -- vim.notify({ "XOXOXO", hl_group = "DiagnosticError" }, vim.log.levels.INFO, { title = "XYZ" })
+  if file then
+    file:write(str)
+    file:close()
+    vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "mxdump" })
+  else
+    print("error:", err)
+  end
+end
+
 return M

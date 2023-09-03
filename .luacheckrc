@@ -16,4 +16,4 @@ read_globals = {
 }
 
 -- globals = { "U", "MxDebug", "MxDump" }
-globals = { "mxdump" }
+globals = { "dd", "ddwrite" }

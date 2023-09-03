@@ -3,15 +3,56 @@
 return {
   "folke/noice.nvim",
   opts = function(_, opts)
-    -- mxdump(vim.inspect(opts), "noice_pre")
-    opts.lsp = vim.tbl_extend("force", {
+    -- ddwrite(opts, "noice_pre")
+    opts.lsp = vim.tbl_deep_extend("force", {
+      override = {
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ["vim.lsp.util.stylize_markdown"] = true,
+        ["cmp.entry.get_documentation"] = true,
+      },
+      -- message = {
+      --   enabled = true,
+      --   view = "mini",
+      -- },
       message = {
         enabled = true,
-        view = "mini",
+        view = "notify",
+        opts = {},
       },
       progress = {
         enabled = true,
         view = "mini",
+      },
+      hover = {
+        enabled = true,
+        silent = false, -- set to true to not show a message if hover is not available
+        view = nil, -- when nil, use defaults from documentation
+        ---@type NoiceViewOptions
+        opts = {}, -- merged with defaults from documentation
+      },
+      signature = {
+        enabled = true,
+        auto_open = {
+          enabled = true,
+          trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
+          luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
+          throttle = 50, -- Debounce lsp signature help request by 50ms
+        },
+        view = nil, -- when nil, use defaults from documentation
+        ---@type NoiceViewOptions
+        opts = {}, -- merged with defaults from documentation
+      },
+      -- defaults for hover and signature help
+      documentation = {
+        view = "hover",
+        ---@type NoiceViewOptions
+        opts = {
+          lang = "markdown",
+          replace = true,
+          render = "plain",
+          format = { "{message}" },
+          win_options = { concealcursor = "n", conceallevel = 3 },
+        },
       },
     }, opts.lsp)
 
@@ -22,7 +63,15 @@ return {
         filter = {},
       },
     }
-    -- mxdump(vim.inspect(opts), "noice_post")
+    -- opts.nui = {
+    --   win_options = {
+    --     winhighlight = {
+    --       FloatBorder = "DiagnosticError",
+    --       Normal = "Constant",
+    --     },
+    --   },
+    -- }
+    -- ddwrite(opts, "noice_2")
     return opts
   end,
 }
