@@ -1,4 +1,10 @@
 {
+  "vim.notify": {
+    "prefix": "vnotify",
+    "body": [
+      "vim.notify('${1:$TM_SELECTED_TEXT}', vim.log.levels.INFO, { title = $2 })"
+    ]
+  },
   "tbl.insert": {
     "prefix": "tblins",
     "body": ["table.insert(${1:$TM_SELECTED_TEXT}, $2)"]

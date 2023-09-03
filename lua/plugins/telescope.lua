@@ -6,9 +6,10 @@ return {
       { "nvim-telescope/telescope-file-browser.nvim", config = function() require("telescope").load_extension("file_browser") end },
     },
     keys = {
-      { "<leader><space>", "<Space>" },
-      { "<leader>sH", ":Telescope highlights<CR>", desc = "Highlights" },
-      { "<leader>sx", ":Telescope builtin<CR>", desc = "Builtin" },
+      { "<leader><space>", nil },
+      -- { "<leader><space>", "<Space>", mode = "n" },
+      { "<leader>sH", ":Telescope highlights<CR>", desc = "Highlights", mode = "n" },
+      { "<leader>sx", ":Telescope builtin<CR>", desc = "Builtin", mode = "n" },
       { "<M-g>", ":Telescope live_grep<CR>", mode = "n" },
       { "<M-f>", ":Telescope find_files<CR>", mode = "n" },
       { "<M-F>", ":Telescope find_files hidden=true<CR>", mode = "n" },
@@ -18,12 +19,12 @@ return {
       -- { "<leader>sr", ":Telescope resume<CR>", desc = "Resume", },
       -- { "<M-m>", ":Telescope keymaps<CR>", mode = "n" },
       -- { "<M-C>", ":Telescope commands<CR>", mode = "n" },
-      { "<leader>fr", ":MxFileRename<CR>", desc = "File Rename" },
+      { "<leader>fr", ":MxFileRename<CR>", desc = "File Rename", mode = "n" },
 -- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
       --stylua: ignore
-      {"<leader>fc", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File",},
+      {"<leader>fc", function() require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File", mode = 'n',},
       --stylua: ignore
-      {"<leader>fx", function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end, desc = "Find Plugin File",},
+      {"<leader>fx", function() require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root }) end, desc = "Find Plugin File", mode = 'n',},
     },
     -- XXX:
     -- Telescope find_files theme=dropdown
@@ -90,7 +91,7 @@ return {
       require("telescope").load_extension("projects")
     end,
     keys = {
-      { "<leader>fp", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+      { "<leader>fp", "<Cmd>Telescope projects<CR>", desc = "Projects", mode = "n" },
     },
   },
   -- {

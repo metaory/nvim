@@ -8,7 +8,7 @@ return {
     "echasnovski/mini.hues",
     keys = {
       {
-        "<leader>ec",
+        "<leader>eec",
         function()
           -- https://github.com/echasnovski/mini.nvim/blob/main/readmes/mini-hues.md
           -- require("mini.hues").setup({ background = "#2b1a33", foreground = "#c9c5cb" })

@@ -79,13 +79,13 @@ return {
               -- { leader .. "nn", "core.dirman.new.note", opts = { desc = "Create New Note" } },
               -- keybinds.remap_event("norg", "n", "<leader>on", "core.dirman.new.note")
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", { silent = true, desc = "Org Heading Mode" })
+              keybinds.map("norg", "n", "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", { silent = true, desc = "Heading Mode" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>mn", "<CMD>Neorg mode norg<CR>", { silent = true, desc = "Org Norg Mode" })
+              keybinds.map("norg", "n", "<leader>mn", "<CMD>Neorg mode norg<CR>", { silent = true, desc = "Normal Mode" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "Org New Note" })
+              keybinds.map("norg", "n", "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", { silent = true, desc = "New Note" })
               -- stylua: ignore
-              keybinds.map("norg", "n", "<leader>j", "<CMD>Neorg journal toc update<CR>", { silent = true, desc = "Org Journal Index" })
+              keybinds.map("norg", "n", "<leader>j", "<CMD>Neorg journal toc update<CR>", { silent = true, desc = "Journal Index" })
               -- stylua: ignore
               keybinds.map("norg", "n", "<leader>y", "<CMD>Neorg journal yesterday<CR>", { silent = true, desc = "Journal Yesterday" })
               -- stylua: ignore
@@ -97,7 +97,7 @@ return {
               keybinds.map("norg", "n", "q", ":Neorg journal toc open<CR>", { silent = true })
               keybinds.map("norg", "n", "Q", ":q<CR>", { silent = true })
               keybinds.map("norg", "n", "<Up>", "<CMD>Neorg presenter start<CR>")
-              keybinds.map("norg", "n", "<leader>uc", "<CMD>Neorg toggle-concealer<CR>")
+              keybinds.map("norg", "n", "<leader>uc", "<CMD>Neorg toggle-concealer<CR>", { desc = "Toggle Concealx" })
             end,
           },
         },

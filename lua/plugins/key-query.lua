@@ -127,12 +127,14 @@ return {
           { mode = "x", keys = "<Leader>c", desc = "+Code" },
 
           { mode = "n", keys = "<Leader>e", desc = "+Exec" },
+          { mode = "n", keys = "<Leader>ee", desc = "+++" },
           { mode = "n", keys = "<Leader>eh", desc = "+Help" },
           { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
           { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
           { mode = "n", keys = "<Leader>ew", desc = "+Wiki" },
           { mode = "n", keys = "<Leader>eo", desc = "+Options" },
           { mode = "n", keys = "<Leader>ez", desc = "+Lazy" },
+          { mode = "n", keys = "<Leader>et", desc = "+Task" },
 
           { mode = "n", keys = "<Leader>d", desc = "+Debug" },
           { mode = "x", keys = "<Leader>d", desc = "+Debug" },

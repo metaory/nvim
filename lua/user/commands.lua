@@ -71,6 +71,8 @@ end, {
   desc = "Rename current file",
 })
 
+-- -----------------------------------------------------------------------------
+
 vim.api.nvim_create_user_command("Xdir", "lua require'noice'.redirect(<q-args>)", { nargs = "+", complete = "command" })
 -- "lua require'noice'.redirect('lua =' .. <q-args>)",
 

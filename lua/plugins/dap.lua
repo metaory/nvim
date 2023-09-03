@@ -4,6 +4,21 @@ return {
   --   cmd = "Nredir",
   --   opts = {},
   -- },
+  {
+    "stevearc/overseer.nvim",
+    cmd = { "OverseerInfo" },
+    config = true,
+    dependencies = { "nvim-dap" },
+    keys = {
+      { "<leader>eti", "<CMD>OverseerInfo<CR>", desc = "Task Info", mode = "n" },
+      { "<leader>ett", "<CMD>OverseerToggle<CR>", desc = "Task Toggle", mode = "n" },
+      { "<leader>etr", "<CMD>OverseerRun<CR>", desc = "Task Run", mode = "n" },
+      { "<leader>etR", "<CMD>OverseerRunCmd<CR>", desc = "Task RunCmd", mode = "n" },
+      { "<leader>etb", "<CMD>OverseerBuild<CR>", desc = "Task Build", mode = "n" },
+      { "<leader>etq", "<CMD>OverseerQuickAction<CR>", desc = "Task QuickAction", mode = "n" },
+      { "<leader>eta", "<CMD>OverseerTaskAction<CR>", desc = "Task Action", mode = "n" },
+    },
+  },
 }
 
 -- if true then
@@ -116,10 +131,3 @@ return {
   end,
 }
 ]]
-
--- {
---   "stevearc/overseer.nvim",
---   cmd = { "OverseerInfo" },
---   config = true,
---   dependencies = { "nvim-dap" },
--- },

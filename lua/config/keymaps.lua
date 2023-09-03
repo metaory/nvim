@@ -5,6 +5,7 @@
 --local util = require("util")
 -- local Util = require("lazyvim.util")
 -- local which_key = require("which-key")
+require("config.prompts")
 local map = vim.api.nvim_set_keymap
 local opt = { noremap = true, silent = true }
 local nor = { noremap = true }
@@ -29,17 +30,6 @@ pcall(vim.keymap.del, "n", "<Leader><Space>")
 
 -- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
 
-vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
-vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
-vim.keymap.set("n", "<leader>in", ":NullLsInfo<CR>", { desc = "Null-ls Info" })
-vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileType Info" })
--- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
--- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
-
--- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
-
--- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
-
 vim.keymap.set("n", "<leader>eov", function()
   local old = vim.o.verbose
   vim.o.verbose = old == 0 and 9 or 0
@@ -51,39 +41,16 @@ vim.keymap.set("n", "<leader>eov", function()
   )
 end, { desc = "Set Verbose Level" })
 
-vim.keymap.set("n", "<leader>er", function()
-  local defCommands = {
-    javascript = "node",
-  }
-  local cmd = defCommands[vim.bo.filetype] or vim.bo.filetype
-  local cwd = vim.fn.getcwd()
-  local path = vim.fn.expand("%:p")
-  local rel = string.gsub(path, cwd, ".")
-  vim.notify(rel)
-  vim.ui.input({
-    prompt = "command",
-    default = cmd .. " " .. rel,
-  }, function(input)
-    if not input then
-      return
-    end
-    vim.notify(input)
-    vim.cmd([[ enew | r ! ]] .. input)
-    vim.keymap.set("n", "q", "<CMD>bw<CR>", { buffer = 0 })
-  end)
-end, { noremap = true, desc = "Exec Run" })
+vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
+vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
+vim.keymap.set("n", "<leader>in", ":NullLsInfo<CR>", { desc = "Null-ls Info" })
+vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
 
-vim.keymap.set("n", "<leader>eof", function()
-  vim.ui.select(vim.fn.getcompletion("*", "filetype"), {
-    prompt = "Select Filetype:",
-  }, function(choice)
-    if choice == nil then
-      return
-    end
-    vim.notify(choice, vim.log.levels.INFO, { title = "Filetype Updated" })
-    vim.o.filetype = choice
-  end)
-end, { desc = "Set File Type" })
+-- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+
+-- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
 
 vim.keymap.set("n", "<leader>eow", function() -- 123 33 true false true true
   vim.wo.wrap = not vim.wo.wrap -- "linebreak" 123454 33
@@ -146,9 +113,7 @@ map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
 -- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
 vim.keymap.set("n", "<C-c>", function()
   local modifiable = vim.bo[vim.api.nvim_win_get_buf(0)].modifiable
-  -- local lspAttached = #vim.lsp.get_active_clients() > 0
-  -- and lspAttached
-  -- else print("TODO")
+  -- local lspAttached = #vim.lsp.get_active_clients() > 0 and lspAttached else print("TODO")
   if modifiable then
     vim.cmd(":normal gcc<CR>")
   end
@@ -256,11 +221,9 @@ map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<C
 map("n", "gG", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
 map("n", "gL", "<CMD>OpenWebUrl<CR>", { silent = true, desc = "Open URL" })
 
-map("n", "<leader>di", ":OverseerInfo<CR>", { desc = "OverSeer Info" })
-
-map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
-map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
-map("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
+-- map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
+-- map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
+-- map("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
 
 -- ////////////////////////////////////////////////////////////////////////////
 
