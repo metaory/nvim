@@ -72,7 +72,8 @@ require("config.lazy")
 -- local inspect = require("inspect")
 
 _G.mxdump = function(t, f, m)
-  assert(t == nil)
+  t = t or {}
+
   local p = "/tmp/mx_lua_" .. f .. ".lua"
   local file, err = io.open(p, m or "w")
 
