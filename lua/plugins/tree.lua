@@ -156,131 +156,134 @@ return {
     --   })
     -- end,
   },
-  -- {
-  --   "stevearc/oil.nvim",
-  --   opts = {
-  --     default_file_explorer = true,
-  --     columns = {
-  --       "icon",
-  --       -- "permissions",
-  --       -- "size",
-  --       -- "mtime",
-  --     },
-  --     buf_options = {
-  --       swapfile = true,
-  --       -- buflisted = false,
-  --       -- bufhidden = "hide",
-  --     },
-  --     -- win_options = {
-  --     --   wrap = false,
-  --     --   signcolumn = "no",
-  --     --   cursorcolumn = false,
-  --     --   foldcolumn = "0",
-  --     --   spell = false,
-  --     --   list = false,
-  --     --   conceallevel = 3,
-  --     --   concealcursor = "n",
-  --     -- },
-  --     -- restore_win_options = true,
-  --     skip_confirm_for_simple_edits = false,
-  --     -- delete_to_trash = false,
-  --     -- trash_command = "trash-put",
-  --     -- prompt_save_on_select_new_entry = true,
-  --     -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
-  --     -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
-  --     keymaps = {
-  --       --   ["g?"] = "actions.show_help",
-  --       --   ["<CR>"] = "actions.select",
-  --       --   ["<C-s>"] = "actions.select_vsplit",
-  --       --   ["<C-h>"] = "actions.select_split",
-  --       --   ["<C-t>"] = "actions.select_tab",
-  --       --   ["<C-p>"] = "actions.preview",
-  --       --   ["<C-c>"] = "actions.close",
-  --       --   ["<C-l>"] = "actions.refresh",
-  --       --   ["-"] = "actions.parent",
-  --       --   ["_"] = "actions.open_cwd",
-  --       --   ["`"] = "actions.cd",
-  --       --   ["~"] = "actions.tcd",
-  --       -- ["g."] = "actions.toggle_hidden",
-  --       -- ["<CR>"] = "actions.cd",
-  --
-  --       ["f"] = "<CMD>lua require'telescope.builtin'.find_files{}<CR>",
-  --       -- ["f"] = {
-  --       --   callback = function()
-  --       --     require("telescope.builtin").find_files{}
-  --       --   end,
-  --       --   desc = "",
-  --       --   nowait = true,
-  --       -- },
-  --       ["q"] = "actions.close",
-  --       ["P"] = "actions.preview",
-  --       ["gy"] = "actions.copy_entry_path",
-  --       ["gh"] = "actions.toggle_hidden",
-  --     },
-  --     -- use_default_keymaps = true,
-  --     view_options = {
-  --       show_hidden = false,
-  --       -- is_hidden_file = function(name, bufnr)
-  --       --   return vim.startswith(name, ".")
-  --       -- end,
-  --       -- is_always_hidden = function(name, bufnr)
-  --       --   return false
-  --       -- end,
-  --     },
-  --     -- Configuration for the floating window in oil.open_float
-  --     float = {
-  --       -- Padding around the floating window
-  --       padding = 2,
-  --       max_width = 0,
-  --       max_height = 0,
-  --       border = "rounded",
-  --       win_options = {
-  --         winblend = 10,
-  --       },
-  --       override = function(conf)
-  --         return conf
-  --       end,
-  --     },
-  --     preview = {
-  --       -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-  --       -- min_width and max_width can be a single value or a list of mixed integer/float types.
-  --       -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
-  --       max_width = 0.9,
-  --       -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
-  --       min_width = { 40, 0.4 },
-  --       -- optionally define an integer/float for the exact width of the preview window
-  --       width = nil,
-  --       -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-  --       -- min_height and max_height can be a single value or a list of mixed integer/float types.
-  --       -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
-  --       max_height = 0.9,
-  --       -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
-  --       min_height = { 5, 0.1 },
-  --       -- optionally define an integer/float for the exact height of the preview window
-  --       height = nil,
-  --       border = "rounded",
-  --       win_options = {
-  --         winblend = 0,
-  --       },
-  --     },
-  --     -- Configuration for the floating progress window
-  --     progress = {
-  --       max_width = 0.9,
-  --       min_width = { 40, 0.4 },
-  --       width = nil,
-  --       max_height = { 10, 0.9 },
-  --       min_height = { 5, 0.1 },
-  --       height = nil,
-  --       border = "rounded",
-  --       minimized_border = "none",
-  --       win_options = {
-  --         winblend = 0,
-  --       },
-  --     },
-  --   },
-  --   cmd = "Oil",
-  --   dependencies = { "nvim-tree/nvim-web-devicons" },
-  -- },
+  {
+    "stevearc/oil.nvim",
+    cmd = "Oil",
+    keys = {
+      { "<Leader>f<Space>", "<CMD>Oil<CR>", desc = "Oil Explorer" },
+    },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {
+      default_file_explorer = true,
+      columns = {
+        "icon",
+        -- "permissions",
+        -- "size",
+        -- "mtime",
+      },
+      buf_options = {
+        swapfile = true,
+        -- buflisted = false,
+        -- bufhidden = "hide",
+      },
+      -- win_options = {
+      --   wrap = false,
+      --   signcolumn = "no",
+      --   cursorcolumn = false,
+      --   foldcolumn = "0",
+      --   spell = false,
+      --   list = false,
+      --   conceallevel = 3,
+      --   concealcursor = "n",
+      -- },
+      -- restore_win_options = true,
+      skip_confirm_for_simple_edits = false,
+      -- delete_to_trash = false,
+      -- trash_command = "trash-put",
+      -- prompt_save_on_select_new_entry = true,
+      -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
+      -- options with a `callback` (e.g. { callback = function() ... end, desc = "", nowait = true })
+      keymaps = {
+        --   ["g?"] = "actions.show_help",
+        --   ["<CR>"] = "actions.select",
+        --   ["<C-s>"] = "actions.select_vsplit",
+        --   ["<C-h>"] = "actions.select_split",
+        --   ["<C-t>"] = "actions.select_tab",
+        --   ["<C-p>"] = "actions.preview",
+        --   ["<C-c>"] = "actions.close",
+        --   ["<C-l>"] = "actions.refresh",
+        ["-"] = "actions.parent",
+        ["_"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        -- ["g."] = "actions.toggle_hidden",
+        -- ["<CR>"] = "actions.cd",
+
+        ["f"] = "<CMD>lua require'telescope.builtin'.find_files{}<CR>",
+        -- ["f"] = {
+        --   callback = function()
+        --     require("telescope.builtin").find_files{}
+        --   end,
+        --   desc = "",
+        --   nowait = true,
+        -- },
+        ["q"] = "actions.close",
+        ["P"] = "actions.preview",
+        ["gy"] = "actions.copy_entry_path",
+        ["gh"] = "actions.toggle_hidden",
+      },
+      -- use_default_keymaps = true,
+      view_options = {
+        show_hidden = false,
+        -- is_hidden_file = function(name, bufnr)
+        --   return vim.startswith(name, ".")
+        -- end,
+        -- is_always_hidden = function(name, bufnr)
+        --   return false
+        -- end,
+      },
+      -- Configuration for the floating window in oil.open_float
+      float = {
+        -- Padding around the floating window
+        padding = 2,
+        max_width = 0,
+        max_height = 0,
+        border = "rounded",
+        win_options = {
+          winblend = 10,
+        },
+        override = function(conf)
+          return conf
+        end,
+      },
+      preview = {
+        -- Width dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+        -- min_width and max_width can be a single value or a list of mixed integer/float types.
+        -- max_width = {100, 0.8} means "the lesser of 100 columns or 80% of total"
+        max_width = 0.9,
+        -- min_width = {40, 0.4} means "the greater of 40 columns or 40% of total"
+        min_width = { 40, 0.4 },
+        -- optionally define an integer/float for the exact width of the preview window
+        width = nil,
+        -- Height dimensions can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
+        -- min_height and max_height can be a single value or a list of mixed integer/float types.
+        -- max_height = {80, 0.9} means "the lesser of 80 columns or 90% of total"
+        max_height = 0.9,
+        -- min_height = {5, 0.1} means "the greater of 5 columns or 10% of total"
+        min_height = { 5, 0.1 },
+        -- optionally define an integer/float for the exact height of the preview window
+        height = nil,
+        border = "rounded",
+        win_options = {
+          winblend = 0,
+        },
+      },
+      -- Configuration for the floating progress window
+      progress = {
+        max_width = 0.9,
+        min_width = { 40, 0.4 },
+        width = nil,
+        max_height = { 10, 0.9 },
+        min_height = { 5, 0.1 },
+        height = nil,
+        border = "rounded",
+        minimized_border = "none",
+        win_options = {
+          winblend = 0,
+        },
+      },
+    },
+  },
 }
 
 -- ██  ██  ██ █│E5108: Error executing lua: (mini.files) `path` is not a valid path ("/home/meta/.config/nvim/Starter")        │

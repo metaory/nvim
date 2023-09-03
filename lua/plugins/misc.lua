@@ -2,7 +2,7 @@ return {
   {
     "folke/twilight.nvim",
     cmd = "Twilight",
-    keys = { { "<leader>Z", "<cmd>Twilight<cr>", desc = "Twilight Mode" } },
+    keys = { { "<leader>uZ", "<cmd>Twilight<cr>", desc = "Twilight Mode" } },
   },
   {
     "echasnovski/mini.splitjoin",
@@ -42,7 +42,7 @@ return {
         kitty = { enabled = false, font = "+2" },
       },
     },
-    keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+    keys = { { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 }
 

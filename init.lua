@@ -12,8 +12,9 @@ end
 
 -- return next(vim.fn.argv()) == nil
 
-_G.dd = require("util.debug").dump
-_G.ddwrite = require("util.debug").dumpwrite
+local util = require("util.debug")
+_G.dd = util.dump
+_G.ddwrite = util.dumpwrite
 -- vim.print = _G.dd
 
 -- require("util.profiler").start()
