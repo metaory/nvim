@@ -61,7 +61,8 @@ require("lazy").setup({
   },
   -- dev = { patterns = {} },
   -- dev = { patterns = { "folke", "LazyVim" } },
-  install = { colorscheme = { "tokyonight" } },
+  -- install = { colorscheme = { "tokyonight" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   -- install = { colorscheme = nil },
   change_detection = {
     enabled = false,

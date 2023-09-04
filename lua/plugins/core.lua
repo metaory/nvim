@@ -29,11 +29,6 @@ return {
   },
   -- { "lukas-reineke/indent-blankline.nvim", -- enabled = false, },
   -- { "echasnovski/mini.indentscope", -- enabled = false, },
-  {
-    "catppuccin/nvim",
-    -- optional = true,
-    enabled = false,
-  },
   -- { "norcalli/nvim-colorizer.lua" },
   -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
   {
