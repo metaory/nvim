@@ -1,4 +1,8 @@
 {
+  "Echo_Var header": {
+    "prefix": ["ecv"],
+    "body": "echo \"${1}: \\$${1}\""
+  },
   "File header": {
     "prefix": ["new", "sh"],
     "body": ["#!/bin/bash", "set -Eeuo pipefail"]

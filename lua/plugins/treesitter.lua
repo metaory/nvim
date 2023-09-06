@@ -12,12 +12,12 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed, {
-        "jq",
-      })
+      opts.highlight.additional_vim_regex_highlighting = { "markdown" }
+      vim.list_extend(opts.ensure_installed, { "jq" })
     end,
   },
 }
+-- ddwrite(opts, "treesitter")
 -- -- { "RRethy/vim-illuminate", event = nil },
 -- { "RRethy/vim-illuminate", dependencies = { "nvim-treesitter/nvim-treesitter" } },
 -- { "windwp/nvim-ts-autotag", },

@@ -1,9 +1,11 @@
 {
+  "str.fortmat": {
+    "prefix": "fmt",
+    "body": ["string.format('${1:$TM_SELECTED_TEXT}%s', $2)"]
+  },
   "vim.notify": {
     "prefix": "vnotify",
-    "body": [
-      "vim.notify('${1:$TM_SELECTED_TEXT}', vim.log.levels.INFO, { title = $2 })"
-    ]
+    "body": ["vim.notify('${1:$TM_SELECTED_TEXT}', vim.log.levels.INFO, { title = $2 })"]
   },
   "tbl.insert": {
     "prefix": "tblins",
@@ -19,7 +21,7 @@
   },
   "mx.inspect": {
     "prefix": "ddw",
-    "body": ["ddwrite(${1:$TM_SELECTED_TEXT}, '$1')"]
+    "body": ["ddwrite(${1:$TM_SELECTED_TEXT}, '$2')"]
   },
   "vim.inspect": {
     "prefix": "vi",
@@ -31,19 +33,11 @@
   },
   "for ipairs": {
     "prefix": "fori",
-    "body": [
-      "for ${1:i},${2:v} in ipairs($3) do",
-      "  ${0:$TM_SELECTED_TEXT}",
-      "end"
-    ]
+    "body": ["for ${1:i},${2:v} in ipairs($3) do", "  ${0:$TM_SELECTED_TEXT}", "end"]
   },
   "for pairs": {
     "prefix": "forp",
-    "body": [
-      "for ${1:k},${2:v} in pairs($3) do",
-      "  ${0:$TM_SELECTED_TEXT}",
-      "end"
-    ]
+    "body": ["for ${1:k},${2:v} in pairs($3) do", "  ${0:$TM_SELECTED_TEXT}", "end"]
   },
   "if": {
     "prefix": "if",

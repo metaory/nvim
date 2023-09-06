@@ -8,38 +8,77 @@ return {
       icons = require("lazyvim.config").icons.kinds,
     },
   },
-  -- {
-  --   "stevearc/dressing.nvim",
-  --   opts = {
-  --     select = {
-  --       enabled = true,
-  --       backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
-  --       trim_prompt = true,
-  --       -- telescope = require('telescope.themes').get_ivy()
-  --       -- telescope = nil,
-  --       telescope = {
-  --         layout_strategy = "dropdown",
-  --         sorting_strategy = "descending",
-  --         -- layout_config = { prompt_position = "bottom" },
-  --         layout_config = {
-  --           prompt_position = "bottom",
-  --           ivy = {
-  --             prompt_position = "bottom",
-  --             width = 0.9,
-  --             preview_width = 0.6,
-  --           },
-  --         },
-  --       },
-  --       -- format_item_override = {},
-  --       -- see :help dressing_get_config
-  --       -- get_config = nil,
-  --     },
-  --   },
-  --   -- input = { enabled = true, default_prompt = "OOOOInput:" },
-  --   -- select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
-  -- },
-  -- },
+  {
+    "rcarriga/nvim-notify",
+    keys = {
+      {
+        "<leader>un",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss all Notifications",
+      },
+    },
+    opts = {
+      timeout = 3000,
+      max_height = function()
+        return math.floor(vim.o.lines * 0.80)
+      end,
+      max_width = function()
+        return math.floor(vim.o.columns * 0.75)
+      end,
+      on_open = function(win)
+        local buf = vim.api.nvim_win_get_buf(win)
+        if not pcall(vim.treesitter.start, buf, "lua") then
+          vim.bo[buf].filetype = "lua"
+        end
+        -- vim.api.nvim_buf_set_option(buf, "filetype", "lua")
+      end,
+    },
+    -- init = function()
+    -- when noice is not enabled, install notify on VeryLazy
+    -- local Util = require("lazyvim.util")
+    -- if not Util.has("noice.nvim") then
+    --   Util.on_very_lazy(function()
+    --     vim.notify = require("notify")
+    --   end)
+    -- end
+    -- vim.notify = nil
+    -- end,
+  },
 }
+-- https://github.com/stevearc/dressing.nvim
+-- {
+--   "stevearc/dressing.nvim",
+--   opts = {
+--     select = {
+--       enabled = true,
+--       backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" },
+--       trim_prompt = true,
+--       -- telescope = require('telescope.themes').get_ivy()
+--       -- telescope = nil,
+--       telescope = {
+--         layout_strategy = "dropdown",
+--         sorting_strategy = "descending",
+--         -- layout_config = { prompt_position = "bottom" },
+--         layout_config = {
+--           prompt_position = "bottom",
+--           ivy = {
+--             prompt_position = "bottom",
+--             width = 0.9,
+--             preview_width = 0.6,
+--           },
+--         },
+--       },
+--       -- format_item_override = {},
+--       -- see :help dressing_get_config
+--       -- get_config = nil,
+--     },
+--   },
+--   -- input = { enabled = true, default_prompt = "OOOOInput:" },
+--   -- select = { backend = { "telescope", "fzf_lua", "fzf", "builtin", "nui" } },
+-- },
+-- },
 --  { "j-hui/fidget.nvim", tag = "legacy", event = "LspAttach", opts = {} },
 -- floating winbar
 -- {

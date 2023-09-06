@@ -10,6 +10,12 @@
       },
       {
         "language": [
+          "sh"
+        ],
+        "path": "snippets/sh.jsonc"
+      },
+      {
+        "language": [
           "lua"
         ],
         "path": "snippets/lua.jsonc"

@@ -96,6 +96,7 @@ return {
           },
         }),
         augend.constant.new({ elements = { "&&", "||" }, word = false }),
+        augend.constant.new({ elements = { "on", "off" }, word = false }),
         augend.paren.alias.quote,
         -- augend.paren.alias.brackets,
         augend.integer.alias.decimal,

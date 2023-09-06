@@ -81,7 +81,7 @@ vim.opt.clipboard = "unnamed" -- Sync with system clipboard
 vim.opt.scrolloff = 0 -- Lines of context
 vim.opt.cursorcolumn = true
 vim.opt.laststatus = 3
-vim.opt.colorcolumn = "80"
+-- vim.opt.colorcolumn = "80"
 
 -- XXX:
 -- vim.g.loaded_netrw = 1

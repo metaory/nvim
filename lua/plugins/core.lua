@@ -31,21 +31,20 @@ return {
   -- { "echasnovski/mini.indentscope", -- enabled = false, },
   -- { "norcalli/nvim-colorizer.lua" },
   -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
+
+  -- NOTE: https://github.com/aca/wezterm.nvim
   {
     "numToStr/Navigator.nvim",
     cmd = { "NavigatorRight", "NavigatorLeft", "NavigatorUp", "NavigatorDown" },
-    opts = {
-      disable_on_zoom = true,
-    },
+    opts = { disable_on_zoom = true },
   },
   {
     "gbprod/yanky.nvim",
     event = "BufReadPost",
     dependencies = { { "kkharji/sqlite.lua", enabled = false } },
     keys = { { "<leader>p", nil, false } },
-    opts = function(_, opts)
-      return vim.list_extend({ ring = { storage = "shada" } }, opts)
-    end,
+    opts = { ring = { storage = "shada" } },
+    -- opts = function(_, opts) return vim.list_extend({ ring = { storage = "shada" } }, opts) end,
   },
 }
 -- { "NvChad/nvim-colorizer.lua", cmd = "ColorizerToggle", opts = { filetypes = { html = { mode = "foreground" }, }, }, },

@@ -1,20 +1,24 @@
 --[[
 https://jacobsimpson.github.io/nvim-lua-manual/docs/communicating/
 --]]
+local util = require("util.debug")
 
 vim.g.vscode = false
 vim.g.debug_treesitter = false
+vim.g.debug_nulls = false
 
 if vim.loader then
   vim.loader.enable()
-  -- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 end
 
--- return next(vim.fn.argv()) == nil
-
-local util = require("util.debug")
 _G.dd = util.dump
 _G.ddwrite = util.dumpwrite
+-- _G.live_inspect = util.live_inspect
+
+require("user.commands")
+require("config.lazy")
+
+-- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 -- vim.print = _G.dd
 
 -- require("util.profiler").start()
@@ -31,9 +35,7 @@ _G.ddwrite = util.dumpwrite
 --   end,
 -- })
 
-require("user.commands")
 -- require("user.ui")
-require("config.lazy")
 -- require("user.plugins.ui")
 -- U = require("util")
 -- require("user.filetypes")
@@ -77,3 +79,15 @@ require("config.lazy")
 -- _G.mxdump = function(...)
 --   require("util.debug").dumpwrite(...)
 -- end
+
+-- vim.ui_attach(vim.api.nvim_create_namespace("redirect messages"), { ext_messages = true }, function(event, ...)
+--   local args = ...
+--   ddwrite({ args = args, event = event }, "____RED____")
+--   -- local kind, content = ...
+--   -- if event == "msg_show" then
+--   -- if string.find(kind, "err") then
+--   --   level = vim.log.levels.ERROR
+--   -- end
+--   -- vim.notify(content, level, { title = "Message" })
+--   -- end
+-- end)

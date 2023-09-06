@@ -6,16 +6,14 @@ return {
   --     vim.list_extend(opts.ensure_installed, { "hadolint" })
   --   end,
   -- },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  --   opts = {
-  --     diagnostics = { virtual_text = { prefix = "icons" } },
-  --     setup = {
-  --       bash = {},
-  --       bashls = {},
-  --     },
-  --   },
-  -- },
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      -- format_notify = true,
+      -- diagnostics = { virtual_text = { prefix = "icons" } },
+      -- setup = {bash = {}, bashls = {},},
+    },
+  },
 
   {
     "williamboman/mason.nvim",
@@ -25,6 +23,7 @@ return {
         "rome",
         "stylua",
         "selene",
+        -- "json",
         -- "bash",
         -- "bashls",
         -- "proselint",
@@ -38,13 +37,14 @@ return {
     "jose-elias-alvarez/null-ls.nvim",
     opts = function(_, opts)
       local nls = require("null-ls")
-      opts.debug = false
+      opts.debug = vim.g.debug_nulls
       vim.list_extend(opts.sources, {
         -- nls.builtins.formatting.dprint.with({
         --   condition = function(utils)
         --     return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json")
         --   end,
         -- }),
+        nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
         -- nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
         nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
         -- nls.builtins.code_actions.proselint.with({ filetypes = { "markdown" } }),
@@ -70,7 +70,7 @@ return {
       -- mxdump(vim.inspect(opts), "null-ls-opt")
       -- mxdump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
       --
-      return opts
+      -- return opts
       -- return {
       --   root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
       --   sources = opts.sources,

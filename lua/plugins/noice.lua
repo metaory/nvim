@@ -1,28 +1,31 @@
+-- INFO: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages
+-- local Config = require("noice.config")
+
 -- if true then return {} end
 
 return {
   "folke/noice.nvim",
+  keys = {
+    {
+      "<S-Enter>",
+      function()
+        require("noice").redirect(vim.fn.getcmdline())
+      end,
+      mode = "c",
+      desc = "Redirect Cmdline",
+    },
+  },
   opts = function(_, opts)
     -- ddwrite(opts, "noice_pre")
+
     opts.lsp = vim.tbl_deep_extend("force", {
       override = {
         ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
         ["vim.lsp.util.stylize_markdown"] = true,
         ["cmp.entry.get_documentation"] = true,
       },
-      -- message = {
-      --   enabled = true,
-      --   view = "mini",
-      -- },
-      message = {
-        enabled = true,
-        view = "notify",
-        opts = {},
-      },
-      progress = {
-        enabled = true,
-        view = "mini",
-      },
+      message = { enabled = true, view = "notify", opts = {} },
+      progress = { enabled = true, view = "mini" },
       hover = {
         enabled = true,
         silent = false, -- set to true to not show a message if hover is not available
@@ -56,25 +59,152 @@ return {
       },
     }, opts.lsp)
 
-    opts.commands = {
-      all = {
-        view = "split",
-        opts = { enter = true, format = "details" },
-        filter = {},
-      },
-    }
-    -- opts.nui = {
-    --   win_options = {
-    --     winhighlight = {
-    --       FloatBorder = "DiagnosticError",
-    --       Normal = "Constant",
+    opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
+
+    -- opts.notify = { enabled = true, view = "notify" }
+
+    -- opts.redirect = {view = "popup", filter = { event = "msg_show" },}
+
+    -- opts.messages = {
+    --   enabled = true,
+    --   view = "mini", -- opts = { format = { "{kind}" } },
+    --   view_error = "notify",
+    --   view_warn = "notify",
+    --   view_history = "messages", -- view for :messages
+    --   view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+    -- }
+
+    -- opts.nui = {win_options = {winhighlight = {FloatBorder = "DiagnosticError", Normal = "Constant",},},}
+
+    -- table.remove(opts.routes, 1)
+    -- { find = "E486:" },
+    -- { find = "at TOP" },
+    table.insert(opts.routes[1].filter.any, { find = "^E486:" })
+    table.insert(opts.routes[1].filter.any, { find = "at TOP" })
+
+    -- table.insert(opts.routes, {
+    --   filter = {
+    --     event = "msg_show",
+    --     any = {
+    --       -- { min_height = 2 },
+    --       -- { min_length = 100 },
+    --       -- { cmdline = true },
+    --       -- { find = "\\<%w\\>" },
+    --     },
+    --     -- ["not"] = { kind = { "confirm" } },
+    --   },
+    --   view = "split",
+    -- })
+    -- table.insert(opts.routes, {
+    --   filter = {
+    --     event = "msg_show",
+    --     ["not"] = { kind = { "confirm" } },
+    --   },
+    --   -- stop = false,
+    --   view = "messages",
+    -- })
+    -- table.insert(opts.routes, {
+    --   filter = {
+    --     event = "msg_show",
+    --     any = {
+    --       { cmdline = true },
     --     },
     --   },
-    -- }
-    -- ddwrite(opts, "noice_2")
-    return opts
+    --   view = "popup",
+    -- })
+
+    --   XXX:
+    --    {
+    --      view = Config.options.notify.view,
+    --      filter = {
+    --        event = "noice",
+    --        kind = { "stats", "debug" },
+    --      },
+    --      opts = { lang = "lua", replace = true, title = "Noice" },
+    --    },
+    table.insert(opts.routes, {
+      filter = {
+        event = "notify",
+        any = {
+          { min_height = 10 },
+          { min_width = 100 },
+          -- { find = "^{+" },
+        },
+      },
+      view = "split",
+    })
+    table.insert(opts.routes, { -- TODO:
+      filter = {
+        event = "notify",
+        any = {
+          {
+            max_height = 2,
+            max_width = 90,
+            ["not"] = { find = "^{+" },
+          },
+        },
+        ["not"] = { error = true },
+      },
+      view = "mini",
+    })
+    -- table.insert(opts.routes, { filter = {event = "notify",}, view = "notify",})
+    -- ddwrite(opts, "noice_x")
+    -- return opts
   end,
 }
+-- ["not"] = { find = "<%w>+" },
+-- ["not"] = { find = "^{+" },
+-- error = false,
+-- ["not"] = { error = true },
+-- , warning = false,
+-- ["not"] = { kind = { "ERROR", vim.log.levels.ERROR, tostring(vim.log.levels.ERROR) } },
+-- { min_height = 4, error = true },
+-- table.insert(opts.routes, {
+--   -- filter = { event = "msg_show", kind = "search_count" },
+--   -- filter = { event = "msg_show", kind = "search_count" },
+--   opts = { skip = true },
+--   -- view = "mini",
+-- })
+
+-- table.insert(opts.routes, {
+--   filter = { event = "notify", any = { { min_height = 20 } } },
+--   view = "split",
+-- })
+-- { find = "^{+" },
+-- { find = "^{+" },
+-- { find = "%d+L, %d+B" },
+-- { find = "; before #%d+" },
+-- { find = "; after #%d+" },
+-- │1 line less; after #178  13:38:56
+-- table.insert(opts.routes[1].filter.any, { find = ";AUTOCMD #%d+", kind = "" })
+-- opts.routes = nil
+-- opts.routes = {
+-- table.insert(opts.routes, {
+--   filter = { event = "notify", kind = tostring(vim.log.levels.ERROR) },
+--   opts = { skip = true },
+-- })
+-- any = {
+-- { kind = tostring(vim.log.levels.INFO) },
+-- { find = ";AUTOCMD #%d+", kind = vim.log.levels.WARN },
+-- },
+-- kind = "ERROR",
+-- find = "AUTOCMD",
+-- { kind = vim.log.levels.ERROR },
+-- { kind = tostring(vim.log.levels.ERROR) },
+-- { kind = "ERROR" },
+-- { warning = true },
+-- min_height = 10,
+-- ["not"] = { kind = { "ERROR", "3", "echo" } },
+-- kind = tostring(vim.log.levels.ERROR),
+-- opts = {}
+-- table.insert(opts.routes, {
+--   filter = {
+--     find = ";AUTOCMD #%d+",
+--     event = "notify",
+--   },
+--   view = "notify",
+-- })
+-- }
 -- opts = function(_, opts)
 --   table.insert(opts.routes, {
 --     filter = {
@@ -403,3 +533,90 @@ return {
 --   },
 --   -- views = { cmdline_popup = { border = { style = "none", padding = { 0, 1 }, }, filter_options = {}, win_options = { winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder", }, }, },
 -- },
+
+-- INFO:
+-- local opts = {
+--   {
+--     view = Config.options.cmdline.view,
+--     opts = Config.options.cmdline.opts,
+--     filter = { event = "cmdline" },
+--   },
+--   {
+--     view = "confirm",
+--     filter = {
+--       any = {
+--         { event = "msg_show", kind = "confirm" },
+--         { event = "msg_show", kind = "confirm_sub" },
+--         -- { event = "msg_show", kind = { "echo", "echomsg", "" }, before = true },
+--         -- { event = "msg_show", kind = { "echo", "echomsg" }, instant = true },
+--         -- { event = "msg_show", find = "E325" },
+--         -- { event = "msg_show", find = "Found a swap file" },
+--       },
+--     },
+--   },
+--   {
+--     view = Config.options.messages.view_history,
+--     filter = {
+--       any = {
+--         { event = "msg_history_show" },
+--         -- { min_height = 20 },
+--       },
+--     },
+--   },
+--   {
+--     view = Config.options.messages.view_search,
+--     filter = {
+--       event = "msg_show",
+--       kind = "search_count",
+--     },
+--   },
+--   {
+--     filter = {
+--       any = {
+--         { event = { "msg_showmode", "msg_showcmd", "msg_ruler" } },
+--         { event = "msg_show", kind = "search_count" },
+--       },
+--     },
+--     opts = { skip = true },
+--   },
+--   {
+--     view = Config.options.messages.view,
+--     filter = {
+--       event = "msg_show",
+--       kind = { "", "echo", "echomsg" },
+--     },
+--     opts = { replace = true, merge = true, title = "Messages" },
+--   },
+--   {
+--     view = Config.options.messages.view_error,
+--     filter = { error = true },
+--     opts = { title = "Error" },
+--   },
+--   {
+--     view = Config.options.messages.view_warn,
+--     filter = { warning = true },
+--     opts = { title = "Warning" },
+--   },
+--   {
+--     view = Config.options.notify.view,
+--     filter = { event = "notify" },
+--     opts = { title = "Notify" },
+--   },
+--   {
+--     view = Config.options.notify.view,
+--     filter = {
+--       event = "noice",
+--       kind = { "stats", "debug" },
+--     },
+--     opts = { lang = "lua", replace = true, title = "Noice" },
+--   },
+--   {
+--     view = Config.options.lsp.progress.view,
+--     filter = { event = "lsp", kind = "progress" },
+--   },
+--   {
+--     view = Config.options.lsp.message.view,
+--     opts = Config.options.lsp.message.opts,
+--     filter = { event = "lsp", kind = "message" },
+--   },
+-- }

@@ -6,7 +6,7 @@
   "ent": {
     "prefix": "ent",
     "body": ["entries()$1"],
-    "description": "The Object.entries() method returns an array of a given object's own enumerable string-keyed property key-value pairs."
+      "description": "The Object.entries() method returns an array of a given object's own enumerable string-keyed property key-value pairs."
   }
   // "ternary": {
   //   "prefix": ["?"],

@@ -5,11 +5,14 @@ vim.keymap.set(
   "n",
   "<leader>eet",
   async.void(function()
-    local a = ui.input({ prompt = "x::A" })
-    vim.notify("nw A", vim.log.levels.INFO, { title = tostring(a) })
+    local answers = {}
+    answers.a = ui.input({ prompt = "x::A" })
+    vim.notify("nw A", vim.log.levels.INFO, { title = tostring(answers.a) })
 
-    local b = ui.input({ prompt = "x::B" })
-    vim.notify("nw B", vim.log.levels.INFO, { title = tostring(b) })
+    answers.b = ui.input({ prompt = "x::B" })
+    vim.notify("nw B", vim.log.levels.INFO, { title = tostring(answers.b) })
+
+    ddwrite(answers, "XYZ")
   end),
   { desc = "Test (WIP)" }
 )
@@ -18,18 +21,20 @@ vim.keymap.set(
   "n",
   "<leader>er",
   async.void(function()
-    local defCommands = { javascript = "node" }
-    local cmd = defCommands[vim.bo.filetype] or vim.bo.filetype
+    local cmd = ui.input_ft_runner()
+
+    if not cmd then
+      return
+    end
+
+    vim.notify(cmd)
+
     local cwd = vim.fn.getcwd()
     local path = vim.fn.expand("%:p")
     local rel = string.gsub(path, cwd, ".")
-    vim.notify(rel)
-    local input = ui.input({ prompt = "command", default = cmd .. " " .. rel })
-    if not input then
-      return
-    end
-    vim.notify(input)
-    vim.cmd([[ enew | r ! ]] .. input)
+    local full = cmd .. " " .. rel
+
+    vim.cmd([[ enew | r ! ]] .. full)
     local buf = vim.api.nvim_win_get_buf(0)
     if not pcall(vim.treesitter.start, buf, "lua") then
       vim.bo[buf].filetype = "lua"
@@ -43,17 +48,26 @@ vim.keymap.set(
   "n",
   "<leader>eof",
   async.void(function()
-    local choice = ui.select(vim.fn.getcompletion("*", "filetype"), {
-      prompt = "Select Filetype:",
-    })
-    if choice == nil then
-      return
-    end
+    local choice = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select Filetype:" }) or vim.bo.filetype
     vim.notify(choice, vim.log.levels.INFO, { title = "Filetype Updated" })
-    vim.o.filetype = choice
+    vim.bo.filetype = choice
   end),
   { desc = "Set File Type" }
 )
+
+vim.keymap.set("n", "<leader>eov", function()
+  local old = vim.o.verbose
+  vim.o.verbose = old == 0 and 9 or 0
+  vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
+
+  local msg = string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose)
+  local lvl = vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN
+  vim.notify(msg, lvl, { title = "Verbose Level" })
+end, { desc = "Set Verbose Level" })
+
+vim.keymap.set("n", "<leader>eow", ":setlocal wrap!<CR>", { desc = "Set Text Wrap" })
+-- vim.keymap.set("n", "<leader>eow", function() vim.wo.wrap = not vim.wo.wrap; end, { desc = "Set Text Wrap" })
+
 --[[
   --   -- make ranged for loop
   -- range(start, stop, [step])

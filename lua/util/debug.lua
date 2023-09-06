@@ -1,6 +1,7 @@
 -- selene: allow(global_usage)
 
 local M = {}
+local PREFIX = "mx_vim_"
 
 function M.get_loc()
   local me = debug.getinfo(1, "S")
@@ -45,7 +46,7 @@ end
 function M.dump(...)
   local value = { ... }
   if vim.tbl_isempty(value) then
-    value = nil
+    value = {}
   else
     value = vim.tbl_islist(value) and vim.tbl_count(value) <= 1 and value[1] or value
   end
@@ -76,7 +77,7 @@ function M.extmark_leaks()
   dd(counts)
 end
 
-function estimateSize(value, visited)
+local function estimateSize(value, visited)
   if value == nil then
     return 0
   end
@@ -156,29 +157,74 @@ function M.get_upvalue(func, name)
 end
 
 function M.dumpwrite(t, f, m)
+  m = m or "w"
   t = t or {}
-  t = type(t) ~= "string" and vim.inspect(t)
-
-  local p = "/tmp/mx_lua_" .. f .. ".lua"
-  local file, err = io.open(p, m or "w")
+  t = type(t) == "table" and vim.inspect(t) or tostring(t)
 
   local rpl = "___"
-  local str = "local "
-    .. rpl
-    .. " = function() end\n\nreturn "
-    .. tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
-  --
+  local p = string.format("/tmp/%s%s.lua", PREFIX, f)
+  local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
+  local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
 
-  local _, lines = string.gsub(str, "\n", "\n")
+  local str = string.format("%s%s\n", pre, msg)
+  -- local _, lines = string.gsub(str, "\n", "\n")
 
-  -- vim.notify({ "XOXOXO", hl_group = "DiagnosticError" }, vim.log.levels.INFO, { title = "XYZ" })
+  local file, err = io.open(p, m)
+
   if file then
     file:write(str)
     file:close()
-    vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "mxdump" })
+    -- vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "ddwrite" })
   else
     print("error:", err)
+    vim.notify(err, vim.log.levels.ERROR, { title = "ddwrite" })
   end
 end
 
+M.live_inspect = function(...)
+  local str = vim.inspect(...)
+  local lines = vim.split(str, "\n")
+  local buf = vim.api.nvim_create_buf(true, false)
+
+  -- local is_remote = vim.g.mx_remtoe_debug
+  -- print(str)
+  -- if is_remote then
+  --   require("noice").redirect(str)
+  --   return
+  -- end
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  vim.api.nvim_buf_set_option(buf, "filetype", "lua")
+  vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
+  vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+  vim.api.nvim_buf_set_option(buf, "buflisted", false)
+  vim.api.nvim_buf_set_option(buf, "swapfile", false)
+
+  local win = vim.api.nvim_open_win(buf, true, {
+    relative = "win",
+    col = 80,
+    row = 10,
+    zindex = 100,
+    width = 60,
+    height = 16,
+    border = "rounded",
+  })
+
+  local close_handler = function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+  vim.keymap.set("n", "q", close_handler, {})
+
+  vim.defer_fn(close_handler, 4000)
+end
+
+-- M.live_inspect_remote = function(...)
+--   M.live_inspect(...)
+-- end
+
 return M
+
+-- vim.notify({ "XOXOXO", hl_group = "DiagnosticError" }, vim.log.levels.INFO, { title = "XYZ" })

@@ -1,3 +1,5 @@
+local isRunningPicom = vim.fn.system("pgrep picom") ~= ""
+
 return {
 
   { "catppuccin/nvim", enabled = false },
@@ -14,10 +16,11 @@ return {
   {
     "tokyonight.nvim",
     -- enabled = false,
+    --  pgrep -l picom
     opts = {
       style = "night",
       light_style = "storm",
-      transparent = true,
+      transparent = isRunningPicom,
       terminal_colors = true,
       styles = {
         -- Style to be applied to different syntax groups

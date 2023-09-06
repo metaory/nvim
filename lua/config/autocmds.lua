@@ -1,10 +1,48 @@
+local lib = require("user.lib")
+
+vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = { "*/playgrounds/*/*.*" },
+  callback = lib.create_auto_run_au,
+})
+
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
-  callback = function()
+  callback = function(args)
+    -- local buf = vim.api.nvim_win_get_buf(win)
+
+    -- vim.bo.filetype = "lua"
+    if not pcall(vim.treesitter.start, args.buf, "lua") then
+      vim.bo[args.buf].filetype = "lua"
+    end
     vim.api.nvim_exec2([[ TSBufDisable highlight ]], {})
-    vim.keymap.set("n", "q", ":q<CR>", { buffer = true })
+    vim.api.nvim_exec2([[ TSBufEnable highlight ]], {})
+    vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true })
+    vim.notify("auto cmd")
   end,
 })
 
+-- INFO:
+-- match: a string that matched the pattern (see <amatch>)
+-- buf: the number of the buffer the event was triggered in (see <abuf>)
+-- file: the file name of the buffer the event was triggered in (see <afile>)
+-- data: a table with other relevant data that is passed for some events
+
+-- local autocommands = vim.api.nvim_get_autocmds({
+--   group = "lazyvim_checktime",
+--   event = { "FocusGained", "TermClose", "TermLeave" },
+-- })
+-- LiveInspect(autocommands)
+-- for _, au in ipairs(autocommands) do
+--   ddwrite({ v = au }, "autocommands", "a")
+-- end
+-- vim.api.nvim_create_autocmd({ "FocusGained", "TermClose", "TermLeave" }, {
+--   group = augroup("checktime"),
+--   command = "checktime",
+-- })
+
+-- pattern = { "*/playgrounds/*/*.lua,*/playgrounds/*/*.js" },
+-- ddwrite(ui.runners, "runners")
 -- vim.api.nvim_create_autocmd("LspAttach", {
 --   callback = function(args)
 --     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -96,3 +134,15 @@ vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
 -- })
 -- au BufNewFile,BufRead *.js set makeprg=gjslint\ %
 -- au BufNewFile,BufRead *.js set errorformat=%-P-----\ FILE\ \ :\ \ %f\ -----,Line\ %l\\,\ E:%n:\ %m,%-Q,%-GFound\ %s,%-GSome\ %s,%-Gfixjsstyle%s,%-Gscript\ can\ %s,%-G
+
+-- INFO:
+-- vim.notify(str, lvl, {
+--   title = "stdout",
+--   background_colour = "NotifyBackground",
+--   icons = { DEBUG = "", ERROR = "", INFO = "", TRACE = "✎", WARN = "" },
+--   minimum_width = 50,
+--   render = "default",
+--   stages = "fade_in_slide_out",
+--   timeout = 10000,
+--   top_down = true,
+-- })

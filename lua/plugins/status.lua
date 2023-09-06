@@ -1,11 +1,16 @@
 return {
+  -- INFO: require('lualine').get_config()
+  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/ui.lua:95
   {
     "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      table.insert(opts.options.disabled_filetypes.statusline, "starter")
-      -- mxdump(vim.inspect(opts), "status")
-      return opts
-    end,
+    opts = {
+      options = {
+        -- theme = "horizon",
+        -- theme = "auto",
+        disabled_filetypes = { statusline = { "starter" } },
+      },
+    },
+    -- opts = function(_, opts) table.insert(opts.options.disabled_filetypes.statusline, "starter") end,
   },
 }
 

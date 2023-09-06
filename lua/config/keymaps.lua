@@ -26,20 +26,16 @@ pcall(vim.keymap.del, "n", "<Leader>e")
 pcall(vim.keymap.del, "n", "<Leader>E")
 pcall(vim.keymap.del, "n", "<Leader>K")
 pcall(vim.keymap.del, "n", "<Leader><Space>")
+pcall(vim.keymap.del, "n", "<C-_>")
+-- pcall(vim.keymap.del, "n", "<Leader>fr")
+-- pcall(vim.keymap.del, "n", "gr")
+-- { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
+
+-- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
+-- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
 -- pcall(vim.keymap.del, "n", "<Leader>fr")
 
 -- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
-
-vim.keymap.set("n", "<leader>eov", function()
-  local old = vim.o.verbose
-  vim.o.verbose = old == 0 and 9 or 0
-  vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
-  vim.notify(
-    string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose),
-    vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN,
-    { title = "Verbose Level" }
-  )
-end, { desc = "Set Verbose Level" })
 
 vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
 vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
@@ -50,13 +46,8 @@ vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileTy
 
 -- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 
--- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
-
-vim.keymap.set("n", "<leader>eow", function() -- 123 33 true false true true
-  vim.wo.wrap = not vim.wo.wrap -- "linebreak" 123454 33
-end, { desc = "Set Text Wrap" })
-
-vim.keymap.set("n", "<leader>ezr", "<CMD>MxReload<CR>", { desc = "Reload Lazy Plugin" })
+vim.keymap.set("n", "<leader>fr", "<CMD>FileRename<CR>", { desc = "File Rename" })
+vim.keymap.set("n", "<leader>ezr", "<CMD>LazyReload<CR>", { desc = "Reload Lazy Plugin" })
 
 -- map("n", "<M-t>", ":TroubleToggle<CR>", { desc = "Trouble Toggle" })
 -- { mode = "n", keys = "<Leader>eo", desc = "+Org" },
@@ -184,7 +175,7 @@ map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
 map("n", "<M-C>", ":Telescope commands<CR>", opt)
 map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
 ]]
-map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
+-- map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
 
 map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
 map("n", "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", { desc = "Quickfix Toggle" })
@@ -218,8 +209,8 @@ map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<C
 --   require("noice").redirect(vim.fn.getcmdline())
 -- end, { desc = "Redirect Cmdline" })
 
-map("n", "gG", "<CMD>OpenGithubRepo<CR>", { silent = true, desc = "Open Github Repo" })
-map("n", "gL", "<CMD>OpenWebUrl<CR>", { silent = true, desc = "Open URL" })
+map("n", "gG", "<CMD>OpenGithubLink<CR>", { silent = true, desc = "Open Github Link" })
+map("n", "gL", "<CMD>OpenWebLink<CR>", { silent = true, desc = "Open Link" })
 
 -- map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
 -- map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })

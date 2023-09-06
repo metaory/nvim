@@ -1,111 +1,21 @@
-vim.api.nvim_create_user_command("MxReload", function()
-  require("lazy.manage.reloader").enable()
+local lib = require("user.lib")
 
-  local plugins = require("lazy").plugins()
-  -- mxdump(plugins, "plugins")
+vim.api.nvim_create_user_command("CreateAutoRun", lib.create_auto_run_au, { nargs = "?" })
 
-  local loaded = {}
-  local dormant = {}
-  local report = {}
+vim.api.nvim_create_user_command("LazyReload", lib.reload_plugin_cmd, { nargs = "?" })
 
-  if vim.g.mx_reloaded_plug then
-    table.insert(loaded, vim.g.mx_reloaded_plug)
-  end
+vim.api.nvim_create_user_command("FileRename", lib.file_rename_cmd, { desc = "Rename current file" })
 
-  table.sort(plugins, function(a, b)
-    if a._.loaded == nil then
-      return false
-    end
-    if b._.loaded == nil then
-      return true
-    end
-    return a._.loaded.time < b._.loaded.time
-  end)
+vim.api.nvim_create_user_command("OpenGithubLink", lib.open_github_link, { desc = "Open Github Repo", force = true })
 
-  for _, v in pairs(plugins) do
-    local p = v
-    local pname = p.name
-    local ploaded = p._.loaded ~= nil
-    if ploaded then
-      table.insert(loaded, pname)
-      table.insert(report, { name = pname, time = p._.loaded.time })
-    else
-      table.insert(dormant, pname)
-    end
-  end
-
-  table.sort(report, function(a, b)
-    return a.time < b.time
-  end)
-
-  vim.ui.select(loaded, {
-    prompt = "Select a Plugin to Reload:",
-  }, function(choice)
-    if choice == nil then
-      return
-    end
-    vim.notify(choice, vim.log.levels.INFO, { title = "Plugin" })
-    require("lazy.core.loader").reload(require("lazy.core.config").plugins[choice])
-    vim.g.mx_reloaded_plug = choice
-  end)
-end, { nargs = "?" })
-
-vim.api.nvim_create_user_command("MxFileRename", function()
-  local default = vim.fn.expand("%:t")
-  -- string.gsub(vim.api.nvim_command("echo expand('%:p')"), vim.api.nvim_command("echo getcwd()"))
-  vim.ui.input({
-    prompt = "File Rename:",
-    default = default,
-  }, function(choice)
-    if choice == nil then
-      return
-    end
-    vim.notify(choice)
-    vim.api.nvim_exec2(":w " .. choice, {})
-    vim.api.nvim_exec2(":e#", {})
-    vim.api.nvim_exec2(":!rm " .. default, {})
-  end)
-end, {
-  -- nargs = "+",
-  -- complete = "command",
-  desc = "Rename current file",
-})
-
--- -----------------------------------------------------------------------------
+vim.api.nvim_create_user_command("OpenWebLink", lib.open_web_link, { desc = "Open Web URL", force = true })
 
 vim.api.nvim_create_user_command("Xdir", "lua require'noice'.redirect(<q-args>)", { nargs = "+", complete = "command" })
--- "lua require'noice'.redirect('lua =' .. <q-args>)",
-
-vim.api.nvim_create_user_command("OpenGithubRepo", function(_)
-  local ghpath = vim.api.nvim_eval("shellescape(expand('<cfile>'))")
-  local formatpath = ghpath:sub(2, #ghpath - 1)
-  local repourl = "https://www.github.com/" .. formatpath
-  vim.fn.system({ "xdg-open", repourl })
-end, {
-  desc = "Open Github Repo",
-  force = true,
-})
-
-vim.api.nvim_create_user_command("OpenWebUrl", function(_)
-  local linenr = vim.fn.line(".")
-  local line = vim.fn.getline(linenr)
-  local constants = {
-    pattern = "[%w@:%%._+~#=/%-?&]*",
-    http_pattern = "https?://",
-  }
-  local url = line:match(constants.http_pattern .. "%w" .. constants.pattern)
-
-  if url then
-    vim.fn.system({ "xdg-open", url })
-  else
-    return print("💁 Woops is not url gais 🙅")
-  end
-end, {
-  desc = "Open Web URL",
-  force = true,
-})
 
 --[[
+    -- style = "minimal",
+  -- ddwrite({ b = buf, w = win, s = str, l = lines }, "live")
+  -- vim.api.nvim_buf_add_highlight(help_state.buf, help_state.ns, "Special", 0, 0, -1)
 -- vim.api.nvim_get_keymap()
 vim.api.nvim_create_user_command("Redir", function(ctx)
   -- lua=vim.tbl_keys(vim.api)
@@ -128,3 +38,5 @@ end, { nargs = "+", complete = "command" })
 ]]
 
 -- vim.diagnostic.set(config.ERROR_NS, bufnr, items)
+-- nargs = "+",
+-- complete = "command",

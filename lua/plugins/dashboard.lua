@@ -4,6 +4,7 @@ return {
   { "goolord/alpha-nvim", enabled = false },
   {
     "echasnovski/mini.starter",
+    enabled = true,
     cond = function()
       return next(vim.fn.argv()) == nil
     end,
@@ -12,16 +13,15 @@ return {
       local pad = string.rep(" ", 10)
       local starter = require("mini.starter")
       local telescope = starter.sections.telescope()()
-      -- table.remove(telescope, 1)
-      -- mxdump(vim.inspect(telescope), "telescope")
+      table.remove(telescope, 1)
+
       local config = {
         evaluate_single = true,
         auto_open = false,
         header = logo,
         items = {
-          starter.sections.recent_files(2),
+          starter.sections.recent_files(4, true, true),
           telescope,
-          -- starter.sections.telescope(),
           { name = "init.lua", action = "e $MYVIMRC", section = "Config" },
           { name = "Lazy", action = "Lazy", section = "Config" },
           { name = "Restore", action = [[lua require("persistence").load()]], section = "Session" },

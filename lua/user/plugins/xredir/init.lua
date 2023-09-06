@@ -110,8 +110,8 @@
 -- local function create_win(filetype)
 --   filetype = (filetype == nil and "result") or filetype
 --   vim.api.nvim_command("botright vnew")
---   win = vim.api.nvim_get_current_win()
---   buf = vim.api.nvim_get_current_buf()
+--NOTE:  win = vim.api.nvim_get_current_win()
+--NOTE:  buf = vim.api.nvim_get_current_buf()
 --
 --   vim.api.nvim_buf_set_name(0, "result #" .. buf)
 --

@@ -14,9 +14,7 @@ return {
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
     -- stylua: ignore
-    keys = {
-      { "<leader>rr", function() require("spectre").open() end, desc = "Replace Spectre" },
-    },
+    keys = {{ "<leader>rr", function() require("spectre").open() end, desc = "Replace Spectre" },},
   },
   {
     "cshuaimin/ssr.nvim",
@@ -30,6 +28,53 @@ return {
         desc = "Structural Replace",
       },
     },
+  },
+  {
+    "echasnovski/mini.operators",
+    event = "VeryLazy",
+    config = true,
+    opts = {
+      -- No need to copy this inside `setup()`. Will be used automatically.
+      -- Each entry configures one operator.
+      -- `prefix` defines keys mapped during `setup()`: in Normal mode
+      -- to operate on textobject and line, in Visual - on selection.
+      -- Evaluate text and replace with output
+      evaluate = {
+        prefix = "g=",
+        func = nil, -- Function which does the evaluation
+        -- func = function(content)
+        --   if not H.is_content(content) then
+        --     H.error("`content` should be a content table.")
+        --   end
+        --   local lines, submode = content.lines, content.submode
+        --   -- In non-blockwise mode return the result of the last line
+        --   if submode ~= H.submode_keys.block then
+        --     return H.eval_lua_lines(lines)
+        --   end
+        --   -- In blockwise selection evaluate and return each line separately
+        --   return vim.tbl_map(function(l)
+        --     return H.eval_lua_lines({ l })[1]
+        --   end, lines)
+        -- end,
+      },
+      exchange = { -- Exchange text regions
+        prefix = "gx",
+        reindent_linewise = true, -- Whether to reindent new text to match previous indent
+      },
+      multiply = { -- Multiply (duplicate) text
+        prefix = "gm",
+        func = nil, -- Function which can modify text before multiplying
+      },
+      replace = { -- Replace text with register
+        prefix = "go",
+        reindent_linewise = true, -- Whether to reindent new text to match previous indent
+      },
+      sort = { -- Sort text
+        prefix = "gs",
+        func = nil, -- Function which does the sort
+      },
+    },
+    -- keys = { { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
 
   {
