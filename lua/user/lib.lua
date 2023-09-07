@@ -66,7 +66,7 @@ M.create_auto_run_au = async.void(function()
       local str = table.concat(l, "\n")
       local lvl = pass and vim.log.levels.INFO or vim.log.levels.ERROR
 
-      require("noice").cmd("dismiss")
+      -- require("noice").cmd("dismiss")
       vim.notify(str, lvl, { title = "stdout", timeout = 6000 })
     end),
   })

@@ -7,6 +7,11 @@ vim.api.nvim_create_autocmd("BufReadPost", {
   callback = lib.create_auto_run_au,
 })
 
+-- local parser = vim.treesitter.get_parser()
+-- if not parser then
+--   return vim.notify("No treesitter parser for the current buffer", vim.log.levels.ERROR)
+-- end
+
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   callback = function(args)
     -- local buf = vim.api.nvim_win_get_buf(win)
@@ -145,4 +150,11 @@ vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
 --   stages = "fade_in_slide_out",
 --   timeout = 10000,
 --   top_down = true,
+-- })
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = {"help", "alpha", "dashboard", "starter", "neo-tree", "Trouble", "lazy", "mason", "notify", "toggleterm", "lazyterm",},
+--   callback = function()
+--     vim.b["miniindentscope_disable"] = true
+--   end,
 -- })

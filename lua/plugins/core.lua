@@ -1,37 +1,4 @@
 return {
-  -- ○ nvim-navic      ■ already up to date
-  -- ○ nvim-peekup      ■ already up to date
-  -- ○ nvim-spectre   Spectre   <leader>sr     ■ already up to date
-  -- ○ nvim-treesitter   TSUpdateSync  BufReadPost BufNewFile   <c-space> <bs> <c-space> <bs>     ■ already up to date
-  -- ○ nvim-treesitter-context      ■ already up to date
-  -- ○ nvim-ts-context-commentstring      ■ already up to date
-
-  -- { "ellisonleao/gruvbox.nvim" },
-  -- TODO: base16
-  -- { "simrat39/rust-tools.nvim" },
-  -- { 'mhartington/formatter.nvim' },
-  -- { "hjson/vim-hjson", ft = "hjson" },
-  -- { "f-person/git-blame.nvim", ft = "*" },
-
-  { "vito-c/jq.vim", ft = "jq" },
-  { "fladson/vim-kitty", ft = "kitty" },
-  { "hashivim/vim-terraform", ft = "terraform" },
-  { "imsnif/kdl.vim", ft = "kdl" },
-  { "mustache/vim-mustache-handlebars", ft = "hbs" },
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    -- event = "VeryLazy",
-    event = "VimEnter",
-    -- event = { "BufReadPost", "BufNewFile" },
-    -- dependencies = { "nvim-telescope/telescope.nvim" },
-
-    -- cmd = "Telescope",
-  },
-  -- { "lukas-reineke/indent-blankline.nvim", -- enabled = false, },
-  -- { "echasnovski/mini.indentscope", -- enabled = false, },
-  -- { "norcalli/nvim-colorizer.lua" },
-  -- { import = "lazyvim.plugins.extras.ui.mini-starter" },
-
   -- NOTE: https://github.com/aca/wezterm.nvim
   {
     "numToStr/Navigator.nvim",
@@ -44,9 +11,34 @@ return {
     dependencies = { { "kkharji/sqlite.lua", enabled = false } },
     keys = { { "<leader>p", nil, false } },
     opts = { ring = { storage = "shada" } },
-    -- opts = function(_, opts) return vim.list_extend({ ring = { storage = "shada" } }, opts) end,
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = "VimEnter",
+    opts = function(_, opts)
+      table.insert(opts.filetype_exclude, "starter")
+    end,
+  },
+  -- { "lukas-reineke/indent-blankline.nvim", -- enabled = false, },
+  -- { "echasnovski/mini.indentscope", enabled = true, init = function() end },
 }
+-- opts = function(_, opts) return vim.list_extend({ ring = { storage = "shada" } }, opts) end,
+-- ○ nvim-navic      ■ already up to date
+-- ○ nvim-peekup      ■ already up to date
+-- ○ nvim-spectre   Spectre   <leader>sr     ■ already up to date
+-- ○ nvim-treesitter   TSUpdateSync  BufReadPost BufNewFile   <c-space> <bs> <c-space> <bs>     ■ already up to date
+-- ○ nvim-treesitter-context      ■ already up to date
+-- ○ nvim-ts-context-commentstring      ■ already up to date
+
+-- { "ellisonleao/gruvbox.nvim" },
+-- TODO: base16
+-- { "simrat39/rust-tools.nvim" },
+-- { 'mhartington/formatter.nvim' },
+-- { "hjson/vim-hjson", ft = "hjson" },
+-- { "f-person/git-blame.nvim", ft = "*" },
+-- { "norcalli/nvim-colorizer.lua" },
+-- { import = "lazyvim.plugins.extras.ui.mini-starter" },
+
 -- { "NvChad/nvim-colorizer.lua", cmd = "ColorizerToggle", opts = { filetypes = { html = { mode = "foreground" }, }, }, },
 -- { "ron-rs/ron.vim" },
 -- { "niuiic/divider.nvim" },

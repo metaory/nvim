@@ -32,9 +32,9 @@ return {
         if not pcall(vim.treesitter.start, buf, "lua") then
           vim.bo[buf].filetype = "lua"
         end
-        -- vim.api.nvim_buf_set_option(buf, "filetype", "lua")
       end,
     },
+    -- vim.api.nvim_buf_set_option(buf, "filetype", "lua")
     -- init = function()
     -- when noice is not enabled, install notify on VeryLazy
     -- local Util = require("lazyvim.util")

@@ -97,6 +97,8 @@ return {
         }),
         augend.constant.new({ elements = { "&&", "||" }, word = false }),
         augend.constant.new({ elements = { "on", "off" }, word = false }),
+        augend.constant.new({ elements = { "left", "right" }, word = false }),
+        augend.constant.new({ elements = { "up", "down" }, word = false }),
         augend.paren.alias.quote,
         -- augend.paren.alias.brackets,
         augend.integer.alias.decimal,
@@ -117,7 +119,7 @@ return {
         javascript = javascript,
         lua = vim.list_extend({
           augend.constant.new({ elements = { "and", "or" }, word = true }),
-          augend.paren.alias.lua_str_literal,
+          -- augend.paren.alias.lua_str_literal,
         }, default),
         rust = vim.list_extend({ augend.paren.alias.rust_str_literal }, default),
         markdown = vim.list_extend({ augend.misc.alias.markdown_header }, default),
@@ -130,6 +132,57 @@ return {
     cmd = "SymbolsOutline",
     opts = {},
   },
+  {
+    "L3MON4D3/LuaSnip",
+    -- opts = {history = true, delete_check_events = "TextChanged",},
+    keys = {
+      {
+        "<tab>",
+        function()
+          local ls = require("luasnip")
+
+          if ls.choice_active() then
+            return "<Plug>luasnip-next-choice"
+          end
+
+          if ls.jumpable(1) then
+            return "<Plug>luasnip-jump-next"
+          end
+
+          return "<tab>"
+        end,
+        expr = true,
+        silent = true,
+        mode = "i",
+      },
+      {
+        "<tab>",
+        function()
+          require("luasnip").jump(1)
+        end,
+        mode = "s",
+      },
+      {
+        "<s-tab>",
+        function()
+          require("luasnip").jump(-1)
+        end,
+        mode = { "i", "s" },
+      },
+    },
+  },
+  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:70
+  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:24
+  -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md?plain=1#L3339
+  -- https://github.com/L3MON4D3/LuaSnip/blob/master/doc/luasnip.txt#L754C1-L755C1
+  -- {
+  --     "hrsh7th/nvim-cmp",
+  --     dependencies = {{"Saecki/crates.nvim", event = { "BufRead Cargo.toml" }, config = true,},},
+  --     opts = function(_, opts)
+  --       local cmp = require("cmp")
+  --       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {{ name = "crates" },}))
+  --     end,
+  --   }
 }
 -- {
 --   "nvim-cmp",

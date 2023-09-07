@@ -157,6 +157,9 @@ function M.get_upvalue(func, name)
 end
 
 function M.dumpwrite(t, f, m)
+  if vim.g.debug_global_flag == false then
+    return
+  end
   m = m or "w"
   t = t or {}
   t = type(t) == "table" and vim.inspect(t) or tostring(t)
@@ -164,7 +167,8 @@ function M.dumpwrite(t, f, m)
   local rpl = "___"
   local p = string.format("/tmp/%s%s.lua", PREFIX, f)
   local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
-  local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
+  local msg = tostring(t)
+  -- local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
 
   local str = string.format("%s%s\n", pre, msg)
   -- local _, lines = string.gsub(str, "\n", "\n")
@@ -182,16 +186,10 @@ function M.dumpwrite(t, f, m)
 end
 
 M.live_inspect = function(...)
-  local str = vim.inspect(...)
-  local lines = vim.split(str, "\n")
+  local lines = vim.split(vim.inspect(...), "\n")
   local buf = vim.api.nvim_create_buf(true, false)
 
-  -- local is_remote = vim.g.mx_remtoe_debug
-  -- print(str)
-  -- if is_remote then
-  --   require("noice").redirect(str)
-  --   return
-  -- end
+  -- XXX: local is_remote = vim.g.mx_remtoe_debug
 
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 
@@ -201,30 +199,25 @@ M.live_inspect = function(...)
   vim.api.nvim_buf_set_option(buf, "buflisted", false)
   vim.api.nvim_buf_set_option(buf, "swapfile", false)
 
-  local win = vim.api.nvim_open_win(buf, true, {
-    relative = "win",
-    col = 80,
-    row = 10,
-    zindex = 100,
-    width = 60,
-    height = 16,
-    border = "rounded",
-  })
+  local win_opt = { relative = "win", col = 80, row = 10, zindex = 100, width = 60, height = 16, border = "rounded" }
+
+  local win = vim.api.nvim_open_win(buf, true, win_opt)
 
   local close_handler = function()
     if vim.api.nvim_win_is_valid(win) then
       vim.api.nvim_win_close(win, true)
     end
   end
+
   vim.keymap.set("n", "q", close_handler, {})
 
-  vim.defer_fn(close_handler, 4000)
+  vim.defer_fn(close_handler, 10000)
 end
-
--- M.live_inspect_remote = function(...)
---   M.live_inspect(...)
--- end
 
 return M
 
 -- vim.notify({ "XOXOXO", hl_group = "DiagnosticError" }, vim.log.levels.INFO, { title = "XYZ" })
+
+-- M.live_inspect_remote = function(...)
+--   M.live_inspect(...)
+-- end

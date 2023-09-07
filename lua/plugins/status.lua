@@ -3,16 +3,36 @@ return {
   -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/ui.lua:95
   {
     "nvim-lualine/lualine.nvim",
-    opts = {
-      options = {
-        -- theme = "horizon",
-        -- theme = "auto",
-        disabled_filetypes = { statusline = { "starter" } },
-      },
-    },
-    -- opts = function(_, opts) table.insert(opts.options.disabled_filetypes.statusline, "starter") end,
+    -- opts = {
+    --   options = {
+    --     -- theme = "horizon",
+    --     -- theme = "auto",
+    --     disabled_filetypes = { statusline = { "starter" } },
+    --   },
+    -- },
+    opts = function(_, opts)
+      table.insert(opts.options.disabled_filetypes.statusline, "starter")
+      table.insert(opts.sections.lualine_x, {
+        require("noice").api.status.search["get"],
+        cond = require("noice").api.status.search["has"],
+        color = { fg = "#ff9e64" },
+      })
+
+      -- ddwrite(opts, "lualine")
+    end,
   },
 }
+-- lualine_x = {
+--   {
+--     function() return require("noice").api.status.command.get() end,
+--     cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
+--     color = Util.fg("Statement"),
+--   },
+--   {
+--     function() return require("noice").api.status.mode.get() end,
+--     cond = function() return package.loaded["noice"] and require("noice").api.status.mode.has() end,
+--     color = Util.fg("Constant"),
+--   },
 
 -- {
 --   "nvim-lualine/lualine.nvim",

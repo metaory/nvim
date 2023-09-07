@@ -4,8 +4,10 @@ https://jacobsimpson.github.io/nvim-lua-manual/docs/communicating/
 local util = require("util.debug")
 
 vim.g.vscode = false
-vim.g.debug_treesitter = false
-vim.g.debug_nulls = false
+vim.g.debug_global_flag = false
+vim.g.debug_treesitter = vim.g.debug_global_flag
+vim.g.debug_nulls = vim.g.debug_global_flag
+-- vim.g.loaded_node_provider = true
 
 if vim.loader then
   vim.loader.enable()
@@ -13,7 +15,7 @@ end
 
 _G.dd = util.dump
 _G.ddwrite = util.dumpwrite
--- _G.live_inspect = util.live_inspect
+_G.live_inspect = util.live_inspect
 
 require("user.commands")
 require("config.lazy")

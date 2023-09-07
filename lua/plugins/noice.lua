@@ -17,123 +17,11 @@ return {
   },
   opts = function(_, opts)
     -- ddwrite(opts, "noice_pre")
+    opts.health = { checker = true }
 
-    opts.lsp = vim.tbl_deep_extend("force", {
-      override = {
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
-        ["vim.lsp.util.stylize_markdown"] = true,
-        ["cmp.entry.get_documentation"] = true,
-      },
-      message = { enabled = true, view = "notify", opts = {} },
-      progress = { enabled = true, view = "mini" },
-      hover = {
-        enabled = true,
-        silent = false, -- set to true to not show a message if hover is not available
-        view = nil, -- when nil, use defaults from documentation
-        ---@type NoiceViewOptions
-        opts = {}, -- merged with defaults from documentation
-      },
-      signature = {
-        enabled = true,
-        auto_open = {
-          enabled = true,
-          trigger = true, -- Automatically show signature help when typing a trigger character from the LSP
-          luasnip = true, -- Will open signature help when jumping to Luasnip insert nodes
-          throttle = 50, -- Debounce lsp signature help request by 50ms
-        },
-        view = nil, -- when nil, use defaults from documentation
-        ---@type NoiceViewOptions
-        opts = {}, -- merged with defaults from documentation
-      },
-      -- defaults for hover and signature help
-      documentation = {
-        view = "hover",
-        ---@type NoiceViewOptions
-        opts = {
-          lang = "markdown",
-          replace = true,
-          render = "plain",
-          format = { "{message}" },
-          win_options = { concealcursor = "n", conceallevel = 3 },
-        },
-      },
-    }, opts.lsp)
-
-    opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
-
-    -- opts.notify = { enabled = true, view = "notify" }
-
-    -- opts.redirect = {view = "popup", filter = { event = "msg_show" },}
-
-    -- opts.messages = {
-    --   enabled = true,
-    --   view = "mini", -- opts = { format = { "{kind}" } },
-    --   view_error = "notify",
-    --   view_warn = "notify",
-    --   view_history = "messages", -- view for :messages
-    --   view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
-    -- }
-
-    -- opts.nui = {win_options = {winhighlight = {FloatBorder = "DiagnosticError", Normal = "Constant",},},}
-
-    -- table.remove(opts.routes, 1)
-    -- { find = "E486:" },
-    -- { find = "at TOP" },
     table.insert(opts.routes[1].filter.any, { find = "^E486:" })
     table.insert(opts.routes[1].filter.any, { find = "at TOP" })
-
-    -- table.insert(opts.routes, {
-    --   filter = {
-    --     event = "msg_show",
-    --     any = {
-    --       -- { min_height = 2 },
-    --       -- { min_length = 100 },
-    --       -- { cmdline = true },
-    --       -- { find = "\\<%w\\>" },
-    --     },
-    --     -- ["not"] = { kind = { "confirm" } },
-    --   },
-    --   view = "split",
-    -- })
-    -- table.insert(opts.routes, {
-    --   filter = {
-    --     event = "msg_show",
-    --     ["not"] = { kind = { "confirm" } },
-    --   },
-    --   -- stop = false,
-    --   view = "messages",
-    -- })
-    -- table.insert(opts.routes, {
-    --   filter = {
-    --     event = "msg_show",
-    --     any = {
-    --       { cmdline = true },
-    --     },
-    --   },
-    --   view = "popup",
-    -- })
-
-    --   XXX:
-    --    {
-    --      view = Config.options.notify.view,
-    --      filter = {
-    --        event = "noice",
-    --        kind = { "stats", "debug" },
-    --      },
-    --      opts = { lang = "lua", replace = true, title = "Noice" },
-    --    },
     table.insert(opts.routes, {
-      filter = {
-        event = "notify",
-        any = {
-          { min_height = 10 },
-          { min_width = 100 },
-          -- { find = "^{+" },
-        },
-      },
-      view = "split",
-    })
-    table.insert(opts.routes, { -- TODO:
       filter = {
         event = "notify",
         any = {
@@ -141,15 +29,40 @@ return {
             max_height = 2,
             max_width = 90,
             ["not"] = { find = "^{+" },
+            error = false,
+            warning = false,
           },
         },
-        ["not"] = { error = true },
+        -- ["not"] = { error = true },
       },
       view = "mini",
     })
-    -- table.insert(opts.routes, { filter = {event = "notify",}, view = "notify",})
-    -- ddwrite(opts, "noice_x")
-    -- return opts
+    -- table.insert(opts.routes, {
+    --   filter = {
+    --     event = "notify",
+    --     any = { { find = "foo" } },
+    --   },
+    --   view = "split",
+    -- })
+
+    opts.commands = {
+      all = { view = "split", opts = { enter = true, format = "details" }, filter = {} },
+      -- history = {view = "split",},
+      -- last = {view = "popup",},
+      -- errors = {view = "popup",},
+    }
+
+    opts.views = vim.tbl_deep_extend("force", {
+      popup = { size = { width = "70%", height = "50%" } },
+      notify = {
+        -- format = { "{kind} ", "{event} ", "{message}" },
+        -- format = "default",
+        replace = true,
+      },
+      split = { win_options = { wrap = false } },
+    }, opts.views or {})
+
+    -- ddwrite(opts, "noice_POST")
   end,
 }
 -- ["not"] = { find = "<%w>+" },
@@ -620,3 +533,272 @@ return {
 --     filter = { event = "lsp", kind = "message" },
 --   },
 -- }
+
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "msg_show",
+--     any = {
+--       -- { min_height = 2 },
+--       -- { min_length = 100 },
+--       -- { cmdline = true },
+--       -- { find = "\\<%w\\>" },
+--     },
+--     -- ["not"] = { kind = { "confirm" } },
+--   },
+--   view = "split",
+-- })
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "msg_show",
+--     ["not"] = { kind = { "confirm" } },
+--   },
+--   -- stop = false,
+--   view = "messages",
+-- })
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "msg_show",
+--     any = {
+--       { cmdline = true },
+--     },
+--   },
+--   view = "popup",
+-- })
+
+--   XXX:
+--    {
+--      view = Config.options.notify.view,
+--      filter = {
+--        event = "noice",
+--        kind = { "stats", "debug" },
+--      },
+--      opts = { lang = "lua", replace = true, title = "Noice" },
+--    },
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "notify",
+--     any = {
+--       { min_height = 10 },
+--       { min_width = 100 },
+--       -- { find = "^{+" },
+--     },
+--   },
+--   view = "split",
+-- })
+
+-- INFO: DEFAULT VIEWS
+-- opts.views = {
+-- popupmenu = {
+--   relative = "editor",
+--   zindex = 65,
+--   position = "auto", -- when auto, then it will be positioned to the cmdline or cursor
+--   size = { width = "auto", height = "auto", max_height = 20, min_width = 10 },
+--   win_options = {
+--     winbar = "",
+--     foldenable = false,
+--     cursorline = true,
+--     cursorlineopt = "line",
+--     winhighlight = {Normal = "NoicePopupmenu", FloatBorder = "NoicePopupmenuBorder", CursorLine = "NoicePopupmenuSelected", PmenuMatch = "NoicePopupmenuMatch",},
+--   },
+--   border = { padding = { 0, 1 } },
+-- },
+-- cmdline_popupmenu = { view = "popupmenu", zindex = 200 },
+-- virtualtext = { backend = "virtualtext", format = { "{message}" }, hl_group = "NoiceVirtualText" },
+-- notify = {
+--   backend = "notify",
+--   fallback = "mini",
+--   format = "notify",
+--   replace = false,
+--   merge = false,
+-- },
+-- split = {
+--   backend = "split",
+--   enter = false,
+--   relative = "editor",
+--   position = "bottom",
+--   size = "20%",
+--   close = {keys = { "q" },},
+--   win_options = { winhighlight = { Normal = "NoiceSplit", FloatBorder = "NoiceSplitBorder" }, wrap = false },
+-- },
+-- messages = { view = "split", enter = true },
+-- vsplit = { view = "split", position = "right" },
+-- hover = {
+--   view = "popup",
+--   relative = "cursor",
+--   zindex = 45,
+--   enter = false,
+--   anchor = "auto",
+--   size = { width = "auto", height = "auto", max_height = 20, max_width = 120 },
+--   border = { style = "none", padding = { 0, 2 } },
+--   position = { row = 1, col = 0 },
+--   win_options = { wrap = true, linebreak = true },
+-- },
+-- popup = {
+--   backend = "popup",
+--   relative = "editor",
+--   close = {events = { "BufLeave" }, keys = { "q" },},
+--   enter = true,
+--   border = {style = "rounded",},
+--   position = "50%",
+--   size = { width = "70%", height = "50%" },
+--   position = { row = "50%", col = "50%" },
+--   win_options = {winhighlight = { Normal = "NoicePopup", FloatBorder = "NoicePopupBorder" }, winbar = "", foldenable = false,},
+-- },
+-- cmdline_output = { format = "details", view = "popup" },
+-- cmdline = {
+--   backend = "popup",
+--   relative = "editor",
+--   position = { row = "100%", col = 0 },
+--   size = { height = "auto", width = "100%" },
+--   border = { style = "none" },
+--   win_options = { winhighlight = { Normal = "NoiceCmdline", IncSearch = "", CurSearch = "", Search = "" } },
+-- },
+-- cmdline_popup = {
+--   backend = "popup",
+--   relative = "editor",
+--   focusable = false,
+--   enter = false,
+--   zindex = 200,
+--   position = { row = "50%", col = "50%" },
+--   size = { min_width = 60, width = "auto", height = "auto" },
+--   border = { style = "rounded", padding = { 0, 1 } },
+--   win_options = {
+--     winhighlight = {
+--       Normal = "NoiceCmdlinePopup",
+--       FloatTitle = "NoiceCmdlinePopupTitle",
+--       FloatBorder = "NoiceCmdlinePopupBorder",
+--       IncSearch = "",
+--       CurSearch = "",
+--       Search = "",
+--     },
+--     winbar = "",
+--     foldenable = false,
+--     cursorline = false,
+--   },
+-- },
+-- confirm = {
+--   backend = "popup",
+--   relative = "editor",
+--   focusable = false,
+--   align = "center",
+--   enter = false,
+--   zindex = 210,
+--   format = { "{confirm}" },
+--   position = { row = "50%", col = "50%" },
+--   size = "auto",
+--   border = { style = "rounded", padding = { 0, 1 }, text = { top = " Confirm " } },
+--   win_options = {
+--     winhighlight = { Normal = "NoiceConfirm", FloatBorder = "NoiceConfirmBorder" },
+--     winbar = "",
+--     foldenable = false,
+--   },
+-- },
+-- mini = {
+--  backend = "mini",
+--  relative = "editor",
+--  align = "message-right",
+--  timeout = 2000,
+--  reverse = true,
+--  focusable = false,
+--  position = { row = -1, col = "100%" }, -- col = 0,
+--  size = "auto",
+--  border = { style = "none" },
+--  zindex = 60,
+--  win_options = {winbar = "", foldenable = false, winblend = 30, winhighlight = { Normal = "NoiceMini", IncSearch = "", CurSearch = "", Search = "" },},
+-- },
+-- }
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "markdown",
+--   callback = function(event)
+--     vim.schedule(function()
+--       vim.notify("NOW!!!!!!!!!!1")
+--       require("noice.text.markdown").keys(event.buf)
+--     end)
+--   end,
+-- })
+
+-- opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
+
+-- opts.notify = { enabled = true, view = "notify" }
+
+-- opts.redirect = {view = "popup", filter = { event = "msg_show" },}
+
+-- opts.messages = {
+--   enabled = true,
+--   view = "mini", -- opts = { format = { "{kind}" } },
+--   view_error = "notify",
+--   view_warn = "notify",
+--   view_history = "messages", -- view for :messages
+--   view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+-- }
+
+-- opts.nui = {win_options = {winhighlight = {FloatBorder = "DiagnosticError", Normal = "Constant",},},}
+-- table.remove(opts.routes, 1)
+-- opts.markdown = {
+--   hover = {
+--     ["|(%S-)|"] = vim.cmd.help, -- vim help links
+--     ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
+--   },
+--   highlights = {
+--     ["|%S-|"] = "@text.reference",
+--     ["@%S+"] = "@parameter",
+--     ["^%s*(Parameters:)"] = "@text.title",
+--     ["^%s*(Return:)"] = "@text.title",
+--     ["^%s*(See also:)"] = "@text.title",
+--     ["{%S-}"] = "@parameter",
+--   },
+-- }
+-- opts.cmdline = {
+--   enabled = true, -- enables the Noice cmdline UI
+--   view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+--   opts = {}, -- global options for the cmdline. See section on views
+--   format = {
+--     -- conceal: (default=true) This will hide the text in the cmdline that matches the pattern.
+--     -- view: (default is cmdline view)
+--     -- opts: any options passed to the view
+--     -- icon_hl_group: optional hl_group for the icon
+--     -- title: set to anything or empty string to hide
+--     cmdline = { pattern = "^:", icon = "", lang = "vim" },
+--     search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
+--     search_up = { kind = "search", pattern = "^%?", icon = " ", lang = "regex" },
+--     filter = { pattern = "^:%s*!", icon = "$", lang = "bash" },
+--     lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = "", lang = "lua" },
+--     help = { pattern = "^:%s*he?l?p?%s+", icon = "" },
+--     input = {}, -- Used by input()
+--   },
+-- }
+
+-- opts.lsp = vim.tbl_deep_extend("force", {
+--   --   -- message = { enabled = true, view = "notify", opts = {} },
+--   --   -- progress = { enabled = true, view = "mini" },
+--   hover = { enabled = true, silent = false, view = nil, opts = {} },
+--   signature = {enabled = true, auto_open = { enabled = true, trigger = true, luasnip = true, throttle = 50 }, view = nil, opts = {},},
+--   documentation = {view = "hover", opts = {lang = "markdown", replace = true, render = "plain", format = { "{message}" }, win_options = { concealcursor = "n", conceallevel = 3 },},},
+-- }, opts.lsp)
+-- opts.popupmenu = { enabled = true, backend = "nui", kind_icons = {} } ---@type 'nui'|'cmp'
+-- opts.format = {
+--   default = { "{level} ", "{title} ", "{message}" },
+--   notify = { "xo{message}{message}" },
+--   foo_format = { "{message}" },
+-- }
+-- opts = { format = { "xo" } },
+
+-- opts.lsp = vim.tbl_deep_extend("force", {
+--   progress = {
+--     enabled = true,
+--     format = "lsp_progress",
+--     format_done = "lsp_progress_done",
+--     throttle = 1000 / 30,
+--     view = "mini",
+--   },
+-- }, opts.lsp)
+-- opts = {
+--   title = "XOtify",
+--   on_open = function(win)
+--     local buf = vim.api.nvim_win_get_buf(win)
+--     if not pcall(vim.treesitter.start, buf, "vim") then
+--       vim.bo[buf].filetype = "vim"
+--     end
+--     ddwrite(win, "XOOXOXO")
+--   end,
+-- },

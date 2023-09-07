@@ -15,68 +15,107 @@ vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
--- vim.keymap.del("n", "gc")
---
-pcall(vim.keymap.del, "n", "<Leader>sr")
-pcall(vim.keymap.del, "n", "<Leader>sR")
-pcall(vim.keymap.del, "n", "<Leader>p")
-pcall(vim.keymap.del, "n", "<Leader>l")
-pcall(vim.keymap.del, "n", "<Leader>L")
-pcall(vim.keymap.del, "n", "<Leader>e")
-pcall(vim.keymap.del, "n", "<Leader>E")
-pcall(vim.keymap.del, "n", "<Leader>K")
-pcall(vim.keymap.del, "n", "<Leader><Space>")
-pcall(vim.keymap.del, "n", "<C-_>")
--- pcall(vim.keymap.del, "n", "<Leader>fr")
--- pcall(vim.keymap.del, "n", "gr")
--- { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
+local del_keymap = function(x)
+  local mode = "n"
+  local key = x
 
--- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
--- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
--- pcall(vim.keymap.del, "n", "<Leader>fr")
+  if vim.tbl_islist(x) then
+    mode = x[1]
+    key = x[2]
+  end
 
--- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
+  pcall(vim.keymap.del, mode, key)
+end
 
-vim.keymap.set("n", "<leader>il", ":LspInfo<CR>", { desc = "LSP Info" })
-vim.keymap.set("n", "<leader>iz", ":Lazy<CR>", { desc = "Lazy Info" })
-vim.keymap.set("n", "<leader>in", ":NullLsInfo<CR>", { desc = "Null-ls Info" })
-vim.keymap.set("n", "<leader>if", ":verbose set filetype?<CR>", { desc = "FileType Info" })
--- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
--- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
+local set_keymap = function(lhs, rhs, opts)
+  local mode = "n"
+  opts = opts or {}
 
--- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+  if type(opts) == "string" then
+    opts = { desc = opts }
+  end
+
+  if opts.mode then
+    mode = opts.mode
+    opts.mode = nil
+  end
+
+  -- ddwrite({ mode = mode, lhs = lhs, rhs = rhs, opts = opts }, "set_keymap")
+  vim.keymap.set(mode, lhs, rhs, opts)
+end
+
+-- set_keymap("<leader>il", "<CMD>LspInfo<CR>")
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", "foo bar")
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", silent = true })
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", mode = { "n", "v", "x" }, silent = true })
+
+-- (mode, lhs, rhs, opts)
+
+-- { "v", "<Leader>gst" }, -- INFO: sample <<<
+local disable_keys = {
+  "<Leader>sr",
+  "<Leader>sR",
+  "<Leader>p",
+  "<Leader>l",
+  "<Leader>L",
+  "<Leader>e",
+  "<Leader>E",
+  "<Leader>K",
+  "<Leader><Space>",
+  "<C-_>",
+}
+
+vim.tbl_map(del_keymap, disable_keys)
+
+vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
+  if not require("noice.lsp").scroll(4) then
+    return "<c-f>"
+  end
+end, { silent = true, expr = true })
+
+vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
+  if not require("noice.lsp").scroll(-4) then
+    return "<c-b>"
+  end
+end, { silent = true, expr = true })
+
+vim.keymap.set("n", "<leader><cr>", function()
+  local cwd = vim.fn.expand("%:h")
+  pcall(vim.api.nvim_set_current_dir, cwd)
+  vim.schedule(function()
+    vim.notify(cwd, vim.log.levels.WARN, { title = "CWD" })
+  end)
+end, { desc = "Set CWD" })
+
+local opts = function(desc)
+  return { desc = desc }
+end
+
+vim.keymap.set("n", "<leader>il", "<CMD>LspInfo<CR>", opts("LSP Info"))
+vim.keymap.set("n", "<leader>iz", "<CMD>Lazy<CR>", { desc = "Lazy Info" })
+vim.keymap.set("n", "<leader>in", "<CMD>NullLsInfo<CR>", { desc = "Null-ls Info" })
+vim.keymap.set("n", "<leader>if", "<CMD>verbose set filetype?<CR>", { desc = "FileType Info" })
 
 vim.keymap.set("n", "<leader>fr", "<CMD>FileRename<CR>", { desc = "File Rename" })
 vim.keymap.set("n", "<leader>ezr", "<CMD>LazyReload<CR>", { desc = "Reload Lazy Plugin" })
 
--- map("n", "<M-t>", ":TroubleToggle<CR>", { desc = "Trouble Toggle" })
--- { mode = "n", keys = "<Leader>eo", desc = "+Org" },
--- map("n", "<leader>eo", "", { desc = "+Org" })
 map("n", "<leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Wik Index" })
 map("n", "<leader>eww", "<CMD>Neorg workspace mx<CR>", { desc = "Wik Workspace" })
 map("n", "<leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", { desc = "Wik Journal" })
+map("n", "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Wiki Yesterday" })
 map("n", "<leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", { desc = "Wik Today" })
 map("n", "<leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", { desc = "Wik Tomorrow" })
-map("n", "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Wiki Yesterday" })
 
--- { mode = "n", keys = "<Leader>eh", desc = "+Help" },
--- map("n", "<leader>eh", "", { desc = "+Help" })
 map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current [+f]" })
 map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current" })
 map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index [+f]" })
 map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index" })
 
 map("n", "<leader>ed", ":Xdir <C-R>: <C-y>", { noremap = true, desc = "Inspect Previous" })
-
--- { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
--- { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
--- map("n", "<leader>ex", "", { desc = "+Inspect" })
 map("n", "<leader>exy", ":lua <C-R>* <C-y>", { noremap = true, desc = "Inspect Yank (CMD)" })
 map("n", "<leader>exx", ":Xdir lua =<C-R>: <C-y>", { noremap = true, desc = "Inspect Redirect (CMD)" })
 map("n", "<leader>exe", ":Xdir <C-R>=", { noremap = true, desc = "Inspect Expand (Redirect)" })
 map("n", "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", { noremap = true, desc = "Inspect Expand Line (Redirect)" })
--- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
--- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
 
 map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
 map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)
@@ -442,3 +481,29 @@ map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 --     y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
 --   },
 -- }, { prefix = "<leader>" })
+-- pcall(vim.keymap.del, "n", "<Leader>fr")
+-- pcall(vim.keymap.del, "n", "gr")
+-- { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
+-- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
+-- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
+-- pcall(vim.keymap.del, "n", "<Leader>fr")
+-- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
+-- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
+
+-- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+-- map("n", "<M-t>", ":TroubleToggle<CR>", { desc = "Trouble Toggle" })
+-- { mode = "n", keys = "<Leader>eo", desc = "+Org" },
+-- map("n", "<leader>eo", "", { desc = "+Org" })
+-- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
+-- { mode = "n", keys = "<Leader>eh", desc = "+Help" },
+-- map("n", "<leader>eh", "", { desc = "+Help" })
+-- { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
+-- { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
+-- map("n", "<leader>ex", "", { desc = "+Inspect" })
+-- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
+-- vim.keymap.del("n", "gc")
+-- https://github.com/neovim/neovim/pull/16591
+--
+-- vim.api.nvim_set_keymap("n", "gd", "lua require('some_module').func()", {})
+-- vim.keymap.set("n", "gd", function() require('some_module').func() end)
