@@ -1,12 +1,8 @@
 return {
-  -- {
-  --   "sbulav/nredir.nvim",
-  --   cmd = "Nredir",
-  --   opts = {},
-  -- },
   {
     "stevearc/overseer.nvim",
     cmd = { "OverseerInfo" },
+    enabled = false,
     config = true,
     dependencies = { "nvim-dap" },
     keys = {
@@ -20,6 +16,8 @@ return {
     },
   },
 }
+
+-- {"sbulav/nredir.nvim", cmd = "Nredir", opts = {},},
 
 -- if true then
 --   return {}

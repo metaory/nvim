@@ -44,28 +44,7 @@ vim.keymap.set(
   { noremap = true, desc = "Exec Run" }
 )
 
-vim.keymap.set(
-  "n",
-  "<leader>eof",
-  async.void(function()
-    local choice = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select Filetype:" }) or vim.bo.filetype
-    vim.notify(choice, vim.log.levels.INFO, { title = "Filetype Updated" })
-    vim.bo.filetype = choice
-  end),
-  { desc = "Set File Type" }
-)
-
-vim.keymap.set("n", "<leader>eov", function()
-  local old = vim.o.verbose
-  vim.o.verbose = old == 0 and 9 or 0
-  vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
-
-  local msg = string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose)
-  local lvl = vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN
-  vim.notify(msg, lvl, { title = "Verbose Level" })
-end, { desc = "Set Verbose Level" })
-
-vim.keymap.set("n", "<leader>eow", ":setlocal wrap!<CR>", { desc = "Set Text Wrap" })
+-- vim.keymap.set("n", "<leader>eow", ":setlocal wrap!<CR>", { desc = "Set Text Wrap" })
 -- vim.keymap.set("n", "<leader>eow", function() vim.wo.wrap = not vim.wo.wrap; end, { desc = "Set Text Wrap" })
 
 --[[

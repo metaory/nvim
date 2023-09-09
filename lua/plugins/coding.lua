@@ -1,46 +1,9 @@
+--  map <expr> (:h map-<expr>)
 -- :enew|put=execute('lua =package.loaded')
 -- :enew|put=execute('lua =package.loaded')|setf lua
---  map <expr> (:h map-<expr>)
 -- nnoremap <expr> Q yourConditionExpression ? ':q!<cr>':':bd<cr>'
 
 return {
-  -- { "folke/which-key.nvim", enabled = false, },
-  -- http://vimcasts.org/episodes/aligning-text-with-tabular-vim
-  -- {
-  --   "echasnovski/mini.align",
-  --   opts = { mappings = { start = "ga", start_with_preview = "gA" } },
-  --   keys = { { "gA", nil } },
-  --   config = true,
-  -- },
-  {
-    "Vonr/align.nvim",
-    keys = {
-      {
-        "gaa",
-        function()
-          local a = require("align")
-          a.operator(a.align_to_char, { length = 1, reverse = true })
-        end,
-        mode = "n",
-        desc = "Align to char",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-      {
-        "gaw",
-        function()
-          local a = require("align")
-          a.operator(a.align_to_string, { is_pattern = false, reverse = true, preview = true })
-        end,
-        mode = "n",
-        desc = "Align to str",
-        noremap = true,
-        silent = true,
-        expr = false,
-      },
-    },
-  },
   {
     "smjonas/inc-rename.nvim",
     cmd = "IncRename",
@@ -50,76 +13,65 @@ return {
         function()
           return ":IncRename " .. vim.fn.expand("<cword>")
         end,
-        mode = "n",
         desc = "Rename Word",
         noremap = true,
         silent = true,
         expr = true,
       },
     },
-    config = true,
   },
 
-  -- {
-  --   "ThePrimeagen/refactoring.nvim",
-  --   keys = {
-  --     {
-  --       "<leader>lx",
-  --       function()
-  --         require("refactoring").select_refactor()
-  --       end,
-  --       mode = "v",
-  --       noremap = true,
-  --       silent = true,
-  --       expr = false,
-  --     },
-  --   },
-  --   opts = {},
-  -- },
   {
     "monaqa/dial.nvim",
-    -- stylua: ignore
     keys = {
-      { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
-      { "<C-x>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").dec_normal() end, expr = true, desc = "Decrement" },
+      {
+        "<C-a>",
+        function()
+          return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal()
+        end,
+        expr = true,
+        desc = "Increment",
+      },
+      {
+        "<C-x>",
+        function()
+          return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").dec_normal()
+        end,
+        expr = true,
+        desc = "Decrement",
+      },
     },
     config = function()
       local augend = require("dial.augend")
+      -- augend.semver.alias.semver, augend.paren.alias.brackets,
       local default = {
-        augend.case.new({
-          types = {
-            "camelCase",
-            "snake_case",
-            "kebab-case",
-            "PascalCase",
-            "SCREAMING_SNAKE_CASE",
-          },
-        }),
+        augend.case.new({ types = { "camelCase", "snake_case", "kebab-case", "PascalCase", "SCREAMING_SNAKE_CASE" } }),
         augend.constant.new({ elements = { "&&", "||" }, word = false }),
         augend.constant.new({ elements = { "on", "off" }, word = false }),
         augend.constant.new({ elements = { "left", "right" }, word = false }),
         augend.constant.new({ elements = { "up", "down" }, word = false }),
         augend.paren.alias.quote,
-        -- augend.paren.alias.brackets,
         augend.integer.alias.decimal,
         augend.constant.alias.bool,
         augend.integer.alias.hex,
         augend.date.new({ pattern = "%Y/%m/%d", default_kind = "day" }),
         augend.date.new({ pattern = "%Y-%m-%d", default_kind = "day" }),
         augend.date.new({ pattern = "%Y_%m_%d", default_kind = "day" }),
-        -- augend.semver.alias.semver,
       }
-      require("dial.config").augends:register_group({ default = default })
+
       local javascript = vim.list_extend({
         augend.constant.new({ elements = { "let", "const" } }),
         augend.constant.new({ elements = { "foo", "bar" } }),
       }, default)
+
+      require("dial.config").augends:register_group({ default = default })
+
       require("dial.config").augends:on_filetype({
         typescript = javascript,
         javascript = javascript,
         lua = vim.list_extend({
           augend.constant.new({ elements = { "and", "or" }, word = true }),
-          -- augend.paren.alias.lua_str_literal,
+          augend.paren.alias.lua_str_literal,
         }, default),
         rust = vim.list_extend({ augend.paren.alias.rust_str_literal }, default),
         markdown = vim.list_extend({ augend.misc.alias.markdown_header }, default),
@@ -130,11 +82,9 @@ return {
     "simrat39/symbols-outline.nvim",
     keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
     cmd = "SymbolsOutline",
-    opts = {},
   },
   {
     "L3MON4D3/LuaSnip",
-    -- opts = {history = true, delete_check_events = "TextChanged",},
     keys = {
       {
         "<tab>",
@@ -155,35 +105,28 @@ return {
         silent = true,
         mode = "i",
       },
-      {
-        "<tab>",
-        function()
-          require("luasnip").jump(1)
-        end,
-        mode = "s",
-      },
-      {
-        "<s-tab>",
-        function()
-          require("luasnip").jump(-1)
-        end,
-        mode = { "i", "s" },
-      },
+      { "<tab>", '<CMD>lua require("luasnip").jump(1)<CR>', mode = "s" },
+      { "<s-tab>", '<CMD>lua require("luasnip").jump(-1)<CR>', mode = { "i", "s" } },
     },
   },
-  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:70
-  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:24
-  -- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md?plain=1#L3339
-  -- https://github.com/L3MON4D3/LuaSnip/blob/master/doc/luasnip.txt#L754C1-L755C1
-  -- {
-  --     "hrsh7th/nvim-cmp",
-  --     dependencies = {{"Saecki/crates.nvim", event = { "BufRead Cargo.toml" }, config = true,},},
-  --     opts = function(_, opts)
-  --       local cmp = require("cmp")
-  --       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {{ name = "crates" },}))
-  --     end,
-  --   }
 }
+
+-- XXX: 'hrsh7th/cmp-cmdline'
+
+-- opts = {history = true, delete_check_events = "TextChanged",},
+-- keys = function() return {} end,
+-- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:70
+-- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/coding.lua:24
+-- https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md?plain=1#L3339
+-- https://github.com/L3MON4D3/LuaSnip/blob/master/doc/luasnip.txt#L754C1-L755C1
+-- {
+--     "hrsh7th/nvim-cmp",
+--     dependencies = {{"Saecki/crates.nvim", event = { "BufRead Cargo.toml" }, config = true,},},
+--     opts = function(_, opts)
+--       local cmp = require("cmp")
+--       opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {{ name = "crates" },}))
+--     end,
+--   }
 -- {
 --   "nvim-cmp",
 --   dependencies = { "hrsh7th/cmp-emoji" },
@@ -390,3 +333,22 @@ return {
 --   --   vim.notify("NOT MODIFIABLE")
 --   --   return false
 -- end,
+
+-- {
+--   "ThePrimeagen/refactoring.nvim",
+--   keys = {
+--     {
+--       "<leader>lx",
+--       function()
+--         require("refactoring").select_refactor()
+--       end,
+--       mode = "v",
+--       noremap = true,
+--       silent = true,
+--       expr = false,
+--     },
+--   },
+--   opts = {},
+-- },
+
+-- http://vimcasts.org/episodes/aligning-text-with-tabular-vim

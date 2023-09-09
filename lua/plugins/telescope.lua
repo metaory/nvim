@@ -4,32 +4,32 @@ return {
   {
     "telescope.nvim", -- dependencies = {},
     keys = {
-      { "<leader><space>", nil },
-      { "<leader>sH", ":Telescope highlights<CR>", desc = "Highlights", mode = "n" },
-      { "<leader>sx", ":Telescope builtin<CR>", desc = "Builtin", mode = "n" },
-      { "<leader>sr", ":Telescope resume<CR>", desc = "Resume", mode = "n" },
-      { "<M-g>", ":Telescope live_grep<CR>", mode = "n" },
-      { "<M-f>", ":Telescope find_files<CR>", mode = "n" },
-      { "<M-F>", ":Telescope find_files hidden=true<CR>", mode = "n" },
-      { "<M-o>", ":Telescope oldfiles<CR>", mode = "n" },
-      { "<M-r>", ":Telescope resume<CR>", mode = "n" },
-      { "<M-b>", ":Telescope file_browser<CR>", mode = "n" },
+      { "<leader><space>", false },
+      { "<leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
+      { "<leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
+      {
+        "<leader>sh",
+        '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>',
+        desc = "Help pages",
+      },
+
+      -- { "<leader>sr", "<CMD>Telescope resume<CR>", desc = "Resume",  },
+      { "<M-g>", "<CMD>Telescope live_grep<CR>" },
+      { "<M-f>", "<CMD>Telescope find_files<CR>" },
+      { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
+      { "<M-o>", "<CMD>Telescope oldfiles<CR>" },
+      { "<M-r>", "<CMD>Telescope resume<CR>" },
+      { "<M-b>", "<CMD>Telescope file_browser<CR>" },
       { "<leader>fr", false },
       {
         "<leader>fc",
-        function()
-          require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })
-        end,
-        desc = "Find Config File",
-        mode = "n",
+        '<CMD>lua require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })<CR>',
+        desc = "Find Config",
       },
       {
         "<leader>fx",
-        function()
-          require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })
-        end,
-        desc = "Find Plugin File",
-        mode = "n",
+        '<CMD>lua require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })<CR>',
+        desc = "Find Plugin",
       },
     },
     opts = {
@@ -47,7 +47,6 @@ return {
         preview = { treesitter = true },
         -- borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },
         file_ignore_patterns = { "^.git/", "^node_modules/" },
-        -- A table of lua regex that define the files that should be ignored.
         -- Example: { "^scratch/" } -- ignore all files in scratch directory
         -- Example: { "%.npz" } -- ignore all npz files
         mappings = {
@@ -73,7 +72,7 @@ return {
   },
   {
     "nvim-telescope/telescope-file-browser.nvim",
-    keys = { { "<leader>sf", "<CMD>Telescope file_browser<CR>", desc = "File Browser", mode = "n" } },
+    keys = { { "<leader>sf", "<CMD>Telescope file_browser<CR>", desc = "File Browser" } },
     opts = {},
     config = function()
       require("telescope").load_extension("file_browser")
@@ -86,7 +85,7 @@ return {
       require("project_nvim").setup(opts)
       require("telescope").load_extension("projects")
     end,
-    keys = { { "<leader>sp", "<CMD>Telescope projects<CR>", desc = "Projects", mode = "n" } },
+    keys = { { "<leader>sp", "<CMD>Telescope projects<CR>", desc = "Projects" } },
   },
 }
 -- {
@@ -232,13 +231,13 @@ return {
 -- sorting_strategy = "ascending",
 -- layout_config = { prompt_position = "bottom" },
 -- layout_config = { height = 0.4 },
--- { "<leader><space>", "<Space>", mode = "n" },
+-- { "<leader><space>", "<Space>",  },
 -- { "<leader>sr", ":Telescope resume<CR>", desc = "Resume", },
--- { "<M-m>", ":Telescope keymaps<CR>", mode = "n" },
--- { "<M-C>", ":Telescope commands<CR>", mode = "n" },
+-- { "<M-m>", ":Telescope keymaps<CR>",  },
+-- { "<M-C>", ":Telescope commands<CR>",  },
 -- { "<leader>fr", "<CMD>FileRename<CR>", { noremap = true, desc = "File Rename" }},
 -- vim.keymap.set("n", "<leader>fr", ":MxFileRename<CR>", { noremap = true, desc = "File Rename" })
--- BUG: { "<leader>fr", ":MxFileRename<CR>", desc = "File Rename", mode = "n" },
+-- BUG: { "<leader>fr", ":MxFileRename<CR>", desc = "File Rename",  },
 
 -- XXX:
 -- Telescope find_files theme=dropdown
@@ -251,4 +250,14 @@ return {
 -- ["<C-b>"] = function(...) return require("telescope.actions").preview_scrolling_up(...) end,
 
 -- INFO: { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+
+-- TODO: <leader>sh -- grep word
+-- INFO: /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/editor.lua:122
+-- INFO: /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/util/init.lua:113
+-- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+-- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+-- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+-- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
 -- INFO: { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
+
+--

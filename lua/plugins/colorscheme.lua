@@ -1,7 +1,54 @@
 local isRunningPicom = vim.fn.system("pgrep picom") ~= ""
 
+-- TODO: LunarVim/colorgen-nvim
+
 return {
 
+  {
+    "navarasu/onedark.nvim",
+    opts = function(_, opts)
+      local style = "deep"
+      local c = require("onedark.palette")[style]
+      return {
+        style = style, -- 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        transparent = isRunningPicom,
+        term_colors = true,
+        ending_tildes = true,
+        cmp_itemkind_reverse = false,
+        code_style = { -- italic, bold, underline, none
+          comments = "italic",
+          keywords = "italic",
+          functions = "none",
+          strings = "none",
+          variables = "none",
+        },
+
+        lualine = {
+          transparent = isRunningPicom,
+        },
+
+        colors = {
+          -- bright_orange = "#ff8800",
+          -- green = "#00ffaa",
+          -- bg3 = "#00ffaa",
+        },
+
+        highlights = {
+          MiniCursorword = { bg = c.bg3, fmt = "bold" },
+          MiniCursorwordCurrent = { bg = c.bg3, fmt = "bold" },
+        },
+
+        diagnostics = {
+          darker = true,
+          undercurl = true,
+          background = true,
+        },
+      }
+    end,
+    -- config = true,
+    -- lazy = false,
+  },
+  -- { "lunarvim/horizon.nvim", enabled = true, config = true, lazy = false },
   { "catppuccin/nvim", enabled = false },
   -- {
   --   "folke/styler.nvim",
@@ -15,8 +62,7 @@ return {
   -- },
   {
     "tokyonight.nvim",
-    -- enabled = false,
-    --  pgrep -l picom
+    enabled = false,
     opts = {
       style = "night",
       light_style = "storm",
@@ -47,6 +93,9 @@ return {
       -- ---@param highlights Highlights
       -- ---@param colors ColorScheme
       -- on_highlights = function(highlights, colors) end,
+      on_highlights = function(highlights, colors)
+        highlights.MsgArea = { bg = colors.none }
+      end,
     },
   },
   {
@@ -171,3 +220,6 @@ return {
 --     }
 --   end,
 -- },
+
+-- toggle_style_key = "<leader>ut", -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+-- toggle_style_list = { "dark", "darker", "cool", "deep", "warm", "warmer", "light" }, -- List of styles to toggle between

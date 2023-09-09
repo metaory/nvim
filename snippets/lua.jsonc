@@ -5,6 +5,10 @@
   //         "body": [ "accept ${1:variable} ${2|from date,from day,from day-of-week,time|}", "$0" ],
   //
 
+  "vim.map.str": {
+    "prefix": "cmd",
+    "body": ["'<CMD>lua ${1}<CR>'"]
+  },
   "vim.log.level": {
     "prefix": "lvl",
     "body": ["vim.log.level.${1|DEBUG,ERROR,INFO,TRACE,WARN,OFF|}"]

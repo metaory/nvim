@@ -12,8 +12,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
-      opts.highlight.additional_vim_regex_highlighting = { "markdown" }
-      vim.list_extend(opts.ensure_installed, { "jq" })
+      -- opts.highlight.additional_vim_regex_highlighting = { "markdown" }
+      opts.indent.enable = false
+      vim.list_extend(opts.ensure_installed, {
+        "jq", -- "help"
+      })
       ddwrite(opts, "treesitter")
     end,
   },

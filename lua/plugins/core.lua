@@ -7,10 +7,13 @@ return {
   },
   {
     "gbprod/yanky.nvim",
-    event = "BufReadPost",
-    dependencies = { { "kkharji/sqlite.lua", enabled = false } },
     keys = { { "<leader>p", nil, false } },
-    opts = { ring = { storage = "shada" } },
+    -- event = "BufReadPost",
+    -- dependencies = { { "kkharji/sqlite.lua", enabled = true } },
+    -- opts = { ring = { storage = "shada" } },
+    -- opts = function(_, opt)
+    --   ddwrite({ o = opt }, "___yanky")
+    -- end,
   },
   {
     "lukas-reineke/indent-blankline.nvim",

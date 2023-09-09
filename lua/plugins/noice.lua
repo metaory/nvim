@@ -2,6 +2,17 @@
 -- local Config = require("noice.config")
 
 -- if true then return {} end
+local popup_format = {
+  "{level} ",
+  "{date} ",
+  "{event}",
+  { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } },
+  " ",
+  "{title} ",
+  "{cmdline} ",
+  "\n",
+  "{message}",
+}
 
 return {
   "folke/noice.nvim",
@@ -16,55 +27,71 @@ return {
     },
   },
   opts = function(_, opts)
-    -- ddwrite(opts, "noice_pre")
+    ddwrite(opts, "noice_pre")
     opts.health = { checker = true }
 
     table.insert(opts.routes[1].filter.any, { find = "^E486:" })
     table.insert(opts.routes[1].filter.any, { find = "at TOP" })
+
     table.insert(opts.routes, {
-      filter = {
-        event = "notify",
-        any = {
-          {
-            max_height = 2,
-            max_width = 90,
-            ["not"] = { find = "^{+" },
-            error = false,
-            warning = false,
-          },
-        },
-        -- ["not"] = { error = true },
-      },
-      view = "mini",
+      filter = { event = "notify", any = { { min_length = 200 } } },
+      opts = { format = popup_format, win_options = { wrap = true } },
+      view = "popup",
     })
-    -- table.insert(opts.routes, {
-    --   filter = {
-    --     event = "notify",
-    --     any = { { find = "foo" } },
+
+    table.insert(opts.routes, { filter = { event = "notify" }, view = "notify" })
+
+    opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
+
+    -- opts.notify = {
+    --   enabled = false,
+    --   opts = {
+    --     background_colour = "#f0f023",
     --   },
-    --   view = "split",
-    -- })
-
-    opts.commands = {
-      all = { view = "split", opts = { enter = true, format = "details" }, filter = {} },
-      -- history = {view = "split",},
-      -- last = {view = "popup",},
-      -- errors = {view = "popup",},
-    }
-
-    opts.views = vim.tbl_deep_extend("force", {
-      popup = { size = { width = "70%", height = "50%" } },
+    --   view = "notify",
+    -- }
+    opts.views = vim.tbl_deep_extend("force", opts.views or {}, {
+      popup = {
+        size = { width = "70%", height = "50%" },
+        format = { "{message}" },
+        buf_options = { buftype = "nofile", filetype = "lua" },
+        win_options = { wrap = false },
+      },
       notify = {
-        -- format = { "{kind} ", "{event} ", "{message}" },
-        -- format = "default",
+        -- background_colour = "#f0f023",
+        buf_options = { buftype = "nofile", filetype = "lua" },
+        win_options = { wrap = false },
         replace = true,
       },
-      split = { win_options = { wrap = false } },
-    }, opts.views or {})
+      split = {
+        buf_options = { buftype = "nofile", filetype = "lua" },
+        win_options = { wrap = false },
+      },
+      hover = {
+        border = { style = "rounded" },
+        size = { max_width = 80 },
+      },
+    })
 
-    -- ddwrite(opts, "noice_POST")
+    ddwrite(opts, "noice_POST")
   end,
 }
+
+-- opts.format = {my_full = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ", "{title} ", "{cmdline} ", "\n", "{message}", },}
+
+-- table.insert(opts.routes, {filter = {event = "notify", any = {{warn = true}, {error = true}},}, view = "notify",})
+
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "notify",
+--     any = {
+--       { max_height = 2, max_width = 90, error = false, warning = false, ["not"] = { find = "^true" } },
+--     },
+--   },
+--   view = "mini",
+-- })
+-- ["not"] = { find = "^{+" },
+-- ["not"] = { error = true },
 -- ["not"] = { find = "<%w>+" },
 -- ["not"] = { find = "^{+" },
 -- error = false,
@@ -448,6 +475,7 @@ return {
 -- },
 
 -- INFO:
+
 -- local opts = {
 --   {
 --     view = Config.options.cmdline.view,
@@ -587,6 +615,7 @@ return {
 -- })
 
 -- INFO: DEFAULT VIEWS
+
 -- opts.views = {
 -- popupmenu = {
 --   relative = "editor",
@@ -802,3 +831,25 @@ return {
 --     ddwrite(win, "XOOXOXO")
 --   end,
 -- },
+
+-- XXX: vim.treesitter.language.require_language
+
+-- TEST:
+-- table.insert(opts.routes, {
+--   filter = {
+--     event = "lsp",
+--     kind = "progress",
+--     cond = function(message)
+--       local client = vim.tbl_get(message.opts, "progress", "client")
+--       return client == "lua_ls" -- skip lua-ls progress
+--     end,
+--   },
+--   opts = { skip = true },
+-- })
+
+-- find = "let%s+",
+-- opts = { buf_options = { buftype = "nofile", filetype = "javascript" } },
+
+-- history = {view = "split",},
+-- last = {view = "popup",},
+-- errors = {view = "popup",},

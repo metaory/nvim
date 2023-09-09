@@ -1,4 +1,8 @@
 return {
+  {
+    "folke/flash.nvim",
+    vscode = nil,
+  },
   -- { "kikito/inspect.lua", module = true, config = false, },
   -- { "echasnovski/mini.bufremove", lazy = false, opts = {} },
 }
@@ -62,3 +66,8 @@ return {
 --   -- { "rlane/pounce.nvim", opts = {}, cmd = "Pounce" },
 --   -- { "echasnovski/mini.jump", lazy = false, opts = {} },
 -- }
+--
+-- if os.getenv("NVIM") ~= nil then
+--   require("lazy").setup({ { "willothy/flatten.nvim", config = true } })
+--   return
+-- end

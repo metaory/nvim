@@ -1,13 +1,10 @@
---[[
-https://jacobsimpson.github.io/nvim-lua-manual/docs/communicating/
---]]
 local util = require("util.debug")
 
 vim.g.vscode = false
 vim.g.debug_global_flag = false
-vim.g.debug_treesitter = vim.g.debug_global_flag
 vim.g.debug_nulls = vim.g.debug_global_flag
--- vim.g.loaded_node_provider = true
+vim.g.debug_treesitter = vim.g.debug_global_flag
+vim.lsp.set_log_level(vim.lsp.log_levels[vim.g.debug_global_flag and "INFO" or "WARN"])
 
 if vim.loader then
   vim.loader.enable()
@@ -20,6 +17,7 @@ _G.live_inspect = util.live_inspect
 require("user.commands")
 require("config.lazy")
 
+-- vim.g.loaded_node_provider = true
 -- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 -- vim.print = _G.dd
 
@@ -93,3 +91,5 @@ require("config.lazy")
 --   -- vim.notify(content, level, { title = "Message" })
 --   -- end
 -- end)
+-- require("vim.lsp.log").set_format_func(vim.inspect)
+-- vim.schedule(function() vim.notify("nvim loader is enabled") end)

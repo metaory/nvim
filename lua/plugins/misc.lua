@@ -13,17 +13,17 @@ return {
     "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     opts = { open_cmd = "noswapfile vnew" },
-    -- stylua: ignore
-    keys = {{ "<leader>rr", function() require("spectre").open() end, desc = "Replace Spectre" },},
+    keys = {
+      { "<leader>sr", false },
+      { "<leader>rr", '<CMD>lua require("spectre").open()<CR>', desc = "Replace Spectre" },
+    },
   },
   {
     "cshuaimin/ssr.nvim",
     keys = {
       {
         "<leader>rs",
-        function()
-          require("ssr").open()
-        end,
+        '<CMD>lua require("ssr").open()<CR>',
         mode = { "n", "x" },
         desc = "Structural Replace",
       },

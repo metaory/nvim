@@ -1,50 +1,32 @@
 return {
+  -- TODO: https://github.com/SmiteshP/nvim-navbuddy
   {
     "SmiteshP/nvim-navic",
-    opts = {
-      separator = " ",
-      highlight = true,
-      depth_limit = 6,
-      icons = require("lazyvim.config").icons.kinds,
-    },
+    opts = function()
+      return { separator = " ", highlight = true, depth_limit = 6, icons = require("lazyvim.config").icons.kinds }
+    end,
   },
   {
     "rcarriga/nvim-notify",
     keys = {
       {
         "<leader>un",
-        function()
-          require("notify").dismiss({ silent = true, pending = true })
-        end,
+        '<CMD>lua require("notify").dismiss({ silent = true, pending = true })<CR>',
         desc = "Dismiss all Notifications",
       },
     },
-    opts = {
-      timeout = 3000,
-      max_height = function()
-        return math.floor(vim.o.lines * 0.80)
-      end,
-      max_width = function()
-        return math.floor(vim.o.columns * 0.75)
-      end,
-      on_open = function(win)
-        local buf = vim.api.nvim_win_get_buf(win)
-        if not pcall(vim.treesitter.start, buf, "lua") then
-          vim.bo[buf].filetype = "lua"
-        end
-      end,
-    },
-    -- vim.api.nvim_buf_set_option(buf, "filetype", "lua")
-    -- init = function()
-    -- when noice is not enabled, install notify on VeryLazy
-    -- local Util = require("lazyvim.util")
-    -- if not Util.has("noice.nvim") then
-    --   Util.on_very_lazy(function()
-    --     vim.notify = require("notify")
-    --   end)
-    -- end
-    -- vim.notify = nil
-    -- end,
+    opts = function(_, opts)
+      return vim.tbl_deep_extend("force", opts, {
+        timeout = 3000,
+        background_colour = "#000000",
+        max_height = function()
+          return math.floor(vim.o.lines * 0.80)
+        end,
+        max_width = function()
+          return math.floor(vim.o.columns * 0.75)
+        end,
+      })
+    end,
   },
 }
 -- https://github.com/stevearc/dressing.nvim
@@ -161,3 +143,15 @@ return {
 -- },
 
 -- lualine
+
+-- on_open = function(win)
+--   local buf = vim.api.nvim_win_get_buf(win)
+--   local syntax = vim.api.nvim_buf_get_option(buf, "syntax")
+--   local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+--   -- ddwrite({ b = buf, w = win, s = syntax, ft = ft }, "___on_open", "a")
+--   if not pcall(vim.treesitter.start, buf, "lua") then
+--     vim.bo[buf].filetype = "lua"
+--   end
+-- end,
+
+--

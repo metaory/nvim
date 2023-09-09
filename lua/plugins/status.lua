@@ -1,27 +1,35 @@
 return {
-  -- INFO: require('lualine').get_config()
-  -- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/ui.lua:95
   {
     "nvim-lualine/lualine.nvim",
-    -- opts = {
-    --   options = {
-    --     -- theme = "horizon",
-    --     -- theme = "auto",
-    --     disabled_filetypes = { statusline = { "starter" } },
-    --   },
-    -- },
     opts = function(_, opts)
-      table.insert(opts.options.disabled_filetypes.statusline, "starter")
+      -- opts.options.theme = "horizon" --, theme = "auto", disabled_filetypes = { statusline = { "starter" } },},},
+      opts.options.component_separators = { left = " ", right = "" } --  
+      -- opts.options.component_separators = { left = "⏽", right = "" } --  
+
+      opts.options.section_separators = { left = "", right = "" }
+      opts.sections.lualine_c[4] = {
+        function()
+          local loc = require("nvim-navic").get_location()
+          -- ddwrite(loc, "navic", "a")
+          return loc
+        end,
+        cond = function()
+          return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+        end,
+        padding = 0,
+      }
       table.insert(opts.sections.lualine_x, {
         require("noice").api.status.search["get"],
         cond = require("noice").api.status.search["has"],
         color = { fg = "#ff9e64" },
       })
-
-      -- ddwrite(opts, "lualine")
+      table.insert(opts.options.disabled_filetypes.statusline, "starter")
     end,
   },
 }
+-- opts = {options = {theme = "horizon", theme = "auto", disabled_filetypes = { statusline = { "starter" } },},},
+-- ddwrite(opts, "lualine")
+-- ddwrite(opts.sections.lualine_c, "lualine_c")
 -- lualine_x = {
 --   {
 --     function() return require("noice").api.status.command.get() end,
@@ -111,3 +119,10 @@ return {
 --     }
 --   end,
 -- },
+-- INFO: require('lualine').get_config()
+-- /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/ui.lua:95
+-- https://github.com/freddiehaddad/feline.nvim
+
+-- TODO: https://github.com/nvim-lualine/lualine.nvim/tree/master#general-component-options
+
+--

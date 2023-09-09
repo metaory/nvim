@@ -1,261 +1,236 @@
--- BUG:
--- - WARNING conflicting keymap exists for mode **"n"**, lhs: **"y"**
--- - rhs: `<Plug>(YankyYank)`
+-- require("config.prompts")
 
---local util = require("util")
--- local Util = require("lazyvim.util")
--- local which_key = require("which-key")
-require("config.prompts")
-local map = vim.api.nvim_set_keymap
-local opt = { noremap = true, silent = true }
-local nor = { noremap = true }
+local util = require("util.maputil")
+local keymap_del = util.keymap_del
+local keymap_set = util.keymap_set
 
 vim.g.maplocalleader = "\\"
 vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
-local del_keymap = function(x)
-  local mode = "n"
-  local key = x
-
-  if vim.tbl_islist(x) then
-    mode = x[1]
-    key = x[2]
-  end
-
-  pcall(vim.keymap.del, mode, key)
-end
-
-local set_keymap = function(lhs, rhs, opts)
-  local mode = "n"
-  opts = opts or {}
-
-  if type(opts) == "string" then
-    opts = { desc = opts }
-  end
-
-  if opts.mode then
-    mode = opts.mode
-    opts.mode = nil
-  end
-
-  -- ddwrite({ mode = mode, lhs = lhs, rhs = rhs, opts = opts }, "set_keymap")
-  vim.keymap.set(mode, lhs, rhs, opts)
-end
-
--- set_keymap("<leader>il", "<CMD>LspInfo<CR>")
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", "foo bar")
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", silent = true })
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", mode = { "n", "v", "x" }, silent = true })
-
--- (mode, lhs, rhs, opts)
-
--- { "v", "<Leader>gst" }, -- INFO: sample <<<
-local disable_keys = {
+vim.tbl_map(keymap_del, {
   "<Leader>sr",
   "<Leader>sR",
   "<Leader>p",
   "<Leader>l",
   "<Leader>L",
-  "<Leader>e",
-  "<Leader>E",
+  "<leader>`",
+  "<leader>,",
   "<Leader>K",
   "<Leader><Space>",
+  { "v", "<Leader>noop" },
   "<C-_>",
-}
+})
 
-vim.tbl_map(del_keymap, disable_keys)
+vim.tbl_map(keymap_set, {
+  { "<leader>il", "<CMD>LspInfo<CR>", "LSP Info" },
+  { "<leader>iz", "<CMD>Lazy<CR>", "Lazy Info" },
+  { "<leader>im", "<CMD>Mason<CR>", "Mason Info" },
+  { "<leader>in", "<CMD>NullLsInfo<CR>", "Null-ls Info" },
+  { "<leader>if", "<CMD>verbose set filetype?<CR>", "FileType Info" },
+})
 
-vim.keymap.set({ "n", "i", "s" }, "<c-f>", function()
-  if not require("noice.lsp").scroll(4) then
-    return "<c-f>"
-  end
-end, { silent = true, expr = true })
+vim.tbl_map(keymap_set, {
+  { "<leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Wiki Index" },
+  { "<leader>eww", "<CMD>Neorg workspace mx<CR>", "Wiki Workspace" },
+  { "<leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", "Wiki Journal" },
+  { "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", "Wiki Yesterday" },
+  { "<leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", "Wiki Today" },
+  { "<leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", "Wiki Tomorrow" },
 
-vim.keymap.set({ "n", "i", "s" }, "<c-b>", function()
-  if not require("noice.lsp").scroll(-4) then
-    return "<c-b>"
-  end
-end, { silent = true, expr = true })
+  { "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", "Devdocs Current [+f]" },
+  { "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", "Devdocs Current" },
+  { "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", "Devdocs Index [+f]" },
+  { "<leader>ehO", "<CMD>DevdocsOpen<CR>", "Devdocs Index" },
 
-vim.keymap.set("n", "<leader><cr>", function()
-  local cwd = vim.fn.expand("%:h")
-  pcall(vim.api.nvim_set_current_dir, cwd)
-  vim.schedule(function()
-    vim.notify(cwd, vim.log.levels.WARN, { title = "CWD" })
-  end)
-end, { desc = "Set CWD" })
+  { "<leader>ezr", "<CMD>LazyReload<CR>", "Reload Lazy Plugin" },
 
-local opts = function(desc)
-  return { desc = desc }
-end
+  { "<leader>exy", ":lua <C-R>* <C-y>", "Inspect Yank (CMD)" },
+  { "<leader>exx", ":Xdir lua =<C-R>: <C-y>", "Inspect Redirect (CMD)" },
+  { "<leader>exe", ":Xdir <C-R>=", "Inspect Expand (Redirect)" },
+  { "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", "Inspect Expand Line (Redirect)" },
+})
 
-vim.keymap.set("n", "<leader>il", "<CMD>LspInfo<CR>", opts("LSP Info"))
-vim.keymap.set("n", "<leader>iz", "<CMD>Lazy<CR>", { desc = "Lazy Info" })
-vim.keymap.set("n", "<leader>in", "<CMD>NullLsInfo<CR>", { desc = "Null-ls Info" })
-vim.keymap.set("n", "<leader>if", "<CMD>verbose set filetype?<CR>", { desc = "FileType Info" })
+vim.tbl_map(keymap_set, {
+  { "<leader>uh", "<CMD>lua require('mini.hipatterns').enable()<CR>", "Toggle Color Highlight" },
+  { "<leader>sr", "<CMD>Telescope resume<CR>", "Resume" },
+  { "<leader>fr", "<CMD>FileRename<CR>", "File Rename" },
+  { "<leader>bb", "<cmd>e #<cr>", "Other Buffer" },
+})
 
-vim.keymap.set("n", "<leader>fr", "<CMD>FileRename<CR>", { desc = "File Rename" })
-vim.keymap.set("n", "<leader>ezr", "<CMD>LazyReload<CR>", { desc = "Reload Lazy Plugin" })
+vim.tbl_map(keymap_set, {
+  { "<C-h>", "<CMD>NavigatorLeft<CR>" },
+  { "<C-l>", "<CMD>NavigatorRight<CR>" },
+  { "<C-j>", "<CMD>NavigatorDown<CR>" },
+  { "<C-k>", "<CMD>NavigatorUp<CR>" },
+})
 
-map("n", "<leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", { desc = "Wik Index" })
-map("n", "<leader>eww", "<CMD>Neorg workspace mx<CR>", { desc = "Wik Workspace" })
-map("n", "<leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", { desc = "Wik Journal" })
-map("n", "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", { desc = "Wiki Yesterday" })
-map("n", "<leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", { desc = "Wik Today" })
-map("n", "<leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", { desc = "Wik Tomorrow" })
+vim.tbl_map(keymap_set, {
+  { "<C-f>", "<Right>", mode = "c" },
+  { "<C-a>", "<Home>", mode = "c" },
+  { "<C-b>", "<Left>", mode = "c" },
+  { "<M-b>", "<C-b>", mode = "c" },
+  { "<M-k>", "<Up>", mode = "c" },
+  { "<M-j>", "<Down>", mode = "c" },
+  { "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", mode = "c", "Redirect Cmdline" },
+})
 
-map("n", "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", { noremap = true, desc = "Devdocs Current [+f]" })
-map("n", "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", { noremap = true, desc = "Devdocs Current" })
-map("n", "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", { noremap = true, desc = "Devdocs Index [+f]" })
-map("n", "<leader>ehO", "<CMD>DevdocsOpen<CR>", { noremap = true, desc = "Devdocs Index" })
+vim.tbl_map(keymap_set, {
+  { "<M-J>", "<C-w>-" },
+  { "<M-K>", "<C-w>+" },
+  { "<M-H>", "<C-w><" },
+  { "<M-L>", "<C-w>>" },
+})
 
-map("n", "<leader>ed", ":Xdir <C-R>: <C-y>", { noremap = true, desc = "Inspect Previous" })
-map("n", "<leader>exy", ":lua <C-R>* <C-y>", { noremap = true, desc = "Inspect Yank (CMD)" })
-map("n", "<leader>exx", ":Xdir lua =<C-R>: <C-y>", { noremap = true, desc = "Inspect Redirect (CMD)" })
-map("n", "<leader>exe", ":Xdir <C-R>=", { noremap = true, desc = "Inspect Expand (Redirect)" })
-map("n", "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", { noremap = true, desc = "Inspect Expand Line (Redirect)" })
+vim.tbl_map(keymap_set, {
+  { "<M-w>", "<cmd>BufferLineCloseLeft<cr>", "Close All Buf to Left" },
+  { "<M-e>", "<cmd>BufferLineCloseRight<cr>", "Close All Buf to Right" },
 
-map("n", "<C-h>", "<CMD>NavigatorLeft<CR>", opt)
-map("n", "<C-l>", "<CMD>NavigatorRight<CR>", opt)
-map("n", "<C-j>", "<CMD>NavigatorDown<CR>", opt)
-map("n", "<C-k>", "<CMD>NavigatorUp<CR>", opt)
+  { "<M-Left>", "<cmd>BufferLineMovePrev<cr>", "Move Buf Left" },
+  { "<M-Right>", "<cmd>BufferLineMoveNext<cr>", "Move Buf Right" },
 
-map("c", "<C-f>", "<Right>", nor)
-map("c", "<C-a>", "<Home>", nor)
-map("c", "<C-b>", "<Left>", nor)
-map("c", "<M-b>", "<C-b>", nor)
-map("c", "<M-k>", "<Up>", nor)
-map("c", "<M-j>", "<Down>", nor)
+  { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
+  { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
+})
 
-map("n", "<M-J>", "<C-w>-", nor)
-map("n", "<M-K>", "<C-w>+", nor)
-map("n", "<M-H>", "<C-w><", nor)
-map("n", "<M-L>", "<C-w>>", nor)
+vim.tbl_map(keymap_set, {
+  { "gG", "<CMD>OpenGithubLink<CR>", "Open Github Link" },
+  { "gL", "<CMD>OpenWebLink<CR>", "Open Link" },
+  { "Y", [[y$]], "Copy till end-of-line (P)" },
+  { "cp", [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]], "Copy Path (S)" },
+})
 
-map("n", "<M-w>", "<cmd>BufferLineCloseLeft<cr>", nor)
-map("n", "<M-e>", "<cmd>BufferLineCloseRight<cr>", nor)
-map("n", "<M-Left>", "<cmd>BufferLineMovePrev<cr>", nor)
-map("n", "<M-Right>", "<cmd>BufferLineMoveNext<cr>", nor)
+vim.tbl_map(keymap_set, {
+  { "jk", "<ESC>", mode = "i" },
+  { "<M-e>", [[g$$]], mode = "i" }, -- BUG: <<
+  { "<M-p>", [["+p]], "Paste System (S)" },
+  { "<M-Y>", [[gg"+yG]], "Copy whole file (S)" },
+  { "<M-y>", [["+y$]], "Copy till end-of-line (S)" },
+  { "<M-p>", [[<ESC>"+p]], mode = "i", "Paste (S)" },
+  { "<M-y>", [["+y]], mode = "v", "Copy Selection (S)" },
+})
 
--- map("n", "<C-c>", ":normal gcc<CR>", opt)
--- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
-vim.keymap.set("n", "<C-c>", function()
-  local modifiable = vim.bo[vim.api.nvim_win_get_buf(0)].modifiable
-  -- local lspAttached = #vim.lsp.get_active_clients() > 0 and lspAttached else print("TODO")
-  if modifiable then
-    vim.cmd(":normal gcc<CR>")
-  end
-end, { silent = true })
-map("i", "jk", "<ESC>", opt)
+vim.tbl_map(keymap_set, {
+  { "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", "Dismiss Notification" },
+  { "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", "Quickfix Toggle" },
+  { "<M-d>", "<ESC>:<C-y>", "Command" },
+  { "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },
+  { "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },
+  { "<M-q>", ":q<CR>", silent = true, "Exit" },
+  { "<M-Q>", ":qall!<CR>", silent = true, "Exit All" },
+})
 
-map("i", "<M-p>", [[<ESC>"+p]], opt)
-map("i", "<M-e>", [[g$$]], opt)
-map("n", "<M-Y>", [[gg"+yG]], opt) -- %y *
-map("n", "<M-y>", [["+y$]], opt)
-map("v", "<M-y>", [["+y]], opt)
-map("n", "<M-p>", [["+p]], opt)
-map("n", "Y", [[y$]], opt)
-map(
-  "n",
-  "cp",
-  [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]],
-  -- [[:let @+ = expand("%:p") .. expand("<slnum>")<cr>]],
-  -- echo expand("<cfile>")
-  { noremap = true, silent = true, desc = "Copy Path" }
-)
--- vim.cmd([[ nnoremap qq :let @q = '^'<cr>^qQ ]])
--- map("n", "qq", [[<ESC>:q<cr>]], { noremap = false, silent = true, desc = "Quit" })
+-- local async = require("util.async")
+-- local ui = require("user.ui")
 
--- map("n", "Y", [[y$]], opt)
--- map("n", "Q", [[ :q<CR> ]], opt)
---
+vim.tbl_map(keymap_set, {
+  {
+    "<c-f>",
+    function()
+      if not require("noice.lsp").scroll(4) then
+        return "<c-f>"
+      end
+    end,
+    mode = { "n", "i", "s" },
+    silent = true,
+    expr = true,
+  },
 
--- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
-map(
-  "n",
-  "<leader>uh",
-  "<CMD>lua require('mini.hipatterns').enable()<CR>",
-  { noremap = true, silent = true, desc = "Toggle Color Highlight" }
-)
+  {
+    "<c-b>",
+    function()
+      if not require("noice.lsp").scroll(-4) then
+        return "<c-b>"
+      end
+    end,
+    mode = { "n", "i", "s" },
+    silent = true,
+    expr = true,
+  },
 
--- map(
---   "n",
---   "<leader>sT",
---   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
---   { noremap = true, silent = true, desc = "Search Telescope" }
--- )
+  {
+    "<C-c>",
+    function()
+      if vim.bo[vim.api.nvim_win_get_buf(0)].modifiable then
+        vim.cmd(":normal gcc<CR>")
+      end
+    end,
+    "Toggle Comment",
+  },
 
--- TODO: Telescope search: >>
--- lua require("persistence").list()
+  {
+    "cd",
+    function()
+      local path = vim.fn.expand("%:p")
+      local base = path:match("@?(.*/)")
+      local ok, msg = pcall(vim.api.nvim_set_current_dir, base)
+      vim.schedule(function()
+        vim.notify(base, vim.log.levels[ok and "INFO" or "ERROR"], { title = msg or "Changed directory" })
+      end)
+    end,
+    "Change Directory",
+  },
 
--- | f           | \<c-f\>     | find\_project\_files       |
--- | b           | \<c-b\>     | browse\_project\_files     |
--- | d           | \<c-d\>     | delete\_project            |
--- | s           | \<c-s\>     | search\_in\_project\_files |
--- | r           | \<c-r\>     | recent\_project\_files     |
--- | w           | \<c-w\>     | change\_working\_directory |
--- project
--- lua =require("project_nvim").get_recent_projects()
--- lua =require("project_nvim").delete_project()
--- /home/meta/dev/forks/dotfiles-steve/vimplugins/aerial.nvim/lua/telescope/_extensions/aerial.lua
---lua require'telescope.builtin'.resume{}
---lua require'telescope.builtin'.live_grep{}
--- map("n", "<M-w>", ":Telescope grep_string<CR>", opt)
---[[
-map("n", "<M-g>", ":Telescope live_grep<CR>", opt)
-map("n", "<M-f>", ":Telescope find_files<CR>", opt)
-map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
-map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
-map("n", "<M-r>", ":Telescope resume<CR>", opt)
-map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
-map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
-map("n", "<M-C>", ":Telescope commands<CR>", opt)
-map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
-]]
--- map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
+  {
+    "<leader>eof",
+    function()
+      vim.ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select Filetype:" }, function(choice)
+        local ft = choice or vim.bo.filetype
+        vim.bo.filetype = ft
+        vim.notify(ft, vim.log.levels.INFO, { title = "Filetype Updated" })
+      end)
+    end,
+    "Set File Type",
+  },
 
-map("n", "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", opt)
-map("n", "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", { desc = "Quickfix Toggle" })
+  {
+    "<leader>eov",
+    function()
+      local old = vim.o.verbose
+      vim.o.verbose = old == 0 and 16 or 0
+      --[[
+          1 Lua assignments to options, mappings, etc.
+          2 When a file is ":source"'ed, or |shada| file is read or written.
+          3 UI info, terminal capabilities.
+          4 Shell commands.
+          5 Every searched tags file and include file.
+          8 Files for which a group of autocommands is executed.
+          9 Executed autocommands.
+          11  Finding items in a path.
+          12  Vimscript function calls.
+          13  When an exception is thrown, caught, finished, or discarded.
+          14  Anything pending in a ":finally" clause.
+          15  Ex commands from a script (truncated at 200 characters).
+          16  Ex commands.
+      ]]
+      -- vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
 
-map("n", "<M-d>", "<ESC>:<C-y>", nor)
+      local msg = string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose)
+      local lvl = vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN
+      vim.notify(msg, lvl, { title = "Verbose Level" })
+    end,
+    "Set Verbose Level",
+  },
+})
 
-map("n", "<M-k>", "<CMD>BufferLineCycleNext<CR>", opt)
-map("n", "<M-j>", "<CMD>BufferLineCyclePrev<CR>", opt)
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////
 
-map("n", "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', opt)
-map("n", "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', opt)
--- map("n", "<M-s>", ":w<CR>", opt)
---
-map("n", "<M-q>", ":q<CR>", opt)
--- map("n", "<M-q>", ":bw<CR>", opt)
-map("n", "<M-Q>", ":qall!<CR>", opt)
-
--- echo 'foo'
--- lua require("util.debug").dump(vim.opt.completeopt)
--- lua dd(vim.opt.completeopt)
--- map(
---   "n",
---   "<leader>Dd",
---   "<CMD>lua require('noice').redirect('@*')<CR>",
---   { silent = true, noremap = true, desc = "Inspect Yank" }
--- )
--- require("noice").redirect(function() print("test") end)
-
-map("c", "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", { desc = "Redirect Cmdline" })
--- vim.keymap.set("c", "<S-Enter>", function()
---   require("noice").redirect(vim.fn.getcmdline())
--- end, { desc = "Redirect Cmdline" })
-
-map("n", "gG", "<CMD>OpenGithubLink<CR>", { silent = true, desc = "Open Github Link" })
-map("n", "gL", "<CMD>OpenWebLink<CR>", { silent = true, desc = "Open Link" })
+-- { "<leader>ed", ":Xdir <C-R>: <C-y>", "Inspect Previous" },
 
 -- map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
 -- map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
 -- map("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
-
--- ////////////////////////////////////////////////////////////////////////////
 
 -- new | r ! node #
 -- !}fmt
@@ -367,10 +342,10 @@ map("n", "gL", "<CMD>OpenWebLink<CR>", { silent = true, desc = "Open Link" })
 -- package
 -- print(vim.inspect(vim.opt.completeopt))
 --[[
-map("n", "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opt)
-map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opt)
-map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opt)
-map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
+old_map("n", "<C-h>", "<CMD>lua require('Navigator').left()<CR>", opt)
+old_map("n", "<C-l>", "<CMD>lua require('Navigator').right()<CR>", opt)
+old_map("n", "<C-j>", "<CMD>lua require('Navigator').down()<CR>", opt)
+old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 ]]
 --[[
 ]]
@@ -507,3 +482,86 @@ map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 --
 -- vim.api.nvim_set_keymap("n", "gd", "lua require('some_module').func()", {})
 -- vim.keymap.set("n", "gd", function() require('some_module').func() end)
+-- set_keymap("<leader>il", "<CMD>LspInfo<CR>")
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", "foo bar")
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", silent = true })
+-- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", mode = { "n", "v", "x" }, silent = true })
+-- local lspAttached = #vim.lsp.get_active_clients() > 0 and lspAttached else print("TODO")
+-- map("n", "<C-c>", ":normal gcc<CR>", opt)
+-- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
+-- [[:let @+ = expand("%:p") .. expand("<slnum>")<cr>]],
+-- echo expand("<cfile>")
+-- vim.cmd([[ nnoremap qq :let @q = '^'<cr>^qQ ]])
+-- map("n", "qq", [[<ESC>:q<cr>]], { noremap = false, silent = true, desc = "Quit" })
+
+-- map("n", "Y", [[y$]], opt)
+-- map("n", "Q", [[ :q<CR> ]], opt)
+--
+
+-- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+-- map(
+--   "n",
+--   "<leader>sT",
+--   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
+--   { noremap = true, silent = true, desc = "Search Telescope" }
+-- )
+
+-- TODO: Telescope search: >>
+-- lua require("persistence").list()
+-- | f           | \<c-f\>     | find\_project\_files       |
+-- | b           | \<c-b\>     | browse\_project\_files     |
+-- | d           | \<c-d\>     | delete\_project            |
+-- | s           | \<c-s\>     | search\_in\_project\_files |
+-- | r           | \<c-r\>     | recent\_project\_files     |
+-- | w           | \<c-w\>     | change\_working\_directory |
+
+-- project
+-- lua =require("project_nvim").get_recent_projects()
+-- lua =require("project_nvim").delete_project()
+-- /home/meta/dev/forks/dotfiles-steve/vimplugins/aerial.nvim/lua/telescope/_extensions/aerial.lua
+--lua require'telescope.builtin'.resume{}
+--lua require'telescope.builtin'.live_grep{}
+-- map("n", "<M-w>", ":Telescope grep_string<CR>", opt)
+--[[
+old_map("n", "<M-g>", ":Telescope live_grep<CR>", opt)
+old_map("n", "<M-f>", ":Telescope find_files<CR>", opt)
+old_map("n", "<M-F>", ":Telescope find_files hidden=true<CR>", opt) -- lua require("telescope.builtin").find_files({hidden=true})
+old_map("n", "<M-o>", ":Telescope oldfiles<CR>", opt)
+old_map("n", "<M-r>", ":Telescope resume<CR>", opt)
+old_map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
+old_map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
+old_map("n", "<M-C>", ":Telescope commands<CR>", opt)
+old_map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
+]]
+-- map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
+-- echo 'foo'
+-- lua require("util.debug").dump(vim.opt.completeopt)
+-- lua dd(vim.opt.completeopt)
+-- map(
+--   "n",
+--   "<leader>Dd",
+--   "<CMD>lua require('noice').redirect('@*')<CR>",
+--   { silent = true, noremap = true, desc = "Inspect Yank" }
+-- )
+-- require("noice").redirect(function() print("test") end)
+-- vim.keymap.set("c", "<S-Enter>", function()
+--   require("noice").redirect(vim.fn.getcmdline())
+-- end, { desc = "Redirect Cmdline" })
+-- local set = function(lhs, rhs, opts)
+--   local mode = "n"
+--   opts = opts or {}
+--
+--   if type(opts) == "string" then
+--     opts = { desc = opts }
+--   end
+--
+--   if opts.mode then
+--     mode = opts.mode
+--     opts.mode = nil
+--   end
+--
+--   vim.keymap.set(mode, lhs, rhs, opts)
+-- end
+--
+-- BUG:
+-- - WARNING conflicting keymap exists for mode **"n"**, lhs: **"y"**

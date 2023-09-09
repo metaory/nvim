@@ -6,82 +6,60 @@ return {
   --     vim.list_extend(opts.ensure_installed, { "hadolint" })
   --   end,
   -- },
-  {
-    "neovim/nvim-lspconfig",
-    opts = {
-      -- format_notify = true,
-      -- diagnostics = { virtual_text = { prefix = "icons" } },
-      -- setup = {bash = {}, bashls = {},},
-    },
-  },
+  -- {
+  --   "neovim/nvim-lspconfig",
+  -- opts = function(_, opts)
+  -- TODO:
+  -- lua_ls = {
+  --   settings = {
+  --     Lua = {
+  --       completion = { callSnippet = "Replace" },
+  --       workspace = { checkThirdParty = false <<
+  -- ddwrite(opts, "__lspconfig")
+  -- end,
+  -- opts = {
+  --   -- format_notify = true,
+  --   -- diagnostics = { virtual_text = { prefix = "icons" } },
+  --   -- setup = {bash = {}, bashls = {},},
+  -- },
+  -- },
 
   {
-    "williamboman/mason.nvim",
+    -- "williamboman/mason.nvim",
+    "mason.nvim",
     opts = function(_, opts)
+      -- TODO: remove fish
+      -- item.filetypes.includes('fish')
+
       vim.list_extend(opts.ensure_installed, {
-        "vale",
-        "rome",
-        "stylua",
-        "selene",
+        -- "stylua", -- already <<
+        -- "shfmt", -- already <<
         -- "json",
         -- "bash",
         -- "bashls",
         -- "proselint",
+        "selene",
+        "vale",
+        -- "rome",
         "luacheck",
         "shellcheck",
-        "shfmt",
       })
+      ddwrite(opts, "__mason")
     end,
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    opts = function(_, opts)
-      local nls = require("null-ls")
-      opts.debug = vim.g.debug_nulls
-      vim.list_extend(opts.sources, {
-        -- nls.builtins.formatting.dprint.with({
-        --   condition = function(utils)
-        --     return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json")
-        --   end,
-        -- }),
-        nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
-        -- nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
-        nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
-        -- nls.builtins.code_actions.proselint.with({ filetypes = { "markdown" } }),
-
-        -- nls.builtins.diagnostics.deno_lint.with({ filetypes = { "javascript", "typescript" } }),
-        -- nls.builtins.diagnostics.selene.with({
-        --   filetypes = { "lua" },
-        --   condition = function(utils) return utils.root_has_file({ "selene.toml" }) end,
-        -- }),
-        -- nls.builtins.formatting.isort,
-        nls.builtins.formatting.black.with({ filetypes = { "python" } }),
-        -- nls.builtins.diagnostics.flake8,
-        nls.builtins.diagnostics.luacheck.with({
-          filetypes = { "lua" },
-          condition = function(utils)
-            return utils.root_has_file({ ".luacheckrc" })
-          end,
-        }),
-        -- table.remove()
-      })
-
-      -- mxdump(vim.inspect(nls.builtins), "null-ls-sources")
-      -- mxdump(vim.inspect(opts), "null-ls-opt")
-      -- mxdump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
-      --
-      -- return opts
-      -- return {
-      --   root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
-      --   sources = opts.sources,
-      --   -- nls.builtins.formatting.fish_indent,
-      --   -- nls.builtins.diagnostics.fish,
-      --   -- nls.builtins.formatting.stylua,
-      --   -- nls.builtins.formatting.shfmt,
-      --   -- nls.builtins.diagnostics.flake8,
-      -- }
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   opts = function(_, opts)
+  --     local nls = require("null-ls")
+  --     opts.debug = vim.g.debug_nulls
+  --     vim.list_extend(opts.sources, {
+  --       nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
+  --       nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
+  --       nls.builtins.formatting.black.with({ filetypes = { "python" } }),
+  --     })
+  --     ddwrite(opts, "__null-ls")
+  --   end,
+  -- },
 }
 --[[
 
@@ -350,3 +328,33 @@ return {
 --     },
 --   },
 -- },
+
+-- ------------------------------------------------------------------------------------
+
+-- nls.builtins.formatting.dprint.with({ condition = function(utils) return utils.root_has_file({ "dprint.json" }) or vim.loop.fs_stat("dprint.json") end, }),
+-- nls.builtins.formatting.prettier.with({ filetypes = { "markdown" } }),
+-- nls.builtins.code_actions.proselint.with({ filetypes = { "markdown" } }),
+-- nls.builtins.diagnostics.deno_lint.with({ filetypes = { "javascript", "typescript" } }),
+-- nls.builtins.diagnostics.selene.with({ filetypes = { "lua" }, condition = function(utils) return utils.root_has_file({ "selene.toml" }) end, }),
+-- nls.builtins.formatting.isort,
+-- nls.builtins.diagnostics.flake8,
+
+-- mxdump(vim.inspect(nls.builtins), "null-ls-sources")
+-- mxdump(vim.inspect(opts), "null-ls-opt")
+-- mxdump(vim.inspect(nls.builtins.diagnostics), "null-ls-diag")
+--
+-- return opts
+-- return {
+--   root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+--   sources = opts.sources,
+--   -- nls.builtins.formatting.fish_indent,
+--   -- nls.builtins.diagnostics.fish,
+--   -- nls.builtins.formatting.stylua,
+--   -- nls.builtins.formatting.shfmt,
+--   -- nls.builtins.diagnostics.flake8,
+-- }
+
+-- TEST:
+-- nls.builtins.diagnostics.luacheck.with({ filetypes = { "lua" }, condition = function(utils) return utils.root_has_file({ ".luacheckrc" }) end, }),
+
+--

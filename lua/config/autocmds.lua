@@ -2,30 +2,31 @@ local lib = require("user.lib")
 
 vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  pattern = { "*/playgrounds/*/*.*" },
-  callback = lib.create_auto_run_au,
-})
-
--- local parser = vim.treesitter.get_parser()
--- if not parser then
---   return vim.notify("No treesitter parser for the current buffer", vim.log.levels.ERROR)
--- end
+vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
 
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   callback = function(args)
-    -- local buf = vim.api.nvim_win_get_buf(win)
-
-    -- vim.bo.filetype = "lua"
     if not pcall(vim.treesitter.start, args.buf, "lua") then
       vim.bo[args.buf].filetype = "lua"
     end
     vim.api.nvim_exec2([[ TSBufDisable highlight ]], {})
     vim.api.nvim_exec2([[ TSBufEnable highlight ]], {})
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true })
-    vim.notify("auto cmd")
   end,
 })
+
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+--   callback = function()
+--     vim.go.smartindent = false
+--     vim.go.autoindent = false
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd("User", {
+--   pattern = "VeryLazy",
+--   callback = function()
+--     vim.notify("NOWWWWW", vim.log.levels.ERROR, { title = "OOOOOOOOOOOOOOOOOOOO" })
+--   end,
+-- })
 
 -- INFO:
 -- match: a string that matched the pattern (see <amatch>)
@@ -158,3 +159,23 @@ vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
 --     vim.b["miniindentscope_disable"] = true
 --   end,
 -- })
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = "markdown",
+--   callback = function(event)
+--     vim.schedule(function()
+--       ddwrite({ e = event }, "______MD______")
+--       require("noice.text.markdown").keys(event.buf)
+--     end)
+--   end,
+-- })
+
+-- local parser = vim.treesitter.get_parser()
+-- if not parser then
+--   return vim.notify("No treesitter parser for the current buffer", vim.log.levels.ERROR)
+-- end
+
+-- local buf = vim.api.nvim_win_get_buf(win)
+
+-- vim.bo.filetype = "lua"
+-- vim.notify("auto cmd win enter", vim.log.levels.DEBUG, { title = "winEnter" })

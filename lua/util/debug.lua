@@ -1,5 +1,3 @@
--- selene: allow(global_usage)
-
 local M = {}
 local PREFIX = "mx_vim_"
 
@@ -160,6 +158,7 @@ function M.dumpwrite(t, f, m)
   if vim.g.debug_global_flag == false then
     return
   end
+
   m = m or "w"
   t = t or {}
   t = type(t) == "table" and vim.inspect(t) or tostring(t)
@@ -167,8 +166,8 @@ function M.dumpwrite(t, f, m)
   local rpl = "___"
   local p = string.format("/tmp/%s%s.lua", PREFIX, f)
   local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
-  local msg = tostring(t)
   -- local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
+  local msg = tostring(t)
 
   local str = string.format("%s%s\n", pre, msg)
   -- local _, lines = string.gsub(str, "\n", "\n")
@@ -212,6 +211,13 @@ M.live_inspect = function(...)
   vim.keymap.set("n", "q", close_handler, {})
 
   vim.defer_fn(close_handler, 10000)
+end
+
+M.expand_callable = function(x)
+  if vim.is_callable(x) then
+    return x()
+  end
+  return x
 end
 
 return M
