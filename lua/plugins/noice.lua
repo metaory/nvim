@@ -1,30 +1,13 @@
--- INFO: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages
--- local Config = require("noice.config")
+-- INFO: <S-Enter>
 
--- if true then return {} end
-local popup_format = {
-  "{level} ",
-  "{date} ",
-  "{event}",
-  { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } },
-  " ",
-  "{title} ",
-  "{cmdline} ",
-  "\n",
-  "{message}",
-}
+  -- stylua: ignore
+local popup_format = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ", "{title} ", "{cmdline} ", "\n", "{message}" }
 
 return {
   "folke/noice.nvim",
   keys = {
-    {
-      "<S-Enter>",
-      function()
-        require("noice").redirect(vim.fn.getcmdline())
-      end,
-      mode = "c",
-      desc = "Redirect Cmdline",
-    },
+    -- stylua: ignore
+    { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline", },
   },
   opts = function(_, opts)
     ddwrite(opts, "noice_pre")
@@ -43,13 +26,8 @@ return {
 
     opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
 
-    -- opts.notify = {
-    --   enabled = false,
-    --   opts = {
-    --     background_colour = "#f0f023",
-    --   },
-    --   view = "notify",
-    -- }
+    -- opts.notify = { enabled = false, opts = { background_colour = "#f0f023" }, view = "notify" }
+
     opts.views = vim.tbl_deep_extend("force", opts.views or {}, {
       popup = {
         size = { width = "70%", height = "50%" },
@@ -58,7 +36,6 @@ return {
         win_options = { wrap = false },
       },
       notify = {
-        -- background_colour = "#f0f023",
         buf_options = { buftype = "nofile", filetype = "lua" },
         win_options = { wrap = false },
         replace = true,
@@ -853,3 +830,7 @@ return {
 -- history = {view = "split",},
 -- last = {view = "popup",},
 -- errors = {view = "popup",},
+
+-- INFO: https://github.com/folke/noice.nvim/wiki/A-Guide-to-Messages
+-- local Config = require("noice.config")
+--

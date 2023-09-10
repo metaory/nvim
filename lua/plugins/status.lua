@@ -1,32 +1,31 @@
 return {
-  {
-    "nvim-lualine/lualine.nvim",
-    opts = function(_, opts)
-      -- opts.options.theme = "horizon" --, theme = "auto", disabled_filetypes = { statusline = { "starter" } },},},
-      opts.options.component_separators = { left = " ", right = "" } --  
-      -- opts.options.component_separators = { left = "⏽", right = "" } --  
-
-      opts.options.section_separators = { left = "", right = "" }
-      opts.sections.lualine_c[4] = {
-        function()
-          local loc = require("nvim-navic").get_location()
-          -- ddwrite(loc, "navic", "a")
-          return loc
-        end,
-        cond = function()
-          return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
-        end,
-        padding = 0,
-      }
-      table.insert(opts.sections.lualine_x, {
-        require("noice").api.status.search["get"],
-        cond = require("noice").api.status.search["has"],
-        color = { fg = "#ff9e64" },
-      })
-      table.insert(opts.options.disabled_filetypes.statusline, "starter")
-    end,
-  },
+  "nvim-lualine/lualine.nvim",
+  opts = function(_, opts)
+    local c = require("user.colors").palette()
+    opts.options.component_separators = { left = "⏽ ", right = "⏽" } -- " ", "⏽" ,"", "" ""
+    opts.options.section_separators = { left = "", right = "" }
+    opts.sections.lualine_c[4] = {
+      function()
+        return require("nvim-navic").get_location()
+      end,
+      cond = function()
+        return package.loaded["nvim-navic"] and require("nvim-navic").is_available()
+      end,
+      padding = 0,
+    }
+    opts.sections.lualine_y = {
+      { "progress", separator = " ", padding = { left = 1, right = 0 } },
+      { "location", padding = { left = 0, right = 1 } },
+    }
+    table.insert(opts.sections.lualine_x, {
+      require("noice").api.status.search["get"],
+      cond = require("noice").api.status.search["has"],
+      color = { fg = c.yellow },
+    })
+    table.insert(opts.options.disabled_filetypes.statusline, "starter")
+  end,
 }
+-- { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
 -- opts = {options = {theme = "horizon", theme = "auto", disabled_filetypes = { statusline = { "starter" } },},},
 -- ddwrite(opts, "lualine")
 -- ddwrite(opts.sections.lualine_c, "lualine_c")

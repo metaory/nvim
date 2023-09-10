@@ -1,4 +1,4 @@
--- local struct = function(mode, keys, desc) return { mode = mode, keys = keys, desc = desc } end
+-- INFO: <LEADER> um
 
 return {
   { "folke/which-key.nvim", enabled = false },
@@ -6,9 +6,9 @@ return {
     "echasnovski/mini.clue",
     lazy = false,
     config = function()
-      local miniclue = require("mini.clue")
+      local clue = require("mini.clue")
 
-      miniclue.setup({
+      clue.setup({
         window = {
           config = { width = "auto", border = "rounded" },
           delay = 200,
@@ -49,12 +49,12 @@ return {
         },
 
         clues = {
-          miniclue.gen_clues.builtin_completion(),
-          miniclue.gen_clues.marks(),
-          miniclue.gen_clues.registers(),
-          miniclue.gen_clues.windows(),
-          miniclue.gen_clues.g(),
-          miniclue.gen_clues.z(),
+          clue.gen_clues.builtin_completion(),
+          clue.gen_clues.marks(),
+          clue.gen_clues.registers(),
+          clue.gen_clues.windows(),
+          clue.gen_clues.g(),
+          clue.gen_clues.z(),
           { mode = "n", keys = "<Leader>b", desc = "+Buffer" },
 
           { mode = "n", keys = "<Leader>c", desc = "+Code" },
@@ -106,10 +106,9 @@ return {
   {
     "echasnovski/mini.map",
     cmd = "MiniMap",
-    keys = { { "<leader>um", "<CMD>lua MiniMap.toggle()<CR>", mode = "n", desc = "Toggle Map" } },
+    keys = { { "<leader>um", "<CMD>lua MiniMap.toggle()<CR>", desc = "Toggle Map" } },
     opts = {
       -- integrations = nil,
-
       -- - View-line pairs: '▒' and '█'.
       -- - Line - '🮚', '▶'.
       -- - View - '╎', '┋', '┋'.
@@ -117,8 +116,8 @@ return {
       window = { focusable = false, side = "right", show_integration_count = true, width = 10, winblend = 100 },
     },
     config = function(_, opts)
-      local c = require("tokyonight.colors").default
-      vim.api.nvim_set_hl(0, "MiniMapNormal", { fg = c.bg_dark })
+      local c = require("user.colors").palette()
+      vim.api.nvim_set_hl(0, "MiniMapNormal", { fg = c.bg2 })
       --   -- vim.api.nvim_set_hl(0, "MiniMapNormal") -- ,  basic highlight of whole window.
       --   -- vim.api.nvim_set_hl(0, "MiniMapSymbolCount")  -- counts of per-line integration items.
       --   -- vim.api.nvim_set_hl(0, "MiniMapSymbolLine") -- scrollbar part representing current line.
@@ -130,3 +129,5 @@ return {
 
 -- { mode = "n", keys = "<LocalLeader>" },
 -- { mode = "x", keys = "<LocalLeader>" },
+
+-- local c = require("tokyonight.colors").default

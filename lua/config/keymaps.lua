@@ -113,7 +113,7 @@ vim.tbl_map(keymap_set, {
 
 vim.tbl_map(keymap_set, {
   { "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", "Dismiss Notification" },
-  { "<C-q>", "<cmd>lua require('user.plugins.qtoggle').toggle_qf()<CR>", "Quickfix Toggle" },
+  { "<C-q>", "<cmd>lua require('user.qtoggle').toggle_qf()<CR>", "Quickfix Toggle" },
   { "<M-d>", "<ESC>:<C-y>", "Command" },
   { "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },
   { "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },

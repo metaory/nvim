@@ -1,31 +1,16 @@
+-- INFO: <LEADER> cs
+
 return {
+  {
+    "simrat39/symbols-outline.nvim",
+    keys = { { "<leader>cs", "<cmd>SymbolsOutline<cr>", desc = "Symbols Outline" } },
+    cmd = "SymbolsOutline",
+  },
   -- TODO: https://github.com/SmiteshP/nvim-navbuddy
   {
     "SmiteshP/nvim-navic",
     opts = function()
       return { separator = " ", highlight = true, depth_limit = 6, icons = require("lazyvim.config").icons.kinds }
-    end,
-  },
-  {
-    "rcarriga/nvim-notify",
-    keys = {
-      {
-        "<leader>un",
-        '<CMD>lua require("notify").dismiss({ silent = true, pending = true })<CR>',
-        desc = "Dismiss all Notifications",
-      },
-    },
-    opts = function(_, opts)
-      return vim.tbl_deep_extend("force", opts, {
-        timeout = 3000,
-        background_colour = "#000000",
-        max_height = function()
-          return math.floor(vim.o.lines * 0.80)
-        end,
-        max_width = function()
-          return math.floor(vim.o.columns * 0.75)
-        end,
-      })
     end,
   },
 }

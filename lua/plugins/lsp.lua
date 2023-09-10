@@ -1,29 +1,4 @@
 return {
-  -- {
-  --   "mason.nvim",
-  --   opts = function(_, opts)
-  --     opts.ensure_installed = opts.ensure_installed or {}
-  --     vim.list_extend(opts.ensure_installed, { "hadolint" })
-  --   end,
-  -- },
-  -- {
-  --   "neovim/nvim-lspconfig",
-  -- opts = function(_, opts)
-  -- TODO:
-  -- lua_ls = {
-  --   settings = {
-  --     Lua = {
-  --       completion = { callSnippet = "Replace" },
-  --       workspace = { checkThirdParty = false <<
-  -- ddwrite(opts, "__lspconfig")
-  -- end,
-  -- opts = {
-  --   -- format_notify = true,
-  --   -- diagnostics = { virtual_text = { prefix = "icons" } },
-  --   -- setup = {bash = {}, bashls = {},},
-  -- },
-  -- },
-
   {
     -- "williamboman/mason.nvim",
     "mason.nvim",
@@ -358,3 +333,27 @@ return {
 -- nls.builtins.diagnostics.luacheck.with({ filetypes = { "lua" }, condition = function(utils) return utils.root_has_file({ ".luacheckrc" }) end, }),
 
 --
+-- {
+--   "mason.nvim",
+--   opts = function(_, opts)
+--     opts.ensure_installed = opts.ensure_installed or {}
+--     vim.list_extend(opts.ensure_installed, { "hadolint" })
+--   end,
+-- },
+-- {
+--   "neovim/nvim-lspconfig",
+-- opts = function(_, opts)
+-- TODO:
+-- lua_ls = {
+--   settings = {
+--     Lua = {
+--       completion = { callSnippet = "Replace" },
+--       workspace = { checkThirdParty = false <<
+-- ddwrite(opts, "__lspconfig")
+-- end,
+-- opts = {
+--   -- format_notify = true,
+--   -- diagnostics = { virtual_text = { prefix = "icons" } },
+--   -- setup = {bash = {}, bashls = {},},
+-- },
+-- },

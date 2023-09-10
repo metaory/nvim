@@ -9,8 +9,8 @@ return {
       return next(vim.fn.argv()) == nil
     end,
     opts = function()
-      local logo = table.concat(header, "\n")
       local pad = string.rep(" ", 10)
+      local logo = pad .. table.concat(header, "\n" .. pad)
       local starter = require("mini.starter")
       local telescope = starter.sections.telescope()()
       table.remove(telescope, 1)
@@ -34,13 +34,13 @@ return {
       }
       return config
     end,
+  },
+}
     -- config = function(_, opts)
     --   -- mxdebug(opts, "mini")
     --   require("mini.starter").setup(opts)
     --   -- vim.api.nvim_buf_set_name(0, "/tmp")
     -- end,
-  },
-}
       -- mxdump(vim.inspect(config), "dashx")
       -- nvim_buf_set_name({buffer}, {name})                      *nvim_buf_set_name()*
 -- {

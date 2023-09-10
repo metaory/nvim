@@ -11,7 +11,7 @@
   },
   "vim.log.level": {
     "prefix": "lvl",
-    "body": ["vim.log.level.${1|DEBUG,ERROR,INFO,TRACE,WARN,OFF|}"]
+    "body": ["vim.log.levels.${1|DEBUG,ERROR,INFO,TRACE,WARN,OFF|}"]
   },
   "vim.notify": {
     "prefix": "vnotify",

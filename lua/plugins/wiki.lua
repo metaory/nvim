@@ -1,5 +1,3 @@
-vim.api.nvim_set_var("vim_markdown_frontmatter ", 1)
-
 local norg_keybind = function(t)
   local map, lhs, rhs, desc = unpack(t)
   map("norg", "n", lhs, rhs, { desc = desc })
@@ -41,24 +39,22 @@ return {
         ["core.keybinds"] = {
           config = {
             neorg_leader = "<leader>",
-            -- norg_keybind(keybinds, t)
             hook = function(bind)
               bind.unmap("norg", "n", "<leader>nn")
-              local map = bind.map
 
               vim.tbl_map(norg_keybind, {
-                { map, "Q", ":q<CR>", "Quit" },
-                { map, "<BS>", ":bw<CR>", "Go Back" },
-                { map, "<leader>uc", "<CMD>Neorg toggle-concealer<CR>", "Toggle Conceale" },
-                { map, "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", "Heading Mode" },
-                { map, "<leader>mn", "<CMD>Neorg mode norg<CR>", "Normal Mode" },
-                { map, "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
-                { map, "<leader>j", "<CMD>Neorg journal toc update<CR>", "Journal Index" },
-                { map, "<leader>y", "<CMD>Neorg journal yesterday<CR>", "Journal Yesterday" },
-                { map, "<leader>n", "<CMD>Neorg journal today<CR>", "Journal Today" },
-                { map, "<leader>N", "<CMD>Neorg journal tomorrow<CR>", "Journal Tomorrow" },
-                { map, "<Up>", "<CMD>Neorg presenter start<CR>", "Presenter Mode" },
-                { map, "q", "<CMD>Neorg journal toc open<CR>", "Close" },
+                { bind.map, "Q", ":q<CR>", "Quit" },
+                { bind.map, "<BS>", ":bw<CR>", "Go Back" },
+                { bind.map, "<leader>uc", "<CMD>Neorg toggle-concealer<CR>", "Toggle Conceale" },
+                { bind.map, "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", "Heading Mode" },
+                { bind.map, "<leader>mn", "<CMD>Neorg mode norg<CR>", "Normal Mode" },
+                { bind.map, "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
+                { bind.map, "<leader>j", "<CMD>Neorg journal toc update<CR>", "Journal Index" },
+                { bind.map, "<leader>y", "<CMD>Neorg journal yesterday<CR>", "Journal Yesterday" },
+                { bind.map, "<leader>n", "<CMD>Neorg journal today<CR>", "Journal Today" },
+                { bind.map, "<leader>N", "<CMD>Neorg journal tomorrow<CR>", "Journal Tomorrow" },
+                { bind.map, "<Up>", "<CMD>Neorg presenter start<CR>", "Presenter Mode" },
+                { bind.map, "q", "<CMD>Neorg journal toc open<CR>", "Close" },
               })
             end,
           },
@@ -67,6 +63,7 @@ return {
     },
     config = function(_, opts)
       require("neorg").setup(opts)
+      vim.api.nvim_set_var("vim_markdown_frontmatter ", 1)
       table.insert(require("mini.clue").config.clues, {
         { mode = "n", keys = "<leader>l", desc = "+List" },
         { mode = "n", keys = "<leader>m", desc = "+Mode" },

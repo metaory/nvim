@@ -1,42 +1,6 @@
-return {
-  -- {
-  --   "mg979/vim-visual-multi",
-  --   -- cmd = { "<Plug>(VM-Find-Under)" },
-  --   -- lazy = false,
-  -- },
-  {
-    "smoka7/multicursors.nvim",
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "smoka7/hydra.nvim",
-    },
-    cmd = { "MCstart" },
-    -- cmd = { "MCstart", "MCvisual", "MCclear", "MCpattern", "MCvisualPattern", "MCunderCursor" },
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>rm",
-        "<cmd>MCstart<cr>",
-        desc = "Multi Cursor",
-      },
-    },
-    opts = {
-      hint_config = {
-        type = "window",
-        border = "none",
-        position = "bottom",
-      },
-      generate_hints = {
-        normal = true,
-        insert = true,
-        extend = true,
-      },
-    },
-    config = function(_, opts)
-      require("multicursors").setup(opts)
-    end,
-  },
-}
+return {}
+
+-- { "mg979/vim-visual-multi", cmd = { "<Plug>(VM-Find-Under)" }, lazy = false },
 
 -- multicursor -----------------------------------------
 -- local I = require("multicursors.insert_mode")

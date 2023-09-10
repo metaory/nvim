@@ -1,8 +1,7 @@
--- INFO: https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/config.lua#L11
-
 return {
   {
     "telescope.nvim", -- dependencies = {},
+    -- TODO: sort binding https://github.com/nvim-telescope/telescope.nvim#sorters
     keys = {
       { "<leader><space>", false },
       { "<leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
@@ -12,8 +11,6 @@ return {
         '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>',
         desc = "Help pages",
       },
-
-      -- { "<leader>sr", "<CMD>Telescope resume<CR>", desc = "Resume",  },
       { "<M-g>", "<CMD>Telescope live_grep<CR>" },
       { "<M-f>", "<CMD>Telescope find_files<CR>" },
       { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
@@ -41,7 +38,6 @@ return {
           horizontal = { prompt_position = "bottom", width = 0.9, preview_width = 0.6 },
           center = { prompt_position = "top" },
         },
-        -- layout_config = { bottom_pane = { prompt_position = "bottom" } },
         wrap_results = false,
         border = true,
         preview = { treesitter = true },
@@ -87,7 +83,15 @@ return {
     end,
     keys = { { "<leader>sp", "<CMD>Telescope projects<CR>", desc = "Projects" } },
   },
+  {
+    "tsakirist/telescope-lazy.nvim",
+    config = function()
+      require("telescope").load_extension("lazy")
+    end,
+    keys = { { "<leader>sl", ":Telescope lazy<CR>", desc = "Lazy" } },
+  },
 }
+-- { "<leader>sr", "<CMD>Telescope resume<CR>", desc = "Resume",  },
 -- {
 --   "nvim-telescope/telescope-file-browser.nvim",
 --   keys = {
@@ -259,5 +263,6 @@ return {
 -- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
 -- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
 -- INFO: { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
+-- INFO: https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/config.lua#L11
 
 --

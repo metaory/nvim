@@ -3,12 +3,7 @@ return {
   -- { "nvim-treesitter/nvim-treesitter-context", cmd = "TSContextToggle" },
   { "echasnovski/mini.ai", enabled = false },
   { "RRethy/vim-illuminate", enabled = false },
-  {
-    "echasnovski/mini.cursorword",
-    event = "VeryLazy",
-    opts = { delay = 100 },
-    config = true,
-  },
+  { "echasnovski/mini.cursorword", event = "VeryLazy", opts = { delay = 100 }, config = true },
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)

@@ -17,6 +17,12 @@ _G.live_inspect = util.live_inspect
 require("user.commands")
 require("config.lazy")
 
+if vim.g.debug_global_flag then
+  vim.schedule(function()
+    vim.notify("  DEBUG IS ENABLED  ", vim.log.levels.WARN, { title = "DEBUG" })
+  end)
+end
+
 -- vim.g.loaded_node_provider = true
 -- vim.schedule(function() vim.notify("nvim loader is enabled") end)
 -- vim.print = _G.dd

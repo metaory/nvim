@@ -1,25 +1,22 @@
+-- INFO: <LEADER> uh
+
 return {
-  {
-    "echasnovski/mini.hipatterns",
-    opts = function()
-      local hi = require("mini.hipatterns")
-      return {
-        -- tailwind = {
-        --   enabled = true,
-        --   ft = { "typescriptreact", "javascriptreact", "css", "javascript", "typescript", "html" },
-        --   style = "full", -- compact: only the color will be highlighted
-        -- },
-        highlighters = {
-          hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }),
-          -- https://github.com/echasnovski/mini.nvim/issues/339
-          -- https://github.com/echasnovski/mini.nvim/issues/374
-          -- short_hex_color = { pattern = '#%x%x%x%f[%X]', group = short_hex_color },
-        },
-      }
-    end,
-  },
+  "echasnovski/mini.hipatterns",
+  opts = function()
+    local hi = require("mini.hipatterns")
+    return { highlighters = { hex_color = hi.gen_highlighter.hex_color({ priority = 2000 }) } }
+  end,
 }
 
+-- https://github.com/echasnovski/mini.nvim/issues/339
+-- https://github.com/echasnovski/mini.nvim/issues/374
+-- short_hex_color = { pattern = '#%x%x%x%f[%X]', group = short_hex_color },
+
+-- tailwind = {
+--   enabled = true,
+--   ft = { "typescriptreact", "javascriptreact", "css", "javascript", "typescript", "html" },
+--   style = "full", -- compact: only the color will be highlighted
+-- },
 -- if true then return {} end
 
 -- local M = {}

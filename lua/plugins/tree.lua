@@ -1,3 +1,5 @@
+-- INFO: <LEADER> f<SPACE> | fm | fM | fe | fE
+
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -33,7 +35,7 @@ return {
             deleted = "✖", -- this can only be used in the git_status source
             renamed = "", -- this can only be used in the git_status source
             untracked = "",
-            ignored = "",
+            ignored = "", -- 
             unstaged = "",
             staged = "", -- 
             conflict = "",
@@ -95,34 +97,6 @@ return {
       { "<leader>fM", '<CMD>require("mini.files").open(vim.loop.cwd(), true)<CR>', desc = "Explorer [] mini" }, -- ·
     },
   },
-  -- require'nvim-web-devicons'.setup
-  {
-    "nvim-tree/nvim-web-devicons",
-    opts = {
-      override = {
-        -- zsh = { icon = "", color = "#428850", cterm_color = "65", name = "Zsh" },
-        -- lua = { icon = "", color = "#428850", name = "Lua" },
-        -- Dockerfile = { icon = "", color = "#1795ea", name = "Dockerfile" },
-        ["Dockerfile"] = {
-          icon = "",
-          color = "#1795ea",
-          cterm_color = "25",
-          name = "Dockerfile",
-        },
-      },
-      color_icons = true, --  (default to true)
-      default = true, --  (default to false)
-      strict = false, -- (default to false)
-      -- override_by_filename = {[".gitignore"] = {icon = "", color = "#f1502f", name = "Gitignore",},},
-      override_by_filename = {
-        ["Dockerfile"] = { icon = "", color = "#1795ea", name = "Dockerfile" },
-      },
-      override_by_extension = {
-        ["txt"] = { icon = "", color = "#81e043", name = "txt" },
-        ["log"] = { icon = "", color = "#81e043", name = "log" },
-      },
-    },
-  },
   {
     "stevearc/oil.nvim",
     cmd = "Oil",
@@ -155,11 +129,11 @@ return {
       float = { padding = 2, max_width = 0, max_height = 0, border = "rounded", win_options = { winblend = 10 } },
       -- override = function(conf) return conf end,
       preview = {
-        max_width = 0.9, -- {100, 0.8} means "the lesser of 100 columns or 80% of total"
-        min_width = { 40, 0.4 }, -- {40, 0.4} means "the greater of 40 columns or 40% of total"
+        max_width = 0.9,
+        min_width = { 40, 0.4 },
         width = nil,
-        max_height = 0.9, -- {80, 0.9} means "the lesser of 80 columns or 90% of total"
-        min_height = { 5, 0.1 }, -- {5, 0.1} means "the greater of 5 columns or 10% of total"
+        max_height = 0.9,
+        min_height = { 5, 0.1 },
         height = nil,
         border = "rounded",
         win_options = { winblend = 0 },
@@ -175,6 +149,10 @@ return {
         minimized_border = "none",
         win_options = { winblend = 0 },
       },
+      -- {100, 0.8} means "the lesser of 100 columns or 80% of total"
+      -- {40, 0.4} means "the greater of 40 columns or 40% of total"
+      -- {80, 0.9} means "the lesser of 80 columns or 90% of total"
+      -- {5, 0.1} means "the greater of 5 columns or 10% of total"
     },
   },
 }

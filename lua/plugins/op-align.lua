@@ -1,9 +1,6 @@
+-- INFO: -- gaa | gaA
+
 return {
-  {
-    "sQVe/sort.nvim",
-    cmd = "Sort",
-    keys = { { "<leader>cas", "<CMD>Sort<CR>", mode = "v", desc = "Sort Selection" } },
-  },
   {
     "echasnovski/mini.align",
     opts = { mappings = { start_with_preview = "gaa", start = "gaA" }, silent = false },

@@ -5,12 +5,25 @@ local set_hl = function(t)
   vim.api.nvim_set_hl(0, g, c)
 end
 
+M.palette = function()
+  local cmap = {
+    ["tokyonight"] = function()
+      return require("tokyonight.colors").default
+    end,
+    ["onedark"] = function()
+      return require("onedark.colors")
+    end,
+  }
+  local cur = vim.api.nvim_eval("g:colors_name")
+  return cmap[cur] and cmap[cur]() or {}
+end
+
 M.setup = function()
   require("onedark").colorscheme()
-  local c = require("onedark.colors")
-  -- local c = require("onedark.palette")[vim.g.onedark_config.style]
 
-  local border = { fg = c.grey }
+  local c = M.palette()
+
+  local border = { fg = c.purple }
 
   vim.tbl_map(set_hl, {
     { "FloatBorder", border },
@@ -57,3 +70,5 @@ return M
 --[[
 NoiceVirtualText xxx cterm= gui= links to DiagnosticVirtualTextInfo
 ]]
+-- local c = require("onedark.colors")
+-- local c = require("onedark.palette")[vim.g.onedark_config.style]
