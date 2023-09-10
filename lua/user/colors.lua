@@ -1,8 +1,10 @@
 local M = {}
 
-local set_hl = function(t)
-  local g, c = unpack(t)
-  vim.api.nvim_set_hl(0, g, c)
+local set_hl = function(l, o)
+  l = type(l) == "table" and l or { l }
+  for _, g in pairs(l) do
+    vim.api.nvim_set_hl(0, g, o)
+  end
 end
 
 M.palette = function()
@@ -23,16 +25,16 @@ M.setup = function()
 
   local c = M.palette()
 
-  local border = { fg = c.purple }
+  set_hl({
+    "FloatBorder",
+    "TelescopeBorder",
+    "TelescopePromptBorder",
+    "TelescopePreviewBorder",
+    "TelescopeResultsBorder",
+    "NoiceConfirmBorder",
+  }, { fg = c.purple })
 
-  vim.tbl_map(set_hl, {
-    { "FloatBorder", border },
-    { "TelescopeBorder", border },
-    { "TelescopePromptBorder", border },
-    { "TelescopePreviewBorder", border },
-    { "TelescopeResultsBorder", border },
-    { "NoiceConfirmBorder", border },
-  })
+  -- set_hl("NormalFloat", { bg = c.red })
 end
 
 return M
