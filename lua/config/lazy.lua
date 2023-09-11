@@ -21,7 +21,7 @@ require("lazy").setup({
           dap = { Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" } },
           kinds = {
             Snippet = " ",
-            Array = " ",
+            Array = " ", --     
           },
         },
       },

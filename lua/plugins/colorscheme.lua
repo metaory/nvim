@@ -1,4 +1,5 @@
-local isRunningPicom = vim.fn.system("pgrep picom") ~= ""
+local isRunningPicom = true
+-- local isRunningPicom = vim.fn.system("pgrep picom") ~= ""
 
 -- TODO: LunarVim/colorgen-nvim
 
@@ -38,6 +39,9 @@ return {
       }
     end,
   },
+  -- { "nyoom-engineering/oxocarbon.nvim", config = true, lazy = false },
+  -- { "B4mbus/oxocarbon-lua.nvim", lazy = false },
+  -- { "olimorris/onedarkpro.nvim", lazy = false },
   { "catppuccin/nvim", enabled = false },
   {
     "tokyonight.nvim",

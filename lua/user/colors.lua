@@ -1,6 +1,6 @@
 local M = {}
 
-local set_hl = function(l, o)
+M.set_hl = function(l, o)
   l = type(l) == "table" and l or { l }
   for _, g in pairs(l) do
     vim.api.nvim_set_hl(0, g, o)
@@ -23,9 +23,11 @@ end
 M.setup = function()
   require("onedark").colorscheme()
 
+  -- vim.cmd.colorscheme("oxocarbon-lua")
+
   local c = M.palette()
 
-  set_hl({
+  M.set_hl({
     "FloatBorder",
     "TelescopeBorder",
     "TelescopePromptBorder",
@@ -34,7 +36,7 @@ M.setup = function()
     "NoiceConfirmBorder",
   }, { fg = c.purple })
 
-  -- set_hl("NormalFloat", { bg = c.red })
+  M.set_hl("Foo", { bg = c.red, fg = c.blue })
 end
 
 return M

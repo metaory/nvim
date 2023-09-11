@@ -15,6 +15,14 @@ vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "json" },
+  callback = function()
+    vim.keymap.set("n", "yl", [[:normal "+yi"<CR>]], { desc = "yank inside quotes", buffer = true })
+    vim.keymap.set("n", "yx", [[:normal "+yi[<CR>]], { desc = "yank inside bracket", buffer = true })
+  end,
+})
+
 -- vim.api.nvim_create_autocmd("BufReadPost", {
 --   callback = function()
 --     vim.go.smartindent = false

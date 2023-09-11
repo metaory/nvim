@@ -8,6 +8,26 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
       -- opts.highlight.additional_vim_regex_highlighting = { "markdown" }
+      -- opts.textobjects = {
+      --   select = {
+      --     enable = true,
+      --     lookahead = true,
+      --     keymaps = {
+      --       ["af"] = "@function.outer",
+      --       ["if"] = "@function.inner",
+      --       ["ij"] = "@block.inner",
+      --       ["ac"] = "@class.outer",
+      --       ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+      --       ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+      --     },
+      --     selection_modes = {
+      --       ["@parameter.outer"] = "v", -- charwise
+      --       ["@function.outer"] = "V", -- linewise
+      --       ["@class.outer"] = "<c-v>", -- blockwise
+      --     },
+      --     include_surrounding_whitespace = true,
+      --   },
+      -- }
       opts.indent.enable = false
       vim.list_extend(opts.ensure_installed, {
         "jq", -- "help"
@@ -15,6 +35,7 @@ return {
       ddwrite(opts, "treesitter")
     end,
   },
+  -- {"nvim-treesitter/nvim-treesitter-textobjects", opts = { , },},
 }
 -- -- { "RRethy/vim-illuminate", event = nil },
 -- { "RRethy/vim-illuminate", dependencies = { "nvim-treesitter/nvim-treesitter" } },

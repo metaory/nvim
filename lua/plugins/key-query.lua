@@ -2,6 +2,7 @@
 
 return {
   { "folke/which-key.nvim", enabled = false },
+  -- { "Cassin01/wf.nvim" },
   {
     "echasnovski/mini.clue",
     lazy = false,
@@ -23,6 +24,12 @@ return {
 
           { mode = "n", keys = "[" },
           { mode = "n", keys = "]" },
+
+          { mode = "n", keys = "c" },
+          { mode = "x", keys = "c" },
+
+          { mode = "x", keys = "d" },
+
           { mode = "n", keys = "g" },
           { mode = "x", keys = "g" },
 
@@ -53,6 +60,8 @@ return {
           clue.gen_clues.marks(),
           clue.gen_clues.registers(),
           clue.gen_clues.windows(),
+          -- clue.gen_clues.c(),
+          -- clue.gen_clues.d(),
           clue.gen_clues.g(),
           clue.gen_clues.z(),
           { mode = "n", keys = "<Leader>b", desc = "+Buffer" },
@@ -95,6 +104,9 @@ return {
           { mode = "n", keys = "<Leader>sn", desc = "+Notification" },
 
           { mode = "n", keys = "<Leader><Tab>", desc = "+Tab" },
+
+          -- { mode = "n", keys = "c", desc = "Change Pending" },
+          -- { mode = "n", keys = "d", desc = "Delete Pending" },
 
           { mode = "n", keys = "gz", desc = "Surround operator" },
           { mode = "n", keys = "ga", desc = "Align operator" }, -- lua/plugins/coding.lua:18

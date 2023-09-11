@@ -6,8 +6,9 @@ return {
       { "<leader><space>", false },
       { "<leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
       { "<leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
+      { "<leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
       {
-        "<leader>sh",
+        "<leader>sH",
         '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>',
         desc = "Help pages",
       },

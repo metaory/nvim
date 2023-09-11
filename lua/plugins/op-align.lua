@@ -12,7 +12,7 @@ return {
   },
   {
     "Vonr/align.nvim",
-    enabled = false,
+    enabled = true,
     keys = {
       { "ga", nil, desc = "Align Operator" },
       {

@@ -4,6 +4,7 @@ return {
     local c = require("user.colors").palette()
     opts.options.component_separators = { left = "⏽ ", right = "⏽" } -- " ", "⏽" ,"", "" ""
     opts.options.section_separators = { left = "", right = "" }
+
     opts.sections.lualine_c[4] = {
       function()
         return require("nvim-navic").get_location()
@@ -14,15 +15,49 @@ return {
       padding = 0,
     }
     opts.sections.lualine_y = {
-      { "progress", separator = " ", padding = { left = 1, right = 0 } },
+      {
+        function()
+          -- local clients = vim.lsp.get_active_clients({ bufnr = 0 }) or {}
+          -- local client = clients[1] or {}
+          -- local icon = "  "
+          -- local len = #clients > 1 and string.format("[%s]", #clients) or ""
+          -- local name = client.name or ""
+          -- return string.format("%s%s%s", name, icon, len)
+          return " "
+        end,
+        separator = "",
+        padding = { left = 1, right = 0 },
+        color = function()
+          local is_lsp_attached = #vim.lsp.get_active_clients({ bufnr = 0 }) > 0
+          return { fg = c[is_lsp_attached and "green" or "red"] }
+        end,
+      },
+      { "progress", separator = " ", padding = { left = 1, right = 0 } },
       { "location", padding = { left = 0, right = 1 } },
     }
+    -- ~.local/share/nvim/lazy/lualine.nvim/lua/lualine/components/diff/init.lua:19
+    -- opts.sections.lualine_x[5].diff_color = {
+    --   added = "Foo", -- Changes the diff's added color
+    --   modified = "Foo", -- Changes the diff's modified color
+    --   removed = "Foo", -- Changes the diff's removed color you
+    -- }
+    -- {"diff", symbols = {added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed,},},
+
     table.insert(opts.sections.lualine_x, {
       require("noice").api.status.search["get"],
       cond = require("noice").api.status.search["has"],
       color = { fg = c.yellow },
     })
+
+    opts.lualine_z = {
+      function()
+        return os.date("%R")
+        -- return " " .. os.date("%R")
+      end,
+    }
     table.insert(opts.options.disabled_filetypes.statusline, "starter")
+    -- opts.options.disabled_filetypes.statusline = vim.list_extend(opts.options.disabled_filetypes.statusline, {"starter", "lazy",})
+    ddwrite(opts, "lualine_opts_post")
   end,
 }
 -- { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
