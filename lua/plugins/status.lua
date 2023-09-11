@@ -5,6 +5,7 @@ return {
     opts.options.component_separators = { left = "⏽ ", right = "⏽" } -- " ", "⏽" ,"", "" ""
     opts.options.section_separators = { left = "", right = "" }
 
+    -- opts.sections.lualine_a = { "mode" }
     opts.sections.lualine_c[4] = {
       function()
         return require("nvim-navic").get_location()
