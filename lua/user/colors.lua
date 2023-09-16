@@ -37,6 +37,9 @@ M.setup = function()
   }, { fg = c.purple })
 
   M.set_hl("Foo", { bg = c.red, fg = c.blue })
+  M.set_hl("Visual", { bg = c.grey })
+
+  M.set_hl("LuaLineDiffChange", { fg = c.yellow })
 end
 
 return M

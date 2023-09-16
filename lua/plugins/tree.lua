@@ -20,23 +20,29 @@ return {
     },
     opts = {
       default_component_configs = {
+        indent = {
+          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
+          expander_collapsed = "", --  
+          expander_expanded = "",
+          expander_highlight = "NeoTreeExpander",
+        },
         icon = {
-          folder_closed = "", --               -- /home/meta/dev/meta/municode/dumps/uni-etc:69
-          folder_open = "",
-          folder_empty = "",
+          folder_closed = "○", --               -- /home/meta/dev/meta/municode/dumps/uni-etc:69
+          folder_open = "●", --        
+          folder_empty = "濾",
           default = "", --   
           highlight = "NeoTreeFileIcon",
         },
-        modified = { symbol = "[]", highlight = "NeoTreeModified" },
+        modified = { symbol = "落", highlight = "NeoTreeModified" },
         git_status = {
           symbols = {
-            added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
+            added = "珞", -- or "✚", but this is redundant info if you use git_status_colors on the name
             modified = "", -- or "", but this is redundant info if you use git_status_colors on the name
             deleted = "✖", -- this can only be used in the git_status source
             renamed = "", -- this can only be used in the git_status source
             untracked = "",
             ignored = "", -- 
-            unstaged = "",
+            unstaged = "",
             staged = "", -- 
             conflict = "",
           },

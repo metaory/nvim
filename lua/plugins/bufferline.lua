@@ -1,4 +1,3 @@
-local foo = ""
 return {
   "akinsho/bufferline.nvim",
   opts = function()
@@ -17,9 +16,10 @@ return {
         -- middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
         separator_style = { "", "" }, -- { "", "" },
         show_buffer_close_icons = false,
+        always_show_bufferline = false,
         -- separator_style = "none", --| "slope" | "thick" | "thin" | { 'any', 'any' },
         modified_icon = "●",
-        close_icon = "",
+        close_icon = "✖", -- 
         indicator = {
           -- icon = "⏽",
           -- style = "icon", -- | "underline" | "none",

@@ -19,7 +19,7 @@ require("config.lazy")
 
 if vim.g.debug_global_flag then
   vim.schedule(function()
-    vim.notify("  DEBUG IS ENABLED  ", vim.log.levels.WARN, { title = "DEBUG" })
+    vim.notify("   DEBUG IS ENABLED  ", vim.log.levels.WARN, { title = "DEBUG" })
   end)
 end
 

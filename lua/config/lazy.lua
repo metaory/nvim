@@ -14,10 +14,12 @@ require("lazy").setup({
       opts = {
         colorscheme = color.setup,
         -- colorscheme = "mx-tokyo",
-        -- INFO: /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/init.lua:21
+        -- INFO: ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/init.lua:21
         icons = {
-          git = {},
-
+          -- git = {},
+          --     柳 
+          -- git = { added = " ", modified = " ", removed = " " },
+          -- git = { added = " ", modified = " ", removed = " " },
           dap = { Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" } },
           kinds = {
             Snippet = " ",

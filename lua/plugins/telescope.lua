@@ -7,11 +7,7 @@ return {
       { "<leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
       { "<leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
       { "<leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
-      {
-        "<leader>sH",
-        '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>',
-        desc = "Help pages",
-      },
+      -- { "<leader>sH", '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>', desc = "Help pages" },
       { "<M-g>", "<CMD>Telescope live_grep<CR>" },
       { "<M-f>", "<CMD>Telescope find_files<CR>" },
       { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
@@ -19,22 +15,15 @@ return {
       { "<M-r>", "<CMD>Telescope resume<CR>" },
       { "<M-b>", "<CMD>Telescope file_browser<CR>" },
       { "<leader>fr", false },
-      {
-        "<leader>fc",
-        '<CMD>lua require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })<CR>',
-        desc = "Find Config",
-      },
-      {
-        "<leader>fx",
-        '<CMD>lua require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })<CR>',
-        desc = "Find Plugin",
-      },
+      --stylua: ignore
+      { "<leader>fc", '<CMD>lua require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })<CR>', desc = "Find Config" },
+      --stylua: ignore
+      { "<leader>fx", '<CMD>lua require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })<CR>', desc = "Find Plugin" },
     },
     opts = {
       defaults = {
         layout_strategy = "horizontal",
         sorting_strategy = "descending",
-
         layout_config = {
           horizontal = { prompt_position = "bottom", width = 0.9, preview_width = 0.6 },
           center = { prompt_position = "top" },
