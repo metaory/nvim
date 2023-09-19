@@ -5,9 +5,8 @@ return {
   opts = function()
     local c = require("user.theme").palette()
     local icons = require("lazyvim.config").icons
-    local Util = require("lazyvim.util")
-
-    local d_icons = icons.diagnostics
+    local icons_d = icons.diagnostics
+    local icons_g = icons.git
 
     local bg_col = { bg = c.grey }
     local pad_l = { left = 1, right = 0 }
@@ -18,20 +17,22 @@ return {
         theme = "auto",
         globalstatus = true,
         disabled_filetypes = { statusline = { "starter", "dashboard", "alpha" } },
-        component_separators = { left = "", right = "" }, -- { left = "⏽", right = "⏽" },
+        component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
       },
       sections = {
         lualine_a = { { "mode", padding = pad_l } },
         lualine_b = { { "branch", icons_enabled = false, padding = pad_l } },
         lualine_c = {
-          { "diagnostics", symbols = { error = d_icons.Error, warn = d_icons.Warn, info = d_icons.Info, hint = d_icons.Hint } },
+          { "diagnostics", symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint } },
           { "filetype", icon_only = true, padding = pad_l },
+          -- stylua: ignore
           {
             "filename",
             path = 1,
-            symbols = { modified = "", readonly = "", unnamed = "" },
-          }, --    
+            color = function() return { fg = c[vim.bo.modified and "yellow" or "fg"] } end,
+            symbols = { modified = "", readonly = "", unnamed = "" },
+          },
           -- stylua: ignore
           {
             function() return require("nvim-navic").get_location() end,
@@ -41,25 +42,18 @@ return {
         },
         lualine_x = {
           -- stylua: ignore
-          -- {
-          --   function() return require("noice").api.status.command['get']() end,
-          --   cond = function() return require("noice").api.status.command['has']() end,
-          --   color = Util.fg("Statement"),
-          -- },
-          -- stylua: ignore
           {
-            function() return require("noice").api.status.mode['get']() end,
-            cond = function() return  require("noice").api.status.mode['has']() end,
-            color = Util.fg("Constant"),
+            function() return require("noice").api.status.mode["get"]() end,
+            cond = function() return require("noice").api.status.mode["has"]() end,
+            color = { fg = c.red },
           },
           -- stylua: ignore
           {
             function() return "  " .. require("dap").status() end,
             cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
-            color = Util.fg("Debug"),
+            color = { fg = c.red },
           },
-          -- { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = Util.fg("Special") },
-          { "diff", symbols = { added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed } },
+          { "diff", symbols = { added = icons_g.added, modified = icons_g.modified, removed = icons_g.removed } },
           {
             require("noice").api.status.search["get"],
             cond = require("noice").api.status.search["has"],
@@ -86,6 +80,7 @@ return {
     }
   end,
 }
+
 -- { "filename", path = 1, symbols = { modified = "  ", readonly = "", unnamed = "" } },
 -- opts = {options = {theme = "horizon", theme = "auto", disabled_filetypes = { statusline = { "starter" } },},},
 -- ddwrite(opts, "lualine")
@@ -156,15 +151,7 @@ return {
 --             color = Util.fg("Debug"),
 --           },
 --           { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = Util.fg("Special") },
---           {
---             "diff",
---             symbols = {
---               added = icons.git.added,
---               modified = icons.git.modified,
---               removed = icons.git.removed,
---             },
---           },
---         },
+--           { "diff", symbols = {added = icons.git.added, modified = icons.git.modified, removed = icons.git.removed,} },
 --         lualine_y = {
 --           { "progress", separator = " ", padding = { left = 1, right = 0 } },
 --           { "location", padding = { left = 0, right = 1 } },
@@ -185,7 +172,6 @@ return {
 
 -- TODO: https://github.com/nvim-lualine/lualine.nvim/tree/master#general-component-options
 
---
 -- function()
 --   -- local clients = vim.lsp.get_active_clients({ bufnr = 0 }) or {}
 --   -- local client = clients[1] or {}
@@ -237,3 +223,11 @@ return {
     table.insert(opts.options.disabled_filetypes.statusline, "starter")
     ddwrite(opts, "lualine_opts_post")
 ]]
+-- symbols = { modified = "", readonly = "", unnamed = "" }, --    
+-- {
+--   function() return require("noice").api.status.command['get']() end,
+--   cond = function() return require("noice").api.status.command['has']() end,
+--   color = Util.fg("Statement"),
+-- },
+-- { require("lazy.status").updates, cond = require("lazy.status").has_updates, color = Util.fg("Special") },
+-- { left = "⏽", right = "⏽" },

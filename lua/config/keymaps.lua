@@ -150,7 +150,7 @@ vim.tbl_map(keymap_set, {
   {
     "<C-c>",
     function()
-      if vim.bo[vim.api.nvim_win_get_buf(0)].modifiable then
+      if vim.bo.modifiable then
         vim.cmd(":normal gcc<CR>")
       end
     end,
