@@ -2,7 +2,8 @@
 vim.cmd("filetype plugin indent off") -- https://neovim.io/doc/user/filetype.html#:~:text=Overview%3A-,%3Afiletype%2Doverview,-command%09%09%09%09detection%09plugin
 vim.opt.list = true
 vim.opt.fillchars = { foldopen = "", foldclose = "", fold = " ", foldsep = " ", diff = "╱", eob = " " }
-vim.opt.updatetime = 2000
+-- XXX:
+-- vim.opt.updatetime = 2000
 
 -- vim.g.ft_ignore_path = [[\.\(Z\|gz\|bz2\|zip\|tgz\)$]]
 vim.o.foldmethod = "indent"

@@ -1,14 +1,6 @@
--- INFO: -- g= | gx | gm | go | gs
--- GJ
--- <LEADER>CAS
+-- INFO: g= | gx | gm | go | gs | gj
 
 return {
-
-  {
-    "sQVe/sort.nvim",
-    cmd = "Sort",
-    keys = { { "<leader>cas", "<CMD>Sort<CR>", mode = "v", desc = "Sort Selection" } },
-  },
   {
     "echasnovski/mini.splitjoin",
     opts = { mappings = { toggle = "gj" } },
@@ -41,3 +33,8 @@ return {
 --     return H.eval_lua_lines({ l })[1]
 --   end, lines)
 -- end,
+-- {
+--   "sQVe/sort.nvim",
+--   cmd = "Sort",
+--   keys = { { "<leader>cas", "<CMD>Sort<CR>", mode = "v", desc = "Sort Selection" } },
+-- },

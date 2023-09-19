@@ -1,5 +1,3 @@
-local color = require("user.colors")
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
@@ -12,7 +10,7 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = color.setup,
+        colorscheme = require("user.theme").setup,
         -- colorscheme = "mx-tokyo",
         -- INFO: ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/init.lua:21
         icons = {

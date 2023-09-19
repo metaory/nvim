@@ -1,19 +1,19 @@
--- INFO: <LEADER> f<SPACE> | fm | fM | fe | fE
+-- INFO: <Leader> f<SPACE> | fm | fM | fe | fE
 
 return {
   {
     "nvim-neo-tree/neo-tree.nvim",
     cmd = "Neotree",
     keys = {
-      { "<leader>e", false },
-      { "<leader>E", false },
+      { "<Leader>e", false },
+      { "<Leader>E", false },
       {
-        "<leader>fe",
+        "<Leader>fe",
         '<CMD>lua require("neo-tree.command").execute({ toggle = true, dir = require("lazyvim.util").get_root() })<CR>',
-        desc = "Explorer [] neo",
+        desc = "Explorer [] neo",
       },
       {
-        "<leader>fE",
+        "<Leader>fE",
         '<CMD>lua require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })<CR>',
         desc = "Explorer [] neo",
       }, -- ·
@@ -21,15 +21,15 @@ return {
     opts = {
       default_component_configs = {
         indent = {
-          with_expanders = true, -- if nil and file nesting is enabled, will enable expanders
-          expander_collapsed = "", --  
-          expander_expanded = "",
-          expander_highlight = "NeoTreeExpander",
+          with_expanders = false, -- if nil and file nesting is enabled, will enable expanders
+          -- expander_collapsed = "", --  
+          -- expander_expanded = "",
+          -- expander_highlight = "NeoTreeExpander",
         },
         icon = {
           folder_closed = "○", --               -- /home/meta/dev/meta/municode/dumps/uni-etc:69
           folder_open = "●", --        
-          folder_empty = "濾",
+          folder_empty = "濾", -- 
           default = "", --   
           highlight = "NeoTreeFileIcon",
         },
@@ -71,7 +71,7 @@ return {
             ["l"] = "open",
             ["h"] = "close_node",
             ["L"] = "focus_preview",
-            ["<space>"] = "toggle_node",
+            ["<Space>"] = "toggle_node",
           },
         },
         commands = {
@@ -99,14 +99,14 @@ return {
       options = { use_as_default_explorer = true },
     },
     keys = {
-      { "<leader>fm", '<CMD>lua require("mini.files").open()<CR>', desc = "Explorer [] mini" },
-      { "<leader>fM", '<CMD>require("mini.files").open(vim.loop.cwd(), true)<CR>', desc = "Explorer [] mini" }, -- ·
+      { "<Leader>fm", '<CMD>lua require("mini.files").open()<CR>', desc = "Explorer [] mini" },
+      { "<Leader>fM", '<CMD>lua require("mini.files").open(vim.loop.cwd(), true)<CR>', desc = "Explorer [] mini" }, -- ·
     },
   },
   {
     "stevearc/oil.nvim",
     cmd = "Oil",
-    keys = { { "<Leader>f<Space>", "<CMD>Oil<CR>", desc = "Explorer [] oil" } },
+    keys = { { "<Leader>f<Space>", "<CMD>Oil<CR>", desc = "Explorer   oil" } },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
       default_file_explorer = true,
@@ -132,7 +132,7 @@ return {
       },
       use_default_keymaps = true,
       view_options = { show_hidden = false },
-      float = { padding = 2, max_width = 0, max_height = 0, border = "rounded", win_options = { winblend = 10 } },
+      float = { padding = 2, max_width = 0, max_height = 0, border = "rounded", win_options = { winblend = 30 } },
       -- override = function(conf) return conf end,
       preview = {
         max_width = 0.9,
@@ -171,14 +171,14 @@ return {
 -- │  /home/meta/.config/nvim/lua/plugins/tree.lua:72: in function </home/meta/.config/nvim/lua/plugins/tree.lua:71│
 --
 -- {
---   "<leader>fE",
+--   "<Leader>fE",
 --   function()
 --     require("neo-tree.command").execute({ toggle = true, dir = vim.loop.cwd() })
 --   end,
 --   desc = "Explorer NeoTree (cwd)",
 -- },
--- { "<leader>e", "<leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
--- { "<leader>E", "<leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
+-- { "<Leader>e", "<Leader>fe", desc = "Explorer NeoTree (root dir)", remap = true },
+-- { "<Leader>E", "<Leader>fE", desc = "Explorer NeoTree (cwd)", remap = true },
 -- is_hidden_file = function(name, bufnr)
 --   return vim.startswith(name, ".")
 -- end,

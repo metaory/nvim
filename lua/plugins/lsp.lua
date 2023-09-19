@@ -22,19 +22,19 @@ return {
       ddwrite(opts, "__mason")
     end,
   },
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   opts = function(_, opts)
-  --     local nls = require("null-ls")
-  --     opts.debug = vim.g.debug_nulls
-  --     vim.list_extend(opts.sources, {
-  --       nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
-  --       nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
-  --       nls.builtins.formatting.black.with({ filetypes = { "python" } }),
-  --     })
-  --     ddwrite(opts, "__null-ls")
-  --   end,
-  -- },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    opts = function(_, opts)
+      -- local nls = require("null-ls")
+      opts.debug = vim.g.debug_nulls
+      -- vim.list_extend(opts.sources, {
+      --   nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
+      --   nls.builtins.diagnostics.markdownlint.with({ filetypes = { "markdown" } }),
+      --   nls.builtins.formatting.black.with({ filetypes = { "python" } }),
+      -- })
+      ddwrite(opts, "__null-ls")
+    end,
+  },
 }
 --[[
 

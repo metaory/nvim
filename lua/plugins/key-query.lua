@@ -20,6 +20,9 @@ return {
           { mode = "n", keys = "<Leader>" },
           { mode = "x", keys = "<Leader>" },
 
+          { mode = "n", keys = "<LocalLeader>" },
+          { mode = "x", keys = "<LocalLeader>" },
+
           { mode = "n", keys = "c" },
 
           { mode = "n", keys = "[" },
@@ -128,7 +131,7 @@ return {
       window = { focusable = false, side = "right", show_integration_count = true, width = 10, winblend = 100 },
     },
     config = function(_, opts)
-      local c = require("user.colors").palette()
+      local c = require("user.theme").palette()
       vim.api.nvim_set_hl(0, "MiniMapNormal", { fg = c.bg2 })
       --   -- vim.api.nvim_set_hl(0, "MiniMapNormal") -- ,  basic highlight of whole window.
       --   -- vim.api.nvim_set_hl(0, "MiniMapSymbolCount")  -- counts of per-line integration items.

@@ -3,7 +3,7 @@
 return {
   "nvim-lualine/lualine.nvim",
   opts = function()
-    local c = require("user.colors").palette()
+    local c = require("user.theme").palette()
     local icons = require("lazyvim.config").icons
     local Util = require("lazyvim.util")
 
@@ -30,7 +30,7 @@ return {
           {
             "filename",
             path = 1,
-            symbols = { modified = "", readonly = "", unnamed = "" },
+            symbols = { modified = "", readonly = "", unnamed = "" },
           }, --    
           -- stylua: ignore
           {

@@ -1,4 +1,4 @@
-local c = require("user.colors").palette()
+local c = require("user.theme").palette()
 
 vim.api.nvim_set_hl(0, "VimwikiLink", { bg = c.black, fg = c.blue, bold = true })
 

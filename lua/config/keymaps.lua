@@ -1,11 +1,12 @@
--- require("config.prompts")
-
+local async = require("util.async")
 local util = require("util.maputil")
+local ui = require("user.ui")
+
 local keymap_del = util.keymap_del
 local keymap_set = util.keymap_set
 
-vim.g.maplocalleader = "\\"
-vim.g.mapleader = " "
+vim.g.maplocalLeader = "\\"
+vim.g.mapLeader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
@@ -15,8 +16,8 @@ vim.tbl_map(keymap_del, {
   "<Leader>p",
   "<Leader>l",
   "<Leader>L",
-  "<leader>`",
-  "<leader>,",
+  "<Leader>`",
+  "<Leader>,",
   "<Leader>K",
   "<Leader><Space>",
   { "v", "<Leader>noop" },
@@ -24,39 +25,39 @@ vim.tbl_map(keymap_del, {
 })
 
 vim.tbl_map(keymap_set, {
-  { "<leader>il", "<CMD>LspInfo<CR>", "LSP Info" },
-  { "<leader>iz", "<CMD>Lazy<CR>", "Lazy Info" },
-  { "<leader>im", "<CMD>Mason<CR>", "Mason Info" },
-  { "<leader>in", "<CMD>NullLsInfo<CR>", "Null-ls Info" },
-  { "<leader>if", "<CMD>verbose set filetype?<CR>", "FileType Info" },
+  { "<Leader>il", "<CMD>LspInfo<CR>", "LSP Info" },
+  { "<Leader>iz", "<CMD>Lazy<CR>", "Lazy Info" },
+  { "<Leader>im", "<CMD>Mason<CR>", "Mason Info" },
+  { "<Leader>in", "<CMD>NullLsInfo<CR>", "Null-ls Info" },
+  { "<Leader>if", "<CMD>verbose set filetype?<CR>", "FileType Info" },
 })
 
 vim.tbl_map(keymap_set, {
-  { "<leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Wiki Index" },
-  { "<leader>eww", "<CMD>Neorg workspace mx<CR>", "Wiki Workspace" },
-  { "<leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", "Wiki Journal" },
-  { "<leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", "Wiki Yesterday" },
-  { "<leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", "Wiki Today" },
-  { "<leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", "Wiki Tomorrow" },
+  { "<Leader>ewi", "<CMD>Neorg workspace mx<CR><CMD>Neorg toc<CR>", "Wiki Index" },
+  { "<Leader>eww", "<CMD>Neorg workspace mx<CR>", "Wiki Workspace" },
+  { "<Leader>ewj", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal toc update<CR>", "Wiki Journal" },
+  { "<Leader>ewy", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal yesterday<CR>", "Wiki Yesterday" },
+  { "<Leader>ewn", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal today<CR>", "Wiki Today" },
+  { "<Leader>ewt", "<CMD>Neorg workspace mx<CR><CMD>Neorg journal tomorrow<CR>", "Wiki Tomorrow" },
 
-  { "<leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", "Devdocs Current [+f]" },
-  { "<leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", "Devdocs Current" },
-  { "<leader>eho", "<CMD>DevdocsOpenFloat<CR>", "Devdocs Index [+f]" },
-  { "<leader>ehO", "<CMD>DevdocsOpen<CR>", "Devdocs Index" },
+  { "<Leader>ehh", "<CMD>DevdocsOpenCurrentFloat<CR>", "Devdocs Current [+f]" },
+  { "<Leader>ehH", "<CMD>DevdocsOpenCurrent<CR>", "Devdocs Current" },
+  { "<Leader>eho", "<CMD>DevdocsOpenFloat<CR>", "Devdocs Index [+f]" },
+  { "<Leader>ehO", "<CMD>DevdocsOpen<CR>", "Devdocs Index" },
 
-  { "<leader>ezr", "<CMD>LazyReload<CR>", "Reload Lazy Plugin" },
+  { "<Leader>ezr", "<CMD>LazyReload<CR>", "Reload Lazy Plugin" },
 
-  { "<leader>exy", ":lua <C-R>* <C-y>", "Inspect Yank (CMD)" },
-  { "<leader>exx", ":Xdir lua =<C-R>: <C-y>", "Inspect Redirect (CMD)" },
-  { "<leader>exe", ":Xdir <C-R>=", "Inspect Expand (Redirect)" },
-  { "<leader>exl", ":Xdir <C-R>= <C-R><C-L>", "Inspect Expand Line (Redirect)" },
+  { "<Leader>exy", ":lua <C-R>* <C-y>", "Inspect Yank (CMD)" },
+  { "<Leader>exx", ":Xdir lua =<C-R>: <C-y>", "Inspect Redirect (CMD)" },
+  { "<Leader>exe", ":Xdir <C-R>=", "Inspect Expand (Redirect)" },
+  { "<Leader>exl", ":Xdir <C-R>= <C-R><C-L>", "Inspect Expand Line (Redirect)" },
 })
 
 vim.tbl_map(keymap_set, {
-  { "<leader>uh", "<CMD>lua require('mini.hipatterns').enable()<CR>", "Toggle Color Highlight" },
-  { "<leader>sr", "<CMD>Telescope resume<CR>", "Resume" },
-  { "<leader>fr", "<CMD>FileRename<CR>", "File Rename" },
-  { "<leader>bb", "<cmd>e #<cr>", "Other Buffer" },
+  { "<Leader>uh", "<CMD>lua require('mini.hipatterns').enable()<CR>", "Toggle Color Highlight" },
+  { "<Leader>sr", "<CMD>Telescope resume<CR>", "Resume" },
+  { "<Leader>fr", "<CMD>FileRename<CR>", "File Rename" },
+  { "<Leader>bb", "<CMD>e #<CR>", "Other Buffer" },
 })
 
 vim.tbl_map(keymap_set, {
@@ -84,11 +85,11 @@ vim.tbl_map(keymap_set, {
 })
 
 vim.tbl_map(keymap_set, {
-  { "<M-w>", "<cmd>BufferLineCloseLeft<cr>", "Close All Buf to Left" },
-  { "<M-e>", "<cmd>BufferLineCloseRight<cr>", "Close All Buf to Right" },
+  { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
+  { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
 
-  { "<M-Left>", "<cmd>BufferLineMovePrev<cr>", "Move Buf Left" },
-  { "<M-Right>", "<cmd>BufferLineMoveNext<cr>", "Move Buf Right" },
+  { "<M-Left>", "<CMD>BufferLineMovePrev<CR>", "Move Buf Left" },
+  { "<M-Right>", "<CMD>BufferLineMoveNext<CR>", "Move Buf Right" },
 
   { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
   { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
@@ -112,17 +113,14 @@ vim.tbl_map(keymap_set, {
 })
 
 vim.tbl_map(keymap_set, {
-  { "<M-c>", "<cmd>lua require('notify').dismiss({ silent = true, pending = true })<CR>", "Dismiss Notification" },
-  { "<C-q>", "<cmd>lua require('user.qtoggle').toggle_qf()<CR>", "Quickfix Toggle" },
+  { "<M-c>", "<CMD>lua require('notify').dismiss({ silent = true, pending = true })<CR>", "Dismiss Notification" },
+  { "<C-q>", "<CMD>lua require('user.qtoggle').toggle_qf()<CR>", "Quickfix Toggle" },
   { "<M-d>", "<ESC>:<C-y>", "Command" },
-  { "<C-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },
-  { "<M-s>", ':set buftype=""<cr> :w<CR><Esc>', silent = true, "Save File" },
+  { "<C-s>", ':set buftype=""<CR> :w<CR><Esc>', silent = true, "Save File" },
+  { "<M-s>", ':set buftype=""<CR> :w<CR><Esc>', silent = true, "Save File" },
   { "<M-q>", ":q<CR>", silent = true, "Exit" },
   { "<M-Q>", ":qall!<CR>", silent = true, "Exit All" },
 })
-
--- local async = require("util.async")
--- local ui = require("user.ui")
 
 vim.tbl_map(keymap_set, {
   {
@@ -173,42 +171,23 @@ vim.tbl_map(keymap_set, {
   },
 
   {
-    "<leader>eof",
-    function()
-      vim.ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select Filetype:" }, function(choice)
-        local ft = choice or vim.bo.filetype
-        vim.bo.filetype = ft
-        vim.notify(ft, vim.log.levels.INFO, { title = "Filetype Updated" })
-      end)
-    end,
+    "<Leader>eof",
+    async.void(function()
+      vim.bo.filetype = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select FileType:" }) or vim.bo.filetype
+      vim.notify(vim.bo.filetype, vim.log.levels.INFO, { title = "FileType Updated" })
+    end),
     "Set File Type",
   },
 
   {
-    "<leader>eov",
+    "<Leader>eov",
     function()
       local old = vim.o.verbose
-      vim.o.verbose = old == 0 and 16 or 0
-      --[[
-          1 Lua assignments to options, mappings, etc.
-          2 When a file is ":source"'ed, or |shada| file is read or written.
-          3 UI info, terminal capabilities.
-          4 Shell commands.
-          5 Every searched tags file and include file.
-          8 Files for which a group of autocommands is executed.
-          9 Executed autocommands.
-          11  Finding items in a path.
-          12  Vimscript function calls.
-          13  When an exception is thrown, caught, finished, or discarded.
-          14  Anything pending in a ":finally" clause.
-          15  Ex commands from a script (truncated at 200 characters).
-          16  Ex commands.
-      ]]
-      -- vim.o.verbosefile = old == 0 and "/tmp/mx-verbose.log" or nil
-
-      local msg = string.format("Updated Verbose Level from %s to %s", old, vim.o.verbose)
-      local lvl = vim.o.verbose == 0 and vim.log.levels.INFO or vim.log.levels.WARN
+      local new = old == 0 and 16 or 0
+      local msg = string.format("Updated Verbose Level from %s to %s", old, new)
+      local lvl = vim.log.levels[vim.o.verbose == 0 and "INFO" or "WARN"]
       vim.notify(msg, lvl, { title = "Verbose Level" })
+      vim.o.verbose = new
     end,
     "Set Verbose Level",
   },
@@ -226,11 +205,11 @@ vim.tbl_map(keymap_set, {
 -- ////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////
 
--- { "<leader>ed", ":Xdir <C-R>: <C-y>", "Inspect Previous" },
+-- { "<Leader>ed", ":Xdir <C-R>: <C-y>", "Inspect Previous" },
 
--- map("n", "<leader>cM", ":Mason<CR>", { desc = "Mason" })
--- map("n", "<leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
--- map("n", "<leader>cc", ":make | cope<CR>", { desc = "Cope" })
+-- map("n", "<Leader>cM", ":Mason<CR>", { desc = "Mason" })
+-- map("n", "<Leader>ce", ":new | r ! node #<CR>", { desc = "Exec" })
+-- map("n", "<Leader>cc", ":make | cope<CR>", { desc = "Cope" })
 
 -- new | r ! node #
 -- !}fmt
@@ -242,8 +221,8 @@ vim.tbl_map(keymap_set, {
 --   end
 -- end, { silent = true, expr = true })
 
--- map("n", "<leader>rx", function() end, { silent = true, noremap = true, desc = "Inspect Recent" })
--- vim.keymap.set("n", "<leader>rx", function()
+-- map("n", "<Leader>rx", function() end, { silent = true, noremap = true, desc = "Inspect Recent" })
+-- vim.keymap.set("n", "<Leader>rx", function()
 -- require("noice").redirect("hi")
 -- require("noice").redirect("lua print(vim.fn.getreg())")
 -- end)
@@ -267,16 +246,16 @@ vim.tbl_map(keymap_set, {
 --     f = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'foreground'})<cr>", "Foreground Colorizer" },
 --     v = { "<cmd>lua require('colorizer').attach_to_buffer(0, { mode = 'virtualtext'})<cr>", "Virtual Colorizer" },
 --   },
--- }, { prefix = "<leader>u" })
+-- }, { prefix = "<Leader>u" })
 
 -- local bufopt = { noremap = true, silent = true, buffer = vim.fn.expand("%") }
--- map("n", "<leader>lr", "<cmd>vim.lsp.buf.rename", bufopt)
--- map("n", "<leader>lr", "nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>", opt)
+-- map("n", "<Leader>lr", "<cmd>vim.lsp.buf.rename", bufopt)
+-- map("n", "<Leader>lr", "nnoremap gr gd[{V%::s/<C-R>///gc<left><left><left>", opt)
 
--- zmap("n", "<leader>gg", function()
+-- zmap("n", "<Leader>gg", function()
 --   Util.float_term({ "gitui" }, { cwd = Util.get_root() })
 -- end, { desc = "GitUI (root dir)" })
--- zmap("n", "<leader>gG", function()
+-- zmap("n", "<Leader>gG", function()
 --   Util.float_term({ "gitui" })
 -- end, { desc = "GitUI (cwd)" })
 -- vim.keymap.set({ "n", "x" }, "p", "<Plug>(YankyPutAfter)")
@@ -285,14 +264,14 @@ vim.tbl_map(keymap_set, {
 -- vim.keymap.set({ "n", "x" }, "gP", "<Plug>(YankyGPutBefore)")
 -- vim.keymap.set("n", "<c-n>", "<Plug>(YankyCycleForward)")
 -- vim.keymap.set("n", "<c-p>", "<Plug>(YankyCycleBackward)")
--- vim.keymap.set("n", "<leader>sr", "<ESC>", { desc = "Make" })
+-- vim.keymap.set("n", "<Leader>sr", "<ESC>", { desc = "Make" })
 
 -- vim.keymap.set("n", "<left>", "<C-w>h")
 -- vim.keymap.set("n", "<down>", "<C-w>j")
 -- vim.keymap.set("n", "<up>", "<C-w>k")
 -- vim.keymap.set("n", "<right>", "<C-w>l")
 -- vim.keymap.set("n", "<C-c>", "<cmd>normal! ciw<cr>a")
--- vim.keymap.set("n", "<leader>cR", util.runlua, { desc = "Run Lua" })
+-- vim.keymap.set("n", "<Leader>cR", util.runlua, { desc = "Run Lua" })
 -- align_to_char(length, reverse, preview, marks)
 -- align_to_string(is_pattern, reverse, preview, marks)
 -- align(str, reverse, marks)
@@ -349,7 +328,7 @@ old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 ]]
 --[[
 ]]
--- map("n", "<leader>li", "<cmd>:LspInfo<cr>", { desc = "LSP Info" })
+-- map("n", "<Leader>li", "<cmd>:LspInfo<cr>", { desc = "LSP Info" })
 
 -- map("c", "<C-a>", "<Home>", nor)
 -- filetype=TelescopePrompt
@@ -377,7 +356,7 @@ old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 
 -- vim.keymap.set(
 --   "n",
---   "<leader>uX",
+--   "<Leader>uX",
 --   "<CMD>TSContextToggle<CR>",
 --   { noremap = true, silent = true, desc = "Toggle Context" }
 -- )
@@ -401,9 +380,9 @@ old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 -- end,
 -- map("n", "<M-d>", "<ESC>:", nor)
 -- :vnew +pu=execute(' ')
--- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
--- vim.cmd("nnoremap <leader>R :Xdir <c-f>A")
--- map("n", "<leader>rr", ":Xdir <C-f>", { silent = true, noremap = true, desc = "Inspect Recent" })
+-- vim.cmd("nnoremap <Leader>R :Nredir <c-f>A")
+-- vim.cmd("nnoremap <Leader>R :Xdir <c-f>A")
+-- map("n", "<Leader>rr", ":Xdir <C-f>", { silent = true, noremap = true, desc = "Inspect Recent" })
 -- echo 'xorg'
 -- ":lua require('user.plugins.xredir').redirect('@*')<CR>",
 -- function() require("user.plugins.xredir").redirect("@*") end,
@@ -455,37 +434,37 @@ old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 --     t = { "<CMD>Neorg journal today<CR>", "Org Journal Today" },
 --     y = { "<CMD>Neorg journal yesterday<CR>", "Org Journal Yesterday" },
 --   },
--- }, { prefix = "<leader>" })
+-- }, { prefix = "<Leader>" })
 -- pcall(vim.keymap.del, "n", "<Leader>fr")
 -- pcall(vim.keymap.del, "n", "gr")
 -- { "gd", function() require("telescope.builtin").lsp_definitions({ reuse_win = true }) end, desc = "Goto Definition", has = "definition" },
 -- map("n", "<c-/>", lazyterm, { desc = "Terminal (root dir)" })
 -- map("n", "<c-_>", lazyterm, { desc = "which_key_ignore" })
 -- pcall(vim.keymap.del, "n", "<Leader>fr")
--- vim.keymap.set("n", "<leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
--- vim.keymap.set("n", "<leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
--- vim.keymap.set("n", "<leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<Leader>rc", ":IncRename<CR>", { desc = "Rename Cursor" })
+-- vim.keymap.set("n", "<Leader>f", ":lua require('noice').redirect('verbose set filetype?')<CR>", { desc = "FileType Info" })
+-- vim.keymap.set("n", "<Leader>f", ":Xdir verbose set filetype?<CR>", { desc = "FileType Info" })
 
--- map("n", "<leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
+-- map("n", "<Leader>L", "<CMD>Lazy<CR>", { noremap = true, desc = "Lazy" })
 -- map("n", "<M-t>", ":TroubleToggle<CR>", { desc = "Trouble Toggle" })
 -- { mode = "n", keys = "<Leader>eo", desc = "+Org" },
--- map("n", "<leader>eo", "", { desc = "+Org" })
--- map("n", "<leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
+-- map("n", "<Leader>eo", "", { desc = "+Org" })
+-- map("n", "<Leader>dd", ":+<C-R><C-W> <C-y>", { noremap = true, desc = "Inspect Recent" })
 -- { mode = "n", keys = "<Leader>eh", desc = "+Help" },
--- map("n", "<leader>eh", "", { desc = "+Help" })
+-- map("n", "<Leader>eh", "", { desc = "+Help" })
 -- { mode = "n", keys = "<Leader>eg", desc = "+Gen" },
 -- { mode = "n", keys = "<Leader>ex", desc = "+Inspect" },
--- map("n", "<leader>ex", "", { desc = "+Inspect" })
--- vim.cmd("nnoremap <leader>R :Nredir <c-f>A")
+-- map("n", "<Leader>ex", "", { desc = "+Inspect" })
+-- vim.cmd("nnoremap <Leader>R :Nredir <c-f>A")
 -- vim.keymap.del("n", "gc")
 -- https://github.com/neovim/neovim/pull/16591
 --
 -- vim.api.nvim_set_keymap("n", "gd", "lua require('some_module').func()", {})
 -- vim.keymap.set("n", "gd", function() require('some_module').func() end)
--- set_keymap("<leader>il", "<CMD>LspInfo<CR>")
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", "foo bar")
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", silent = true })
--- set_keymap("<leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", mode = { "n", "v", "x" }, silent = true })
+-- set_keymap("<Leader>il", "<CMD>LspInfo<CR>")
+-- set_keymap("<Leader>oo", "<CMD>LspInfo<CR>", "foo bar")
+-- set_keymap("<Leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", silent = true })
+-- set_keymap("<Leader>oo", "<CMD>LspInfo<CR>", { desc = "mydesc", mode = { "n", "v", "x" }, silent = true })
 -- local lspAttached = #vim.lsp.get_active_clients() > 0 and lspAttached else print("TODO")
 -- map("n", "<C-c>", ":normal gcc<CR>", opt)
 -- { "<C-a>", function() return vim.bo[vim.api.nvim_win_get_buf(0)].modifiable and require("dial.map").inc_normal() end, expr = true, desc = "Increment" },
@@ -498,10 +477,10 @@ old_map("n", "<C-k>", "<CMD>lua require('Navigator').up()<CR>", opt)
 -- map("n", "Q", [[ :q<CR> ]], opt)
 --
 
--- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+-- { "<Leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
 -- map(
 --   "n",
---   "<leader>sT",
+--   "<Leader>sT",
 --   "<CMD>lua require'telescope.builtin'.builtin{}<CR>",
 --   { noremap = true, silent = true, desc = "Search Telescope" }
 -- )
@@ -531,15 +510,15 @@ old_map("n", "<M-r>", ":Telescope resume<CR>", opt)
 old_map("n", "<M-m>", ":Telescope keymaps<CR>", opt)
 old_map("n", "<M-b>", ":Telescope file_browser<CR>", opt) -- Telescope buffers
 old_map("n", "<M-C>", ":Telescope commands<CR>", opt)
-old_map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
+old_map("n", "<Leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope" })
 ]]
--- map("n", "<leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
+-- map("n", "<Leader>sr", ":Telescope resume<CR>", { desc = "Resume" })
 -- echo 'foo'
 -- lua require("util.debug").dump(vim.opt.completeopt)
 -- lua dd(vim.opt.completeopt)
 -- map(
 --   "n",
---   "<leader>Dd",
+--   "<Leader>Dd",
 --   "<CMD>lua require('noice').redirect('@*')<CR>",
 --   { silent = true, noremap = true, desc = "Inspect Yank" }
 -- )
@@ -565,3 +544,19 @@ old_map("n", "<leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope"
 --
 -- BUG:
 -- - WARNING conflicting keymap exists for mode **"n"**, lhs: **"y"**
+
+--[[
+    1 Lua assignments to options, mappings, etc.
+    2 When a file is ":source"'ed, or |shada| file is read or written.
+    3 UI info, terminal capabilities.
+    4 Shell commands.
+    5 Every searched tags file and include file.
+    8 Files for which a group of autocommands is executed.
+    9 Executed autocommands.
+    11  Finding items in a path.
+    12  Vimscript function calls.
+    13  When an exception is thrown, caught, finished, or discarded.
+    14  Anything pending in a ":finally" clause.
+    15  Ex commands from a script (truncated at 200 characters).
+    16  Ex commands.
+]]
