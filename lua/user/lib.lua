@@ -11,6 +11,8 @@ M.create_auto_run_au = async.void(function()
   local file = vim.fn.expand("%:t")
   local ft = vim.bo.filetype
 
+  ddwrite({p=path,f=file,ft=ft}, '__auto_run_1')
+
   local ignore = vim.tbl_contains(auto_run_files_ignore, path)
   local existing = vim.tbl_contains(auto_run_files, path)
 

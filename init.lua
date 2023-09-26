@@ -1,21 +1,23 @@
 local util = require("util.debug")
 
-vim.g.vscode = false
+if vim.loader then
+  vim.loader.enable()
+end
+
 vim.g.debug_global_flag = false
 vim.g.debug_nulls = vim.g.debug_global_flag
 vim.g.debug_treesitter = vim.g.debug_global_flag
 vim.lsp.set_log_level(vim.lsp.log_levels[vim.g.debug_global_flag and "INFO" or "WARN"])
 
-if vim.loader then
-  vim.loader.enable()
-end
-
 _G.dd = util.dump
 _G.ddwrite = util.dumpwrite
 _G.live_inspect = util.live_inspect
 
-require("user.commands")
-require("config.lazy")
+require("config.commands")
+require("config.options")
+require("config.keymaps")
+require("config.autocmds")
+-- require("config.lazy")
 
 if vim.g.debug_global_flag then
   vim.schedule(function()
@@ -23,79 +25,50 @@ if vim.g.debug_global_flag then
   end)
 end
 
--- vim.g.loaded_node_provider = true
--- vim.schedule(function() vim.notify("nvim loader is enabled") end)
--- vim.print = _G.dd
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
+end
+vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 
--- require("util.profiler").start()
---
--- vim.api.nvim_create_autocmd("User", {
---   pattern = "LazyVimStarted",
---   callback = function()
---     vim.schedule(function()
---       require("util.profiler").stop()
---       vim.schedule(function()
---         vim.notify("LazyVimStarted")
---       end)
---     end)
---   end,
--- })
-
--- require("user.ui")
--- require("user.plugins.ui")
--- U = require("util")
--- require("user.filetypes")
--- require("user.plugins.xredir")
--- require("user.plugins.qtoggle")
--- require('user.plugins.qtoggle').toggle_qf
--- require("luasnip.loaders.from_vscode").load({ paths = { "./snippets" } })
--- require("luasnip.loaders.from_vscode").load()
-
--- vim.cmd([[ hi VimnikiLink guibg=#fff000 ]])
-
--- vim.g.profile_loaders = true
---[[require("config.lazy")({
-  debug = false,
-  defaults = {
-    lazy = true,
-    -- cond = false,
-  },
+require("lazy").setup("plugins", {
+  dev = { path = vim.fn.stdpath('config') .. "/dev", fallback = true },
+  defaults = { lazy = true },
+  install = { missing = true, colorscheme = { "ron" } },
+  spec = nil,
+  diff = { cmd = "git" },
+  change_detection = { enabled = false, notify = false },
+  checker = { enabled = false },
   performance = {
-    cache = {
-      enabled = true,
+    cache = { enabled = true },
+    reset_packpath = true,
+    rtp = {
+      reset = true,
+      disabled_plugins = {
+        "gzip",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
+      },
     },
   },
+  ui = {
+    throttle = 20,
+    size = { width = 0.8, height = 0.8 },
+    wrap = true,
+    border = "none",
+    pills = true,
+    icons = { lazy = " " },
+  },
+  readme = {
+    enabled = true,
+    root = vim.fn.stdpath("state") .. "/lazy/readme",
+    files = { "README.md", "lua/**/README.md" },
+    skip_if_doc_exists = true,
+  },
+  build = { warn_on_override = true },
+  debug = vim.g.debug_global_flag,
 })
-]]
 
--- require("util.dashboard").setup()
-
--- vim.api.nvim_create_autocmd("User", {
---   pattern = "VeryLazy",
---   callback = function()
---     -- require("config.env")
---     require("util").version()
---   end,
--- })
--- local inspect = require("inspect")
-
--- _G.dd = function(...)
---   require("util.debug").dump(...)
--- end
--- _G.mxdump = function(...)
---   require("util.debug").dumpwrite(...)
--- end
-
--- vim.ui_attach(vim.api.nvim_create_namespace("redirect messages"), { ext_messages = true }, function(event, ...)
---   local args = ...
---   ddwrite({ args = args, event = event }, "____RED____")
---   -- local kind, content = ...
---   -- if event == "msg_show" then
---   -- if string.find(kind, "err") then
---   --   level = vim.log.levels.ERROR
---   -- end
---   -- vim.notify(content, level, { title = "Message" })
---   -- end
--- end)
--- require("vim.lsp.log").set_format_func(vim.inspect)
--- vim.schedule(function() vim.notify("nvim loader is enabled") end)
+-- vim.g.loaded_node_provider = true

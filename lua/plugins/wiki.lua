@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 local norg_keybind = function(t)
   local map, lhs, rhs, desc = unpack(t)
   map("norg", "n", lhs, rhs, { desc = desc })

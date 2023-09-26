@@ -1,13 +1,15 @@
+local H = require("util.helper")
+
 return {
   {
-    "telescope.nvim",
-    -- TODO: sort binding https://github.com/nvim-telescope/telescope.nvim#sorters
+    "nvim-telescope/telescope.nvim",
     keys = {
       { "<Leader>fr", false },
       { "<Leader><Space>", false },
       { "<Leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
       { "<Leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
       { "<Leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
+      { "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", "Resume" },
       { "<M-g>", "<CMD>Telescope grep_string<CR>" },
       { "<M-f>", "<CMD>Telescope find_files<CR>" },
       { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
@@ -19,6 +21,40 @@ return {
       { "<Leader>fc", '<CMD>lua require("telescope.builtin").find_files({ cwd = vim.fn.stdpath("config") })<CR>', desc = "Find Config" },
       { "<Leader>fx", '<CMD>lua require("telescope.builtin").find_files({ cwd = require("lazy.core.config").options.root })<CR>', desc = "Find Plugin" },
       --stylua: ignore end
+      { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
+      { "<leader>/", H.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader><space>", H.telescope("files"), desc = "Find Files (root dir)" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
+      { "<leader>ff", H.telescope("files"), desc = "Find Files (root dir)" },
+      { "<leader>fF", H.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
+      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+      { "<leader>fR", H.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
+      { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
+      { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
+      { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
+      { "<leader>sa", "<cmd>Telescope autocommands<cr>", desc = "Auto Commands" },
+      { "<leader>sb", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Buffer" },
+      { "<leader>sc", "<cmd>Telescope command_history<cr>", desc = "Command History" },
+      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
+      { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
+      { "<leader>sg", H.telescope("live_grep"), desc = "Grep (root dir)" },
+      { "<leader>sG", H.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
+      { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
+      { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
+      { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Key Maps" },
+      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
+      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
+      { "<leader>sw", H.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+      { "<leader>sW", H.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+      { "<leader>sw", H.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+      { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+      { "<leader>uC", H.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+      { "<leader>ss", H.telescope("lsp_document_symbols", { symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module", "Struct", "Trait", "Field", "Property" } }), desc = "Goto Symbol" },
+      { "<leader>sS", H.telescope("lsp_dynamic_workspace_symbols", { symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module", "Struct", "Trait", "Field", "Property" } }), desc = "Goto Symbol (Workspace)" },
     },
     opts = {
       defaults = {
@@ -41,15 +77,31 @@ return {
             ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
             ["<C-o>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
             ["<C-Space>"] = require("telescope.actions").toggle_selection + require("telescope.actions").move_selection_worse,
-
-            ["<C-h>"] = require("telescope.actions").results_scrolling_left,
-            ["<C-l>"] = require("telescope.actions").results_scrolling_right,
-
-            ["<C-S-H>"] = require("telescope.actions").preview_scrolling_left,
-            ["<C-S-L>"] = require("telescope.actions").preview_scrolling_right,
-
-            ["<C-S-P>"] = require("telescope.actions").results_scrolling_up,
-            ["<C-S-N>"] = require("telescope.actions").results_scrolling_down,
+            -- ["<C-h>"] = require("telescope.actions").results_scrolling_left,
+            -- ["<C-l>"] = require("telescope.actions").results_scrolling_right,
+            -- ["<C-S-H>"] = require("telescope.actions").preview_scrolling_left,
+            -- ["<C-S-L>"] = require("telescope.actions").preview_scrolling_right,
+            -- ["<C-S-P>"] = require("telescope.actions").results_scrolling_up,
+            -- ["<C-S-N>"] = require("telescope.actions").results_scrolling_down,
+            ["<c-t>"] = function(...) return require("trouble.providers.telescope").open_with_trouble(...) end,
+            ["<a-t>"] = function(...) return require("trouble.providers.telescope").open_selected_with_trouble(...) end,
+            ["<a-i>"] = function()
+              local action_state = require("telescope.actions.state")
+              local line = action_state.get_current_line()
+              H.telescope("find_files", { no_ignore = true, default_text = line })()
+            end,
+            ["<a-h>"] = function()
+              local action_state = require("telescope.actions.state")
+              local line = action_state.get_current_line()
+              H.telescope("find_files", { hidden = true, default_text = line })()
+            end,
+            ["<C-Down>"] = function(...) return require("telescope.actions").cycle_history_next(...) end,
+            ["<C-Up>"] = function(...) return require("telescope.actions").cycle_history_prev(...) end,
+            ["<C-f>"] = function(...) return require("telescope.actions").preview_scrolling_down(...) end,
+            ["<C-b>"] = function(...) return require("telescope.actions").preview_scrolling_up(...) end,
+          },
+          n = {
+            ["q"] = function(...) return require("telescope.actions").close(...) end,
           },
         },
         winblend = 0,
@@ -214,11 +266,11 @@ return {
 --     require("telescope").load_extension("fzf")
 --   end,
 -- },
--- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
--- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
--- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
--- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
--- { "<leader>uC", Util.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+-- { "<leader>sw", H.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+-- { "<leader>sW", H.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+-- { "<leader>sw", H.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+-- { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+-- { "<leader>uC", H.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
 
 -- layout_strategy = "bottom_pane",
 -- layout_strategy = "center",
@@ -248,11 +300,12 @@ return {
 -- TODO: <leader>sh -- grep word
 -- INFO: /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/plugins/editor.lua:122
 -- INFO: /home/meta/.local/share/nvim/lazy/LazyVim/lua/lazyvim/util/init.lua:113
--- { "<leader>sw", Util.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
--- { "<leader>sW", Util.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
--- { "<leader>sw", Util.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
--- { "<leader>sW", Util.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
--- INFO: { "<leader>fR", Util.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
+-- { "<leader>sw", H.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
+-- { "<leader>sW", H.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+-- { "<leader>sw", H.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+-- { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
+-- INFO: { "<leader>fR", H.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
 -- INFO: https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/config.lua#L11
 
---
+
+-- TODO: sort binding https://github.com/nvim-telescope/telescope.nvim#sorters

@@ -1,3 +1,7 @@
+if true then
+  return
+end
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath })
@@ -10,37 +14,19 @@ require("lazy").setup({
       "LazyVim/LazyVim",
       import = "lazyvim.plugins",
       opts = {
-        colorscheme = require("user.theme").setup,
-        -- colorscheme = "mx-tokyo",
-        -- INFO: ~/.local/share/nvim/lazy/LazyVim/lua/lazyvim/config/init.lua:21
+        colorscheme = function() end,
         icons = {
-          -- git = {},
-          --     柳 
-          -- git = { added = " ", modified = " ", removed = " " },
-          -- git = { added = " ", modified = " ", removed = " " },
           dap = { Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" } },
-          kinds = {
-            Snippet = " ",
-            Array = " ", --     
-          },
+          kinds = { Snippet = " ", Array = " " },
         },
       },
     },
-    -- { import = "lazyvim.plugins.extras.lang.rust" },
-    { import = "lazyvim.plugins.extras.lang.docker" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.yaml" },
-    { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.coding.yanky" },
-    { import = "lazyvim.plugins.extras.editor.mini-files" },
-    { import = "lazyvim.plugins.extras.ui.mini-starter" },
-    -- { import = "lazyvim.plugins.extras.dap.core" },
+    { "folke/lazy.nvim", version = "*" },
     { import = "plugins" },
   },
   defaults = { lazy = true },
   install = { missing = true, colorscheme = { "tokyonight", "onedark", "horizon", "catppuccin", "habamax" } },
-  diff = { cmd = "git" }, -- "terminal_git"
+  diff = { cmd = "git" },
   change_detection = { enabled = false, notify = false },
   checker = { enabled = false },
   performance = {
@@ -102,3 +88,16 @@ require("lazy").setup({
 --   fallback = false, -- Fallback to git when local plugin doesn't exist
 -- },
 -- local use_dev = true
+
+-- { import = "lazyvim.plugins.extras.dap.core" },
+-- { import = "lazyvim.plugins.extras.lang.rust" },
+-- colorscheme = require("user.theme").setup,
+
+-- { import = "lazyvim.plugins.extras.lang.docker" },
+-- { import = "lazyvim.plugins.extras.lang.json" },
+-- { import = "lazyvim.plugins.extras.lang.yaml" },
+-- { import = "lazyvim.plugins.extras.linting.eslint" },
+-- { import = "lazyvim.plugins.extras.formatting.prettier" },
+-- { import = "lazyvim.plugins.extras.coding.yanky" },
+-- { import = "lazyvim.plugins.extras.editor.mini-files" },
+-- { import = "lazyvim.plugins.extras.ui.mini-starter" },

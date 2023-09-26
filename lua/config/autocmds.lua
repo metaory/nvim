@@ -1,6 +1,6 @@
 local lib = require("user.lib")
 
-vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
+-- vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
 
 vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
 

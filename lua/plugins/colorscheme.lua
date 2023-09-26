@@ -17,6 +17,8 @@ return {
   },
   {
     "navarasu/onedark.nvim",
+    -- priority = 1000,
+    lazy = false,
     opts = function()
       local style = "deep"
       local c = require("onedark.palette")[style]
@@ -38,13 +40,18 @@ return {
         diagnostics = { darker = true, undercurl = true, background = true },
       }
     end,
+    config = function(_, opts)
+      require("onedark").setup(opts)
+      require("user.theme").setup()
+    end,
   },
   -- { "nyoom-engineering/oxocarbon.nvim", config = true, lazy = false },
   -- { "B4mbus/oxocarbon-lua.nvim", lazy = false },
   -- { "olimorris/onedarkpro.nvim", lazy = false },
-  { "catppuccin/nvim", enabled = false },
+
+  -- { "catppuccin/nvim",          enabled = false },
   {
-    "tokyonight.nvim",
+    "folke/tokyonight.nvim",
     enabled = false,
     opts = {
       style = "night",

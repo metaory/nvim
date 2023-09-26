@@ -1,17 +1,18 @@
 return {
   "akinsho/bufferline.nvim",
+  event = "VeryLazy",
   opts = function()
     local bufferline = require("bufferline")
     local c = require("user.theme").palette()
     -- local hl = { selected = { bg = c.black, fg = c.cyan } }
     return {
       options = {
-        mode = "buffers", -- set to "tabs" to only show tabpages instead
+        mode = "buffers",                               -- set to "tabs" to only show tabpages instead
         style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
-        themable = true, -- allows highlight groups to be overriden i.e. sets highlights as default
+        themable = true,                                -- allows highlight groups to be overriden i.e. sets highlights as default
         -- numbers = "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
         -- close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
-        -- right_mouse_command = "bdelete! %d", -- can be a string | function | false, see "Mouse actions"
+        -- right_mouse_command = "bdelete! %d", -- can be a string | function  | false, see "Mouse actions"
         -- left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
         -- middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
         separator_style = { "", "" }, -- { "", "" },
@@ -23,7 +24,7 @@ return {
         indicator = {
           -- icon = "⏽",
           -- style = "icon", -- | "underline" | "none",
-          style = "none", -- | "underline" | "none",
+          style = "none",         -- | "underline" | "none",
         },
         diagnostics = "nvim_lsp", -- | "coc",
       },

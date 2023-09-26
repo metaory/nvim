@@ -5,8 +5,8 @@ local ui = require("user.ui")
 local keymap_del = util.keymap_del
 local keymap_set = util.keymap_set
 
-vim.g.maplocalLeader = "\\"
-vim.g.mapLeader = " "
+vim.g.maplocalleader = "\\"
+vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
@@ -55,7 +55,6 @@ vim.tbl_map(keymap_set, {
 
 vim.tbl_map(keymap_set, {
   { "<Leader>uh", "<CMD>lua require('mini.hipatterns').enable()<CR>", "Toggle Color Highlight" },
-  { "<Leader>sr", "<CMD>Telescope resume<CR>", "Resume" },
   { "<Leader>fr", "<CMD>FileRename<CR>", "File Rename" },
   { "<Leader>bb", "<CMD>e #<CR>", "Other Buffer" },
 })
