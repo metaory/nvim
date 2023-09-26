@@ -110,10 +110,7 @@ function M.telescope(builtin, opts)
         map("i", "<a-c>", function()
           local action_state = require("telescope.actions.state")
           local line = action_state.get_current_line()
-          M.telescope(
-            params.builtin,
-            vim.tbl_deep_extend("force", {}, params.opts or {}, { cwd = false, default_text = line })
-          )()
+          M.telescope(params.builtin, vim.tbl_deep_extend("force", {}, params.opts or {}, { cwd = false, default_text = line }))()
         end)
         return true
       end
@@ -258,8 +255,6 @@ function M.lsp_get_config(server)
   return rawget(configs, server)
 end
 
----@param server string
----@param cond fun( root_dir, config): boolean
 function M.lsp_disable(server, cond)
   local util = require("lspconfig.util")
   local def = M.lsp_get_config(server)
@@ -271,25 +266,24 @@ function M.lsp_disable(server, cond)
 end
 
 ---@param name string
----@param fn fun(name:string)
-function M.on_load(name, fn)
-  local Config = require("lazy.core.config")
-  if Config.plugins[name] and Config.plugins[name]._.loaded then
-    vim.schedule(function()
-      fn(name)
-    end)
-  else
-    vim.api.nvim_create_autocmd("User", {
-      pattern = "LazyLoad",
-      callback = function(event)
-        if event.data == name then
-          fn(name)
-          return true
-        end
-      end,
-    })
-  end
-end
+-- function M.on_load(name, fn)
+--   local Config = require("lazy.core.config")
+--   if Config.plugins[name] and Config.plugins[name]._.loaded then
+--     vim.schedule(function()
+--       fn(name)
+--     end)
+--   else
+--     vim.api.nvim_create_autocmd("User", {
+--       pattern = "LazyLoad",
+--       callback = function(event)
+--         if event.data == name then
+--           fn(name)
+--           return true
+--         end
+--       end,
+--     })
+--   end
+-- end
 
 function M.changelog()
   local lv = require("lazy.core.config").plugins.LazyVim

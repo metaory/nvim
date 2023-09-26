@@ -10,7 +10,6 @@ return {
   { "echasnovski/mini.cursorword", event = "VeryLazy", opts = { delay = 100 }, config = true },
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false, -- last release is way too old and doesn't work on Windows
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     dependencies = {

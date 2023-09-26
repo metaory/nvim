@@ -4,8 +4,6 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     keys = {
-      { "<Leader>fr", false },
-      { "<Leader><Space>", false },
       { "<Leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
       { "<Leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
       { "<Leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
@@ -24,11 +22,11 @@ return {
       { "<leader>,", "<cmd>Telescope buffers show_all_buffers=true<cr>", desc = "Switch Buffer" },
       { "<leader>/", H.telescope("live_grep"), desc = "Grep (root dir)" },
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
-      { "<leader><space>", H.telescope("files"), desc = "Find Files (root dir)" },
+      -- { "<leader><space>", H.telescope("files"), desc = "Find Files (root dir)" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
       { "<leader>ff", H.telescope("files"), desc = "Find Files (root dir)" },
       { "<leader>fF", H.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
-      { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
+      -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
       { "<leader>fR", H.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
       { "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "status" },
@@ -53,8 +51,10 @@ return {
       { "<leader>sw", H.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
       { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
       { "<leader>uC", H.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
+      --stylua: ignore start
       { "<leader>ss", H.telescope("lsp_document_symbols", { symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module", "Struct", "Trait", "Field", "Property" } }), desc = "Goto Symbol" },
       { "<leader>sS", H.telescope("lsp_dynamic_workspace_symbols", { symbols = { "Class", "Function", "Method", "Constructor", "Interface", "Module", "Struct", "Trait", "Field", "Property" } }), desc = "Goto Symbol (Workspace)" },
+      --stylua: ignore end
     },
     opts = {
       defaults = {
@@ -83,8 +83,12 @@ return {
             -- ["<C-S-L>"] = require("telescope.actions").preview_scrolling_right,
             -- ["<C-S-P>"] = require("telescope.actions").results_scrolling_up,
             -- ["<C-S-N>"] = require("telescope.actions").results_scrolling_down,
-            ["<c-t>"] = function(...) return require("trouble.providers.telescope").open_with_trouble(...) end,
-            ["<a-t>"] = function(...) return require("trouble.providers.telescope").open_selected_with_trouble(...) end,
+            ["<c-t>"] = function(...)
+              return require("trouble.providers.telescope").open_with_trouble(...)
+            end,
+            ["<a-t>"] = function(...)
+              return require("trouble.providers.telescope").open_selected_with_trouble(...)
+            end,
             ["<a-i>"] = function()
               local action_state = require("telescope.actions.state")
               local line = action_state.get_current_line()
@@ -95,13 +99,23 @@ return {
               local line = action_state.get_current_line()
               H.telescope("find_files", { hidden = true, default_text = line })()
             end,
-            ["<C-Down>"] = function(...) return require("telescope.actions").cycle_history_next(...) end,
-            ["<C-Up>"] = function(...) return require("telescope.actions").cycle_history_prev(...) end,
-            ["<C-f>"] = function(...) return require("telescope.actions").preview_scrolling_down(...) end,
-            ["<C-b>"] = function(...) return require("telescope.actions").preview_scrolling_up(...) end,
+            ["<C-Down>"] = function(...)
+              return require("telescope.actions").cycle_history_next(...)
+            end,
+            ["<C-Up>"] = function(...)
+              return require("telescope.actions").cycle_history_prev(...)
+            end,
+            ["<C-f>"] = function(...)
+              return require("telescope.actions").preview_scrolling_down(...)
+            end,
+            ["<C-b>"] = function(...)
+              return require("telescope.actions").preview_scrolling_up(...)
+            end,
           },
           n = {
-            ["q"] = function(...) return require("telescope.actions").close(...) end,
+            ["q"] = function(...)
+              return require("telescope.actions").close(...)
+            end,
           },
         },
         winblend = 0,
@@ -306,6 +320,5 @@ return {
 -- { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
 -- INFO: { "<leader>fR", H.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
 -- INFO: https://github.com/nvim-telescope/telescope-file-browser.nvim/blob/master/lua/telescope/_extensions/file_browser/config.lua#L11
-
 
 -- TODO: sort binding https://github.com/nvim-telescope/telescope.nvim#sorters

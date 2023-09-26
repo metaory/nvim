@@ -1,6 +1,86 @@
 local M = {}
 local PREFIX = "mx_vim_"
 
+-- function M.dumpwrite(t, f, m)
+_G.ddwrite = function(t, f, m)
+  if vim.g.debug_global_flag == false then
+    return
+  end
+
+  m = m or "w"
+  t = t or {}
+  t = type(t) == "table" and vim.inspect(t) or tostring(t)
+
+  local rpl = "___"
+  local p = string.format("/tmp/%s%s.lua", PREFIX, f)
+  local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
+  -- local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
+  local msg = tostring(t)
+
+  local str = string.format("%s%s\n", pre, msg)
+  -- local _, lines = string.gsub(str, "\n", "\n")
+
+  local file, err = io.open(p, m)
+
+  if file then
+    file:write(str)
+    file:close()
+    -- vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "ddwrite" })
+  else
+    print("error:", err)
+    vim.notify(err, vim.log.levels.ERROR, { title = "ddwrite" })
+  end
+end
+
+-- M.live_inspect = function(...)
+_G.live_inspect = function(...)
+  local lines = vim.split(vim.inspect(...), "\n")
+  local buf = vim.api.nvim_create_buf(true, false)
+
+  -- XXX: local is_remote = vim.g.mx_remtoe_debug
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+
+  vim.api.nvim_buf_set_option(buf, "filetype", "lua")
+  vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
+  vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
+  vim.api.nvim_buf_set_option(buf, "buflisted", false)
+  vim.api.nvim_buf_set_option(buf, "swapfile", false)
+
+  local win_opt = { relative = "win", col = 80, row = 10, zindex = 100, width = 60, height = 16, border = "rounded" }
+
+  local win = vim.api.nvim_open_win(buf, true, win_opt)
+
+  local close_handler = function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+  end
+
+  vim.keymap.set("n", "q", close_handler, {})
+
+  vim.defer_fn(close_handler, 10000)
+end
+
+-- function M.dump(...)
+_G.dd = function(...)
+  local value = { ... }
+  if vim.tbl_isempty(value) then
+    value = {}
+  else
+    value = vim.tbl_islist(value) and vim.tbl_count(value) <= 1 and value[1] or value
+  end
+  M._dump(value)
+end
+
+if vim.g.debug_global_flag then
+  vim.schedule(function()
+    vim.notify("   DEBUG IS ENABLED  ", vim.log.levels.WARN, { title = "DEBUG" })
+  end)
+end
+
+-- ///////////////////////////////////////////////////////
+
 function M.get_loc()
   local me = debug.getinfo(1, "S")
   local level = 2
@@ -39,16 +119,6 @@ function M._dump(value, opts)
       end
     end,
   })
-end
-
-function M.dump(...)
-  local value = { ... }
-  if vim.tbl_isempty(value) then
-    value = {}
-  else
-    value = vim.tbl_islist(value) and vim.tbl_count(value) <= 1 and value[1] or value
-  end
-  M._dump(value)
 end
 
 function M.extmark_leaks()
@@ -152,65 +222,6 @@ function M.get_upvalue(func, name)
     end
     i = i + 1
   end
-end
-
-function M.dumpwrite(t, f, m)
-  if vim.g.debug_global_flag == false then
-    return
-  end
-
-  m = m or "w"
-  t = t or {}
-  t = type(t) == "table" and vim.inspect(t) or tostring(t)
-
-  local rpl = "___"
-  local p = string.format("/tmp/%s%s.lua", PREFIX, f)
-  local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
-  -- local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
-  local msg = tostring(t)
-
-  local str = string.format("%s%s\n", pre, msg)
-  -- local _, lines = string.gsub(str, "\n", "\n")
-
-  local file, err = io.open(p, m)
-
-  if file then
-    file:write(str)
-    file:close()
-    -- vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "ddwrite" })
-  else
-    print("error:", err)
-    vim.notify(err, vim.log.levels.ERROR, { title = "ddwrite" })
-  end
-end
-
-M.live_inspect = function(...)
-  local lines = vim.split(vim.inspect(...), "\n")
-  local buf = vim.api.nvim_create_buf(true, false)
-
-  -- XXX: local is_remote = vim.g.mx_remtoe_debug
-
-  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
-
-  vim.api.nvim_buf_set_option(buf, "filetype", "lua")
-  vim.api.nvim_buf_set_option(buf, "buftype", "nofile")
-  vim.api.nvim_buf_set_option(buf, "bufhidden", "hide")
-  vim.api.nvim_buf_set_option(buf, "buflisted", false)
-  vim.api.nvim_buf_set_option(buf, "swapfile", false)
-
-  local win_opt = { relative = "win", col = 80, row = 10, zindex = 100, width = 60, height = 16, border = "rounded" }
-
-  local win = vim.api.nvim_open_win(buf, true, win_opt)
-
-  local close_handler = function()
-    if vim.api.nvim_win_is_valid(win) then
-      vim.api.nvim_win_close(win, true)
-    end
-  end
-
-  vim.keymap.set("n", "q", close_handler, {})
-
-  vim.defer_fn(close_handler, 10000)
 end
 
 M.expand_callable = function(x)

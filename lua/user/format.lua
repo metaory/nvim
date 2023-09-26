@@ -2,7 +2,6 @@ local Util = require("lazy.core.util")
 
 local M = {}
 
----@type PluginLspOpts
 M.opts = nil
 
 function M.enabled()
@@ -48,10 +47,9 @@ function M.format(opts)
     filter = function(client)
       return vim.tbl_contains(client_ids, client.id)
     end,
-  }, require("lazyvim.util").opts("nvim-lspconfig").format or {}))
+  }, require("util.helper").opts("nvim-lspconfig").format or {}))
 end
 
----@param formatters LazyVimFormatters
 function M.notify(formatters)
   local lines = { "# Active:" }
 
@@ -98,11 +96,8 @@ function M.get_formatters(bufnr)
   -- check if we have any null-ls formatters for the current filetype
   local null_ls = package.loaded["null-ls"] and require("null-ls.sources").get_available(ft, "NULL_LS_FORMATTING") or {}
 
-  ---@class LazyVimFormatters
   local ret = {
-    ---@type lsp.Client[]
     active = {},
-    ---@type lsp.Client[]
     available = {},
     null_ls = null_ls,
   }
@@ -140,7 +135,7 @@ end
 function M.setup(opts)
   M.opts = opts
   vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("LazyVimFormat", {}),
+    group = vim.api.nvim_create_augroup("MXFormat", {}),
     callback = function()
       if M.opts.autoformat then
         M.format()
