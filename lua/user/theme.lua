@@ -1,5 +1,7 @@
 local M = {}
 
+-- ~/.local/share/nvim/lazy/onedark.nvim/lua/onedark/palette.lua:86
+
 M.set_hl = function(l, o)
   l = type(l) == "table" and l or { l }
   for _, g in pairs(l) do
@@ -42,6 +44,8 @@ M.setup = function()
   -- M.set_hl("Float", { fg = c.red })
 
   M.set_hl("Visual", { bg = c.blue, fg = "black" })
+
+  M.set_hl({ "CursorLine", "CursorColumn" }, { bg = c.bg_d })
 
   -- M.set_hl("LuaLineDiffChange", { fg = c.yellow })
 end
@@ -104,7 +108,7 @@ M.icons = {
     Unit = " ",
     Value = " ",
     Variable = " ",
-  }
+  },
 }
 
 return M

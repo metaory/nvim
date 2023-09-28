@@ -33,9 +33,13 @@
     "prefix": "sf",
     "body": ["string.format(\"${1:$TM_SELECTED_TEXT}\", $2)"]
   },
-  "mx.inspect": {
+  "mx.dump": {
     "prefix": "ddw",
     "body": ["ddwrite(${1:$TM_SELECTED_TEXT}, '$2')"]
+  },
+  "mx.dump.raw": {
+    "prefix": "ddww",
+    "body": ["ddwriteraw(${1:$TM_SELECTED_TEXT}, '$2')"]
   },
   "vim.inspect": {
     "prefix": "vi",

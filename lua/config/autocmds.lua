@@ -1,5 +1,9 @@
 local lib = require("user.lib")
 
+local function augroup(name)
+  return vim.api.nvim_create_augroup("mx_" .. name, { clear = true })
+end
+
 -- vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
 
 vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
@@ -23,6 +27,38 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    vim.notify("LSP ATTACHED!", vim.log.levels.DEBUG, { title = "LSP" })
+    local opts = { buffer = ev.buf }
+  end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("close_with_q"),
+  pattern = {
+    "PlenaryTestPopup",
+    "help",
+    "lspinfo",
+    "man",
+    "notify",
+    "qf",
+    "spectre_panel",
+    "startuptime",
+    "tsplayground",
+    "neotest-output",
+    "checkhealth",
+    "neotest-summary",
+    "neotest-output-panel",
+  },
+  callback = function(event)
+    vim.bo[event.buf].buflisted = false
+    vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+  end,
+})
 -- vim.api.nvim_create_autocmd("BufReadPost", {
 --   callback = function()
 --     vim.go.smartindent = false

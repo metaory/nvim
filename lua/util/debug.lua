@@ -1,35 +1,37 @@
 local M = {}
 local PREFIX = "mx_vim_"
 
--- function M.dumpwrite(t, f, m)
-_G.ddwrite = function(t, f, m)
+_G.ddwriteraw = function(d, f, m)
   if vim.g.debug_global_flag == false then
     return
   end
 
+  local p = string.format("/tmp/%s%s.lua", PREFIX, f)
+
+  local file, err = io.open(p, m or "w")
+
+  if file then
+    file:write(tostring(d))
+    file:close()
+  else
+    print("error:", err)
+    vim.notify(err, vim.log.levels.ERROR, { title = "ddwrite" })
+  end
+end
+
+_G.ddwrite = function(t, f, m)
   m = m or "w"
   t = t or {}
   t = type(t) == "table" and vim.inspect(t) or tostring(t)
 
   local rpl = "___"
-  local p = string.format("/tmp/%s%s.lua", PREFIX, f)
   local pre = m ~= "a" and string.format("local %s  = function() end\n\nreturn ", rpl) or ""
   -- local msg = tostring(t):gsub("<%a+ %d+>", rpl):gsub("<%a+>", rpl):gsub("<%d+>", rpl)
   local msg = tostring(t)
 
   local str = string.format("%s%s\n", pre, msg)
-  -- local _, lines = string.gsub(str, "\n", "\n")
 
-  local file, err = io.open(p, m)
-
-  if file then
-    file:write(str)
-    file:close()
-    -- vim.notify(string.format("written %s lines to %s", lines + 1, p), vim.log.levels.WARN, { title = "ddwrite" })
-  else
-    print("error:", err)
-    vim.notify(err, vim.log.levels.ERROR, { title = "ddwrite" })
-  end
+  ddwriteraw(str, f, m)
 end
 
 -- M.live_inspect = function(...)
