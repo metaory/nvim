@@ -2,6 +2,7 @@ return {
   {
     "lukas-reineke/indent-blankline.nvim",
     -- event = "VimEnter",
+    version = "2.20.8",
     event = { "BufReadPost", "BufNewFile" },
     opts = {
       char = "│",
