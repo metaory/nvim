@@ -16,7 +16,8 @@ M.palette = function()
       return require("onedark.colors")
     end,
   }
-  local cur = vim.api.nvim_eval("g:colors_name")
+  -- local cur = vim.api.nvim_eval("g:colors_name")
+  local cur = "onedark"
   return cmap[cur] and cmap[cur]() or {}
 end
 
@@ -44,6 +45,67 @@ M.setup = function()
 
   -- M.set_hl("LuaLineDiffChange", { fg = c.yellow })
 end
+
+M.icons = {
+  dap = {
+    Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
+    Breakpoint = " ",
+    BreakpointCondition = " ",
+    BreakpointRejected = { " ", "DiagnosticError" },
+    LogPoint = ".>",
+  },
+  diagnostics = {
+    Error = " ",
+    Warn = " ",
+    Hint = " ",
+    Info = " ",
+  },
+  git = {
+    added = " ",
+    modified = " ",
+    removed = " ",
+  },
+  kinds = {
+    -- Array = " ",
+    Array = " ",
+    Boolean = " ",
+    Class = " ",
+    Color = " ",
+    Constant = " ",
+    Constructor = " ",
+    Copilot = " ",
+    Enum = " ",
+    EnumMember = " ",
+    Event = " ",
+    Field = " ",
+    File = " ",
+    Folder = " ",
+    Function = " ",
+    Interface = " ",
+    Key = " ",
+    Keyword = " ",
+    Method = " ",
+    Module = " ",
+    Namespace = " ",
+    Null = " ",
+    Number = " ",
+    -- Number = " ",
+    Object = " ",
+    Operator = " ",
+    Package = " ",
+    Property = " ",
+    Reference = " ",
+    -- Snippet = " ",
+    Snippet = " ",
+    String = " ",
+    Struct = " ",
+    Text = " ",
+    TypeParameter = " ",
+    Unit = " ",
+    Value = " ",
+    Variable = " ",
+  }
+}
 
 return M
 -- day moon night storm

@@ -9,9 +9,41 @@ return {
   -- TODO: https://github.com/SmiteshP/nvim-navbuddy
   {
     "SmiteshP/nvim-navic",
-    opts = function()
-      return { separator = " ", highlight = true, depth_limit = 6, icons = require("lazyvim.config").icons.kinds }
+    lazy = true,
+    init = function()
+      vim.g.navic_silence = true
+      -- TODO:
+      -- require("lazyvim.util").on_attach(function(client, buffer)
+      --   if client.server_capabilities.documentSymbolProvider then
+      --     require("nvim-navic").attach(client, buffer)
+      --   end
+      -- end)
     end,
+    opts = function()
+      return {
+        separator = " ",
+        highlight = true,
+        depth_limit = 5,
+        icons = require("user.theme").icons.kinds,
+      }
+    end,
+  },
+
+  { "MunifTanjim/nui.nvim", lazy = false },
+
+  {
+    "stevearc/dressing.nvim",
+    lazy = false,
+    -- init = function()
+    --   vim.ui.select = function(...)
+    --     require("lazy").load({ plugins = { "dressing.nvim" } })
+    --     return vim.ui.select(...)
+    --   end
+    --   vim.ui.input = function(...)
+    --     require("lazy").load({ plugins = { "dressing.nvim" } })
+    --     return vim.ui.input(...)
+    --   end
+    -- end,
   },
 }
 -- https://github.com/stevearc/dressing.nvim

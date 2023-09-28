@@ -1,5 +1,53 @@
 -- vim.cmd("filetype indent plugin off")
 vim.cmd("filetype plugin indent off") -- https://neovim.io/doc/user/filetype.html#:~:text=Overview%3A-,%3Afiletype%2Doverview,-command%09%09%09%09detection%09plugin
+
+-- XXX: ==>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+vim.opt.autowrite = true           -- Enable auto write
+vim.opt.clipboard = "unnamedplus"  -- Sync with system clipboard
+vim.opt.completeopt = "menu,menuone,noselect"
+vim.opt.conceallevel = 3           -- Hide * markup for bold and italic
+vim.opt.confirm = true             -- Confirm to save changes before exiting modified buffer
+vim.opt.cursorline = true          -- Enable highlighting of the current line
+vim.opt.expandtab = true           -- Use spaces instead of tabs
+vim.opt.formatoptions = "jcroqlnt" -- tcqj
+vim.opt.grepformat = "%f:%l:%c:%m"
+vim.opt.grepprg = "rg --vimgrep"
+vim.opt.ignorecase = true      -- Ignore case
+vim.opt.inccommand = "nosplit" -- preview incremental substitute
+vim.opt.laststatus = 0
+vim.opt.list = true            -- Show some invisible characters (tabs...
+vim.opt.mouse = "a"            -- Enable mouse mode
+vim.opt.number = true          -- Print line number
+vim.opt.pumblend = 10          -- Popup blend
+vim.opt.pumheight = 10         -- Maximum number of entries in a popup
+vim.opt.relativenumber = true  -- Relative line numbers
+vim.opt.scrolloff = 4          -- Lines of context
+vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
+vim.opt.shiftround = true      -- Round indent
+vim.opt.shiftwidth = 2         -- Size of an indent
+vim.opt.shortmess:append({ W = true, I = true, c = true })
+vim.opt.showmode = false       -- Dont show mode since we have a statusline
+vim.opt.sidescrolloff = 8      -- Columns of context
+vim.opt.signcolumn = "yes"     -- Always show the signcolumn, otherwise it would shift the text each time
+vim.opt.smartcase = true       -- Don't ignore case with capitals
+vim.opt.smartindent = true     -- Insert indents automatically
+vim.opt.spelllang = { "en" }
+vim.opt.splitbelow = true      -- Put new windows below current
+vim.opt.splitright = true      -- Put new windows right of current
+vim.opt.tabstop = 2            -- Number of spaces tabs count for
+vim.opt.termguicolors = true   -- True color support
+vim.opt.timeoutlen = 300
+vim.opt.undofile = true
+vim.opt.undolevels = 10000
+vim.opt.updatetime = 200               -- Save swap file and trigger CursorHold
+vim.opt.wildmode = "longest:full,full" -- Command-line completion mode
+vim.opt.winminwidth = 5                -- Minimum window width
+vim.opt.wrap = false                   -- Disable line wrap
+vim.opt.splitkeep = "screen"
+vim.opt.shortmess:append({ C = true })
+vim.g.markdown_recommended_style = 0
+-- XXX: ==<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 vim.opt.list = true
 vim.opt.fillchars = { foldopen = "", foldclose = "", fold = " ", foldsep = " ", diff = "╱", eob = " " }
 -- XXX:
@@ -28,7 +76,7 @@ vim.filetype.add({
   -- pattern = { [".*/%.vscode/.*%.json"] = "json5", ["Dockerfile-.*"] = "dockerfile", [".*/%.vscode/.*%.json"] = "json5", },
 })
 
-vim.opt.commentstring = "# %s"
+-- vim.opt.commentstring = "# %s" -- BUG: <<<
 
 vim.opt.cmdheight = 0
 
@@ -43,10 +91,10 @@ vim.o.undodir = vim.fn.stdpath("state") .. "/undo"
 vim.o.backup = true
 vim.o.backupdir = vim.fn.stdpath("state") .. "/backup"
 
-vim.opt.clipboard = "unnamed"
-vim.opt.scrolloff = 0
+vim.opt.clipboard = "unnamed" -- NOTE: <<<
+vim.opt.scrolloff = 0         -- NOTE: <<<
 vim.opt.cursorcolumn = true
-vim.opt.laststatus = 3
+vim.opt.laststatus = 3        -- NOTE: <<<
 
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -69,27 +117,3 @@ vim.g.loaded_ruby_provider = 0
 -- vim.o.foldlevelstart = 99
 -- vim.o.foldenable = true
 -- vim.o.foldcolumn = "0"
-
--- if vim.g.neovide then
---   vim.opt.guifont = { "FiraCode Nerd Font Mono", "h9" }
---   vim.g.neovide_scale_factor = 0.3
--- end
--- vim.opt.colorcolumn = "80"
-
--- vim.g.node_host_prog = "/Users/folke/.pnpm-global/5/node_modules/neovim/bin/cli.js"
-
--- require("util.status")
-
--- make all keymaps silent by default
--- local keymap_set = vim.keymap.set
--- ---@diagnostic disable-next-line: duplicate-set-field
--- vim.keymap.set = function(mode, lhs, rhs, opts)
---   opts = opts or {}
---   opts.silent = opts.silent ~= false
---   return keymap_set(mode, lhs, rhs, opts)
--- end
--- vim.api.nvim_get_runtime_file("package.json", true) = {
---   "/home/meta/.local/share/nvim/lazy/friendly-snippets/package.json",
---   "/home/meta/.local/share/nvim/lazy/typescript.nvim/package.json",
--- }
---

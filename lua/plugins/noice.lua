@@ -1,7 +1,8 @@
 -- INFO: <S-Enter>
 
-  -- stylua: ignore
-local popup_format = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ", "{title} ", "{cmdline} ", "\n", "{message}" }
+-- stylua: ignore
+local popup_format = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ",
+  "{title} ", "{cmdline} ", "\n", "{message}" }
 
 return {
   "folke/noice.nvim",
@@ -9,26 +10,44 @@ return {
     -- stylua: ignore
     { "<S-Enter>", function() require("noice").redirect(vim.fn.getcmdline()) end, mode = "c", desc = "Redirect Cmdline", },
   },
-  opts = function(_, opts)
-    ddwrite(opts, "noice_pre")
-    opts.health = { checker = true }
-
-    table.insert(opts.routes[1].filter.any, { find = "^E486:" })
-    table.insert(opts.routes[1].filter.any, { find = "at TOP" })
-
-    table.insert(opts.routes, {
-      filter = { event = "notify", any = { { min_length = 200 } } },
-      opts = { format = popup_format, win_options = { wrap = true } },
-      view = "popup",
-    })
-
-    table.insert(opts.routes, { filter = { event = "notify" }, view = "notify" })
-
-    opts.commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } }
-
-    -- opts.notify = { enabled = false, opts = { background_colour = "#f0f023" }, view = "notify" }
-
-    opts.views = vim.tbl_deep_extend("force", opts.views or {}, {
+  opts = {
+    health = { checker = true },
+    lsp = {
+      override = {
+        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ["vim.lsp.util.stylize_markdown"] = true,
+        ["cmp.entry.get_documentation"] = true,
+      },
+    },
+    -- table.insert(opts.routes[1].filter.any, { find = "^E486:" })
+    -- table.insert(opts.routes[1].filter.any, { find = "at TOP" })
+    routes = {
+      {
+        filter = {
+          event = "msg_show",
+          any = {
+            { find = "%d+L, %d+B" },
+            { find = "; after #%d+" },
+            { find = "; before #%d+" },
+          },
+        },
+        view = "mini",
+      },
+      {
+        filter = { event = "notify", any = { { min_length = 200 } } },
+        opts = { format = popup_format, win_options = { wrap = true } },
+        view = "popup",
+      },
+      { filter = { event = "notify" }, view = "notify" }
+    },
+    presets = {
+      bottom_search = true,
+      command_palette = true,
+      long_message_to_split = true,
+      inc_rename = true,
+    },
+    commands = { all = { view = "split", opts = { enter = true, format = "details" }, filter = {} } },
+    views = {
       popup = {
         size = { width = "70%", height = "50%" },
         format = { "{message}" },
@@ -48,11 +67,12 @@ return {
         border = { style = "rounded" },
         size = { max_width = 80 },
       },
-    })
-
-    ddwrite(opts, "noice_POST")
-  end,
+    }
+  },
 }
+
+-- XXX: >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+-- XXX: <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 -- opts.format = {my_full = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ", "{title} ", "{cmdline} ", "\n", "{message}", },}
 

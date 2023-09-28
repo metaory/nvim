@@ -2,9 +2,10 @@
 
 return {
   "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
   opts = function()
     local c = require("user.theme").palette()
-    local icons = require("lazyvim.config").icons
+    local icons = require("user.theme").icons
     local icons_d = icons.diagnostics
     local icons_g = icons.git
 
@@ -25,7 +26,12 @@ return {
         lualine_b = { { "branch", icons_enabled = false, padding = pad_l } },
         lualine_c = {
           { "diagnostics", symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint } },
-          { "filetype", icon_only = true, padding = pad_l },
+          {
+            "filetype",
+            icon_only = true,
+            padding =
+                pad_l
+          },
           -- stylua: ignore
           {
             "filename",
@@ -50,7 +56,7 @@ return {
           -- stylua: ignore
           {
             function() return "  " .. require("dap").status() end,
-            cond = function () return package.loaded["dap"] and require("dap").status() ~= "" end,
+            cond = function() return package.loaded["dap"] and require("dap").status() ~= "" end,
             color = { fg = c.red },
           },
           { "diff", symbols = { added = icons_g.added, modified = icons_g.modified, removed = icons_g.removed } },

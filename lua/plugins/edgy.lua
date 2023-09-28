@@ -1,3 +1,6 @@
+return {}
+
+--[[
 if true then
   return {}
 end
@@ -121,3 +124,4 @@ return {
     end,
   },
 }
+]]

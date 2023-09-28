@@ -1,16 +1,14 @@
-local header = require("user.header")
-
 return {
-  { "goolord/alpha-nvim", enabled = false },
+  -- { "goolord/alpha-nvim", enabled = false },
   {
     "echasnovski/mini.starter",
-    enabled = true,
+    event = "VimEnter",
     cond = function()
       return next(vim.fn.argv()) == nil
     end,
     opts = function()
       local pad = string.rep(" ", 10)
-      local logo = pad .. table.concat(header, "\n" .. pad)
+      local logo = pad .. table.concat(require("user.header"), "\n" .. pad)
       local starter = require("mini.starter")
       local telescope = starter.sections.telescope()()
       table.remove(telescope, 1)
@@ -36,13 +34,13 @@ return {
     end,
   },
 }
-    -- config = function(_, opts)
-    --   -- mxdebug(opts, "mini")
-    --   require("mini.starter").setup(opts)
-    --   -- vim.api.nvim_buf_set_name(0, "/tmp")
-    -- end,
-      -- mxdump(vim.inspect(config), "dashx")
-      -- nvim_buf_set_name({buffer}, {name})                      *nvim_buf_set_name()*
+-- config = function(_, opts)
+--   -- mxdebug(opts, "mini")
+--   require("mini.starter").setup(opts)
+--   -- vim.api.nvim_buf_set_name(0, "/tmp")
+-- end,
+-- mxdump(vim.inspect(config), "dashx")
+-- nvim_buf_set_name({buffer}, {name})                      *nvim_buf_set_name()*
 -- {
 --   "goolord/alpha-nvim",
 --   event = "VimEnter",
