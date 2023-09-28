@@ -5,8 +5,8 @@ return {
   -- TODO:
   -- { "nvim-treesitter/nvim-treesitter-context", cmd = "TSContextToggle" },
   -- {"nvim-treesitter/nvim-treesitter-textobjects", opts = { , },},
-  { "echasnovski/mini.ai", enabled = false },
-  { "RRethy/vim-illuminate", enabled = false },
+  -- { "echasnovski/mini.ai", enabled = true },
+  -- { "RRethy/vim-illuminate", enabled = false },
   { "echasnovski/mini.cursorword", event = "VeryLazy", opts = { delay = 100 }, config = true },
   {
     "nvim-treesitter/nvim-treesitter",

@@ -1,5 +1,5 @@
 return {
-  { "goolord/alpha-nvim", enabled = false },
+  -- { "goolord/alpha-nvim", enabled = false },
   {
     "echasnovski/mini.starter",
     event = "VimEnter",
@@ -20,9 +20,9 @@ return {
         items = {
           starter.sections.recent_files(4, true, true),
           telescope,
-          { name = "init.lua", action = "e $MYVIMRC",                          section = "Config" },
-          { name = "Lazy",     action = "Lazy",                                section = "Config" },
-          { name = "Restore",  action = [[lua require("persistence").load()]], section = "Session" },
+          { name = "init.lua", action = "e $MYVIMRC", section = "Config" },
+          { name = "Lazy", action = "Lazy", section = "Config" },
+          { name = "Restore", action = [[lua require("persistence").load()]], section = "Session" },
           starter.sections.builtin_actions(),
         },
         content_hooks = {

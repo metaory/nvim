@@ -7,7 +7,7 @@ vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
 require("lazy").setup("plugins", {
   dev = { path = vim.fn.stdpath("config") .. "/dev", fallback = true },
   defaults = { lazy = true, version = false },
-  install = { missing = true, colorscheme = { "ron" } },
+  install = { missing = true, colorscheme = { "onedark", "ron" } },
   spec = nil,
   diff = { cmd = "git" },
   change_detection = { enabled = false, notify = false },
