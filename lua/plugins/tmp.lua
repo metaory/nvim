@@ -1,8 +1,4 @@
 return {
-  {
-    "folke/flash.nvim",
-    vscode = nil,
-  },
   -- { "kikito/inspect.lua", module = true, config = false, },
   -- { "echasnovski/mini.bufremove", lazy = false, opts = {} },
 }

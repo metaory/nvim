@@ -1,42 +1,181 @@
+local H = require("util.helper")
+
 return {
-  "akinsho/bufferline.nvim",
-  event = "VeryLazy",
-  opts = function()
-    local bufferline = require("bufferline")
-    local c = require("user.theme").palette()
-    -- local hl = { selected = { bg = c.black, fg = c.cyan } }
-    return {
-      options = {
-        mode = "buffers",                               -- set to "tabs" to only show tabpages instead
-        style_preset = bufferline.style_preset.default, -- or bufferline.style_preset.minimal,
-        themable = true,                                -- allows highlight groups to be overriden i.e. sets highlights as default
-        -- numbers = "none" | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
-        -- close_command = "bdelete! %d",       -- can be a string | function, | false see "Mouse actions"
-        -- right_mouse_command = "bdelete! %d", -- can be a string | function  | false, see "Mouse actions"
-        -- left_mouse_command = "buffer %d",    -- can be a string | function, | false see "Mouse actions"
-        -- middle_mouse_command = nil,          -- can be a string | function, | false see "Mouse actions"
-        separator_style = { "", "" }, -- { "", "" },
-        show_buffer_close_icons = false,
-        always_show_bufferline = false,
-        -- separator_style = "none", --| "slope" | "thick" | "thin" | { 'any', 'any' },
-        modified_icon = "●",
-        close_icon = "✖", -- 
-        indicator = {
-          -- icon = "⏽",
-          -- style = "icon", -- | "underline" | "none",
-          style = "none",         -- | "underline" | "none",
+  {
+    "willothy/nvim-cokeline",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    enabled = true,
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {
+      show_if_buffers_are_at_least = 1,
+      -- buffers = {
+      -- filter_valid = function(buffer) -> true | false,
+      -- filter_visible = function(buffer) -> true | false,
+      -- focus_on_delete = 'prev' | 'next',
+      -- new_buffers_position = 'last' | 'next' | 'directory' | 'number' | fun(buffer_a, buffer_b) -> true | false,
+      -- delete_on_right_click = true | false,
+      -- },
+      -- mappings = { cycle_prev_next = true, disable_mouse = true },
+      history = {
+        enabled = false,
+        -- size = int (default: 2)
+      },
+      -- rendering = {
+      -- max_buffer_width = int,
+      -- },
+      -- pick = {
+      -- use_filename = true | false,
+      -- letters: `'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP'`
+      -- },
+      -- default_hl = {
+      -- fg = ('hlgroup' | '#rrggbb') | function(buf) -> ('#rrggbb' | 'hlgroup'),
+      -- bg = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
+      -- sp = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
+      -- bold = = true | false | fun(buf) -> true | false,
+      -- italic = = true | false | fun(buf) -> true | false,
+      -- underline = = true | false | fun(buf) -> true | false,
+      -- undercurl = = true | false | fun(buf) -> true | false,
+      -- strikethrough = true | false | fun(buf) -> true | false,
+      -- },
+      -- fill_hl = 'TabLineFill',
+      -- components = {..},
+      -- rhs = {..},
+      -- tabs = {
+      -- placement = "left" | "right",
+      -- components = {..}
+      -- },
+      -- sidebar = {
+      -- filetype = '<filetype>',
+      -- components = {..},
+      -- },
+    },
+    config = function(_, opts)
+      -- local H.fg = require("cokeline/utils").H.fg
+      local theme = require("user.theme")
+      local c = theme.palette()
+      local i = theme.icons
+
+      local hl = function(buf)
+        -- if buf.is_modified then
+        --   return c.yellow
+        -- end
+        return buf.is_focused and c.cx4 or c.bg3
+      end
+
+      local hl_bold = function(buf)
+        return not not buf.is_focused
+      end
+
+      require("cokeline").setup(vim.tbl_deep_extend("force", opts, {
+        default_hl = {
+          fg = function(buf)
+            return buf.is_focused and "none" or "red"
+          end,
+          bg = c.bg_d,
         },
-        diagnostics = "nvim_lsp", -- | "coc",
-      },
-      highlights = {
-        modified_selected = { fg = c.yellow },
-        modified = { fg = c.grey },
-        -- buffer_selected = vim.tbl_extend("force", hl.selected, { italic = false }),
-        -- modified_selected = vim.tbl_extend("force", hl.selected, { fg = c.yellow }),
-        -- modified = { bold = true, fg = c.grey },
-      },
-    }
-  end,
+
+        components = {
+          { text = " ", bg = "none" },
+          { text = "", fg = hl, bg = "none" },
+          {
+            text = function(buf)
+              return buf.devicon.icon
+            end,
+            -- fg = "white",
+            fg = function(buf)
+              return buf.is_focused and "white" or buf.devicon.color
+            end,
+            bg = hl,
+          },
+          -- fg = function(buf) return buf.devicon.color end,
+          -- { text = " " },
+          {
+            text = function(buf)
+              return buf.filename .. " "
+            end,
+            -- style = function(buf) return buf.is_focused and "BOLD" or nil end,
+            bold = hl_bold,
+            fg = "white",
+            bg = hl,
+          },
+          {
+            text = function(buf)
+              return buf.diagnostics.errors > 0 and "" .. i.diagnostics.Error or ""
+            end,
+            bg = hl,
+            fg = function(buf)
+              return buf.is_focused and "white" or c.red
+            end,
+          },
+          {
+            text = function(buf)
+              return buf.diagnostics.warnings > 0 and "" .. i.diagnostics.Warn or ""
+            end,
+            bg = hl,
+            fg = function(buf)
+              return buf.is_focused and "white" or c.yellow
+            end,
+          },
+          {
+            text = function(buf)
+              return buf.diagnostics.infos > 0 and "" .. i.diagnostics.Info or ""
+            end,
+            bg = hl,
+            fg = function(buf)
+              return buf.is_focused and "white" or c.blue
+            end,
+          },
+          {
+            text = function(buf)
+              return buf.diagnostics.hints > 0 and "" .. i.diagnostics.Hint or ""
+            end,
+            bg = hl,
+            fg = function(buf)
+              return buf.is_focused and "white" or c.cyan
+            end,
+          },
+
+          {
+            text = function(buf)
+              return buf.is_modified and "●" or ""
+            end,
+            bg = hl,
+            fg = function(buf)
+              return buf.is_focused and "white" or c.yellow
+            end,
+          },
+          { text = "", fg = hl, bg = "none" },
+        },
+      }))
+    end,
+  },
+  {
+    "akinsho/bufferline.nvim",
+    enabled = false,
+    event = { "BufReadPost", "BufNewFile" },
+    opts = function()
+      local bufferline = require("bufferline")
+      local c = require("user.theme").palette()
+      return {
+        options = {
+          mode = "buffers",
+          style_preset = bufferline.style_preset.minimal,
+          themable = true,
+          separator_style = { "", "" }, -- { "", "" },
+          show_buffer_close_icons = false,
+          always_show_bufferline = false,
+          modified_icon = "●",
+          close_icon = "✖", -- 
+          indicator = { style = "none" },
+          diagnostics = "nvim_lsp", -- | "coc",
+        },
+        highlights = {
+          modified_selected = { fg = c.yellow },
+          modified = { fg = c.grey },
+        },
+      }
+    end,
+  },
 }
 
 -- separator_selected = hl.selected,

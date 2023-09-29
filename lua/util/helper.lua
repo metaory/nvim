@@ -22,8 +22,14 @@ end
 
 function M.fg(name)
   local hl = vim.api.nvim_get_hl(0, { name = name })
-  local fg = hl and hl.fg or hl.foreground
-  return fg and { fg = string.format("#%06x", fg) }
+  local fg = hl.fg
+  return fg and { fg = string.format("#%06x", fg) } or { fg = "none" }
+end
+
+function M.bg(name)
+  local hl = vim.api.nvim_get_hl(0, { name = name })
+  local bg = hl.bg
+  return bg and { bg = string.format("#%06x", bg) } or { bg = "none" }
 end
 
 ---@param fn fun()

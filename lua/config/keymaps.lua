@@ -11,17 +11,17 @@ vim.g.mapleader = " "
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
 
 vim.tbl_map(keymap_del, {
-  "<Leader>sr",
-  "<Leader>sR",
-  "<Leader>p",
-  "<Leader>l",
-  "<Leader>L",
-  "<Leader>`",
-  "<Leader>,",
-  "<Leader>K",
-  "<Leader><Space>",
-  { "v", "<Leader>noop" },
-  "<C-_>",
+  -- "<Leader>sr",
+  -- "<Leader>sR",
+  -- "<Leader>p",
+  -- "<Leader>l",
+  -- "<Leader>L",
+  -- "<Leader>`",
+  -- "<Leader>,",
+  -- "<Leader>K",
+  -- "<Leader><Space>",
+  -- { "v", "<Leader>noop" },
+  -- "<C-_>",
 })
 
 vim.tbl_map(keymap_set, {
@@ -51,6 +51,11 @@ vim.tbl_map(keymap_set, {
   { "<Leader>exx", ":Xdir lua =<C-R>: <C-y>", "Inspect Redirect (CMD)" },
   { "<Leader>exe", ":Xdir <C-R>=", "Inspect Expand (Redirect)" },
   { "<Leader>exl", ":Xdir <C-R>= <C-R><C-L>", "Inspect Expand Line (Redirect)" },
+})
+
+vim.tbl_map(keymap_set, {
+  { "<ESC>", ":noh<CR><ESC>", silent = true },
+  { "jk", "<ESC>", mode = "i" },
 })
 
 vim.tbl_map(keymap_set, {
@@ -84,25 +89,34 @@ vim.tbl_map(keymap_set, {
 })
 
 vim.tbl_map(keymap_set, {
-  { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
-  { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
+  -- { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
+  -- { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
 
-  { "<M-Left>", "<CMD>BufferLineMovePrev<CR>", "Move Buf Left" },
-  { "<M-Right>", "<CMD>BufferLineMoveNext<CR>", "Move Buf Right" },
+  { "<M-Left>", "<Plug>(cokeline-switch-prev)", "Move Buf Left" },
+  { "<M-Right>", "<Plug>(cokeline-switch-next)", "Move Buf Right" },
 
-  { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
-  { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
+  { "<M-k>", "<Plug>(cokeline-focus-next)", "Next Buf" },
+  { "<M-j>", "<Plug>(cokeline-focus-prev)", "Next Prev" },
 })
+-- vim.tbl_map(keymap_set, {
+--   { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
+--   { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
+--
+--   { "<M-Left>", "<CMD>BufferLineMovePrev<CR>", "Move Buf Left" },
+--   { "<M-Right>", "<CMD>BufferLineMoveNext<CR>", "Move Buf Right" },
+--
+--   { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
+--   { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
+-- })
 
 vim.tbl_map(keymap_set, {
   { "gG", "<CMD>OpenGithubLink<CR>", "Open Github Link" },
   { "gL", "<CMD>OpenWebLink<CR>", "Open Link" },
   { "Y", [[y$]], "Copy till end-of-line (P)" },
-  { "cp", [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]], "Copy Path (S)" },
+  { "cp", [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]], "Copy Path (S)", silent = true },
 })
 
 vim.tbl_map(keymap_set, {
-  { "jk", "<ESC>", mode = "i" },
   { "<M-e>", [[g$$]], mode = "i" }, -- BUG: <<
   { "<M-p>", [["+p]], "Paste System (S)" },
   { "<M-Y>", [[gg"+yG]], "Copy whole file (S)" },
