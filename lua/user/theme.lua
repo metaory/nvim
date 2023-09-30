@@ -79,6 +79,7 @@ M.setup = function()
 end
 
 M.icons = {
+  modified = "●",
   dap = {
     Stopped = { " ", "DiagnosticWarn", "DapStoppedLine" },
     Breakpoint = " ",

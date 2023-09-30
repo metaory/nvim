@@ -217,6 +217,7 @@ return {
       lspconfig.rust_analyzer.setup({ settings = { ["rust-analyzer"] = {} } })
       lspconfig.lua_ls.setup({
         handlers = {
+          -- settings = { Lua = { workspace = { checkThirdParty = false } } },
           ["textDocument/definition"] = function(_, result, ctx, _)
             if result == nil or vim.tbl_isempty(result) then
               return nil

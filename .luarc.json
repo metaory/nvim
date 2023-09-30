@@ -1,4 +1,5 @@
 {
   "diagnostics.disable": ["incomplete-signature-doc", "trailing-space", "no-unknown", "missing-fields"],
+  "workspace.checkThirdParty": false,
   "workspace.library": []
 }

@@ -6,64 +6,54 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     enabled = true,
     event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      show_if_buffers_are_at_least = 1,
-      -- buffers = {
-      -- filter_valid = function(buffer) -> true | false,
-      -- filter_visible = function(buffer) -> true | false,
-      -- focus_on_delete = 'prev' | 'next',
-      -- new_buffers_position = 'last' | 'next' | 'directory' | 'number' | fun(buffer_a, buffer_b) -> true | false,
-      -- delete_on_right_click = true | false,
-      -- },
-      -- mappings = { cycle_prev_next = true, disable_mouse = true },
-      history = {
-        enabled = false,
-        -- size = int (default: 2)
-      },
-      -- rendering = {
-      -- max_buffer_width = int,
-      -- },
-      -- pick = {
-      -- use_filename = true | false,
-      -- letters: `'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP'`
-      -- },
-      -- default_hl = {
-      -- fg = ('hlgroup' | '#rrggbb') | function(buf) -> ('#rrggbb' | 'hlgroup'),
-      -- bg = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
-      -- sp = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
-      -- bold = = true | false | fun(buf) -> true | false,
-      -- italic = = true | false | fun(buf) -> true | false,
-      -- underline = = true | false | fun(buf) -> true | false,
-      -- undercurl = = true | false | fun(buf) -> true | false,
-      -- strikethrough = true | false | fun(buf) -> true | false,
-      -- },
-      -- fill_hl = 'TabLineFill',
-      -- components = {..},
-      -- rhs = {..},
-      -- tabs = {
-      -- placement = "left" | "right",
-      -- components = {..}
-      -- },
-      -- sidebar = {
-      -- filetype = '<filetype>',
-      -- components = {..},
-      -- },
-    },
+    opts = { show_if_buffers_are_at_least = 1, history = { enabled = false, size = 2 } },
     config = function(_, opts)
-      -- local H.fg = require("cokeline/utils").H.fg
       local theme = require("user.theme")
       local c = theme.palette()
-      local i = theme.icons
 
       local hl = function(buf)
-        -- if buf.is_modified then
-        --   return c.yellow
-        -- end
         return buf.is_focused and c.cx4 or c.bg3
       end
 
       local hl_bold = function(buf)
         return not not buf.is_focused
+      end
+
+      local comp = function(l, s)
+        local cond, icon, color = unpack(l)
+        local ret = {
+          text = function(buf)
+            if icon == "devicon" then
+              return buf.devicon.icon
+            end
+            if type(buf[cond]) == "boolean" then
+              return buf[cond] and theme.icons[icon] or ""
+            end
+            return (buf[cond] or "") .. " "
+          end,
+          bg = hl,
+          fg = function(buf)
+            return buf.is_focused and "white"
+              or icon == "devicon" and buf.devicon.color
+              or c[icon]
+              or c[color]
+              or c.purple
+          end,
+        }
+        return vim.tbl_extend("force", ret, s or {})
+      end
+
+      local diag = function(l)
+        local type, icon, color = unpack(l)
+        return {
+          text = function(buf)
+            return buf.diagnostics[type] > 0 and theme.icons.diagnostics[icon] or ""
+          end,
+          bg = hl,
+          fg = function(buf)
+            return buf.is_focused and "white" or c[color]
+          end,
+        }
       end
 
       require("cokeline").setup(vim.tbl_deep_extend("force", opts, {
@@ -73,77 +63,32 @@ return {
           end,
           bg = c.bg_d,
         },
-
+        sidebar = {
+          filetype = { "neo-tree" },
+          components = {
+            { text = "", fg = hl, bg = "none" },
+            {
+              text = function(buf)
+                return buf.filetype
+              end,
+              fg = "white",
+              bg = hl,
+              bold = true,
+            },
+            -- comp({ "filename", "blue" }),
+            { text = "", fg = hl, bg = "none" },
+          },
+        },
         components = {
           { text = " ", bg = "none" },
           { text = "", fg = hl, bg = "none" },
-          {
-            text = function(buf)
-              return buf.devicon.icon
-            end,
-            -- fg = "white",
-            fg = function(buf)
-              return buf.is_focused and "white" or buf.devicon.color
-            end,
-            bg = hl,
-          },
-          -- fg = function(buf) return buf.devicon.color end,
-          -- { text = " " },
-          {
-            text = function(buf)
-              return buf.filename .. " "
-            end,
-            -- style = function(buf) return buf.is_focused and "BOLD" or nil end,
-            bold = hl_bold,
-            fg = "white",
-            bg = hl,
-          },
-          {
-            text = function(buf)
-              return buf.diagnostics.errors > 0 and "" .. i.diagnostics.Error or ""
-            end,
-            bg = hl,
-            fg = function(buf)
-              return buf.is_focused and "white" or c.red
-            end,
-          },
-          {
-            text = function(buf)
-              return buf.diagnostics.warnings > 0 and "" .. i.diagnostics.Warn or ""
-            end,
-            bg = hl,
-            fg = function(buf)
-              return buf.is_focused and "white" or c.yellow
-            end,
-          },
-          {
-            text = function(buf)
-              return buf.diagnostics.infos > 0 and "" .. i.diagnostics.Info or ""
-            end,
-            bg = hl,
-            fg = function(buf)
-              return buf.is_focused and "white" or c.blue
-            end,
-          },
-          {
-            text = function(buf)
-              return buf.diagnostics.hints > 0 and "" .. i.diagnostics.Hint or ""
-            end,
-            bg = hl,
-            fg = function(buf)
-              return buf.is_focused and "white" or c.cyan
-            end,
-          },
-
-          {
-            text = function(buf)
-              return buf.is_modified and "●" or ""
-            end,
-            bg = hl,
-            fg = function(buf)
-              return buf.is_focused and "white" or c.yellow
-            end,
-          },
+          comp({ "is_focused", "devicon" }),
+          comp({ "filename", "light_grey" }, { bold = true }),
+          diag({ "errors", "Error", "red" }),
+          diag({ "warnings", "Warn", "yellow" }),
+          diag({ "infos", "Info", "blue" }),
+          diag({ "hints", "Hint", "cyan" }),
+          comp({ "is_modified", "modified", "yellow" }),
           { text = "", fg = hl, bg = "none" },
         },
       }))
@@ -253,3 +198,38 @@ return {
 -- pick = { fg = c.red, bg = c.blue, bold = true, italic = true },
 -- offset_separator = { fg = c.red, bg = c.blue },
 -- trunc_marker = { fg = c.red, bg = c.blue },
+
+-- ########################################################
+
+-- buffers = {
+-- filter_valid = function(buffer) -> true | false,
+-- filter_visible = function(buffer) -> true | false,
+-- focus_on_delete = 'prev' | 'next',
+-- new_buffers_position = 'last' | 'next' | 'directory' | 'number' | fun(buffer_a, buffer_b) -> true | false,
+-- delete_on_right_click = true | false,
+-- },
+-- mappings = { cycle_prev_next = true, disable_mouse = true },
+-- rendering = {
+-- max_buffer_width = int,
+-- },
+-- pick = {
+-- use_filename = true | false,
+-- letters: `'asdfjkl;ghnmxcvbziowerutyqpASDFJKLGHNMXCVBZIOWERTYQP'`
+-- },
+-- default_hl = {
+-- fg = ('hlgroup' | '#rrggbb') | function(buf) -> ('#rrggbb' | 'hlgroup'),
+-- bg = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
+-- sp = ('hlgroup' | '#rrggbb') | function(buf) -> ('hlgroup' | '#rrggbb'),
+-- bold = = true | false | fun(buf) -> true | false,
+-- italic = = true | false | fun(buf) -> true | false,
+-- underline = = true | false | fun(buf) -> true | false,
+-- undercurl = = true | false | fun(buf) -> true | false,
+-- strikethrough = true | false | fun(buf) -> true | false,
+-- },
+-- fill_hl = 'TabLineFill',
+-- components = {..},
+-- rhs = {..},
+-- tabs = {
+-- placement = "left" | "right",
+-- components = {..}
+-- },
