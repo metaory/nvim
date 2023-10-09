@@ -2,6 +2,7 @@ return {
   -- { "goolord/alpha-nvim", enabled = false },
   {
     "echasnovski/mini.starter",
+    -- enabled = false,
     event = "VimEnter",
     cond = function()
       return next(vim.fn.argv()) == nil
