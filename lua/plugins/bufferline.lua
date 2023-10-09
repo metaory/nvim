@@ -6,7 +6,10 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     enabled = true,
     event = { "BufReadPost", "BufNewFile" },
-    opts = { show_if_buffers_are_at_least = 1, history = { enabled = false, size = 2 } },
+    opts = {
+      show_if_buffers_are_at_least = 1,
+      history = { enabled = false, size = 2 },
+    },
     config = function(_, opts)
       local theme = require("user.theme")
       local c = theme.palette()
@@ -15,13 +18,9 @@ return {
         return buf.is_focused and c.cx4 or c.bg3
       end
 
-      local hl_bold = function(buf)
-        return not not buf.is_focused
-      end
-
-      local comp = function(l, s)
+      local comp = function(l)
         local cond, icon, color = unpack(l)
-        local ret = {
+        return {
           text = function(buf)
             if icon == "devicon" then
               return buf.devicon.icon
@@ -30,6 +29,9 @@ return {
               return buf[cond] and theme.icons[icon] or ""
             end
             return (buf[cond] or "") .. " "
+          end,
+          bold = function(buf)
+            return buf.is_focused
           end,
           bg = hl,
           fg = function(buf)
@@ -40,7 +42,6 @@ return {
               or c.purple
           end,
         }
-        return vim.tbl_extend("force", ret, s or {})
       end
 
       local diag = function(l)
@@ -57,12 +58,15 @@ return {
       end
 
       require("cokeline").setup(vim.tbl_deep_extend("force", opts, {
-        default_hl = {
-          fg = function(buf)
-            return buf.is_focused and "none" or "red"
-          end,
-          bg = c.bg_d,
-        },
+        -- default_hl = {
+        --   fg = function(buf)
+        --     return buf.is_focused and "yellow" or "red"
+        --   end,
+        --   bg = c.red,
+        --   sp = c.blue,
+        -- },
+        -- TODO:
+        fill_hl = "None",
         sidebar = {
           filetype = { "neo-tree" },
           components = {
@@ -83,7 +87,7 @@ return {
           { text = " ", bg = "none" },
           { text = "", fg = hl, bg = "none" },
           comp({ "is_focused", "devicon" }),
-          comp({ "filename", "light_grey" }, { bold = true }),
+          comp({ "filename", "light_grey" }),
           diag({ "errors", "Error", "red" }),
           diag({ "warnings", "Warn", "yellow" }),
           diag({ "infos", "Info", "blue" }),

@@ -24,15 +24,15 @@ M.palette = function()
   return vim.tbl_extend("force", palette, {
     dark_grey = "#3d4c67",
     cx1 = "#ff1f35",
-    -- cx2 = "#2ddfaa",
     cx2 = "#44e778",
-    -- cx3 = "#FBBF24",
     cx3 = "#ff983e",
-    -- cx4 = "#2563EB",
     cx4 = "#3c74ed",
     cx5 = "#9474f3",
   })
 end
+
+-- vim.g.terminal_color_3
+-- cx4 = "#2563EB",
 
 M.setup = function()
   require("onedark").colorscheme()
@@ -50,7 +50,7 @@ M.setup = function()
     "NoiceConfirmBorder",
   }, { fg = c.purple })
 
-  M.set_hl("Foo", { bg = c.red, fg = c.blue })
+  M.set_hl("None", { bg = "none", fg = "none" })
 
   -- M.set_hl("Float", { fg = c.red })
   M.set_hl("Normal", { fg = "none" })

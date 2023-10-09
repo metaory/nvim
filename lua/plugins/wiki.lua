@@ -28,7 +28,11 @@ return {
         ["core.autocommands"] = {},
         ["core.syntax"] = {},
         ["core.concealer"] = {
-          config = { icons = { todo = { pending = { icon = "" }, undone = { icon = " " }, done = { icon = "" } } } },
+          config = {
+            icons = { todo = { pending = { icon = "" }, undone = { icon = " " }, done = { icon = "" } } },
+          },
+          --  
+          --  
         },
         -- https://github.com/nvim-neorg/neorg/blob/main/lua/neorg/modules/core/concealer/module.lua#L655
         ["core.highlights"] = {},

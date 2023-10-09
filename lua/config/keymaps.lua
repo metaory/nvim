@@ -97,6 +97,8 @@ vim.tbl_map(keymap_set, {
 
   { "<M-k>", "<Plug>(cokeline-focus-next)", "Next Buf" },
   { "<M-j>", "<Plug>(cokeline-focus-prev)", "Next Prev" },
+
+  { "<M-x>", "<CMD>bdelete<CR>", "Delete Buffer", silent = true },
 })
 -- vim.tbl_map(keymap_set, {
 --   { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
@@ -112,17 +114,17 @@ vim.tbl_map(keymap_set, {
 vim.tbl_map(keymap_set, {
   { "gG", "<CMD>OpenGithubLink<CR>", "Open Github Link" },
   { "gL", "<CMD>OpenWebLink<CR>", "Open Link" },
-  { "Y", [[y$]], "Copy till end-of-line (P)" },
-  { "cp", [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]], "Copy Path (S)", silent = true },
+  { "Y", [[y$]], "Yank till end-of-line (P)" },
+  { "yp", [[:let @+ = expand("%:p") .. ':' .. line(".")<cr>]], "Yank Path (S)", silent = true },
 })
 
 vim.tbl_map(keymap_set, {
   { "<M-e>", [[g$$]], mode = "i" }, -- BUG: <<
   { "<M-p>", [["+p]], "Paste System (S)" },
-  { "<M-Y>", [[gg"+yG]], "Copy whole file (S)" },
-  { "<M-y>", [["+y$]], "Copy till end-of-line (S)" },
+  { "<M-Y>", [[gg"+yG]], "Yank whole file (S)" },
+  { "<M-y>", [["+y$]], "Yank till end-of-line (S)" },
   { "<M-p>", [[<ESC>"+p]], mode = "i", "Paste (S)" },
-  { "<M-y>", [["+y]], mode = "v", "Copy Selection (S)" },
+  { "<M-y>", [["+y]], mode = "v", "Yank Selection (S)" },
 })
 
 vim.tbl_map(keymap_set, {
@@ -147,7 +149,6 @@ vim.tbl_map(keymap_set, {
     silent = true,
     expr = true,
   },
-
   {
     "<c-b>",
     function()
@@ -159,7 +160,6 @@ vim.tbl_map(keymap_set, {
     silent = true,
     expr = true,
   },
-
   {
     "<C-c>",
     function()
@@ -169,7 +169,6 @@ vim.tbl_map(keymap_set, {
     end,
     "Toggle Comment",
   },
-
   {
     "cd",
     function()
@@ -182,16 +181,15 @@ vim.tbl_map(keymap_set, {
     end,
     "Change Directory",
   },
-
   {
     "<Leader>eof",
     async.void(function()
-      vim.bo.filetype = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select FileType:" }) or vim.bo.filetype
+      vim.bo.filetype = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select FileType:" })
+        or vim.bo.filetype
       vim.notify(vim.bo.filetype, vim.log.levels.INFO, { title = "FileType Updated" })
     end),
     "Set File Type",
   },
-
   {
     "<Leader>eov",
     function()
