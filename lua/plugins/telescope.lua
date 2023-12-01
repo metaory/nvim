@@ -2,14 +2,18 @@ local H = require("util.helper")
 
 return {
   {
+    -- metaory mini handle
     "nvim-telescope/telescope.nvim",
     keys = {
       { "<Leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
       { "<Leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
       { "<Leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
       { "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", "Resume" },
-      { "<M-g>", "<CMD>Telescope grep_string<CR>" },
-      { "<M-f>", "<CMD>Telescope find_files<CR>" },
+      -- { "<M-g>", "<CMD>Telescope grep_string<CR>" },
+      { "<M-g>", H.telescope("grep_string"), desc = "Grep String (root dir)" },
+      { "<M-f>", H.telescope("find_files"), desc = "Find Files (root dir)" },
+      -- { "<M-f>", [[<CMD>Telescope find_files cmd="expand('%:p:h')"<CR>]] },
+      -- { "<M-f>", "<CMD>Telescope find_files<CR>" },
       { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
       { "<M-o>", "<CMD>Telescope oldfiles<CR>" },
       { "<M-r>", "<CMD>Telescope resume<CR>" },
@@ -24,8 +28,10 @@ return {
       { "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
       -- { "<leader><space>", H.telescope("files"), desc = "Find Files (root dir)" },
       { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Buffers" },
-      { "<leader>ff", H.telescope("files"), desc = "Find Files (root dir)" },
-      { "<leader>fF", H.telescope("files", { cwd = false }), desc = "Find Files (cwd)" },
+      { "<leader>ff", H.telescope("find_files"), desc = "Find Files (root dir)" },
+      -- { "<leader>ff", [[<CMD>Telescope find_files cmd="expand('%:p:h')"<CR>]], desc = "Grep (root dir)" },
+      -- { "<leader>fF", H.telescope("find_files", { cwd = false }), desc = "Find Files (cwd)" },
+      -- {"<Leader>ff", '<CMD>lua require("telescope.builtin").find_files({ cwd = vim.fn.expand("%:p:h") })<CR>', desc = "Find in Buf CWD",},
       -- { "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
       { "<leader>fR", H.telescope("oldfiles", { cwd = vim.loop.cwd() }), desc = "Recent (cwd)" },
       { "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "commits" },
@@ -38,6 +44,8 @@ return {
       { "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document diagnostics" },
       { "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace diagnostics" },
       { "<leader>sg", H.telescope("live_grep"), desc = "Grep (root dir)" },
+      -- function utils.buffer_dir() return vim.fn.expand "%:p:h" end
+      -- { "<leader>sg", "<CMD>Telescope live_grep cmd=expand('%:p:h')<CR>", desc = "Grep (root dir)" },
       { "<leader>sG", H.telescope("live_grep", { cwd = false }), desc = "Grep (cwd)" },
       { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
       { "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
@@ -76,7 +84,8 @@ return {
             -- ["<esc>"] = "close",
             ["<C-q>"] = require("telescope.actions").send_to_qflist + require("telescope.actions").open_qflist,
             ["<C-o>"] = require("telescope.actions").send_selected_to_qflist + require("telescope.actions").open_qflist,
-            ["<C-Space>"] = require("telescope.actions").toggle_selection + require("telescope.actions").move_selection_worse,
+            ["<C-Space>"] = require("telescope.actions").toggle_selection
+              + require("telescope.actions").move_selection_worse,
             -- ["<C-h>"] = require("telescope.actions").results_scrolling_left,
             -- ["<C-l>"] = require("telescope.actions").results_scrolling_right,
             -- ["<C-S-H>"] = require("telescope.actions").preview_scrolling_left,

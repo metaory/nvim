@@ -2,10 +2,6 @@ local M = {}
 local PREFIX = "mx_vim_"
 
 _G.ddwriteraw = function(d, f, m)
-  if vim.g.debug_global_flag == false then
-    return
-  end
-
   local p = string.format("/tmp/%s%s.lua", PREFIX, f)
 
   local file, err = io.open(p, m or "w")
@@ -20,7 +16,18 @@ _G.ddwriteraw = function(d, f, m)
 end
 
 _G.ddwrite = function(t, f, m)
-  m = m or "w"
+  -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
+  -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
+  os.execute("   >>>>>   logger pre mode: " .. m)
+  local ignore = m == "x" and false or (debug == true and false) or true
+  if ignore == true then
+    return
+  end
+  m = m == "x" and "w" or m
+  os.execute("   >>>>>   logger post mode: " .. m)
+  -- local ignore = m ~= "x" and "a" or vim.g.debug_global_flag
+  -- local is_debug_disabled = vim.g.debug_global_flag == false
+
   t = t or {}
   t = type(t) == "table" and vim.inspect(t) or tostring(t)
 
@@ -49,7 +56,15 @@ _G.live_inspect = function(...)
   vim.api.nvim_buf_set_option(buf, "buflisted", false)
   vim.api.nvim_buf_set_option(buf, "swapfile", false)
 
-  local win_opt = { relative = "win", col = 80, row = 10, zindex = 100, width = 60, height = 16, border = "rounded" }
+  local win_opt = {
+    relative = "win",
+    col = 80,
+    row = 10,
+    zindex = 100,
+    width = 60,
+    height = 16,
+    border = "rounded",
+  }
 
   local win = vim.api.nvim_open_win(buf, true, win_opt)
 

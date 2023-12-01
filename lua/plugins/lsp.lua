@@ -209,6 +209,7 @@ return {
     config = function(_, opts)
       local plugin = require("lazy.core.config").spec.plugins["neoconf.nvim"]
       require("neoconf").setup(require("lazy.core.plugin").values(plugin, "opts", false))
+      -- require("user.format").setup(vim.tbl_deep_extend("force", opts, { autoformat = false }))
       require("user.format").setup(opts)
 
       local lspconfig = require("lspconfig")

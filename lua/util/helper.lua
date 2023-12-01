@@ -2,6 +2,13 @@ local Util = require("lazy.core.util")
 
 local M = {}
 
+vim.schedule(function()
+  ddwrite({
+    workspace = "fooo",
+    paths = "barrr",
+  }, "helper-wtf", "w")
+end)
+
 M.root_patterns = { ".git", "lua" }
 
 ---@param on_attach fun(client, buffer)
@@ -23,13 +30,17 @@ end
 function M.fg(name)
   local hl = vim.api.nvim_get_hl(0, { name = name })
   local fg = hl.fg
-  return fg and { fg = string.format("#%06x", fg) } or { fg = "none" }
+  return fg and {
+    fg = string.format("#%06x", fg),
+  } or { fg = "none" }
 end
 
 function M.bg(name)
   local hl = vim.api.nvim_get_hl(0, { name = name })
   local bg = hl.bg
-  return bg and { bg = string.format("#%06x", bg) } or { bg = "none" }
+  return bg and {
+    bg = string.format("#%06x", bg),
+  } or { bg = "none" }
 end
 
 ---@param fn fun()
@@ -65,11 +76,39 @@ function M.get_root()
   ---@type string[]
   local roots = {}
   if path then
-    for _, client in pairs(vim.lsp.get_active_clients({ bufnr = 0 })) do
+    for _, client in
+      pairs(vim.lsp.get_active_clients({
+        bufnr = 0,
+      }))
+    do
       local workspace = client.config.workspace_folders
-      local paths = workspace and vim.tbl_map(function(ws)
-        return vim.uri_to_fname(ws.uri)
-      end, workspace) or client.config.root_dir and { client.config.root_dir } or {}
+      local paths = workspace
+          and vim.tbl_map(function(ws)
+            return vim.uri_to_fname(ws.uri)
+          end, workspace)
+        or client.config.root_dir and {
+          client.config.root_dir,
+        }
+        or {}
+      ddwrite({
+        workspace = workspace,
+        paths = paths,
+      }, "helper-workspaces", "x")
+      print(vim.inspect({
+        workspace = workspace,
+        paths = paths,
+      }))
+      print(
+        ">>>>>>>>>>>>>>>>>>>",
+        "   --- [ WORKSPACE ] ---",
+        vim.inspect({
+          loopcwd = vim.loop.cwd(),
+          xpnd = vim.fn.expand("%:p:h"),
+          workspace = workspace,
+          path = path,
+        }),
+        "<<<<<<<<<<<<<<<<<<<"
+      )
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
         if path:find(r, 1, true) then
@@ -86,9 +125,30 @@ function M.get_root()
   if not root then
     path = path and vim.fs.dirname(path) or vim.loop.cwd()
     ---@type string?
-    root = vim.fs.find(M.root_patterns, { path = path, upward = true })[1]
+    root = vim.fs.find(M.root_patterns, {
+      path = path,
+      upward = true,
+    })[1]
     root = root and vim.fs.dirname(root) or vim.loop.cwd()
   end
+
+  ddwrite({
+    loopcwd = vim.loop.cwd(),
+    root = root,
+    path = path,
+  }, "helper-result", "x")
+  print(
+    ">>>>>>>>>>>>>>>>>>>",
+    "   --- [ RESULT ] ---",
+    vim.inspect({
+      loopcwd = vim.loop.cwd(),
+      xpnd = vim.fn.expand("%:p:h"),
+      root = root,
+      path = path,
+    }),
+    "<<<<<<<<<<<<<<<<<<<"
+  )
+
   ---@cast root string
   return root
 end
@@ -97,7 +157,10 @@ end
 -- cwd will default to lazyvim.util.get_root
 -- for `files`, git_files or find_files will be chosen depending on .git
 function M.telescope(builtin, opts)
-  local params = { builtin = builtin, opts = opts }
+  local params = {
+    builtin = builtin,
+    opts = opts,
+  }
   return function()
     builtin = params.builtin
     opts = params.opts
@@ -115,7 +178,13 @@ function M.telescope(builtin, opts)
         map("i", "<a-c>", function()
           local action_state = require("telescope.actions.state")
           local line = action_state.get_current_line()
-          M.telescope(params.builtin, vim.tbl_deep_extend("force", {}, params.opts or {}, { cwd = false, default_text = line }))()
+          M.telescope(
+            params.builtin,
+            vim.tbl_deep_extend("force", {}, params.opts or {}, {
+              cwd = false,
+              default_text = line,
+            })
+          )()
         end)
         return true
       end
@@ -134,11 +203,19 @@ local terminals = {}
 function M.float_term(cmd, opts)
   opts = vim.tbl_deep_extend("force", {
     ft = "lazyterm",
-    size = { width = 0.9, height = 0.9 },
+    size = {
+      width = 0.9,
+      height = 0.9,
+    },
   }, opts or {}, { persistent = true })
   ---@cast opts LazyCmdOptions|{interactive?:boolean, esc_esc?:false}
 
-  local termkey = vim.inspect({ cmd = cmd or "shell", cwd = opts.cwd, env = opts.env, count = vim.v.count1 })
+  local termkey = vim.inspect({
+    cmd = cmd or "shell",
+    cwd = opts.cwd,
+    env = opts.env,
+    count = vim.v.count1,
+  })
 
   if terminals[termkey] and terminals[termkey]:buf_valid() then
     terminals[termkey]:toggle()
@@ -147,13 +224,28 @@ function M.float_term(cmd, opts)
     local buf = terminals[termkey].buf
     vim.b[buf].lazyterm_cmd = cmd
     if opts.esc_esc == false then
-      vim.keymap.set("t", "<esc>", "<esc>", { buffer = buf, nowait = true })
+      vim.keymap.set("t", "<esc>", "<esc>", {
+        buffer = buf,
+        nowait = true,
+      })
     end
     if opts.ctrl_hjkl == false then
-      vim.keymap.set("t", "<c-h>", "<c-h>", { buffer = buf, nowait = true })
-      vim.keymap.set("t", "<c-j>", "<c-j>", { buffer = buf, nowait = true })
-      vim.keymap.set("t", "<c-k>", "<c-k>", { buffer = buf, nowait = true })
-      vim.keymap.set("t", "<c-l>", "<c-l>", { buffer = buf, nowait = true })
+      vim.keymap.set("t", "<c-h>", "<c-h>", {
+        buffer = buf,
+        nowait = true,
+      })
+      vim.keymap.set("t", "<c-j>", "<c-j>", {
+        buffer = buf,
+        nowait = true,
+      })
+      vim.keymap.set("t", "<c-k>", "<c-k>", {
+        buffer = buf,
+        nowait = true,
+      })
+      vim.keymap.set("t", "<c-l>", "<c-l>", {
+        buffer = buf,
+        nowait = true,
+      })
     end
 
     vim.api.nvim_create_autocmd("BufEnter", {
@@ -188,10 +280,16 @@ function M.toggle(option, silent, values)
   end
 end
 
-local nu = { number = true, relativenumber = true }
+local nu = {
+  number = true,
+  relativenumber = true,
+}
 function M.toggle_number()
   if vim.opt_local.number:get() or vim.opt_local.relativenumber:get() then
-    nu = { number = vim.opt_local.number:get(), relativenumber = vim.opt_local.relativenumber:get() }
+    nu = {
+      number = vim.opt_local.number:get(),
+      relativenumber = vim.opt_local.relativenumber:get(),
+    }
     vim.opt_local.number = false
     vim.opt_local.relativenumber = false
     Util.warn("Disabled line numbers", { title = "Option" })
@@ -207,10 +305,14 @@ function M.toggle_diagnostics()
   enabled = not enabled
   if enabled then
     vim.diagnostic.enable()
-    Util.info("Enabled diagnostics", { title = "Diagnostics" })
+    Util.info("Enabled diagnostics", {
+      title = "Diagnostics",
+    })
   else
     vim.diagnostic.disable()
-    Util.warn("Disabled diagnostics", { title = "Diagnostics" })
+    Util.warn("Disabled diagnostics", {
+      title = "Diagnostics",
+    })
   end
 end
 
