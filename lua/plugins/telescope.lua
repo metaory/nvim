@@ -2,6 +2,77 @@ local H = require("util.helper")
 
 return {
   {
+    -- TODO: https://github.com/axkirillov/easypick.nvim/wiki
+    "axkirillov/easypick.nvim",
+    cmd = { "Easypick" },
+    keys = {
+      { "<Leader>esl", "<CMD>Easypick ls<CR>", desc = "pipe ls" },
+      { "<Leader>esc", "<CMD>Easypick conflicts<CR>", desc = "pipe conflicts" },
+      { "<Leader>esm", "<CMD>Easypick changed_files<CR>", desc = "pipe modified files" },
+      { "<Leader>esf", "<CMD>Easypick fd<CR>", desc = "pipe find files" },
+      { "<Leader>est", "<CMD>Easypick styles<CR>", desc = "pipe styles" },
+      { "<Leader>esd", "<CMD>Easypick sx<CR>", desc = "pipe sx" },
+    },
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-lua/plenary.nvim",
+    },
+    opts = {},
+    config = function()
+      require("telescope")
+      require("easypick").setup({
+        pickers = {
+          {
+            name = "styles",
+
+            -- basename -z -s .theme $str
+            -- find /usr/share/highlight/themes/*.theme -type f -exec basename -s .theme {} \;
+            -- command = "find . -path '*/.highlight/*' -type f",
+            command = "find /usr/share/highlight/themes/*.theme -type f -exec basename -s .theme {} \\;",
+            -- previewer = require("config.previewers").arg_preview({}),
+            -- previewer = require("config.previewers").vim_buffer_cat,
+            -- previewer = require("telescope.previewers").vim_buffer_cat(),
+            -- cat_preview
+            -- previewer = require("telescope.previewers.cat_preview")({}),
+            -- previewer = require("telescope.previewers").vim_buffer_cat({}),
+            -- require "telescope.previewers.term_previewer"
+            -- previewer = require("easypick").previewers.branch_diff({ base_branch = "dev" }),
+            previewer = require("easypick").previewers.default(),
+            -- echo -e "AAAAAAAAAAAAAAAAAAA\nBBBBBBBBBBBBBBBBBBB\n"
+            -- string.format("<CMD>Easypick %s<CR>", 'echo -e "AAAAAAAAAAAAAAAAAAA\nBBBBBBBBBBBBBBBBBBB\n"'),
+          },
+          {
+            name = "sx",
+            -- command = "find . -path '*/.highlight/*' -type f",
+            command = "find /usr/share/highlight/themes/*.theme -type f -exec basename -s .theme {} \\;",
+            previewer = require("easypick").previewers.default(),
+          },
+          {
+            name = "fd",
+            command = "find . -path '*/.highlight/*' -type f",
+            previewer = require("easypick").previewers.default(),
+          },
+          {
+            name = "ls",
+            command = "ls",
+            previewer = require("easypick").previewers.default(),
+          },
+          {
+            name = "changed_files",
+            command = "git diff --name-only $(git merge-base HEAD dev)",
+            previewer = require("easypick").previewers.branch_diff({ base_branch = "dev" }),
+          },
+          {
+            name = "conflicts",
+            command = "git diff --name-only --diff-filter=U --relative",
+            previewer = require("easypick").previewers.file_diff(),
+          },
+        },
+      })
+      -- pcall(_G["ddwrite"], { foo = "hi" }, "___xxxx____1_", "a")
+    end,
+  },
+  {
     -- metaory mini handle
     "nvim-telescope/telescope.nvim",
     keys = {
@@ -130,6 +201,9 @@ return {
         winblend = 0,
       },
     },
+    -- config = function(_, opts)
+    --   require("easypick").setup(opts)
+    -- end,
   },
   {
     "nvim-telescope/telescope-file-browser.nvim",
@@ -139,6 +213,7 @@ return {
       require("telescope").load_extension("file_browser")
     end,
   },
+  -- opts = ,
   {
     "ahmedkhalf/project.nvim",
     opts = {},

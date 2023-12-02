@@ -1,9 +1,10 @@
 -- vim.cmd("filetype indent plugin off")
 vim.cmd("filetype plugin indent off") -- https://neovim.io/doc/user/filetype.html#:~:text=Overview%3A-,%3Afiletype%2Doverview,-command%09%09%09%09detection%09plugin
 
+-- lua vim.lsp.buf_attach_client(1)
 -- XXX: ==>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 vim.opt.autowrite = true -- Enable auto write
-vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
+-- vim.opt.clipboard = "unnamedplus" -- Sync with system clipboard
 vim.opt.completeopt = "menu,menuone,noselect"
 vim.opt.conceallevel = 3 -- Hide * markup for bold and italic
 vim.opt.confirm = true -- Confirm to save changes before exiting modified buffer

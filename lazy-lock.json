@@ -10,6 +10,7 @@
   "colortils.nvim": { "branch": "main", "commit": "435d4de7a007b83b1b07152276960018f4583cbd" },
   "dial.nvim": { "branch": "master", "commit": "27eb570085db2ef44bff4f620d3806039184651c" },
   "dressing.nvim": { "branch": "master", "commit": "8b7ae53d7f04f33be3439a441db8071c96092d19" },
+  "easypick.nvim": { "branch": "main", "commit": "6ea5aef3eceba46a26091e2339c9b51d7e104648" },
   "flash.nvim": { "branch": "main", "commit": "48817af25f51c0590653bbc290866e4890fe1cbe" },
   "flit.nvim": { "branch": "main", "commit": "f4e9af572a62c808c8de214da672f2a115a98c35" },
   "friendly-snippets": { "branch": "main", "commit": "53d3df271d031c405255e99410628c26a8f0d2b0" },
