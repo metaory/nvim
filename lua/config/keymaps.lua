@@ -1,3 +1,8 @@
+--[[ XXX: 
+      call v:lua.somemod.func(args)
+      call v:lua.eval('2 * 2')
+      call v:lua.require'mypack'.func(arg1, arg2)
+]]
 local async = require("util.async")
 local util = require("util.maputil")
 local ui = require("user.ui")

@@ -90,25 +90,6 @@ function M.get_root()
           client.config.root_dir,
         }
         or {}
-      ddwrite({
-        workspace = workspace,
-        paths = paths,
-      }, "helper-workspaces", "x")
-      print(vim.inspect({
-        workspace = workspace,
-        paths = paths,
-      }))
-      print(
-        ">>>>>>>>>>>>>>>>>>>",
-        "   --- [ WORKSPACE ] ---",
-        vim.inspect({
-          loopcwd = vim.loop.cwd(),
-          xpnd = vim.fn.expand("%:p:h"),
-          workspace = workspace,
-          path = path,
-        }),
-        "<<<<<<<<<<<<<<<<<<<"
-      )
       for _, p in ipairs(paths) do
         local r = vim.loop.fs_realpath(p)
         if path:find(r, 1, true) then
@@ -131,23 +112,6 @@ function M.get_root()
     })[1]
     root = root and vim.fs.dirname(root) or vim.loop.cwd()
   end
-
-  ddwrite({
-    loopcwd = vim.loop.cwd(),
-    root = root,
-    path = path,
-  }, "helper-result", "x")
-  print(
-    ">>>>>>>>>>>>>>>>>>>",
-    "   --- [ RESULT ] ---",
-    vim.inspect({
-      loopcwd = vim.loop.cwd(),
-      xpnd = vim.fn.expand("%:p:h"),
-      root = root,
-      path = path,
-    }),
-    "<<<<<<<<<<<<<<<<<<<"
-  )
 
   ---@cast root string
   return root
@@ -401,3 +365,39 @@ function M.changelog()
 end
 
 return M
+
+-- ddwrite({
+--   workspace = 12,
+--   paths = 12,
+-- }, "helper-workspaces", "x")
+-- print(vim.inspect({
+--   workspace = 12,
+--   paths = 12,
+-- }))
+-- print(
+--   ">>>>>>>>>>>>>>>>>>>",
+--   "   --- [ WORKSPACE ] ---",
+--   vim.inspect({
+--     loopcwd = vim.loop.cwd(),
+--     xpnd = vim.fn.expand("%:p:h"),
+--     workspace = workspace,
+--     path = path,
+--   }),
+--   "<<<<<<<<<<<<<<<<<<<"
+-- )
+-- ddwrite({
+--   loopcwd = vim.loop.cwd(),
+--   root = root,
+--   path = path,
+-- }, "helper-result", "x")
+-- print(
+--   ">>>>>>>>>>>>>>>>>>>",
+--   "   --- [ RESULT ] ---",
+--   vim.inspect({
+--     loopcwd = vim.loop.cwd(),
+--     xpnd = vim.fn.expand("%:p:h"),
+--     root = root,
+--     path = path,
+--   }),
+--   "<<<<<<<<<<<<<<<<<<<"
+-- )

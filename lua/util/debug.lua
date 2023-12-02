@@ -18,13 +18,13 @@ end
 _G.ddwrite = function(t, f, m)
   -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
   -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
-  os.execute("   >>>>>   logger pre mode: " .. m)
+  os.execute(string.format("logger 'pre mode: %s'", m))
   local ignore = m == "x" and false or (debug == true and false) or true
   if ignore == true then
     return
   end
   m = m == "x" and "w" or m
-  os.execute("   >>>>>   logger post mode: " .. m)
+  os.execute(string.format("logger 'pst mode: %s'", m))
   -- local ignore = m ~= "x" and "a" or vim.g.debug_global_flag
   -- local is_debug_disabled = vim.g.debug_global_flag == false
 
@@ -39,6 +39,10 @@ _G.ddwrite = function(t, f, m)
   local str = string.format("%s%s\n", pre, msg)
 
   ddwriteraw(str, f, m)
+end
+
+_G.P = function(t)
+  print(vim.inspect(t))
 end
 
 -- M.live_inspect = function(...)

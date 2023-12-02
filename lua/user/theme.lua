@@ -17,29 +17,118 @@ M.palette = function()
     ["onedark"] = function()
       return require("onedark.colors")
     end,
+    ["oxocarbon"] = function()
+      -- 1:local oxocarbon = (require("oxocarbon")).oxocarbon
+      -- 2:local colors = {color0 = oxocarbon.base02, color1 = oxocarbon.base10, color2 = oxocarbon.base08, color3 = oxocarbon.base00, color6 = oxocarbon.base04, color7 = oxocarbon.base09, color8 = oxocarbon.base14,
+      -- color9 = oxocarbon.base12, color10 = oxocarbon.base13}
+      -- return require("onedark.colors")
+      -- local oxo = (require("oxocarbon")).oxocarbon
+      -- local oxo = {}
+      -- local oxo = vim.g.oxo or {}
+      local oxo = require("oxocarbon").oxocarbon or {}
+      --vim.cmd([[ new | r "lua print(require('oxocarbon'))" ]])
+      -- P({
+      --   holllaaa = 12212,
+      --   oxo = oxocarbon,
+      --   z = "-----------------------------------------------------------------------------------------------------------------------",
+      -- })
+      -- return {}
+      --[[
+{
+  base00 = "#221b1c",
+  base01 = "#2f2528",
+  base02 = "#3f3137",
+  base03 = "#533f4e",
+  base04 = "#8496bf",
+  base05 = "#8ab0cf",
+  base06 = "#8ebad4",
+  base07 = "#08bdba",
+  base08 = "#3ddbd9",
+  base09 = "#ea6774",
+  base10 = "#ee5396",
+  base11 = "#33b1ff",
+  base12 = "#ff7eb6",
+  base13 = "#42be65",
+  base14 = "#be95ff",
+  base15 = "#82cfff",
+  blend = "#131313",
+  none = "NONE"
+}
+      ]]
+      return vim.tbl_deep_extend("force", oxo, {
+        base10 = "green",
+        base11 = "green",
+        base12 = "green",
+        base13 = "green",
+        bg0 = oxo.base00,
+        bg1 = oxo.base01,
+        bg2 = oxo.base02,
+        bg3 = oxo.base03,
+        bg_blue = oxo.base07,
+        bg_d = oxo.blend,
+        bg_yellow = "Orange",
+        black = "#000000",
+        blue = "DodgerBlue",
+        -- blue =  oxo.base08,
+        cyan = oxo.base15,
+        dark_cyan = "#1b6a73",
+        dark_purple = "#862aa1",
+        dark_red = "#992525",
+        dark_yellow = "#8f610d",
+        diff_add = "#27341c",
+        diff_change = "#102b40",
+        diff_delete = "#331c1e",
+        diff_text = "#1c4a6e",
+        fg = "#93a4c3",
+        green = "#8bcd5b",
+        grey = "#455574",
+        light_grey = "#6c7d9c",
+        orange = "#dd9046",
+        purple = "#c75ae8",
+        red = "#f65866",
+        yellow = "#efbd5d",
+      })
+    end,
   }
   -- local cur = vim.api.nvim_eval("g:colors_name")
-  local cur = "onedark"
+  local cur = "oxocarbon"
+  -- local cur = "onedark"
+  -- local palette = cmap[cur] and cmap[cur]() or {}
   local palette = cmap[cur] and cmap[cur]() or {}
-  return vim.tbl_extend("force", palette, {
+  local oxo = vim.tbl_extend("force", palette, {
     dark_grey = "#3d4c67",
     cx1 = "#ff1f35",
     cx2 = "#44e778",
     cx3 = "#ff983e",
     cx4 = "#3c74ed",
     cx5 = "#9474f3",
+    xxx = "none",
   })
+  return oxo
 end
 
 -- vim.g.terminal_color_3
 -- cx4 = "#2563EB",
 
 M.setup = function()
-  require("onedark").colorscheme()
+  -- require("onedark").colorscheme()
 
   -- vim.cmd.colorscheme("oxocarbon-lua")
 
+  -- require("oxocarbon").setup(opts)
+  vim.opt.background = "dark" -- set this to dark or light
+  vim.cmd.colorscheme("oxocarbon")
   local c = M.palette()
+  -- vim.notify("c1: " .. (c.bg3 or "NA"), vim.log.levels.INFO)
+  -- vim.g.oxo = c
+  -- vim.g["oxo"] = c
+  -- vim.g["meta_wtf"] = "foobar"
+  -- vim.notify(vim.g['terminal_color_2'], vim.log.levels.INFO)
+  -- vim.notify(vim.g['oxo'] or '', vim.log.levels.INFO)
+  --   require("user.theme").setup()
+  -- vim.cmd("colorscheme oxocarbon")
+
+  -- local c = {}
 
   M.set_hl({
     "FloatBorder",
@@ -53,9 +142,9 @@ M.setup = function()
   M.set_hl("None", { bg = "none", fg = "none" })
 
   -- M.set_hl("Float", { fg = c.red })
-  M.set_hl("Normal", { fg = "none" })
+  M.set_hl("Normal", { fg = "none", bg = c.xxx })
 
-  M.set_hl("Visual", { bg = c.blue, fg = "black" })
+  M.set_hl("Visual", { bg = c.blue, fg = "Black", bold = true })
 
   M.set_hl({ "CursorLine", "CursorColumn" }, { bg = c.bg_d })
 

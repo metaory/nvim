@@ -15,7 +15,8 @@ return {
 
     return {
       options = {
-        theme = "auto",
+        -- theme = "auto",
+        theme = "horizon",
         globalstatus = true,
         disabled_filetypes = { statusline = { "starter", "dashboard", "alpha" } },
         component_separators = { left = "", right = "" },
@@ -25,12 +26,14 @@ return {
         lualine_a = { { "mode", padding = pad_l } },
         lualine_b = { { "branch", icons_enabled = false, padding = pad_l } },
         lualine_c = {
-          { "diagnostics", symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint } },
+          {
+            "diagnostics",
+            symbols = { error = icons_d.Error, warn = icons_d.Warn, info = icons_d.Info, hint = icons_d.Hint },
+          },
           {
             "filetype",
             icon_only = true,
-            padding =
-                pad_l
+            padding = pad_l,
           },
           -- stylua: ignore
           {

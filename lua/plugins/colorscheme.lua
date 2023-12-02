@@ -16,8 +16,27 @@ return {
     },
   },
   {
+    "nyoom-engineering/oxocarbon.nvim",
+    lazy = false,
+    -- config = true,
+    -- event = "VeryLazy",
+    -- setup = require("user.theme").setup,
+    init = function()
+      vim.g["mxc_base_00"] = "#221b1c"
+      vim.g["mxc_base_06"] = "#8ebad4"
+      vim.g["mxc_base_09"] = "#ea6774"
+      -- local base00 = "#161616"
+      -- local base06 = "#ffffff"
+      -- local base09 = "#78a9ff"
+    end,
+    config = function(_, opts)
+      require("user.theme").setup()
+    end,
+  },
+  {
     "navarasu/onedark.nvim",
     -- priority = 1000,
+    enabled = false,
     lazy = false,
     opts = function()
       local style = "deep"
@@ -28,7 +47,13 @@ return {
         term_colors = true,
         ending_tildes = true,
         cmp_itemkind_reverse = false,
-        code_style = { comments = "italic", keywords = "italic", functions = "none", strings = "none", variables = "none" },
+        code_style = {
+          comments = "italic",
+          keywords = "italic",
+          functions = "none",
+          strings = "none",
+          variables = "none",
+        },
         lualine = { transparent = isRunningPicom },
         colors = {
           -- yellow = "#fe0332",

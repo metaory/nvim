@@ -29,6 +29,16 @@ return {
             { find = "%d+L, %d+B" },
             { find = "; after #%d+" },
             { find = "; before #%d+" },
+            -- { find = "^{+" },
+            -- { error = true },
+            -- { find = "^true" } },
+            -- { find = "^false" } },
+            -- { find = "<%w>+" },
+            -- { find = "^{+" },
+            -- error = false,
+            -- { error = true },
+            -- , warning = false,
+            -- { kind = { "ERROR", vim.log.levels.ERROR, tostring(vim.log.levels.ERROR) } },
           },
         },
         view = "mini",
@@ -38,7 +48,7 @@ return {
         opts = { format = popup_format, win_options = { wrap = true } },
         view = "popup",
       },
-      { filter = { event = "notify" }, view = "notify" }
+      { filter = { event = "notify" }, view = "notify" },
     },
     presets = {
       bottom_search = true,
@@ -67,7 +77,7 @@ return {
         border = { style = "rounded" },
         size = { max_width = 80 },
       },
-    }
+    },
   },
 }
 

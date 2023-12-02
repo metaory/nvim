@@ -9,6 +9,7 @@ require("config.keymaps")
 require("config.lazy")
 require("config.commands")
 require("config.autocmds")
+-- require("user.theme").setup()
 
 require("util.helper").lazy_notify()
 require("util.debug")
