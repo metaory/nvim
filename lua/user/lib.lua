@@ -6,75 +6,23 @@ local M = {}
 local auto_run_files = {}
 local auto_run_files_ignore = {}
 
-M.create_auto_run_au = async.void(function()
-  local path = vim.fn.expand("%:p")
-  local file = vim.fn.expand("%:t")
-  local ft = vim.bo.filetype
-
-  ddwrite({ p = path, f = file, ft = ft }, "__auto_run_1")
-
-  local ignore = vim.tbl_contains(auto_run_files_ignore, path)
-  local existing = vim.tbl_contains(auto_run_files, path)
-
-  if existing or ignore then
-    return
-  end
-
-  local runner = ui.runners[ft] or (vim.fn.executable(ft) == 1 and ft)
-
-  if not runner then
-    table.insert(auto_run_files_ignore, path)
-    vim.notify(string.format("No Runner Found for %s", vim.bo.filetype), vim.log.levels.ERROR, { title = "Runner" })
-    return
-  end
-
-  if vim.endswith(file, "rc") then
-    return
-  end
-
-  ui.schedule()
-
-  local confirm = ui.confirm(string.format("Create BufWrite Run AutoCMD for %s?", file))
-
-  if confirm == false then
-    table.insert(auto_run_files_ignore, path)
-    return
-  end
-
-  vim.api.nvim_create_autocmd("BufWritePost", {
-    pattern = { path },
-    callback = async.void(function()
-      if vim.endswith(file, ".nvim.lua") then
-        return dofile(file)
-      end
-
-      local cmd = string.format("%s %s", runner, path)
-
-      local l = vim.fn.systemlist(cmd)
-
-      if #l == 0 then
-        vim.notify("NO OUTPUT", vim.log.levels.ERROR, { title = "stdout" })
-        return
-      end
-
-      local pass = nil
-      local l1 = l[1]
-
-      if string.match(l1, "true") or string.match(l1, "false") then
-        pass = l1 == "true"
-        table.remove(l, 1)
-      end
-
-      local str = table.concat(l, "\n")
-      local lvl = vim.log.levels[pass and "INFO" or "ERROR"]
-
-      ddwrite(str, "lib_stdout")
-      vim.notify(str, lvl, { title = "stdout", timeout = 10000 })
-    end),
+M.create_aut_save_au = async.void(function()
+  vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "TextChangedP" }, {
+    callback = function(arg)
+      vim.cmd.write()
+      vim.api.nvim_command("bash %") -- TODO: <<< get:dynamic
+    end,
+    buffer = 0,
   })
-
-  vim.notify(string.format("created autocmd for %s", path), vim.log.levels.INFO, { title = "autocmd" })
-  table.insert(auto_run_files, path)
+end)
+M.create_auto_run_au = async.void(function()
+  vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "TextChangedP" }, {
+    callback = function()
+      vim.cmd.write()
+      vim.api.nvim_command("luafile %")
+    end,
+    buffer = 0,
+  })
 end)
 
 M.reload_plugin_cmd = async.void(function()

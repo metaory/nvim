@@ -4,8 +4,6 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("mx_" .. name, { clear = true })
 end
 
--- vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
-
 vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
 
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {

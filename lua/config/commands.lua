@@ -1,5 +1,10 @@
 local lib = require("user.lib")
 
+-- vim.api.nvim_del_augroup_by_name("lazyvim_checktime")
+
+--"TextChangedI", --"TextYankPost",
+vim.api.nvim_create_user_command("AutoSave", lib.create_aut_save_au, { nargs = "?", desc = "Enable Auto Save" })
+
 vim.api.nvim_create_user_command("CreateAutoRun", lib.create_auto_run_au, { nargs = "?" })
 
 vim.api.nvim_create_user_command("LazyReload", lib.reload_plugin_cmd, { nargs = "?" })
