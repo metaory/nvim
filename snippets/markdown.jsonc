@@ -1,0 +1,14 @@
+{
+  "table": {
+    "prefix": "table",
+    "body": ["| $1 | $2 |", "| --- | --- |", "| $3 | $4 |"]
+  },
+  "codeblock": {
+    "prefix": "code",
+    "body": ["```$1", "$0", "```"]
+  },
+  "xlinkcom": { "prefix": "lncom", "body": ["[${1:$CLIPBOARD}](https://${1:$CLIPBOARD}.app)"] },
+  "xlinkapp": { "prefix": "lnapp", "body": ["[${1:$CLIPBOARD}](https://${1:$CLIPBOARD}.app)"] },
+  "xlinkio": { "prefix": "lnio", "body": ["[${1:$CLIPBOARD}](https://${1:$CLIPBOARD}.io)"] },
+  "xlinkai": { "prefix": "lnai", "body": ["[${1:$CLIPBOARD}](https://${1:$CLIPBOARD}.ai)"] }
+}
