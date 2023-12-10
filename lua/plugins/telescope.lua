@@ -30,16 +30,23 @@ return {
             -- command = "find . -path '*/.highlight/*' -type f",
             command = "find /usr/share/highlight/themes/*.theme -type f -exec basename -s .theme {} \\;",
             -- previewer = require("config.previewers").arg_preview({}),
-            -- previewer = require("config.previewers").vim_buffer_cat,
+            previewer = require("config.previewers").vim_buffer_cat(),
             -- previewer = require("telescope.previewers").vim_buffer_cat(),
             -- cat_preview
             -- previewer = require("telescope.previewers.cat_preview")({}),
             -- previewer = require("telescope.previewers").vim_buffer_cat({}),
             -- require "telescope.previewers.term_previewer"
             -- previewer = require("easypick").previewers.branch_diff({ base_branch = "dev" }),
-            previewer = require("easypick").previewers.default(),
+            -- previewer = require("easypick").previewers.default(),
             -- echo -e "AAAAAAAAAAAAAAAAAAA\nBBBBBBBBBBBBBBBBBBB\n"
             -- string.format("<CMD>Easypick %s<CR>", 'echo -e "AAAAAAAAAAAAAAAAAAA\nBBBBBBBBBBBBBBBBBBB\n"'),
+          },
+          {
+            name = "sxx",
+            -- command = "find . -path '*/.highlight/*' -type f",
+            command = "find /usr/share/highlight/themes/*.theme -type f -exec basename -s .theme {} \\;",
+            -- previewer = require("easypick").previewers.default(),
+            previewer = require("config.previewers").vim_buffer_cat(),
           },
           {
             name = "sx",

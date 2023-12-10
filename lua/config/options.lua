@@ -69,7 +69,9 @@ vim.filetype.add({
     tmuxtheme = "tmux",
   }, -- jsx = "javascript.jsx", ["js.flow"] = "javascript.jsx", norg = "norg", rbi = "ruby", tsx = "typescript.tsx",
   filename = {
-    [".zalias"] = "zsh",
+    [".zsh-theme"] = "bash",
+    [".zalias"] = "bash",
+    [".zshrc"] = "bash",
     [".nvimrc"] = "lua",
     ["Dockerfile"] = "dockerfile",
     ["tsconfig.json"] = "jsonc",

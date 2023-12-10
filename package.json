@@ -30,6 +30,12 @@
       {
         "language": "norg",
         "path": "snippets/norg.jsonc"
+      },
+      {
+        "language": [
+          "markdown"
+        ],
+        "path": "snippets/markdown.jsonc"
       }
     ]
   }

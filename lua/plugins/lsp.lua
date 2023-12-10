@@ -25,10 +25,13 @@ return {
       ensure_installed = {
         "stylua",
         "shfmt",
+        "beautysh",
         "prettierd",
         "hadolint",
-        "selene",
+        'eslint-lsp',
+        -- "selene",
         "vale",
+        "bash-language-server",
         "lua-language-server",
         "luacheck",
         "shellcheck",
@@ -64,7 +67,15 @@ return {
           nls.builtins.diagnostics.hadolint, -- docker
           nls.builtins.formatting.prettierd,
           nls.builtins.formatting.stylua,
-          nls.builtins.formatting.shfmt,
+          -- nls.builtins.formatting.shfmt,
+          nls.builtins.formatting.beautysh,
+          nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
+
+  -- nls.builtins.formatting.stylua.with({
+  --   condition = has_exe("stylua"),
+  --   runtime_condition = has_root_pattern("stylua.toml", ".stylua.toml"),
+  -- }),
+
         },
       }
     end,
@@ -116,6 +127,16 @@ return {
         timeout_ms = nil,
       },
       servers = {
+        bashls = {
+          cmd = { "bash-language-server", "start" },
+          filetypes = { "sh", "zsh", "zshrc" },
+          settings = {
+            bashIde = {
+              globPattern = "*@(.sh|.zsh|.inc|.bash|.command)",
+            },
+          },
+          single_file_support = true,
+        },
         dockerls = {},
         docker_compose_language_service = {},
         eslint = {

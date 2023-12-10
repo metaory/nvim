@@ -1,5 +1,5 @@
 {
-  "diagnostics.disable": ["incomplete-signature-doc", "trailing-space", "no-unknown", "missing-fields"],
   "workspace.checkThirdParty": false,
-  "workspace.library": []
+  "diagnostics.disable": ["unused_secondaries", "inject-field", "trailing-space", "no-unknown", "missing-fields"],
+  "workspace.library": ["/usr/local/share/nvim/runtime/lua"]
 }

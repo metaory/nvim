@@ -3,8 +3,8 @@ local ui = require("user.ui")
 
 local M = {}
 
-local auto_run_files = {}
-local auto_run_files_ignore = {}
+-- local auto_run_files = {}
+-- local auto_run_files_ignore = {}
 
 M.create_aut_save_au = async.void(function()
   vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "TextChangedP" }, {
@@ -19,7 +19,15 @@ M.create_auto_run_au = async.void(function()
   vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "TextChangedP" }, {
     callback = function()
       vim.cmd.write()
-      vim.api.nvim_command("luafile %")
+      -- if vim.bo.filetype == "lua" then
+      --   vim.api.nvim_command("luafile %")
+      -- end
+      -- if vim.bo.filetype == "sh" then
+      --   vim.api.nvim_command("! bash -c 'bash %'")
+      -- end
+      -- if vim.bo.filetype == "javascript" then
+      --   vim.api.nvim_command("node %")
+      -- end
     end,
     buffer = 0,
   })

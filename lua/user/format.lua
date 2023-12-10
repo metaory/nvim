@@ -9,13 +9,13 @@ function M.enabled()
 end
 
 function M.toggle()
-  if vim.b.autoformat == false then
-    vim.b.autoformat = nil
-    M.opts.autoformat = true
+  if vim.b["autoformat"] == false then
+    -- vim.b.autoformat = nil
+    M.o.autoformat = true
   else
-    M.opts.autoformat = not M.opts.autoformat
+    M.o.autoformat = not M.o.autoformat
   end
-  if M.opts.autoformat then
+  if M.o.autoformat then
     Util.info("Enabled format on save", { title = "Format" })
   else
     Util.warn("Disabled format on save", { title = "Format" })
@@ -24,8 +24,11 @@ end
 
 ---@param opts? {force?:boolean}
 function M.format(opts)
+  ddwrite({ x = "format", opts = M.opts or "_XX_" }, "format__", "w")
+
+  -- if true then return end
   local buf = vim.api.nvim_get_current_buf()
-  if vim.b.autoformat == false and not (opts and opts.force) then
+  if vim.b["autoformat"] == false and not (opts and opts.force) then
     return
   end
 
@@ -133,7 +136,7 @@ end
 
 ---@param opts PluginLspOpts
 function M.setup(opts)
-  M.opts = opts
+  M.opts = opts or {}
   vim.api.nvim_create_autocmd("BufWritePre", {
     group = vim.api.nvim_create_augroup("MXFormat", {}),
     callback = function()

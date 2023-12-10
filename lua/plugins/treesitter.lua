@@ -46,6 +46,7 @@ return {
         "lua",
         "luadoc",
         "luap",
+        "norg",
         "markdown",
         "markdown_inline",
         "python",

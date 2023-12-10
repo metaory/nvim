@@ -1,10 +1,4 @@
 {
-  //         "body": [ "<svelte:options ${1|immutable,accessors,namespace,tag|}={${2:value}}/>" ],
-  //         "body": ["${1|transition,in,out|}:${2:name}={${3:params}}"],
-  //         "body": ["next { state | ${1:name} = ${1:name} + 1 }"],
-  //         "body": [ "accept ${1:variable} ${2|from date,from day,from day-of-week,time|}", "$0" ],
-  //
-
   "vim.map.str": {
     "prefix": "cmd",
     "body": ["'<CMD>lua ${1}<CR>'"]

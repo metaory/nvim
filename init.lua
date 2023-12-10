@@ -1,5 +1,5 @@
 vim.g.debug_global_flag = false
-require("util.debug")
+  require("util.debug")
 
 vim.lsp.set_log_level(vim.log.levels[vim.g.debug_global_flag and "DEBUG" or "WARN"])
 

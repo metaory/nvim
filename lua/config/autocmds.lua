@@ -25,15 +25,15 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-    vim.notify("LSP ATTACHED!", vim.log.levels.DEBUG, { title = "LSP" })
-    local opts = { buffer = ev.buf }
-  end,
-})
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+--   callback = function(ev)
+--     -- Enable completion triggered by <c-x><c-o>
+--     -- vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+--     -- vim.notify("LSP ATTACHED!", vim.log.levels.DEBUG, { title = "LSP" })
+--     -- local opts = { buffer = ev.buf }
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("close_with_q"),

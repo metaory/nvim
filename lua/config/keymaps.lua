@@ -1,3 +1,10 @@
+--[[ INFO:
+      https://medium.com/scoro-engineering/5-smart-mini-snippets-for-making-text-editing-more-fun-in-neovim-b55ffb96325a
+      local old_name = vim.fn.expand '<cword>'
+      -- Search & replace word under cursor
+      map('n', '<leader>sr', ':%s/\\<<c-r><c-w>\\>/')
+      /home/meta/dev/forks/dotfiles/dotfiles-joose/config/nvim/lua/j/mappings.lua:79
+]]
 --[[ XXX: 
       call v:lua.somemod.func(args)
       call v:lua.eval('2 * 2')
@@ -188,10 +195,18 @@ vim.tbl_map(keymap_set, {
   },
   {
     "<Leader>eof",
-    async.void(function()
-      vim.bo.filetype = ui.select(vim.fn.getcompletion("*", "filetype"), { prompt = "Select FileType:" })
-        or vim.bo.filetype
-      vim.notify(vim.bo.filetype, vim.log.levels.INFO, { title = "FileType Updated" })
+    async.void(function(...)
+      local ftlist = vim.fn.getcompletion("*", "filetype")
+      local function ft_cycle(...)
+        local ft = ui.select(ftlist, { prompt = "Select FileType:" })
+        if not ft then
+          return
+        end
+        vim.bo.filetype = ft or vim.bo.filetype
+        vim.notify(vim.bo.filetype, vim.log.levels.INFO, { title = "FileType Updated" })
+        return ft_cycle(...)
+      end
+      return ft_cycle(...)
     end),
     "Set File Type",
   },

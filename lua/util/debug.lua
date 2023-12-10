@@ -137,9 +137,9 @@ function M._dump(value, opts)
       vim.wo[win].concealcursor = ""
       vim.wo[win].spell = false
       local buf = vim.api.nvim_win_get_buf(win)
-      if not pcall(vim.treesitter.start, buf, "lua") then
-        vim.bo[buf].filetype = "lua"
-      end
+      -- if not pcall(vim.treesitter.start, buf, "lua") then
+      --   vim.bo[buf].filetype = "lua"
+      -- end
     end,
   })
 end
