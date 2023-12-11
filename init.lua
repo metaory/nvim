@@ -1,10 +1,10 @@
 vim.g.debug_global_flag = false
-  require("util.debug")
 
-vim.lsp.set_log_level(vim.log.levels[vim.g.debug_global_flag and "DEBUG" or "WARN"])
+vim.lsp.set_log_level(vim.log.levels[vim.g.debug_global_flag and "DEBUG" or "INFO"]) -- WARN
 
 vim.loader.enable()
 
+require("util.debug")
 require("config.options")
 require("config.keymaps")
 require("config.lazy")

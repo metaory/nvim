@@ -28,7 +28,7 @@ return {
         "beautysh",
         "prettierd",
         "hadolint",
-        'eslint-lsp',
+        "eslint-lsp",
         -- "selene",
         "vale",
         "bash-language-server",
@@ -58,10 +58,11 @@ return {
   {
     "jose-elias-alvarez/null-ls.nvim",
     event = { "BufReadPre", "BufNewFile" },
-    opts = function()
+    opts = function(_, _)
       local nls = require("null-ls")
       return {
-        debug = vim.g.debug_global_flag,
+        -- debug = vim.g.debug_global_flag,
+        debug = true,
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
           nls.builtins.diagnostics.hadolint, -- docker
@@ -71,11 +72,10 @@ return {
           nls.builtins.formatting.beautysh,
           nls.builtins.formatting.prettier.with({ filetypes = { "json", "jsonc" } }),
 
-  -- nls.builtins.formatting.stylua.with({
-  --   condition = has_exe("stylua"),
-  --   runtime_condition = has_root_pattern("stylua.toml", ".stylua.toml"),
-  -- }),
-
+          -- nls.builtins.formatting.stylua.with({
+          --   condition = has_exe("stylua"),
+          --   runtime_condition = has_root_pattern("stylua.toml", ".stylua.toml"),
+          -- }),
         },
       }
     end,
@@ -86,7 +86,7 @@ return {
     dependencies = {
       "b0o/SchemaStore.nvim",
       { "folke/neoconf.nvim", cmd = "Neoconf", config = false, dependencies = { "nvim-lspconfig" } },
-      { "folke/neodev.nvim", opts = {} },
+      { "folke/neodev.nvim", opts = { debug = true } },
       "mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
@@ -149,6 +149,9 @@ return {
           -- mason = false, -- set to false if you don't want this server to be installed with mason
           settings = {
             Lua = {
+              diagnostics = {
+                globals = { "vim", "use", "s", "sn", "i", "rep", "c", "d", "f", "t", "fmta", "fmt" },
+              },
               workspace = {
                 checkThirdParty = false,
               },
