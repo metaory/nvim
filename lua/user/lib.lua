@@ -5,6 +5,25 @@ local M = {}
 
 -- local auto_run_files = {}
 -- local auto_run_files_ignore = {}
+M.create_new_journal_entry_cmd = async.void(function(args)
+  ddwrite({ args = args, xx = "anewcmd" }, "__new_cmd_args_")
+  local choice = ui.input({ prompt = "journal entry:", default = "NA" })
+  if choice == nil then
+    return
+  end
+  vim.notify(choice)
+
+  -- local linenr = vim.fn.line(".")
+  -- local line = vim.fn.getline(linenr)
+  -- local constants = { pattern = "[%w@:%%._+~#=/%-?&]*", http_pattern = "https?://" }
+  -- local url = line:match(constants.http_pattern .. "%w" .. constants.pattern)
+
+  vim.api.nvim_set_current_line(string.format(" |> %s ::", choice))
+  -- vim.api.nvim_exec2(":insert foo") -- TODO: <<< get:dynamic
+  -- vim.api.nvim_exec2(":w " .. choice, {})
+  -- vim.api.nvim_exec2(":e#", {})
+  -- vim.api.nvim_exec2(":!rm " .. default, {})
+end)
 
 M.create_aut_save_au = async.void(function()
   vim.api.nvim_create_autocmd({ "TextChanged", "InsertLeave", "TextChangedP" }, {

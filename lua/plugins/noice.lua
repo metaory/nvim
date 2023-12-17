@@ -1,5 +1,7 @@
 -- INFO: <S-Enter>
 
+-- https://github.com/WhoIsSethDaniel/dotfiles/blob/4478cc6d548e87b93283f1a40b29500bfbb875f6/.config/nvim/lua/plugins/noice-nvim.lua
+
 -- stylua: ignore
 local popup_format = { "{level} ", "{date} ", "{event}", { "{kind}", before = { ".", hl_group = "NoiceFormatKind" } }, " ",
   "{title} ", "{cmdline} ", "\n", "{message}" }
@@ -30,6 +32,7 @@ return {
             { find = "; after #%d+" },
             { find = "; before #%d+" },
             -- { find = "^{+" },
+            -- { find = "}" },
             -- { error = true },
             -- { find = "^true" } },
             -- { find = "^false" } },
@@ -44,7 +47,28 @@ return {
         view = "mini",
       },
       {
-        filter = { event = "notify", any = { { min_length = 200 } } },
+        filter = {
+          event = "msg_show",
+          any = {
+            -- { find = "^{+" },
+            { find = "}" },
+            -- { find = "You selected" },
+            -- { error = true },
+            -- { find = "^true" } },
+            -- { find = "^false" } },
+            -- { find = "<%w>+" },
+            -- { find = "^{+" },
+            -- error = false,
+            -- { error = true },
+            -- , warning = false,
+            -- { kind = { "ERROR", vim.log.levels.ERROR, tostring(vim.log.levels.ERROR) } },
+          },
+        },
+        opts = { format = popup_format, win_options = { wrap = false } },
+        view = "popup",
+      },
+      {
+        filter = { event = "notify", any = { { min_length = 200 }, { min_height = 2 } } },
         opts = { format = popup_format, win_options = { wrap = true } },
         view = "popup",
       },
@@ -67,7 +91,7 @@ return {
       notify = {
         buf_options = { buftype = "nofile", filetype = "lua" },
         win_options = { wrap = false },
-        replace = true,
+        -- replace = true,
       },
       split = {
         buf_options = { buftype = "nofile", filetype = "lua" },

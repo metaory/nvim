@@ -97,6 +97,8 @@ M.palette = function()
   local palette = cmap[cur] and cmap[cur]() or {}
   local oxo = vim.tbl_extend("force", palette, {
     dark_grey = "#3d4c67",
+
+    cfg = "#aaaFee",
     cx1 = "#ff1f35",
     cx2 = "#44e778",
     cx3 = "#ff983e",
@@ -110,7 +112,7 @@ end
 -- vim.g.terminal_color_3
 -- cx4 = "#2563EB",
 
-M.setup = function()
+M.setup = function(_, opts)
   -- require("onedark").colorscheme()
 
   -- vim.cmd.colorscheme("oxocarbon-lua")
@@ -118,6 +120,7 @@ M.setup = function()
   -- require("oxocarbon").setup(opts)
   vim.opt.background = "dark" -- set this to dark or light
   vim.cmd.colorscheme("oxocarbon")
+
   local c = M.palette()
   -- vim.notify("c1: " .. (c.bg3 or "NA"), vim.log.levels.INFO)
   -- vim.g.oxo = c
@@ -156,7 +159,22 @@ M.setup = function()
   M.set_hl("MxTodoPerf", { fg = c.green })
   M.set_hl("MxTodoHint", { fg = c.blue })
   M.set_hl("MxTodoTest", { fg = c.cx5 })
+  M.set_hl("DiagnosticHint", { fg = c.cx5 })
+  M.set_hl("DiagnosticUnderlineHint", { fg = c.blue })
+  M.set_hl("DiagnosticInfo", { fg = c.cx4 })
+  M.set_hl("DiagnosticUnderlineInfo", { fg = c.cfg })
+  --  guifg=#d0d0d0
 
+  -- DiagnosticError guifg=#ee5396
+  -- DiagnosticWarn guifg=#be95ff
+  -- DiagnosticInfo guifg=#78a9ff
+  -- DiagnosticHint guifg=#d0d0d0
+  -- DiagnosticOk ctermfg=10 guifg=LightGreen
+  -- DiagnosticUnderlineError cterm=undercurl gui=undercurl guifg=#ee5396
+  -- DiagnosticUnderlineWarn cterm=undercurl gui=undercurl guifg=#be95ff
+  -- DiagnosticUnderlineInfo cterm=undercurl gui=undercurl guifg=#d0d0d0
+  -- DiagnosticUnderlineHint cterm=undercurl gui=undercurl guifg=#d0d0d0
+  -- DiagnosticUnderlineOk cterm=underline gui=underline guisp=LightGreen
   -- error = { "DiagnosticError", "ErrorMsg", "#DC2626" },
   -- todo = { "DiagnosticInfo", "#2563EB" },
   -- hack = { "DiagnosticInfo", "#2563EB" },

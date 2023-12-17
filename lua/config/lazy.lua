@@ -50,4 +50,5 @@ require("lazy").setup("plugins", {
   },
   build = { warn_on_override = true },
   debug = vim.g.debug_global_flag,
+  -- debug = vim.g.debug_global_flag,
 })

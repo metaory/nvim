@@ -1,4 +1,12 @@
 {
+  "vim.log.info": {
+    "prefix": "lgi",
+    "body": ["_G.log:info(${1})"]
+  },
+  "vim.log.warn": {
+    "prefix": "lvw",
+    "body": ["_G.log:warn(${1})"]
+  },
   "vim.map.str": {
     "prefix": "cmd",
     "body": ["'<CMD>lua ${1}<CR>'"]

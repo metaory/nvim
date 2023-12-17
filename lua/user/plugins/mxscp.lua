@@ -1,3 +1,7 @@
+if true then
+  return {}
+end
+
 local M = {}
 
 -- lua require('user.plugins.mxscp').setup()

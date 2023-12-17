@@ -4,7 +4,27 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("mx_" .. name, { clear = true })
 end
 
-vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "help", "txt" },
+--   callback = function(args)
+--     -- vim.schedule(function()
+--     -- vim.bo[args.buf].syntax = "lua"
+--     -- vim.bo[args.buf].filetype = "lua"
+--     -- vim.bo.syntax = "lua"
+--     -- vim.bo.filetype = "lua"
+--     -- end)
+--     -- if not pcall(vim.treesitter.start, args.buf, "lua") then
+--     --   vim.bo[args.buf].syntax = "lua"
+--     --   vim.bo[args.buf].filetype = "lua"
+--     -- end
+--     -- vim.notify("___FFFFFFFF_", vim.log.levels.DEBUG, { title = "_F_F_" })
+--     -- vim.b["miniindentscope_disable"] = true
+--     -- vim.api.nvim_exec2([[ TSBufEnable highlight ]], {})
+--     -- vim.api.nvim_exec2([[ set syntax=help ]], {})
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*/*.*" }, callback = lib.create_auto_run_au })
+vim.api.nvim_create_autocmd("BufReadPost", { pattern = { "*/playgrounds/*" }, callback = lib.create_auto_run_au })
 
 vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
   callback = function(args)
@@ -16,6 +36,16 @@ vim.api.nvim_create_autocmd({ "CmdwinEnter" }, {
     vim.keymap.set("n", "q", "<cmd>close<CR>", { buffer = true })
   end,
 })
+
+-- vim.api.nvim_create_autocmd("FileType", {
+--   pattern = { "norg" },
+--   callback = function()
+--     -- vim.notify("___XX__NN_CONFIG_WIKI____", vim.log.levels.ERROR, { title = "_XXXX_WIKI__" })
+--     vim.keymap.set("n", "<C-i>", [[:insert \* hi... ]], { desc = "new journal entry", buffer = true })
+--     -- vim.keymap.set("n", "yl", [[:normal "+yi"<CR>]], { desc = "yank inside quotes", buffer = true })
+--     -- vim.keymap.set("n", "yx", [[:normal "+yi[<CR>]], { desc = "yank inside bracket", buffer = true })
+--   end,
+-- })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "json" },
@@ -57,6 +87,34 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
+
+-- XXX:  ::==>
+-- local function supports_inlay_hints(bufnr)
+--   local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+--   for _, client in ipairs(clients) do
+--     if client.server_capabilities.inlayHintProvider then
+--       return true
+--     end
+--   end
+--   return false
+-- end
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   callback = function(args)
+--     if supports_inlay_hints(args.buf) then
+--       vim.lsp.inlay_hint(args.buf, true)
+--     end
+--   end,
+-- })
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   callback = function(args)
+--     if supports_inlay_hints(args.buf) then
+--       vim.defer_fn(function()
+--         vim.lsp.inlay_hint(args.buf, true)
+--       end, 3000)
+--     end
+--   end,
+-- })
+
 -- vim.api.nvim_create_autocmd("BufReadPost", {
 --   callback = function()
 --     vim.go.smartindent = false

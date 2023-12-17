@@ -1,6 +1,8 @@
+local lib = require("user.lib")
+
 local norg_keybind = function(t)
-  local map, lhs, rhs, desc = unpack(t)
-  map("norg", "n", lhs, rhs, { desc = desc })
+  local map, lhs, rhs, desc, mode = unpack(t)
+  map("norg", mode or "n", lhs, rhs, { desc = desc })
 end
 
 return {
@@ -18,13 +20,28 @@ return {
   {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
-    dependencies = "folke/zen-mode.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "zen-mode.nvim",
+    },
     cmd = "Neorg",
     ft = "norg",
     opts = {
       load = {
         ["core.defaults"] = {},
-        ["core.dirman"] = { config = { workspaces = { mx = "~/neorg" }, index = "index.norg" } },
+        ["core.dirman"] = {
+          config = {
+            workspaces = { mx = "~/neorg" },
+            default_workspace = "mx",
+            index = "index.norg",
+          },
+        },
+        ["core.journal"] = {
+          config = {
+            template_name = "journal-template.norg",
+            strategy = "%y/%y-%m_%d",
+          },
+        },
         ["core.autocommands"] = {},
         ["core.syntax"] = {},
         ["core.concealer"] = {
@@ -46,13 +63,37 @@ return {
             hook = function(bind)
               bind.unmap("norg", "n", "<leader>nn")
 
+              -- https://github.com/nvim-neorg/neorg/wiki
+              -- bind.remap_event("norg", "n", "<C-Space>", "core.qol.todo_items.todo.task_done")
+
+              -- local dirman = require("neorg").modules.get_module("core.dirman")
+              -- dirman.create_file("my_file", "my_ws", {
+              --   no_open = false, -- open file after creation?
+              --   force = false, -- overwrite file if exists
+              --   metadata = {}, -- key-value table for metadata fields
+              -- })
+              -- bind.remap_event("norg", "n", "<C-n>", "core.dirman.create_file('foo')")
+              -- { "gh", '<CMD>lua require("telescope.builtin").help_tags({ default_text = vim.fn.expand("<cword>") })<CR>', desc = "Help pages" },
+              -- { "<M-F>", "<CMD>Telescope find_files hidden=true<CR>" },
+
               vim.tbl_map(norg_keybind, {
                 { bind.map, "Q", ":q<CR>", "Quit" },
                 { bind.map, "<BS>", ":bw<CR>", "Go Back" },
+                { bind.map, ",,", "|> ", "Put Arrow Right", "i" },
+                -- inoreab ,, \|>
                 { bind.map, "<leader>uc", "<CMD>Neorg toggle-concealer<CR>", "Toggle Conceale" },
                 { bind.map, "<leader>mh", "<CMD>Neorg mode traverse-heading<CR>", "Heading Mode" },
                 { bind.map, "<leader>mn", "<CMD>Neorg mode norg<CR>", "Normal Mode" },
-                { bind.map, "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
+                -- [[:insert hi ]]
+                -- { bind.map, "<C-n>", "<CMD>Neorg keybind norg core.dirman.create_file<CR>", "New Note" },
+                -- { bind.map, "<C-i>", "[[:insert hi<CR> ]]", "New Journal Entry" },
+                -- { bind.map, "<C-i>", lib.create_new_journal_entry, "New Journal Entry" },
+                -- { bind.map, "<C-i>", "<CMD>NeorgNewEntry<CR>", "New Journal Entry" },
+                -- strategy = "%y/%y-%m_%d",
+                { bind.map, "<C-i>", ":normal ggO<C-R>=strftime('%m_%d.%H:%M')<CR><CR>a ", "New Journal Entry" },
+                -- { bind.map, "<C-i>", "[[:normal gg Ohi<CR>]]", "New Journal Entry" },
+                { bind.map, "<C-n>", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
+                -- { bind.map, "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
                 { bind.map, "<leader>j", "<CMD>Neorg journal toc update<CR>", "Journal Index" },
                 { bind.map, "<leader>y", "<CMD>Neorg journal yesterday<CR>", "Journal Yesterday" },
                 { bind.map, "<leader>n", "<CMD>Neorg journal today<CR>", "Journal Today" },
@@ -74,6 +115,13 @@ return {
         { mode = "n", keys = "<leader>i", desc = "+Insert" },
         { mode = "n", keys = "<leader>t", desc = "+Todo" },
       })
+      vim.api.nvim_create_user_command(
+        "NeorgNewEntry",
+        lib.create_new_journal_entry_cmd,
+        { desc = "New Journal Entry" }
+      )
+      -- vim.notify("__OOOOOOOOOOO_CONFIG_WIKI____", vim.log.levels.ERROR, { title = "__WIKI__" })
+      -- vim.keymap.set("n", "<C-i>", [[:insert hi ]], { desc = "New Journal Entry", buffer = true })
     end,
   },
 }

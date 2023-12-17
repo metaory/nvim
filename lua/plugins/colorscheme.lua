@@ -29,9 +29,7 @@ return {
       -- local base06 = "#ffffff"
       -- local base09 = "#78a9ff"
     end,
-    config = function(_, opts)
-      require("user.theme").setup()
-    end,
+    config = require("user.theme").setup,
   },
   {
     "navarasu/onedark.nvim",

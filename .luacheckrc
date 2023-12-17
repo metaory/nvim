@@ -3,7 +3,7 @@ codes = true
 
 exclude_files = {
   "tests/",
-  ".luacheckrc"
+  ".luacheckrc",
 }
 -- https://luacheck.readthedocs.io/en/stable/warnings.html
 -- 211	Unused local variable.
@@ -22,12 +22,12 @@ ignore = {
   "211", -- Unused local variable.
   "212", -- Unused argument
   "631", -- Line is too long
-  "122" -- Setting a readonly global
+  "122", -- Setting a readonly global
 }
 
 read_globals = {
-  "vim"
+  "vim",
 }
 
 -- globals = { "U", "MxDebug", "MxDump" }
-globals = { "ddwrite", "ddwriteraw" }
+globals = { "log", "ddwrite", "ddwriteraw" }

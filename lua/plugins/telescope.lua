@@ -83,10 +83,8 @@ return {
     -- metaory mini handle
     "nvim-telescope/telescope.nvim",
     keys = {
-      { "<Leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
-      { "<Leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
-      { "<Leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
-      { "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", "Resume" },
+      -- { "<Leader>sH", "<CMD>Telescope highlights<CR>", desc = "Highlights" },
+      -- { "<Leader>sh", '<CMD>lua require("telescope.builtin").help_tags()<CR>', desc = "Help pages" },
       -- { "<M-g>", "<CMD>Telescope grep_string<CR>" },
       { "<M-g>", H.telescope("grep_string"), desc = "Grep String (root dir)" },
       { "<M-f>", H.telescope("find_files"), desc = "Find Files (root dir)" },
@@ -131,10 +129,12 @@ return {
       { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
       { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
       { "<leader>so", "<cmd>Telescope vim_options<cr>", desc = "Options" },
-      { "<leader>sR", "<cmd>Telescope resume<cr>", desc = "Resume" },
-      { "<leader>sw", H.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
-      { "<leader>sW", H.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
+      { "<Leader>sx", "<CMD>Telescope builtin<CR>", desc = "Builtin" },
+      { "<leader>sr", "<cmd>Telescope resume<cr>", desc = "Resume" },
+      -- { "<Leader>sr", "<CMD>lua require'telescope.builtin'.resume{}<CR>", "Resume" },
+      -- { "<leader>sw", H.telescope("grep_string", { word_match = "-w" }), desc = "Word (root dir)" },
       { "<leader>sw", H.telescope("grep_string"), mode = "v", desc = "Selection (root dir)" },
+      -- { "<leader>sW", H.telescope("grep_string", { cwd = false, word_match = "-w" }), desc = "Word (cwd)" },
       { "<leader>sW", H.telescope("grep_string", { cwd = false }), mode = "v", desc = "Selection (cwd)" },
       { "<leader>uC", H.telescope("colorscheme", { enable_preview = true }), desc = "Colorscheme with preview" },
       --stylua: ignore start

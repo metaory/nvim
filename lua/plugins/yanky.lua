@@ -7,8 +7,8 @@ return {
     mappings.i["<c-p>"] = nil
     return {
       highlight = { timer = 200 },
-      ring = { storage = "sqlite" },
-      -- ring = { storage = "shada" },
+      -- ring = { storage = "sqlite" },
+      ring = { storage = "shada" },
       picker = {
         telescope = {
           use_default_mappings = false,

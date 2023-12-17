@@ -21,6 +21,11 @@ vim.g.maplocalleader = "\\"
 vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
+vim.cmd([[
+  " Use TYPED as search command PREFIX
+  cnoremap <expr> <C-p> pumvisible() ? "<C-p>" : "<Up>"
+  cnoremap <expr> <C-n> pumvisible() ? "<C-n>" : "<Down>"
+]])
 
 vim.tbl_map(keymap_del, {
   -- "<Leader>sr",

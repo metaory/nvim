@@ -19,14 +19,14 @@ _G.ddwrite = function(t, f, m)
   -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
   -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
   -- local ignore = m == "x" and false or (vim.g.debug_global_flag == true and false) or true
-  local ignore = false
-  os.execute(string.format("logger 'pre mode: %s  ignore: %s'", m, tostring(ignore)))
-  if ignore == true then
-    os.execute(string.format("logger ' =>[IGNORED] %s'", m))
-    return
-  end
+  -- local ignore = false
+  -- os.execute(string.format("logger 'pre mode: %s  ignore: %s'", m, tostring(ignore)))
+  -- if ignore == true then
+  --   os.execute(string.format("logger ' =>[IGNORED] %s'", m))
+  --   return
+  -- end
   m = m == "x" and "a" or m
-  os.execute(string.format("logger '>>>pst mode: %s'", m))
+  -- os.execute(string.format("logger '>>>pst mode: %s'", m))
   -- local ignore = m ~= "x" and "a" or vim.g.debug_global_flag
   -- local is_debug_disabled = vim.g.debug_global_flag == false
 
