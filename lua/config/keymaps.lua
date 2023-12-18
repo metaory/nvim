@@ -1,45 +1,14 @@
---[[ INFO:
-      https://medium.com/scoro-engineering/5-smart-mini-snippets-for-making-text-editing-more-fun-in-neovim-b55ffb96325a
-      local old_name = vim.fn.expand '<cword>'
-      -- Search & replace word under cursor
-      map('n', '<leader>sr', ':%s/\\<<c-r><c-w>\\>/')
-      /home/meta/dev/forks/dotfiles/dotfiles-joose/config/nvim/lua/j/mappings.lua:79
-]]
---[[ XXX: 
-      call v:lua.somemod.func(args)
-      call v:lua.eval('2 * 2')
-      call v:lua.require'mypack'.func(arg1, arg2)
-]]
 local async = require("util.async")
 local util = require("util.maputil")
 local ui = require("user.ui")
 
-local keymap_del = util.keymap_del
+-- local keymap_del = util.keymap_del
 local keymap_set = util.keymap_set
 
 vim.g.maplocalleader = "\\"
 vim.g.mapleader = " "
 
 vim.api.nvim_command("exe 'set cedit=<C-y>'")
-vim.cmd([[
-  " Use TYPED as search command PREFIX
-  cnoremap <expr> <C-p> pumvisible() ? "<C-p>" : "<Up>"
-  cnoremap <expr> <C-n> pumvisible() ? "<C-n>" : "<Down>"
-]])
-
-vim.tbl_map(keymap_del, {
-  -- "<Leader>sr",
-  -- "<Leader>sR",
-  -- "<Leader>p",
-  -- "<Leader>l",
-  -- "<Leader>L",
-  -- "<Leader>`",
-  -- "<Leader>,",
-  -- "<Leader>K",
-  -- "<Leader><Space>",
-  -- { "v", "<Leader>noop" },
-  -- "<C-_>",
-})
 
 vim.tbl_map(keymap_set, {
   { "<Leader>il", "<CMD>LspInfo<CR>", "LSP Info" },
@@ -88,13 +57,24 @@ vim.tbl_map(keymap_set, {
   { "<C-k>", "<CMD>NavigatorUp<CR>" },
 })
 
+-- vim.tbl_map(keymap_set, {})
+-- vim.cmd([[
+--   cnoremap <expr> <C-p> pumvisible() ? "<C-p>" : "<Up>"
+--   cnoremap <expr> <C-n> pumvisible() ? "<C-n>" : "<Down>"
+-- ]])
+
+-- vim.keymap.set('i', '<Tab>', function()
+--   return vim.fn.pumvisible() == 1 and "<C-n>" or "<Tab>"
+-- end, { expr = true })
 vim.tbl_map(keymap_set, {
+  { "<M-k>", "<Up>", mode = "c" },
+  { "<M-j>", "<Down>", mode = "c" },
   { "<C-f>", "<Right>", mode = "c" },
   { "<C-a>", "<Home>", mode = "c" },
   { "<C-b>", "<Left>", mode = "c" },
   { "<M-b>", "<C-b>", mode = "c" },
-  { "<M-k>", "<Up>", mode = "c" },
-  { "<M-j>", "<Down>", mode = "c" },
+  -- { "<C-p>", '<C-p> pumvisible() ? "<C-p>" : "<Up>"', mode = "c" },
+  -- { "<C-n>", '<C-n> pumvisible() ? "<C-n>" : "<Down>"', mode = "c" },
   { "<S-Enter>", "<CMD>lua require('noice').redirect(vim.fn.getcmdline())<CR>", mode = "c", "Redirect Cmdline" },
 })
 
@@ -117,16 +97,6 @@ vim.tbl_map(keymap_set, {
 
   { "<M-x>", "<CMD>bdelete<CR>", "Delete Buffer", silent = true },
 })
--- vim.tbl_map(keymap_set, {
---   { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
---   { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
---
---   { "<M-Left>", "<CMD>BufferLineMovePrev<CR>", "Move Buf Left" },
---   { "<M-Right>", "<CMD>BufferLineMoveNext<CR>", "Move Buf Right" },
---
---   { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
---   { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
--- })
 
 vim.tbl_map(keymap_set, {
   { "gG", "<CMD>OpenGithubLink<CR>", "Open Github Link" },
@@ -231,8 +201,22 @@ vim.tbl_map(keymap_set, {
 
 -- ////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////
+--[[ INFO:
+      https://medium.com/scoro-engineering/5-smart-mini-snippets-for-making-text-editing-more-fun-in-neovim-b55ffb96325a
+      local old_name = vim.fn.expand '<cword>'
+      -- Search & replace word under cursor
+      map('n', '<leader>sr', ':%s/\\<<c-r><c-w>\\>/')
+      /home/meta/dev/forks/dotfiles/dotfiles-joose/config/nvim/lua/j/mappings.lua:79
+]]
+--[[ XXX:
+      call v:lua.somemod.func(args)
+      call v:lua.eval('2 * 2')
+      call v:lua.require'mypack'.func(arg1, arg2)
+]]
 -- ////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////
+-- INFO: unmap()
+-- vim.tbl_map(keymap_del, { "<Leader>sr", "<Leader>sR", "<Leader>p", "<Leader>l", "<Leader>L", "<Leader>`", "<Leader>,", "<Leader>K", "<Leader><Space>", { "v", "<Leader>noop" }, "<C-_>" })
 -- ////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////
@@ -338,7 +322,7 @@ vim.tbl_map(keymap_set, {
 --   a.operator(a.align_to_string, { is_pattern = false, reverse = true, preview = true })
 -- end, opt)
 --
--- -- Example gaaip to aling a paragraph to 1 character, looking left
+-- -- Example gaaip to align a paragraph to 1 character, looking left
 -- vim.keymap.set("n", "gaa", function()
 --   local a = require("align")
 --   a.operator(a.align_to_char, { length = 1, reverse = true })
@@ -596,3 +580,14 @@ old_map("n", "<Leader>sx", ":Telescope builtin<CR>", { desc = "Search Telescope"
     15  Ex commands from a script (truncated at 200 characters).
     16  Ex commands.
 ]]
+
+-- vim.tbl_map(keymap_set, {
+--   { "<M-w>", "<CMD>BufferLineCloseLeft<CR>", "Close All Buf to Left" },
+--   { "<M-e>", "<CMD>BufferLineCloseRight<CR>", "Close All Buf to Right" },
+--
+--   { "<M-Left>", "<CMD>BufferLineMovePrev<CR>", "Move Buf Left" },
+--   { "<M-Right>", "<CMD>BufferLineMoveNext<CR>", "Move Buf Right" },
+--
+--   { "<M-k>", "<CMD>BufferLineCycleNext<CR>", "Next Buf" },
+--   { "<M-j>", "<CMD>BufferLineCyclePrev<CR>", "Next Prev" },
+-- })

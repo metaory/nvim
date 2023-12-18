@@ -1,35 +1,39 @@
 return function()
   -- local nls_builtins = require("null-ls.builtins")
-  local nls_utils = require("null-ls.utils")
-  local nls_builtins = require("null-ls.builtins")
+
+  local nls = require("null-ls")
+
+  -- ddwrite({ x = "nls", comp = nls.builtins.completion.tags }, "XOOXOXO")
+
   return {
     -- debug = vim.g.debug_global_flag,
     debug = true,
-    root_dir = nls_utils.root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
+    fallback_severity = vim.diagnostic.severity.HINT,
+    log_level = "trace",
+    -- log_level = "warn",
+    -- local nls_utils = require("null-ls.utils")
+    root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
     sources = {
-      nls_builtins.formatting.prettier.with({
-        filetypes = { "html", "json", "yaml", "markdown" },
-      }),
-      nls_builtins.diagnostics.zsh,
-      nls_builtins.diagnostics.luacheck,
-      nls_builtins.formatting.stylua.with({
-        filetypes = { "lua" },
-        -- -- extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
-        --   -- condition = function(utils)
-        --   --   return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
-        --   -- end,
-      }),
+      nls.builtins.formatting.prettier.with({ filetypes = { "html", "json", "yaml", "markdown" } }),
+      nls.builtins.formatting.stylua.with({ filetypes = { "lua" } }),
+      nls.builtins.formatting.beautysh.with({ filetypes = { "bash", "sh" } }),
 
-      nls_builtins.formatting.beautysh.with({ filetypes = { "bash", "sh" } }),
+      nls.builtins.diagnostics.zsh,
+      nls.builtins.diagnostics.luacheck,
+      nls.builtins.diagnostics.markdownlint,
+      nls.builtins.diagnostics.actionlint,
+      nls.builtins.diagnostics.typos,
 
-      nls_builtins.diagnostics.markdownlint,
-      nls_builtins.diagnostics.actionlint,
-      nls_builtins.diagnostics.typos,
-      nls_builtins.completion.spell,
-      nls_builtins.completion.luasnip,
+      nls.builtins.completion.tags,
+      nls.builtins.completion.spell,
+      nls.builtins.completion.luasnip,
     },
   }
 end
+-- -- extra_args = { "--config-path", vim.fn.expand("~/.config/stylua.toml") },
+--   -- condition = function(utils)
+--   --   return utils.root_has_file({ "stylua.toml", ".stylua.toml" })
+--   -- end,
 
 -- #### Defaults
 -- - Filetypes: `{ "lua" }`

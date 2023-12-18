@@ -26,6 +26,8 @@ _G.ddwrite = function(t, f, m)
   --   return
   -- end
   m = m == "x" and "a" or m
+
+  f = f or "__NA__"
   -- os.execute(string.format("logger '>>>pst mode: %s'", m))
   -- local ignore = m ~= "x" and "a" or vim.g.debug_global_flag
   -- local is_debug_disabled = vim.g.debug_global_flag == false

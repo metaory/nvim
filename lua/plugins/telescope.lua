@@ -215,7 +215,6 @@ return {
   {
     "nvim-telescope/telescope-file-browser.nvim",
     keys = { { "<leader>sf", "<CMD>Telescope file_browser<CR>", desc = "File Browser" } },
-    opts = {},
     config = function()
       require("telescope").load_extension("file_browser")
     end,

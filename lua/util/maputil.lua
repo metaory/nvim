@@ -26,6 +26,8 @@ M.keymap_set = function(t)
   local mode = opts.mode or "n"
   opts.mode = nil
 
+  -- ddwrite({ x = "map_set", m = mode, l = lhs, r = rhs, opts }, "__map_set__")
+
   pcall(vim.keymap.set, mode, lhs, rhs, opts)
 end
 

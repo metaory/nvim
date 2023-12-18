@@ -1,131 +1,129 @@
 local H = require("util.helper")
 
 return {
-  {
-    "willothy/nvim-cokeline",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    enabled = true,
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {
-      show_if_buffers_are_at_least = 1,
-      history = { enabled = false, size = 2 },
-    },
-    config = function(_, opts)
-      local theme = require("user.theme")
-      local c = theme.palette()
+  "willothy/nvim-cokeline",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  event = { "BufReadPost", "BufNewFile" },
+  opts = {
+    show_if_buffers_are_at_least = 1,
+    history = { enabled = false, size = 2 },
+  },
+  config = function(_, opts)
+    local theme = require("user.theme")
+    local c = theme.palette()
 
-      local hl = function(buf)
-        return buf.is_focused and c.cx4 or c.bg3
-      end
+    local hl = function(buf)
+      return buf.is_focused and c.cx4 or c.bg3
+    end
 
-      local comp = function(l)
-        local cond, icon, color = unpack(l)
-        return {
-          text = function(buf)
-            if icon == "devicon" then
-              return buf.devicon.icon
-            end
-            if type(buf[cond]) == "boolean" then
-              return buf[cond] and theme.icons[icon] or ""
-            end
-            return (buf[cond] or "") .. " "
-          end,
-          bold = function(buf)
-            return buf.is_focused
-          end,
-          bg = hl,
-          fg = function(buf)
-            return buf.is_focused and "white"
-              or icon == "devicon" and buf.devicon.color
-              or c[icon]
-              or c[color]
-              or c.purple
-          end,
-        }
-      end
+    local comp = function(l)
+      local cond, icon, color = unpack(l)
+      return {
+        text = function(buf)
+          if icon == "devicon" then
+            return buf.devicon.icon
+          end
+          if type(buf[cond]) == "boolean" then
+            return buf[cond] and theme.icons[icon] or ""
+          end
+          return (buf[cond] or "") .. " "
+        end,
+        bold = function(buf)
+          return buf.is_focused
+        end,
+        bg = hl,
+        fg = function(buf)
+          return buf.is_focused and "white"
+            or icon == "devicon" and buf.devicon.color
+            or c[icon]
+            or c[color]
+            or c.purple
+        end,
+      }
+    end
 
-      local diag = function(l)
-        local type, icon, color = unpack(l)
-        return {
-          text = function(buf)
-            return buf.diagnostics[type] > 0 and theme.icons.diagnostics[icon] or ""
-          end,
-          bg = hl,
-          fg = function(buf)
-            return buf.is_focused and "white" or c[color]
-          end,
-        }
-      end
+    local diag = function(l)
+      local type, icon, color = unpack(l)
+      return {
+        text = function(buf)
+          return buf.diagnostics[type] > 0 and theme.icons.diagnostics[icon] or ""
+        end,
+        bg = hl,
+        fg = function(buf)
+          return buf.is_focused and "white" or c[color]
+        end,
+      }
+    end
 
-      require("cokeline").setup(vim.tbl_deep_extend("force", opts, {
-        -- default_hl = {
-        --   fg = function(buf)
-        --     return buf.is_focused and "yellow" or "red"
-        --   end,
-        --   bg = c.red,
-        --   sp = c.blue,
-        -- },
-        -- TODO:
-        fill_hl = "None",
-        sidebar = {
-          filetype = { "neo-tree" },
-          components = {
-            { text = "", fg = hl, bg = "none" },
-            {
-              text = function(buf)
-                return buf.filetype
-              end,
-              fg = "white",
-              bg = hl,
-              bold = true,
-            },
-            -- comp({ "filename", "blue" }),
-            { text = "", fg = hl, bg = "none" },
-          },
-        },
+    require("cokeline").setup(vim.tbl_deep_extend("force", opts, {
+      -- default_hl = {
+      --   fg = function(buf)
+      --     return buf.is_focused and "yellow" or "red"
+      --   end,
+      --   bg = c.red,
+      --   sp = c.blue,
+      -- },
+      -- TODO:
+      fill_hl = "None",
+      sidebar = {
+        filetype = { "neo-tree" },
         components = {
-          { text = " ", bg = "none" },
           { text = "", fg = hl, bg = "none" },
-          comp({ "is_focused", "devicon" }),
-          comp({ "filename", "light_grey" }),
-          diag({ "errors", "Error", "red" }),
-          diag({ "warnings", "Warn", "yellow" }),
-          diag({ "infos", "Info", "blue" }),
-          diag({ "hints", "Hint", "cyan" }),
-          comp({ "is_modified", "modified", "yellow" }),
+          {
+            text = function(buf)
+              return buf.filetype
+            end,
+            fg = "white",
+            bg = hl,
+            bold = true,
+          },
+          -- comp({ "filename", "blue" }),
           { text = "", fg = hl, bg = "none" },
         },
-      }))
-    end,
-  },
-  {
-    "akinsho/bufferline.nvim",
-    enabled = false,
-    event = { "BufReadPost", "BufNewFile" },
-    opts = function()
-      local bufferline = require("bufferline")
-      local c = require("user.theme").palette()
-      return {
-        options = {
-          mode = "buffers",
-          style_preset = bufferline.style_preset.minimal,
-          themable = true,
-          separator_style = { "", "" }, -- { "", "" },
-          show_buffer_close_icons = false,
-          always_show_bufferline = false,
-          modified_icon = "●",
-          close_icon = "✖", -- 
-          indicator = { style = "none" },
-          diagnostics = "nvim_lsp", -- | "coc",
-        },
-        highlights = {
-          modified_selected = { fg = c.yellow },
-          modified = { fg = c.grey },
-        },
-      }
-    end,
-  },
+      },
+      components = {
+        { text = "  ", bg = "none" },
+        { text = "", fg = hl, bg = "none" },
+        comp({ "is_focused", "devicon" }),
+        comp({ "filename", "light_grey" }),
+        diag({ "errors", "Error", "red" }),
+        diag({ "warnings", "Warn", "yellow" }),
+        diag({ "infos", "Info", "blue" }),
+        diag({ "hints", "Hint", "cyan" }),
+        comp({ "is_modified", "modified", "yellow" }),
+        { text = "", fg = hl, bg = "none" },
+      },
+    }))
+  end,
 }
+
+-- {
+--   "akinsho/bufferline.nvim",
+--   enabled = false,
+--   event = { "BufReadPost", "BufNewFile" },
+--   opts = function()
+--     local bufferline = require("bufferline")
+--     local c = require("user.theme").palette()
+--     return {
+--       options = {
+--         mode = "buffers",
+--         style_preset = bufferline.style_preset.minimal,
+--         themable = true,
+--         separator_style = { "", "" }, -- { "", "" },
+--         show_buffer_close_icons = false,
+--         always_show_bufferline = false,
+--         modified_icon = "●",
+--         close_icon = "✖", -- 
+--         indicator = { style = "none" },
+--         diagnostics = "nvim_lsp", -- | "coc",
+--       },
+--       highlights = {
+--         modified_selected = { fg = c.yellow },
+--         modified = { fg = c.grey },
+--       },
+--     }
+--   end,
+-- },
 
 -- separator_selected = hl.selected,
 -- separator_visible = hl.selected,

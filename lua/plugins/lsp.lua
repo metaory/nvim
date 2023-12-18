@@ -3,10 +3,8 @@ local H = require("util.helper")
 
 local icons = require("user.theme").icons
 
--- local ff = "ff"
---
--- local ffo = 122
---
+-- ddwrite(require("config.opts_lsp"), "_OPTS_LSP_")
+
 return {
   {
     "williamboman/mason.nvim",
@@ -41,16 +39,18 @@ return {
     -- config = true,
     opts = require("config.opts_nls"),
   },
+
+  -- { "b0o/SchemaStore.nvim", lazy = false },
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = {
-      "b0o/SchemaStore.nvim",
       -- { "folke/neoconf.nvim", cmd = "Neoconf", config = false },
       -- { "folke/neodev.nvim", opts = { debug = true } },
+      "b0o/SchemaStore.nvim",
       "mason.nvim",
       "none-ls.nvim",
-      "hrsh7th/cmp-nvim-lsp",
+      -- "hrsh7th/cmp-nvim-lsp",
       -- "mfussenegger/nvim-lint",
       -- "mason-null-ls.nvim",
       -- "williamboman/mason-lspconfig.nvim",

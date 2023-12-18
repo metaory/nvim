@@ -14,6 +14,7 @@ vim.filetype.add({
   }, -- jsx = "javascript.jsx", ["js.flow"] = "javascript.jsx", norg = "norg", rbi = "ruby", tsx = "typescript.tsx",
   filename = {
     -- ["config"] = "bash",
+    ["zsh*"] = "bash",
     [".zprofile"] = "bash",
     [".zalias"] = "bash",
     [".zshrc"] = "zsh",
@@ -25,7 +26,8 @@ vim.filetype.add({
 })
 
 vim.opt.sessionoptions = { "buffers", "curdir", "tabpages", "winsize" }
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert" }
 vim.opt.spelllang = { "en" }
 vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
 vim.opt.fillchars = { foldopen = "", foldclose = "", fold = " ", foldsep = " ", diff = "╱", eob = " " }
@@ -55,7 +57,6 @@ vim.o.number = true -- Print line number
 vim.o.pumblend = 10 -- Popup blend
 vim.o.pumheight = 10 -- Maximum number of entries in a popup
 vim.o.relativenumber = true -- Relative line numbers
-vim.o.scrolloff = 4 -- Lines of context
 vim.o.shiftround = true -- Round indent
 vim.o.shiftwidth = 2 -- Size of an indent
 vim.o.showmode = false -- Dont show mode since we have a statusline

@@ -25,9 +25,13 @@ require("lazy").setup("plugins", {
     rtp = {
       reset = true,
       disabled_plugins = {
+        "matchit",
+        "matchparen",
         "gzip",
         "tarPlugin",
+        "rplugin",
         "netrw",
+        "netrwPlugin",
         "tohtml",
         "tutor",
         "zipPlugin",
@@ -36,6 +40,7 @@ require("lazy").setup("plugins", {
   },
   ui = {
     throttle = 20,
+
     size = { width = 0.8, height = 0.8 },
     wrap = true,
     border = "none",
