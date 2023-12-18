@@ -90,7 +90,8 @@ return {
                 -- { bind.map, "<C-i>", lib.create_new_journal_entry, "New Journal Entry" },
                 -- { bind.map, "<C-i>", "<CMD>NeorgNewEntry<CR>", "New Journal Entry" },
                 -- strategy = "%y/%y-%m_%d",
-                { bind.map, "<C-i>", ":normal ggO<C-R>=strftime('%m_%d.%H:%M')<CR><CR>a ", "New Journal Entry" },
+                -- https://stackoverflow.com/questions/20021618/insert-text-conditionally-using-vim-key-mapping
+                { bind.map, "<C-i>", ":normal! ggO<C-R>=strftime('%m_%d.%H:%M')<CR><CR>a ", "New Journal Entry" },
                 -- { bind.map, "<C-i>", "[[:normal gg Ohi<CR>]]", "New Journal Entry" },
                 { bind.map, "<C-n>", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },
                 -- { bind.map, "<leader>o", "<CMD>Neorg keybind norg core.dirman.new.note<CR>", "New Note" },

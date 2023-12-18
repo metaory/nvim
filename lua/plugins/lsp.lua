@@ -64,7 +64,7 @@ return {
       --[[ XXX ]]
       -- ddwrite(neoconf_opts, "__plugin__neoconf_OPT_")
 
-      ddwrite(opts, "__plugin__LSPCONF_OPT_")
+      -- ddwrite(opts, "__plugin__LSPCONF_OPT_")
 
       -- require("neoconf").setup(neoconf_opts)
       require("user.format").create_autocmd(opts)
@@ -93,27 +93,26 @@ return {
           end
         end)
       end
-      ddwrite({ x = "xx", k = vim.tbl_keys(opts.servers) }, "____SERVVV_")
+      -- ddwrite({ x = "xx", k = vim.tbl_keys(opts.servers) }, "____SERVVV_")
       for key in pairs(opts.servers) do
         lspconfig[key].setup(opts.servers[key] or {})
       end
-      -- vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
       vim.diagnostic.config(opts.diagnostics)
-
-      -- if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
-      --   opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
-      --     or function(diagnostic)
-      --       for d, icon in pairs(icons.diagnostics) do
-      --         if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-      --           return "x" .. icon .. "y"
-      --         end
-      --       end
-      --     end
-      -- end
     end,
   },
 }
 
+-- vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+-- if type(opts.diagnostics.virtual_text) == "table" and opts.diagnostics.virtual_text.prefix == "icons" then
+--   opts.diagnostics.virtual_text.prefix = vim.fn.has("nvim-0.10.0") == 0 and "●"
+--     or function(diagnostic)
+--       for d, icon in pairs(icons.diagnostics) do
+--         if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
+--           return "x" .. icon .. "y"
+--         end
+--       end
+--     end
+-- end
 -- {
 --   "jay-babu/mason-null-ls.nvim",
 --   opts = function()

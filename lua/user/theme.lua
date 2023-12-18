@@ -145,7 +145,8 @@ M.setup = function(_, opts)
   M.set_hl("None", { bg = "none", fg = "none" })
 
   -- M.set_hl("Float", { fg = c.red })
-  M.set_hl("Normal", { fg = "none", bg = c.xxx })
+  M.set_hl("Normal", { fg = "#aaafee", bg = "none" })
+  M.set_hl("NormalNC", { bg = "none" })
 
   M.set_hl("Visual", { bg = c.blue, fg = "Black", bold = true })
 
