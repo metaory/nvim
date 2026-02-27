@@ -28,7 +28,7 @@ vim.opt.guicursor = {
   "r-cr:hor20-Cursor",
   "o-v:block-Cursor-blinkwait300-blinkon200-blinkoff150",
 }
-vim.opt.conceallevel = 0
+vim.opt.conceallevel = 2
 vim.opt.showmode = false
 vim.opt.laststatus = 3
 vim.opt.mouse = "a"
@@ -40,8 +40,7 @@ vim.opt.relativenumber = true
 vim.opt.scrolloff = 8
 vim.opt.virtualedit = list({ "block" })
 vim.opt.sidescrolloff = 8
-vim.opt.clipboard = "unnamedplus"
--- vim.opt.shell = "fish"
+vim.opt.clipboard = "unnamed"
 vim.opt.enc = "utf-8"
 vim.opt.background = "dark"
 vim.opt.showtabline = 0
@@ -62,7 +61,6 @@ vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
 
-vim.opt.showmatch = true
 vim.opt.undolevels = 10000
 vim.opt.swapfile = false
 vim.opt.undofile = true
@@ -82,10 +80,11 @@ vim.opt.diffopt = list({
   "filler",
   "closeoff",
   "iwhite",
-  -- "vertical",
   "context:5",
   "linematch:60",
 })
+vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
+vim.opt.formatoptions = "jcroqlnt"
 
 vim.opt.splitright = false
 vim.opt.splitbelow = true
@@ -94,18 +93,6 @@ vim.opt.viewoptions = {
   "folds",
 }
 vim.opt.showmatch = false
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true })
-vim.opt.showmode = false -- Dont show mode since we have a statusline
-vim.opt.formatoptions = vim.opt.formatoptions
-  - "a" -- Auto formatting is BAD.
-  - "t" -- Don't auto format my code. I got linters for that.
-  + "c" -- In general, I like it when comments respect textwidth
-  + "q" -- Allow formatting comments w/ gq
-  - "o" -- O and o, don't continue comments
-  + "r" -- But do continue when pressing enter.
-  + "n" -- Indent past the formatlistpat, not underneath it.
-  + "j" -- Auto-remove comments if possible.
-  - "2" -- I'm not in gradeschool anymore
 if vim.fn.executable("rg") then
   -- if ripgrep installed, use that as a grepper
   vim.opt.grepprg = "rg --vimgrep --no-heading"
@@ -116,7 +103,6 @@ vim.g.editorconfig = false
 
 vim.opt.statuscolumn = [[%!v:lua.require'metaory.utils.ui'.statuscolumn()]]
 
--- Fix markdown indentation settings
 vim.g.markdown_recommended_style = 0
 
 vim.o.formatexpr = "v:lua.require'metaory.utils'.formatexpr()"
