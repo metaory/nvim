@@ -1,4 +1,9 @@
-# dotfiles/.config/nvim
+<div align="center">
+    <img src"/.github/assets/banner.png" alt="logo" width="100">
+    <h1>dotfiles/.config/nvim</h1></h1>
+</div>
+
+
 
 <a href="https://dotfyle.com/metaory/dotfiles-config-nvim"><img src="https://dotfyle.com/metaory/dotfiles-config-nvim/badges/plugins?style=flat" /></a>
 <a href="https://dotfyle.com/metaory/dotfiles-config-nvim"><img src="https://dotfyle.com/metaory/dotfiles-config-nvim/badges/leaderkey?style=flat" /></a>
