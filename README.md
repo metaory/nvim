@@ -1,6 +1,6 @@
 <div align="center">
-    <img src".github/assets/banner.png" alt="logo" width="100">
-    <h1>dotfiles/.config/nvim</h1></h1>
+    <img src=".github/assets/banner.png" alt="logo" width="100">
+    <h1>dotfiles/.config/nvim</h1>
 </div>
 
 
