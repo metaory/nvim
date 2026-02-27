@@ -1,5 +1,5 @@
 <div align="center">
-    <img src=".github/assets/banner.png" alt="logo" width="100">
+    <img src=".github/assets/banner.png" alt="logo" width="80%">
     <h1>dotfiles/.config/nvim</h1>
 </div>
 
