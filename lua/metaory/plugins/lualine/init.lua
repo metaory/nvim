@@ -59,7 +59,7 @@ M.config = function()
           cond = require("noice").api.status.search.has,
           color = { fg = "#f0a275", bg = "NONE" },
         },
-        -- components.breadcrumbs,
+        { "filename", path = 1, color = { fg = colors.fg_dark, bg = "NONE" } },
       },
       lualine_x = {
         { require("recorder").recordingStatus },
@@ -67,7 +67,10 @@ M.config = function()
         components.lsp,
         -- components.filetype,
       },
-      lualine_y = {},
+      lualine_y = {
+        components.branch,
+        components.diagnostics,
+      },
       lualine_z = {
         components.location,
         components.scrollbar,

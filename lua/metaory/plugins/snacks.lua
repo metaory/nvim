@@ -561,14 +561,14 @@ return {
       desc = "LSP Functions",
     },
     {
-      "<leader>.",
+      "\\.",
       function()
         Snacks.scratch()
       end,
       desc = "Toggle Scratch Buffer",
     },
     {
-      "<leader>S",
+      "\\S",
       function()
         Snacks.scratch.select()
       end,

@@ -1,6 +1,7 @@
 local M = {}
 
 M.setup = function()
+  require("lspconfig") -- ensure configs are registered before vim.lsp.enable()
   local handlers = require("metaory.plugins.lsp.handlers")
 
   vim.lsp.enable("kulala_ls") -- npm install -g @mistweaverco/kulala-ls

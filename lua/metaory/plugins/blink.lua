@@ -222,8 +222,9 @@ return {
 
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
         ["<C-e>"] = { "hide", "fallback" },
-        ["<Tab>"] = {},
-        ["<S-Tab>"] = {},
+        ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
+        ["<S-Tab>"] = { "snippet_backward", "fallback" },
+        -- ["<CR>"] = { "accept", "fallback" },
       }
 
       return opts

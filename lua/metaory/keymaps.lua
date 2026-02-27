@@ -121,10 +121,18 @@ if vim.opt.diff:get() then
     { '<leader>3', ':diffget REMOTE<CR>', 'Take Remote' },
   })
 end
+local format_buf = function()
+  local ok, conform = pcall(require, "conform")
+  if ok and conform then
+    conform.format({ bufnr = 0, lsp_fallback = true, async = false })
+  else
+    vim.lsp.buf.format()
+  end
+end
 vim.tbl_map(keymap_set, {
   { '<leader>lj', '<cmd>%!jq<cr>', '[JSON] Format' },
   { '<leader>lJ', '<cmd>%!jq -c<cr>', '[JSON] Compact Format' },
-  { '<leader>lf', '<cmd>lua vim.lsp.buf.format()<CR>', 'Format' },
+  { '<leader>lf', format_buf, 'Format' },
 })
 keymap_set({
   '<F10>',
@@ -210,6 +218,11 @@ vim.tbl_map(keymap_set, {
   { '<M-x>', [[<CMD>bdelete<CR>]], 'Delete Buffer' },
 })
 vim.tbl_map(keymap_set, {
+  { '<M-g>', function() require('snacks').picker.grep { root = false } end, 'Grep (cwd)' },
+  { '<M-r>', function() require('snacks').picker.resume() end, 'Resume Last Picker' },
+  { l .. 'fM', function() require('snacks').picker.man() end, 'Man pages' },
+})
+vim.tbl_map(keymap_set, {
   { '<RightMouse>', rightmouse_yank, silent = true, 'Delete Buffer' },
 })
 vim.tbl_map(keymap_set, {
@@ -217,6 +230,7 @@ vim.tbl_map(keymap_set, {
 })
 vim.tbl_map(keymap_set, {
   { lt .. 'G', [[<Cmd>call glyph_palette#apply()<CR>]], 'Toggle Glyph' },
+  { lt .. 's', '<cmd>lua require("kulala").scratchpad()<cr>', 'Toggle scratchpad' },
   { lt .. 'O', [[<Cmd>    set cursorline! | set cursorcolumn!<CR>]], 'Toggle CursorLine' },
   { lt .. 'X', [[<Cmd>    TSContextToggle<CR>]], 'Toggle TSContext' },
   { lt .. 'h', [[<Cmd>    TSBufToggle highlight<CR>]], 'Toggle TSHighlight' },
