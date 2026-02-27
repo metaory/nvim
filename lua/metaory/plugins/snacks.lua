@@ -470,6 +470,20 @@ return {
       end,
       desc = "Notification History",
     },
+    {
+      "<M-o>",
+      function()
+        Snacks.picker.recent()
+      end,
+      desc = "Old Files",
+    },
+    {
+      "<M-r>",
+      function()
+        Snacks.picker.recent()
+      end,
+      desc = "Recent Files",
+    },
     -- find
     {
       "<leader>fb",

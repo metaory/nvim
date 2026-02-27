@@ -12,10 +12,16 @@ return {
       {
         "<C-p>",
         function()
-          -- require("metaory.plugins.fff.fff").fff()
           require("fff").find_files()
         end,
         desc = "Project Files",
+      },
+      {
+        "<M-f>",
+        function()
+          require("fff").find_files()
+        end,
+        desc = "Files",
       },
     },
     opts = {
