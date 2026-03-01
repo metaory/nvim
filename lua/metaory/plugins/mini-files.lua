@@ -17,7 +17,8 @@ return {
   init = function()
     local wk = require("which-key")
     wk.add({
-      { "<leader>e", desc = "Files", icon = " ", mode = "n" },
+      { "<leader>e", desc = "Files", icon = " ·", mode = "n" },
+      { "g.", desc = "Toggle hidden", icon = " ", mode = "n" },
     })
 
     local function open_files(data)
@@ -44,18 +45,49 @@ return {
     })
   end,
   config = function()
+
+    local icon_prefix = function(fs_entry)
+      if fs_entry.fs_type == 'directory' then
+        return ' ', 'MiniFilesDirectory'
+      end
+      return MiniFiles.default_prefix(fs_entry)
+    end
     require("mini.files").setup({
+      content = {
+        prefix = icon_prefix
+      },
       windows = {
-        preview = false,
+        preview = true,
         max_number = math.huge,
         width_focus = 30,
         width_nofocus = 20,
         width_preview = 25,
       },
       mappings = {
-        synchronize = "<leader>bw",
+        -- synchronize = "<leader>bw",
       },
       use_as_default_explorer = true,
+    })
+
+    local show_dotfiles = true
+
+    local filter_show = function(fs_entry) return true end
+
+    local filter_hide = function(fs_entry)
+      return not vim.startswith(fs_entry.name, '.')
+    end
+
+    local toggle_dotfiles = function()
+      show_dotfiles = not show_dotfiles
+      local new_filter = show_dotfiles and filter_show or filter_hide
+      MiniFiles.refresh({ content = { filter = new_filter } })
+    end
+
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'MiniFilesBufferCreate',
+      callback = function(args)
+        vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = args.data.buf_id })
+      end,
     })
 
     vim.api.nvim_create_autocmd("User", {
@@ -84,10 +116,10 @@ return {
             return doesNotExist and notSpecialBuffer and notNewBuffer
           end)
           :each(function(bufnr)
-            local bufName = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
-            table.insert(closedBuffers, bufName)
-            vim.api.nvim_buf_delete(bufnr, { force = true })
-          end)
+          local bufName = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
+          table.insert(closedBuffers, bufName)
+          vim.api.nvim_buf_delete(bufnr, { force = true })
+        end)
         if #closedBuffers == 0 then
           return
         end

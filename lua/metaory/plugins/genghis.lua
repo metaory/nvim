@@ -27,7 +27,7 @@ return {
   init = function()
     local wk = require("which-key")
     wk.add({
-      { "<leader>y", group = "Copy", icon = " " },
+      { "<leader>y", group = "Yank", icon = " +" },
     })
   end,
 }

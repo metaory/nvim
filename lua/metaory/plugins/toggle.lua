@@ -13,7 +13,7 @@ return {
     })
     local wk = require("which-key")
     wk.add({
-      { "<leader>u", group = "Toggle", icon = "󰨚 " },
+      { "<leader>u", group = "Toggle", icon = "󰨚 +" },
     })
   end,
 }

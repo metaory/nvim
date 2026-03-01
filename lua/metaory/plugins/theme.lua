@@ -81,12 +81,12 @@ M.config = function()
       hl.BlinkCmpMenuSelection = { bg = c.bg_highlight }
       hl.BlinkCmpScrollBarThumb = { bg = darker_bg }
       hl.BlinkCmpSource = { bg = c.none, fg = c.comment }
-
       hl.CmpDocumentation = { bg = darker_bg }
       hl.CmpDocumentationBorder = { bg = darker_bg }
       hl.TelescopeMatching = { fg = c.warning, bold = true }
       hl.TreesitterContext = { bg = c.bg_highlight }
       hl.NvimTreeFolderIcon = { fg = c.blue }
+      hl.FloatBorder = { fg = c.blue7, bg = "NONE" }
       hl.CmpBorder = { fg = c.fg_gutter, bg = "NONE" }
       hl.CmpDocBorder = { fg = c.fg_gutter, bg = "NONE" }
       hl.TelescopeBorder = { fg = c.fg_gutter, bg = "NONE" }
@@ -123,8 +123,9 @@ M.config = function()
       hl.WhichKeyIconOrange = { bg = "NONE", fg = c.fg_dark }
       hl.WhichKeyIconPurple = { bg = "NONE", fg = c.fg_dark }
       hl.WhichKeyIconYellow = { bg = "NONE", fg = c.fg_dark }
-      hl.WhichKeyGroup = { bg = "NONE", fg = c.fg }
-      hl.WhichKeyDesc = { bg = "NONE", fg = c.fg }
+      hl.WhichKeyGroup = { bg = "NONE", fg = c.purple }
+      hl.WhichKeyDesc = { bg = "NONE", fg = c.blue2 }
+      hl.WhichKey = { bg = "NONE", fg = c.orange }
       hl["@markup.list"] = { link = "@markup.strong" }
       hl["@markup.list.markdown"] = { link = "@markup.strong" }
       hl["@markup.heading.2"] = { fg = c.blue5, bold = true }

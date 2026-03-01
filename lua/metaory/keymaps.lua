@@ -104,15 +104,15 @@ vim.tbl_map(keymap_set, {
   { '<C-y>', '3<C-y>', 'Scroll screen up' },
   { 'Q', '<Nop>' },
 })
-vim.tbl_map(keymap_set, {
-  { '<leader><leader>', '<C-^>', 'Last Buffer' },
-  { '<leader>bn', '<cmd>enew<cr>', 'New File' },
-  { '<leader>bq', '<cmd>q<cr>', 'Quit File' },
-  { '<leader>bo', close_other_buffers, 'Close Other Buffers' },
-  { '<leader>bw', '<cmd>w<cr>', 'Write File' },
-  { '<leader>bW', '<cmd>wa<cr>', 'Write All Files' },
-  { '<leader>bQ', '<cmd>qa!<cr>', 'Quit nvim' },
-})
+-- vim.tbl_map(keymap_set, {
+--   { '<leader><leader>', '<C-^>', 'Last Buffer' },
+--   { '<leader>bn', '<cmd>enew<cr>', 'New File' },
+--   { '<leader>bq', '<cmd>q<cr>', 'Quit File' },
+--   { '<leader>bo', close_other_buffers, 'Close Other Buffers' },
+--   { '<leader>bw', '<cmd>w<cr>', 'Write File' },
+--   { '<leader>bW', '<cmd>wa<cr>', 'Write All Files' },
+--   { '<leader>bQ', '<cmd>qa!<cr>', 'Quit nvim' },
+-- })
 keymap_set({ '<leader>fn', '<cmd>lua Snacks.notifier.show_history()<cr>', 'Noice' })
 if vim.opt.diff:get() then
   vim.tbl_map(keymap_set, {
@@ -209,8 +209,9 @@ vim.tbl_map(keymap_set, {
   { '<M-d>', '<ESC>:<C-y>', 'Command' },
   { '<M-s>', '<ESC>:w<CR>', silent = true, 'Save File' },
   { '<M-Q>', ':qall!<CR>', silent = false, 'Exit All' },
-  { '<M-q>', quit_gracefully, silent = false, 'Exit' },
+  { '<M-q>', ':qall<CR>', mode = 'n', silent = true, 'Exit' },
   { 'q', quit_gracefully, mode = 't' },
+  { l .. 'q', quit_gracefully, silent = false, 'Exit' },
 })
 vim.tbl_map(keymap_set, {
   { '<M-j>', [[<CMD>bp<CR>]], 'Prev Buffer' },
@@ -245,8 +246,8 @@ vim.tbl_map(keymap_set, {
     [[:setlocal conceallevel=<C-r>=&conceallevel == 0 ? 3 : 0<CR><CR>]],
     "Toggle 'conceallevel'",
   },
-  { lt .. 'f', [[:set cmdheight=<C-r>=&cmdheight ? 0 : 1<CR><CR>]], "Toggle 'cmdheight'" },
-  { lt .. 'V', [[:set verbose=<C-r>=&verbose > 3 ? 3 : 9<CR><CR>]], "Toggle 'verbose'" },
+  { lt .. 'f', [[:set cmdheight=<C-r>=&cmdheight ? 0 : 1<CR><CR>]], "Toggle cmdheight" },
+  { lt .. 'V', [[:set verbose=<C-r>=&verbose > 3 ? 3 : 9<CR><CR>]], "Toggle verbose" },
   {
     lt .. 'd',
     [[:lua vim.diagnostic[vim.diagnostic.is_disabled() and 'enable' or 'disable']()<CR>]],

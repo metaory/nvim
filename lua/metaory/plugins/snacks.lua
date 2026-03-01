@@ -314,7 +314,7 @@ return {
           modified = "○",
           renamed = "",
           unmerged = " ",
-          untracked = "?",
+          untracked = "",
         },
         diagnostics = {
           Error = " ",
@@ -323,7 +323,7 @@ return {
           Info = " ",
         },
         lsp = {
-          unavailable = "",
+          unavailable = " ", -- 
           enabled = " ",
           disabled = " ",
           attached = "󰖩 ",
@@ -331,39 +331,39 @@ return {
         kinds = {
           Array = " ",
           Boolean = "󰨙 ",
-          Class = " ",
-          Color = " ",
-          Control = " ",
-          Collapsed = " ",
+          Class = " ",
+          Color = " ",
+          Control = " ", --  
+          Collapsed = " ", -- 
           Constant = "󰏿 ",
-          Constructor = " ",
+          Constructor = " ",
           Copilot = " ",
           Enum = " ",
           EnumMember = " ",
-          Event = " ",
+          Event = " ",
           Field = " ",
-          File = " ",
-          Folder = " ",
+          File = " ",
+          Folder = " ",
           Function = "󰊕 ",
           Interface = " ",
           Key = " ",
-          Keyword = " ",
+          Keyword = " ", -- 
           Method = "󰊕 ",
           Module = " ",
           Namespace = "󰦮 ",
           Null = " ",
           Number = "󰎠 ",
-          Object = " ",
+          Object = " ", -- 
           Operator = " ",
           Package = " ",
           Property = " ",
           Reference = " ",
           Snippet = "󱄽 ",
-          String = " ",
+          String = " ", -- 
           Struct = "󰆼 ",
           Text = " ",
           TypeParameter = " ",
-          Unit = " ",
+          Unit = " ",
           Unknown = " ",
           Value = " ",
           Variable = "󰀫 ",
@@ -380,7 +380,7 @@ return {
   },
   keys = {
     {
-      "<leader>fg",
+      "<leader>fs",
       function()
         Snacks.picker.grep({
           actions = {
@@ -509,10 +509,10 @@ return {
       desc = "Buffers",
     },
     {
-      "<leader>fs",
+      "<leader>fg",
       function()
         Snacks.picker.git_status({
-          icon = " ",
+          icon = " ",
           preview = "git_status",
         })
       end,

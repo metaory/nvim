@@ -11,6 +11,7 @@ return {
     "typescript",
     "tsx",
     "vue",
+    "lua",
   },
   config = function()
     require("colorizer").setup({
@@ -19,6 +20,7 @@ return {
         "less",
         "scss",
         "sass",
+        "lua",
         "javascript",
         "jsx",
         "typescript",
