@@ -89,6 +89,9 @@ M.config = function()
         enter = false,
         position = "100%",
         border = "rounded",
+        -- border = {
+        --   style = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+        -- },
         win_options = {
           winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
         },

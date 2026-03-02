@@ -73,6 +73,10 @@ M.config = function()
       hl.PmenuMatchSel = { fg = darker_orange }
       hl.PmenuMatch = { fg = darker_orange, bg = c.bg_highlight }
 
+      hl.SnacksDashboardTerminal = { fg = c.fg_gutter }
+      hl.SnacksDashboardDesc = { fg = c.teal }
+      hl.SnacksDashboardIcon = { fg = c.blue1 }
+
       hl.BlinkCmpMenu = { bg = "#010101" }
       hl.BlinkCmpMenuBorder = { fg = c.fg_gutter, bg = "#010101" }
       hl.BlinkCmpDoc = { bg = "#010101" }

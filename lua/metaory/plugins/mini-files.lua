@@ -17,7 +17,7 @@ return {
   init = function()
     local wk = require("which-key")
     wk.add({
-      { "<leader>e", desc = "Files", icon = " ·", mode = "n" },
+      { "<leader>e", desc = "Files", icon = " ", mode = "n" },
       { "g.", desc = "Toggle hidden", icon = " ", mode = "n" },
     })
 

@@ -97,7 +97,8 @@ vim.tbl_map(keymap_set, {
   { 'Y', 'y$' },
   { 'n', 'nzzzv' },
   { 'N', 'Nzzzv' },
-  { 'gj', 'mzJ`z', 'Join Line Below' },
+  -- { 'gj', 'mzJ`z', 'Join Line Below' },
+  { 'gj', '<ESC>:join<CR>', 'Join Line Below' },
   { '<', '<gv', 'Indent Less', mode = 'v' },
   { '>', '>gv', 'Indent More', mode = 'v' },
   { '<C-e>', '<Nop>', 'Scroll screen down' },
@@ -162,6 +163,7 @@ vim.tbl_map(keymap_set, {
   { '<leader>c,', modify_line_end_delimiter(','), "[Add] ',' to end of line" },
   { '<leader>c;', modify_line_end_delimiter(';'), "[Add] ';' to end of line" },
 })
+-- vim.tbl_map(keymap_set, { { '<leader>ol', ':Lazy<CR>', "Lazy 󰒲" } })
 vim.tbl_map(keymap_set, {
   { '<leader>cn', '*``cgn', '[Replace] Next Occurrence' },
   { '<leader>cN', '*``cgN', '[Replace] Next Occurrence (Backwards)' },
@@ -200,6 +202,7 @@ vim.tbl_map(keymap_set, {
   { '<M-Y>', [[<ESC>gg"+yGg;zz]], mode = 'n', 'N Yank whole file (S)' },
   { '<M-Y>', [[<ESC>gg"+yGg;zz]], mode = 'i', 'I Yank whole file (S)' },
   { '<M-Y>', [["+y]], mode = 'v', 'V Yank whole file (S)' },
+
   { '<M-y>', [["+y]], mode = 'v', 'V Yank Selection (S)' },
   { '<M-y>', [["+y$]], mode = 'n', 'N Yank till end-of-line (S)' },
   { '<M-y>', [[<ESC>gg"+yGg;zz]], mode = 'i', 'I Yank whole file (S)' },

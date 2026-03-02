@@ -11,10 +11,10 @@ M.config = function()
     icons = {
       breadcrumb = "»", -- symbol used in the command line area that shows your active key combo
       separator = "→", -- symbol used between a key and it's label
-      group = "", -- symbol prepended to a group
+      group = "+", -- symbol prepended to a group
     },
     win = {
-      padding = { 1, 1 }, -- extra window padding [top/bottom, right/left]
+      padding = { 0, 1 }, -- extra window padding [top/bottom, right/left]
     },
     triggers = {
       { "<auto>", mode = "nistc" },
@@ -48,15 +48,15 @@ M.config = function()
   }
   wk.add({
     { "<leader>*", hidden = true, nowait = false, remap = false },
-    { "<leader><Tab>", group = "Tabs", icon = "󰓩 +", nowait = false, remap = false },
+    { "<leader><Tab>", group = "Tabs", icon = "󰓩 ", nowait = false, remap = false },
   -- -- wk.add({
-    { "<leader>q",  desc = "Quit", icon = " ·" },
+    { "<leader>q",  desc = "Quit", icon = " " },
   -- -- })
-    { "<leader>b", group = "Buffers", icon = " +", nowait = false, remap = false },
-    { "<leader>c", group = "Code", icon = " +", nowait = false, remap = false },
-    { "<leader>d", group = "Debug", icon = " +", nowait = false, remap = false },
-    { "<leader>f", group = "Find", icon = " +", nowait = false, remap = false },
-    { "<leader>n", group = "Notification", icon = " ·" },
+    { "<leader>b", group = "Buffers", icon = " ", nowait = false, remap = false },
+    { "<leader>c", group = "Code", icon = " ", nowait = false, remap = false },
+    { "<leader>d", group = "Debug", icon = " ", nowait = false, remap = false },
+    { "<leader>f", group = "Find", icon = " ", nowait = false, remap = false },
+    { "<leader>n", group = "Notification", icon = " " },
     { "<leader>fb", desc = "Buffers", icon = " " },
     { "<leader>fc", desc = "Command History", icon = " " },
     { "<leader>ff", desc = "LSP Functions", icon = "󰊕 " },
@@ -72,7 +72,7 @@ M.config = function()
     { "<leader>fs", desc = "Git status", icon = " " },
     { "<leader>fg", desc = "Grep", icon = " " },
     { "<leader>fu", desc = "Undo history", icon = " " },
-    { "<leader>g", group = "Git", icon = " +", nowait = false, remap = false },
+    { "<leader>g", group = "Git", icon = " ", nowait = false, remap = false },
     { "<leader>gb", desc = "Blame", icon = " " },
     { "<leader>gB", desc = "GitHub Blame", icon = " " },
     { "<leader>gc", desc = "Review comments", icon = " " },
@@ -84,10 +84,10 @@ M.config = function()
     { "<leader>gym", desc = "URL (main)", icon = " " },
     { "<leader>gyb", desc = "URL (branch)", icon = " " },
     { "<leader>gyc", desc = "URL (commit)", icon = " " },
-    { "<leader>h", group = "Gitsigns", icon = " +", nowait = false, remap = false },
+    { "<leader>h", group = "Gitsigns", icon = " ", nowait = false, remap = false },
     { "<leader>ht", group = "Toggle", icon = "󰨚 ", nowait = false, remap = false },
 
-    { "<leader>l", group = "LSP", icon = " +", nowait = false, remap = false },
+    { "<leader>l", group = "LSP", icon = " ", nowait = false, remap = false },
     { "<leader>lr", desc = "LSP Restart", icon = " " },
     { "<leader>le", desc = "Restart eslint_d", icon = " " },
     { "<leader>lf", desc = "Format", icon = " " },
@@ -95,15 +95,16 @@ M.config = function()
     { "<leader>lF", desc = "Auto format", icon = "󰨚 " },
     { "<leader>lj", desc = "JSON format", icon = " " },
     { "<leader>lJ", desc = "JSON compact", icon = " " },
-    { "<leader>R", group = "Kulala", icon = "󰛳 +", nowait = false, remap = false },
-    { "<leader>o", group = "Octo", icon = " +", nowait = false, remap = false },
+    { "<leader>R", group = "Kulala", icon = "󰛳 ", nowait = false, remap = false },
+    { "<leader>o", group = "Open", icon = " ", nowait = false, remap = false },
     { "<leader>oc", desc = "Chrome DevTools", icon = "󰖟 " },
-    { "<leader>t", group = "Test", icon = " +", nowait = false, remap = false },
+    { "<leader>ol", ':Lazy<CR>', desc = "Lazy", icon = "󰒲 " },
+    { "<leader>t", group = "Test", icon = " ", nowait = false, remap = false },
     { "<leader>tn", desc = "Test nearest", icon = " " },
     { "<leader>tt", desc = "Test suite", icon = " " },
     { "<leader>tf", desc = "Test file", icon = " " },
     { "<leader>tr", desc = "Test last", icon = " " },
-    { "<leader>x", group = "Trouble", icon = " +", nowait = false, remap = false },
+    { "<leader>x", group = "Trouble", icon = " ", nowait = false, remap = false },
     { "<leader>xd", desc = "Diagnostics", icon = " " }, -- 󱖫
     { "<leader>xl", desc = "Loclist", icon = " " },
     { "<leader>xq", desc = "Quickfix", icon = " " }, --  
@@ -116,7 +117,7 @@ M.config = function()
     { "<leader>bW", desc = "Write all", icon = " " },
     { "<leader>bQ", desc = "Quit nvim", icon = " " },
     { "<leader>bz", desc = "Maximize", icon = " " },
-    { "<leader><leader>", desc = "Last buffer", icon = " ·" },
+    { "<leader><leader>", desc = "Last buffer", icon = " " },
     { "<leader>c,", desc = "Add ,", icon = " " },
     { "<leader>c;", desc = "Add ;", icon = " " },
     { "<leader>cn", desc = "Replace next", icon = " " },
@@ -143,11 +144,19 @@ M.config = function()
     { "<leader>dT", desc = "Terminate", icon = " " },
     { "<leader>du", desc = "DAP UI", icon = " " },
     { "<leader>dw", desc = "Widgets", icon = " " },
+
+    { "<leader>a", desc = "Code Action", icon = " " },
+
+    { '<leader><Tab>d', desc = 'tabclose', icon = '' },
+    { '<leader><Tab>n', desc = 'tabnext', icon = '' },
+    { '<leader><Tab>p', desc = 'tabprevious', icon = '' },
   }, opts)
 
   -- g prefix (LSP / glance / inc-rename)
   wk.add({
-    { "ga", desc = "Code Action", icon = " " },
+    { "ga", desc = "Align", icon = " " },
+    { "gA", desc = "Align w/preview", icon = " " },
+
     { "gd", desc = "Definitions", icon = "󰊕 " },
     { "gD", desc = "Declaration", icon = "󰊕 " },
     { "gr", desc = "References", icon = "󰊕 " },
@@ -168,8 +177,8 @@ M.config = function()
     { "g]", desc = "Move Right", icon = " " },
     { "gx", desc = "Browse", icon = " " },
   }, { mode = "n" })
---                      
-  --              ⛚ ⛛ ⎓ ⎇ ⌦ ⌧ ⌘  
+--                         
+  --              ⛚ ⛛ ⎓ ⎇ ⌦ ⌧ ⌘   
   -- z prefix (scroll / fold) ⎋ ⫽       
   wk.add({
 { "<C-w>d", icon = "", desc = "Diagnostic" },
@@ -200,9 +209,9 @@ M.config = function()
     { "zb", desc = "Scroll bottom", icon = " " },
     { "zt", desc = "Scroll top", icon = " " },
     { "zz", desc = "Scroll center", icon = "● " },
-    { "zR", desc = "Open all folds", icon = " " },
+    { "zR", desc = "Open all folds", icon = "↗ " },
     { "zr", desc = "Open fold", icon = " " },
-    { "zM", desc = "Close all folds", icon = " " },
+    { "zM", desc = "Close all folds", icon = "↙ " },
     { "zm", desc = "Close fold", icon = " " },
     { "z%", desc = "Matchup", icon = " " },
     { "z=", desc = "Spelling", icon = " " },

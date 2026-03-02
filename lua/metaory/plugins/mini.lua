@@ -54,6 +54,16 @@ function M.config()
     f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }), -- function
   })
 
+  require('mini.align').setup({
+    version = false,
+    opts = {
+      mappings = {
+        start = 'ga',
+        start_with_preview = 'gA',
+      },
+    },
+  })
+
   -- require("mini.pairs").setup({
   --   modes = { insert = true, command = true, terminal = false },
   --   -- skip autopair when next character is one of these

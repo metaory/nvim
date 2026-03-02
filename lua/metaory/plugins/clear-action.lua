@@ -5,7 +5,7 @@ return {
   init = function()
     local wk = require("which-key")
     wk.add({
-      { "ga", group = "Code Action" },
+      { "<leader>a", group = "Code Action" },
     })
   end,
   config = function()
@@ -29,7 +29,7 @@ return {
         },
       },
       mappings = {
-        code_action = "ga",
+        code_action = "<leader>a",
       },
     })
   end,

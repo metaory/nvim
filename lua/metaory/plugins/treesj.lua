@@ -3,7 +3,8 @@ return {
   dependencies = { "nvim-treesitter" },
   keys = {
     {
-      "<space>cb",
+      -- "<space>cb",
+      "gJ",
       function()
         require("treesj").toggle()
       end,
@@ -13,7 +14,8 @@ return {
   init = function()
     local wk = require("which-key")
     wk.add({
-      { "<space>cb", icon = "󰨚 " },
+      { "gj", icon = " " },
+      { "gJ", icon = " " },
     })
   end,
   config = function()
@@ -25,7 +27,7 @@ return {
     tsj.setup({
       use_default_keymaps = false,
       check_syntax_error = true,
-      max_join_length = 120,
+      max_join_length = 180,
       cursor_behavior = "hold",
 
       -- Notify about possible problems or not
