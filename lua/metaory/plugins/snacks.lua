@@ -30,7 +30,7 @@ return {
         { icon = " ", desc = "Old", padding = 1, key = "o", action = "<cmd>lua Snacks.picker.recent()<CR>" },
         { icon = " ", desc = "Find", padding = 1, key = "f", action = "<cmd>lua require('fff').find_files()<CR>" },
         { icon = " ", desc = "Grapple", padding = 1, key = "m", action = "<CMD>Grapple open_tags<CR>" },
-        { icon = " ", desc = "Config", padding = 1, key = "c", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+        { icon = " ", desc = "Config", padding = 1, key = "c", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
         { icon = " ", desc = "Quit", padding = 1, key = "q", action = "<CMD>qa<CR>" },
         { section = "startup", align = "center", padding = { 10, 4 } },
           -- cmd = "artprint --random -t metaory --tc 5 --style 1",
@@ -40,7 +40,7 @@ return {
       enabled = true,
     },
     picker = {
-      prompt = " ",
+      prompt = " ", -- 
       sources = {},
       focus = "input",
       layout = {
@@ -277,8 +277,8 @@ return {
           saved = " ",
         },
         ui = {
-          live = "󰐰 ",
-          hidden = " ",
+          live = " ", -- 󰐰
+          hidden = "h ",
           ignored = "i",
           follow = "f",
           selected = "● ",

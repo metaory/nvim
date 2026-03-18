@@ -7,6 +7,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.projects_dir = vim.env.HOME .. "/dev"
 vim.g.work_projects_dir = vim.env.HOME .. "/dev/port"
 
+require("hexocd-colors")
 require("metaory.lazy")
 require("metaory.options")
 require("metaory.keymaps")

@@ -55,6 +55,7 @@ vim.opt.belloff = "all"
 vim.opt.cursorline = true
 vim.opt.updatetime = 50
 vim.opt.confirm = true
+vim.opt.wrap = false
 
 vim.o.foldcolumn = "auto"
 vim.o.foldlevel = 99

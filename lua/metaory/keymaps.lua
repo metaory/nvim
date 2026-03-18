@@ -98,7 +98,7 @@ vim.tbl_map(keymap_set, {
   { 'n', 'nzzzv' },
   { 'N', 'Nzzzv' },
   -- { 'gj', 'mzJ`z', 'Join Line Below' },
-  { 'gj', '<ESC>:join<CR>', 'Join Line Below' },
+  { 'gj', '<ESC>:join<CR>$', 'Join Line Below' },
   { '<', '<gv', 'Indent Less', mode = 'v' },
   { '>', '>gv', 'Indent More', mode = 'v' },
   { '<C-e>', '<Nop>', 'Scroll screen down' },
@@ -178,10 +178,10 @@ vim.tbl_map(keymap_del, {
   { 'n', '<leader>l' },
 })
 vim.tbl_map(keymap_set, {
-  { '<C-a>', '<ESC>g0i', mode = 'i', silent = false },
-  { '<C-e>', '<ESC>g$i', mode = 'i', silent = false },
-  { '<C-f>', '<ESC>lli', mode = 'i', silent = false },
-  { '<C-b>', '<ESC>i', mode = 'i', silent = false },
+  { '<C-a>', '<ESC>g0i', mode = 'i', silent = true },
+  -- { '<C-e>', '<ESC>g$i', mode = 'i', silent = false },
+  { '<C-f>', '<ESC>lli', mode = 'i', silent = true },
+  { '<C-b>', '<ESC>i', mode = 'i', silent = true },
 })
 vim.tbl_map(keymap_set, {
   { '<M-k>', '<Up>', mode = 'c', silent = false },
@@ -212,7 +212,7 @@ vim.tbl_map(keymap_set, {
   { '<M-d>', '<ESC>:<C-y>', 'Command' },
   { '<M-s>', '<ESC>:w<CR>', silent = true, 'Save File' },
   { '<M-Q>', ':qall!<CR>', silent = false, 'Exit All' },
-  { '<M-q>', ':qall<CR>', mode = 'n', silent = true, 'Exit' },
+  { '<M-q>', ':q<CR>', mode = 'n', silent = true, 'Exit' },
   { 'q', quit_gracefully, mode = 't' },
   { l .. 'q', quit_gracefully, silent = false, 'Exit' },
 })

@@ -207,7 +207,7 @@ return {
 
       opts.keymap = {
         preset = "default",
-        ["<C-y>"] = { "select_and_accept" },
+      -- ["<C-y>"] = { "select_and_accept" },
 
         ["<C-l>"] = { "snippet_forward", "fallback" },
         ["<C-h>"] = { "snippet_backward", "fallback" },
@@ -221,12 +221,11 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-        ["<C-e>"] = { "hide", "fallback" },
+      -- ["<C-e>"] = { "hide", "fallback" },
         ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
         -- ["<CR>"] = { "accept", "fallback" },
       }
-
       return opts
     end,
   },
