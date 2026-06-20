@@ -78,10 +78,10 @@ local rightmouse_yank = function()
   vim.cmd 'normal! "+yi"'
 end
 
-vim.tbl_map(keymap_set, {
-  { 'j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], nil, expr = true },
-  { 'k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], nil, expr = true },
-})
+-- vim.tbl_map(keymap_set, {
+--   { 'j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], nil, expr = true },
+--   { 'k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], nil, expr = true },
+-- })
 vim.tbl_map(keymap_set, {
   { '<esc>', '<cmd>noh<cr><esc>', 'Escape and clear hlsearch', mode = 'i' },
   { '<esc>', '<cmd>noh<cr><esc>', 'Escape and clear hlsearch', mode = 'n' },
