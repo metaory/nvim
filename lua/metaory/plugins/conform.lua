@@ -12,6 +12,11 @@ return {
             GOFUMPT_SPLIT_LONG_LINES = "on",
           },
         },
+        prettier = {
+          options = {
+            ft_parsers = { astro = "astro" },
+          },
+        },
       },
       format_on_save = function(buf)
         if vim.g.disable_autoformat then

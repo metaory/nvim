@@ -3,7 +3,7 @@ local M = {}
 local stacks = {
   prettier = { "typescript", "typescriptreact", "javascript", "javascriptreact", "html", "css", "postcss", "markdown", "astro", "mdx", "json", "yaml" },
   vtsls = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
-  emmet = { "html", "css", "javascriptreact", "typescriptreact" },
+  emmet = { "html", "css", "javascriptreact", "typescriptreact", "astro" },
 }
 
 local langs = {
@@ -13,18 +13,19 @@ local langs = {
   nix = { parser = "nix", format = { "nixfmt" } },
   dockerfile = { parser = "dockerfile", lsp = "dockerls" },
   http = { parser = "http", lsp = "kulala_ls" },
-  astro = { parser = "astro", lsp = "astro" },
+  astro = { parser = "astro", lsp = "astro", lsp_format = false },
+  css = { parser = "css", lsp = "cssls", lsp_format = false },
   bash = { parser = "bash", lsp = "bashls" },
   typescriptreact = { parser = "tsx" },
   javascriptreact = { parser = "javascript" },
   mdx = { parser = "markdown" },
-  postcss = { parser = "css" },
+  postcss = { parser = "css", lsp = "cssls", lsp_format = false },
   jsonc = { parser = "jsonc" },
   c = { parser = "c" },
   java = { parser = "java" },
   graphql = { parser = "graphql" },
   ruby = { parser = "ruby" },
-  scss = { parser = "scss" },
+  scss = { parser = "scss", lsp = "cssls", lsp_format = false },
   regex = { parser = "regex" },
   ninja = { parser = "ninja" },
   rst = { parser = "rst" },
@@ -33,6 +34,8 @@ local langs = {
 
 local servers = {
   { name = "harper_ls", config = { filetypes = { "markdown" } } },
+  { name = "cssls", config = { filetypes = { "css", "scss", "less", "postcss" } } },
+  { name = "stylelint_lsp" },
   { name = "tailwindcss" },
   { name = "oxlint", on_save = "LspOxlintFixAll" },
   { name = "jsonls" },
