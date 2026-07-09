@@ -1,48 +1,17 @@
 local M = {}
 
 M.setup = function()
-  require("lspconfig") -- ensure configs are registered before vim.lsp.enable()
+  local lang = require("metaory.lang")
   local handlers = require("metaory.plugins.lsp.handlers")
 
-  vim.lsp.enable("kulala_ls") -- npm install -g @mistweaverco/kulala-ls
-  vim.lsp.enable("vtsls")
-  vim.lsp.enable("astro")
-  vim.lsp.enable("pyright")
-  -- yay -S dockerfile-language-server
-  vim.lsp.enable("dockerls") -- npm install -g dockerfile-language-server-nodejs
+  require("lspconfig")
 
-  -- pacman -S lua-language-server
-  vim.lsp.enable("lua_ls") -- brew install lua-language-server
-
-  -- pacman -S vscode-json-languageserver
-  vim.lsp.enable("jsonls") -- brew install vscode-langservers-extracted
-
-  -- pacman -S yaml-language-server
-  vim.lsp.enable("yamlls") -- npm i -g add yaml-language-server
-
---  vim.lsp.enable("prismals") -- npm install -g @prisma/language-server
-
--- pacman -S vscode-html-languageserver
-  vim.lsp.enable("html") -- brew install vscode-langservers-extracted
-
-  -- pacman -S gopls
-  vim.lsp.enable("gopls") -- brew install gopls
-
-  -- pacman -S bash-language-server
-  vim.lsp.enable("bashls") -- npm i -g bash-language-server
-
- -- vim.lsp.enable("helm_ls") -- brew install helm-ls
-  
- -- pacman -S harper
- vim.lsp.config("harper_ls", { filetypes = { "markdown" } })
-  vim.lsp.enable("harper_ls")
-
-  -- vscode-css-languageserver, tailwindcss-language-server
-  vim.lsp.enable("tailwindcss")
-
-  -- yay -S oxlint-bin
-  vim.lsp.enable("oxlint") -- npm i -g oxlint
-  -- vim.lsp.enable("denols")
+  for _, server in ipairs(lang.lsp_servers()) do
+    if server.config then
+      vim.lsp.config(server.name, server.config)
+    end
+    vim.lsp.enable(server.name)
+  end
 
   vim.lsp.config("*", {
     capabilities = handlers.capabilities(),
@@ -53,27 +22,6 @@ M.setup = function()
     callback = function(event)
       local client = vim.lsp.get_client_by_id(event.data.client_id)
       handlers.on_attach(client, event.buf)
-
-      if client ~= nil and client.name == "gopls" then
-        vim.api.nvim_create_autocmd("BufWritePre", {
-          pattern = { "*.go" },
-          callback = function()
-            local params = vim.lsp.util.make_range_params(nil, "utf-16")
-            ---@diagnostic disable-next-line: inject-field
-            params.context = { only = { "source.organizeImports" } }
-            local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
-            for _, res in pairs(result or {}) do
-              for _, r in pairs(res.result or {}) do
-                if r.edit then
-                  vim.lsp.util.apply_workspace_edit(r.edit, "utf-16")
-                else
-                  vim.lsp.buf.execute_command(r.command)
-                end
-              end
-            end
-          end,
-        })
-      end
     end,
   })
 end

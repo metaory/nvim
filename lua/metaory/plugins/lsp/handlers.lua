@@ -34,19 +34,19 @@ function M.diagnostic_goto(next, severity)
   end
 end
 
+local lang = require("metaory.lang")
+
 local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
 
 M.on_attach = function(client, bufnr)
-  if client.name == "lua_ls" then
+  if lang.lsp_no_format()[client.name] then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
   end
 
-  if client.name == "oxlint" then
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = "LspOxlintFixAll",
-    })
+  local hook = lang.server_hooks()[client.name]
+  if hook then
+    hook(client, bufnr)
   end
 
   if client.server_capabilities.documentFormattingProvider then
@@ -56,7 +56,7 @@ M.on_attach = function(client, bufnr)
     })
   end
 
-  if client.supports_method("textDocument/inlayHint") then
+  if client:supports_method("textDocument/inlayHint") then
     vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>lh", "", {
       callback = function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -149,7 +149,7 @@ function M.get_clients(opts)
     if opts and opts.method then
       ---@param client vim.lsp.Client
       ret = vim.tbl_filter(function(client)
-        return client.supports_method(opts.method, { bufnr = opts.bufnr })
+        return client:supports_method(opts.method, opts.bufnr)
       end, ret)
     end
   end
@@ -167,8 +167,8 @@ function M.on_rename(from, to, rename)
 
   local clients = M.get_clients()
   for _, client in ipairs(clients) do
-    if client.supports_method("workspace/willRenameFiles") then
-      local resp = client.request_sync("workspace/willRenameFiles", changes, 1000, 0)
+    if client:supports_method("workspace/willRenameFiles") then
+      local resp = client:request_sync("workspace/willRenameFiles", changes, 1000, 0)
       if resp and resp.result ~= nil then
         vim.lsp.util.apply_workspace_edit(resp.result, client.offset_encoding)
       end
@@ -180,8 +180,8 @@ function M.on_rename(from, to, rename)
   end
 
   for _, client in ipairs(clients) do
-    if client.supports_method("workspace/didRenameFiles") then
-      client.notify("workspace/didRenameFiles", changes)
+    if client:supports_method("workspace/didRenameFiles") then
+      client:notify("workspace/didRenameFiles", changes)
     end
   end
 end

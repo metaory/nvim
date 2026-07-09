@@ -11,14 +11,13 @@ M.config = function()
 
   illuminate.configure({
     providers = {
-      "lsp",
       "treesitter",
       "regex",
     },
     delay = 200,
     large_file_cutoff = 2000,
     large_file_overrides = {
-      providers = { "lsp" },
+      providers = { "treesitter" },
     },
     filetypes_denylist = {
       "help",

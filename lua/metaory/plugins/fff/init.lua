@@ -40,7 +40,6 @@ return {
           git_status_hl = true, -- use the git status highlight group for the filename
         },
       },
-      preview = "none",
     },
   },
 }

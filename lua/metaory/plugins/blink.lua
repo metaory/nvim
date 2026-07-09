@@ -53,7 +53,7 @@ return {
             path = "~/.config/nvim/lua/metaory/snippets/markdown.json",
           })
 
-          require("luasnip.loaders.from_lua").load({ paths = { "/Users/metaory/.config/nvim/lua/metaory/snippets" } })
+          require("luasnip.loaders.from_lua").load({ paths = { vim.fn.stdpath("config") .. "/lua/metaory/snippets" } })
           require("luasnip.loaders.from_vscode").lazy_load()
         end,
       },
@@ -68,7 +68,7 @@ return {
           "nvim-telescope/telescope.nvim",
           "neovim/nvim-lspconfig",
         },
-        ft = { "html", "css", "javascriptreact", "typescriptreact" },
+        ft = require("metaory.lang").fts_emmet(),
         opts = {}, -- your configuration
       },
       -- "onsails/lspkind-nvim",

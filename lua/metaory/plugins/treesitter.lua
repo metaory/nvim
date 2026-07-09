@@ -14,41 +14,18 @@ local M = {
 M.config = function()
   local parsers = require("nvim-treesitter.parsers")
   local configs = require("nvim-treesitter.configs")
+  local lang = require("metaory.lang")
+
+  local available = parsers.get_parser_configs()
+  local ensure = vim.tbl_filter(function(p)
+    return available[p] ~= nil
+  end, lang.treesitter_parsers())
 
   configs.setup({
     sync_install = false,
     auto_install = true,
     ignore_install = {},
-    ensure_installed = {
-      "c",
-      "lua",
-      "vim",
-      "vimdoc",
-      "query",
-      "typescript",
-      "javascript",
-      "html",
-      "http",
-      "graphql",
-      "css",
-      "json",
-      "yaml",
-      "bash",
-      "dockerfile",
-      "go",
-      "java",
-      "jsonc",
-      "lua",
-      "regex",
-      "ruby",
-      "scss",
-      "tsx",
-      "yaml",
-      "ninja",
-      "python",
-      "rst",
-      "toml",
-    },
+    ensure_installed = ensure,
     modules = {},
     highlight = {
       enable = true,
@@ -110,6 +87,7 @@ M.config = function()
     },
     matchup = {
       enable = true,
+      disable = { "html" },
       disable_virtual_text = true,
     },
   })
@@ -117,7 +95,7 @@ M.config = function()
   local parser_config = parsers.get_parser_configs()
   parser_config.markdown.filetype_to_parsername = "octo"
 
-  vim.g.skip_ts_context_commentstring_module = true
+  vim.g.matchup_treesitter_disabled = { "html" }
   vim.g.matchup_matchparen_offscreen = { method = "popup" }
 end
 

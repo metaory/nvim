@@ -102,8 +102,6 @@ end
 
 vim.g.editorconfig = false
 
-vim.opt.statuscolumn = [[%!v:lua.require'metaory.utils.ui'.statuscolumn()]]
-
 vim.g.markdown_recommended_style = 0
 
 vim.o.formatexpr = "v:lua.require'metaory.utils'.formatexpr()"
