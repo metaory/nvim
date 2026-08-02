@@ -13,3 +13,6 @@ require("metaory.options")
 require("metaory.keymaps")
 require("metaory.autocmd")
 require("metaory.winbar")
+-- jackMort/ChatGPT.nvim
+-- olimorris/codecompanion.nvim
+-- yetone/avante.nvim

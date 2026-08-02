@@ -13,6 +13,10 @@ return {
     global_keymaps_prefix = "<leader>R",
     kulala_keymaps_prefix = "",
     lsp = { formatter = true },
+    -- needs `tree-sitter` CLI (pacman -S tree-sitter-cli)
+    treesitter = {
+      enable = vim.fn.executable("tree-sitter") == 1,
+    },
     ui = {
       ---@type table<string, string|vim.api.keyset.highlight>
       syntax_hl = {

@@ -10,14 +10,12 @@ M.config = function()
   end
 
   illuminate.configure({
-    providers = {
-      "treesitter",
-      "regex",
-    },
+    -- treesitter provider breaks on current nvim-treesitter locals API
+    providers = { "regex" },
     delay = 200,
     large_file_cutoff = 2000,
     large_file_overrides = {
-      providers = { "treesitter" },
+      providers = { "regex" },
     },
     filetypes_denylist = {
       "help",

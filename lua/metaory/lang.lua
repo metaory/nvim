@@ -20,7 +20,8 @@ local langs = {
   javascriptreact = { parser = "javascript" },
   mdx = { parser = "markdown" },
   postcss = { parser = "css", lsp = "cssls", lsp_format = false },
-  jsonc = { parser = "jsonc" },
+  -- jsonc parser lives on GitLab (often blocked); use json
+  jsonc = { parser = "json" },
   c = { parser = "c" },
   java = { parser = "java" },
   graphql = { parser = "graphql" },

@@ -24,7 +24,8 @@ M.config = function()
   configs.setup({
     sync_install = false,
     auto_install = true,
-    ignore_install = {},
+    -- GitLab-hosted; downloads fail with Cloudflare 1009 here
+    ignore_install = { "jsonc" },
     ensure_installed = ensure,
     modules = {},
     highlight = {
@@ -94,6 +95,7 @@ M.config = function()
 
   local parser_config = parsers.get_parser_configs()
   parser_config.markdown.filetype_to_parsername = "octo"
+  vim.treesitter.language.register("json", "jsonc")
 
   vim.g.matchup_treesitter_disabled = { "html" }
   vim.g.matchup_matchparen_offscreen = { method = "popup" }
