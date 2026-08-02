@@ -9,6 +9,73 @@ return {
       timeout = 2000,
     },
     dashboard = {
+      width = 60,
+      row = nil, -- dashboard position. nil for center
+      col = nil, -- dashboard position. nil for center
+      pane_gap = 4, -- empty columns between vertical panes
+      autokeys = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ", -- autokey sequence
+      preset = {
+        pick = nil,
+        keys = {
+          {
+            icon = " ",
+            desc = "Last Session",
+            padding = 1,
+            key = "s",
+            action = "<cmd>silent lua require('persistence').load()<CR>",
+          },
+          { icon = " ", desc = "New file", padding = 1, key = "e", action = "<CMD>ene <BAR> startinsert<CR>" },
+          { icon = " ", desc = "Old", padding = 1, key = "o", action = "<cmd>lua Snacks.picker.recent()<CR>" },
+          { icon = " ", desc = "Find", padding = 1, key = "f", action = "<cmd>lua require('fff').find_files()<CR>" },
+          { icon = " ", desc = "Grapple", padding = 1, key = "m", action = "<CMD>Grapple open_tags<CR>" },
+          {
+            icon = " ",
+            desc = "Config",
+            padding = 1,
+            key = "c",
+            action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+          },
+          { icon = " ", desc = "Quit", padding = 1, key = "q", action = "<CMD>qa<CR>" },
+        },
+        -- Used by the `header` section
+        header = [[
+▄▄   ▄▄ ▄▄▄▄▄ ▄▄▄▄▄▄  ▄▄▄   ▄▄▄  ▄▄▄▄  ▄▄ ▄▄ 
+██▀▄▀██ ██▄▄    ██   ██▀██ ██▀██ ██▄█▄ ▀███▀ 
+██   ██ ██▄▄▄   ██   ██▀██ ▀███▀ ██ ██   █   
+]],
+      },
+      -- item field formatters
+      formats = {
+        icon = function(item)
+          if item.file and item.icon == "file" or item.icon == "directory" then
+            return require("snacks").dashboard.icon(item.file, item.icon)
+          end
+          return { item.icon, width = 2, hl = "icon" }
+        end,
+        footer = { "%s", align = "center" },
+        header = { "%s", align = "center" },
+        file = function(item, ctx)
+          local fname = vim.fn.fnamemodify(item.file, ":~")
+          fname = ctx.width and #fname > ctx.width and vim.fn.pathshorten(fname) or fname
+          if #fname > ctx.width then
+            local dir = vim.fn.fnamemodify(fname, ":h")
+            local file = vim.fn.fnamemodify(fname, ":t")
+            if dir and file then
+              file = file:sub(-(ctx.width - #dir - 2))
+              fname = dir .. "/…" .. file
+            end
+          end
+          local dir, file = fname:match("^(.*)/(.+)$")
+          return dir and { { dir .. "/", hl = "dir" }, { file, hl = "file" } } or { { fname, hl = "file" } }
+        end,
+      },
+      sections = {
+        { section = "header" },
+        { section = "keys", gap = 1, padding = 1 },
+        { section = "startup" },
+      },
+    },
+    dashboardz = {
       sections = {
         { row = nil, padding = { 1, 0 } },
         -- { section = "header",  padding = { 4, 14 } },
@@ -25,15 +92,27 @@ return {
           -- gap = 2,
           -- pane = 1,
         },
-        { icon = " ", desc = "Last Session", padding = 1, key = "s", action = "<cmd>silent lua require('persistence').load()<CR>" },
+        {
+          icon = " ",
+          desc = "Last Session",
+          padding = 1,
+          key = "s",
+          action = "<cmd>silent lua require('persistence').load()<CR>",
+        },
         { icon = " ", desc = "New file", padding = 1, key = "e", action = "<CMD>ene <BAR> startinsert<CR>" },
         { icon = " ", desc = "Old", padding = 1, key = "o", action = "<cmd>lua Snacks.picker.recent()<CR>" },
         { icon = " ", desc = "Find", padding = 1, key = "f", action = "<cmd>lua require('fff').find_files()<CR>" },
         { icon = " ", desc = "Grapple", padding = 1, key = "m", action = "<CMD>Grapple open_tags<CR>" },
-        { icon = " ", desc = "Config", padding = 1, key = "c", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+        {
+          icon = " ",
+          desc = "Config",
+          padding = 1,
+          key = "c",
+          action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+        },
         { icon = " ", desc = "Quit", padding = 1, key = "q", action = "<CMD>qa<CR>" },
         { section = "startup", align = "center", padding = { 10, 4 } },
-          -- cmd = "artprint --random -t metaory --tc 5 --style 1",
+        -- cmd = "artprint --random -t metaory --tc 5 --style 1",
       },
     },
     image = {
