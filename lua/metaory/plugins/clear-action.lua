@@ -23,7 +23,7 @@ local opts = {
 }
 
 return {
-  "luckasRanarison/clear-action.nvim",
+  "metaory/clear-action.nvim",
   dependencies = "folke/which-key.nvim",
   event = "LspAttach",
   init = function()
