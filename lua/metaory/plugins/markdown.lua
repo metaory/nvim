@@ -43,6 +43,7 @@ return {
         code = {
           border = "thin",
           left_pad = 2,
+          render_modes = true,
           width = "block",
           min_width = 80,
           highlight = "CodeBlock",

@@ -1,6 +1,6 @@
 -- Neovim 0.12 compat: match captures may be node lists, not single nodes.
 -- Shadows plugin module via rtp precedence.
-local query = require "vim.treesitter.query"
+local query = require("vim.treesitter.query")
 
 local html_script_type_languages = {
   ["importmap"] = "json",
@@ -31,7 +31,7 @@ local function get_node(match, id)
 end
 
 local function get_parser_from_markdown_info_string(injection_alias)
-  local match = vim.filetype.match { filename = "a." .. injection_alias }
+  local match = vim.filetype.match({ filename = "a." .. injection_alias })
   return match or non_filetype_match_injection_language_aliases[injection_alias] or injection_alias
 end
 
@@ -69,7 +69,7 @@ query.add_predicate("is?", function(match, _pattern, bufnr, pred)
   if not valid_args("is?", pred, 2) then
     return
   end
-  local locals = require "nvim-treesitter.locals"
+  local locals = require("nvim-treesitter.locals")
   local node = get_node(match, pred[2])
   local types = { unpack(pred, 3) }
   if not node then

@@ -1,7 +1,20 @@
 local M = {}
 
 local stacks = {
-  prettier = { "typescript", "typescriptreact", "javascript", "javascriptreact", "html", "css", "postcss", "markdown", "astro", "mdx", "json", "yaml" },
+  prettier = {
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "html",
+    "css",
+    "postcss",
+    "markdown",
+    "astro",
+    "mdx",
+    "json",
+    "yaml",
+  },
   vtsls = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
   emmet = { "html", "css", "javascriptreact", "typescriptreact", "astro" },
 }

@@ -37,9 +37,9 @@ vim.opt.wildignore = vim.opt.wildignore + { "**/coverage/*", "**/node_modules/*"
 vim.opt.termguicolors = true
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.scrolloff = 8
+vim.opt.scrolloff = 0
 vim.opt.virtualedit = list({ "block" })
-vim.opt.sidescrolloff = 8
+vim.opt.sidescrolloff = 0
 vim.opt.clipboard = "unnamed"
 vim.opt.enc = "utf-8"
 vim.opt.background = "dark"
@@ -61,6 +61,11 @@ vim.o.foldcolumn = "auto"
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldenable = true
+
+vim.opt.spell = false
+vim.opt.spellfile = "/home/metaory/.config/nvim/spell/en.utf-8.add"
+vim.opt.spelllang = { "en" }
+vim.opt.dictionary = "/home/metaory/.config/nvim/spell/english-dict"
 
 vim.opt.undolevels = 10000
 vim.opt.swapfile = false

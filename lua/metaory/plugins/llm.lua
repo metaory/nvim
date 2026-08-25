@@ -1,5 +1,28 @@
 return {
   {
+    "nickjvandyke/opencode.nvim",
+    version = "*",
+    config = function()
+      vim.g.opencode_opts = {}
+
+      vim.keymap.set({ "n", "x" }, "<C-x>i", function()
+        require("opencode").ask("@this: ")
+      end, { desc = "Ask OpenCode" })
+
+      vim.keymap.set({ "n", "x" }, "<C-x><C-p>", function()
+        require("opencode").select()
+      end, { desc = "OpenCode select" })
+
+      vim.keymap.set({ "n", "x" }, "<C-x>o", function()
+        return require("opencode").operator("@this ")
+      end, { expr = true, desc = "Send range to OpenCode" })
+
+      -- vim.keymap.set({ "n" }, "<C-x>z", function()
+      --   return require("opencode").operator("@this ") .. "_"
+      -- end, { expr = true, desc = "Send line to OpenCode" })
+    end,
+  },
+  {
     "robitx/gp.nvim",
     config = function()
       local system_prompt = "You are an AI working as a code editor.\n\n"
@@ -25,38 +48,58 @@ return {
       require("gp").setup({
         agents = {
           {
-            provider = "openai",
             name = "CodeGPT4o",
-            chat = false,
-            command = true,
-            model = { model = "gpt-4o", temperature = 0.2, top_p = 1 },
-            system_prompt = system_prompt,
-            -- system_prompt = require("gp.defaults").code_system_prompt,
+            disable = true,
           },
           {
-            provider = "openai",
             name = "CodeGPT-o3-mini",
-            chat = false,
-            command = true,
-            model = { model = "o3-mini", temperature = 0.2, top_p = 1 },
-            system_prompt = system_prompt,
+            disable = true,
           },
           {
-            provider = "openai",
             name = "CodeGPT4o-mini",
+            disable = true,
+          },
+          -- ########################################
+          {
+            provider = "openai",
+            name = "CodeGPT-o4-mini",
             chat = false,
             command = true,
-            model = { model = "gpt-4o-mini", temperature = 0.2, top_p = 1 },
+            model = { model = "o4-mini", temperature = 0.2, top_p = 1 },
             system_prompt = system_prompt,
           },
           {
             provider = "openai",
-            name = "CodeGPT5.6-luna",
+            name = "CodeGPT-5.4-mini",
+            chat = false,
+            command = true,
+            model = { model = "gpt-5.4-mini", temperature = 0.2, top_p = 1 },
+            system_prompt = system_prompt,
+          },
+          {
+            provider = "openai",
+            name = "CodeGPT-5.6-Luna",
             chat = false,
             command = true,
             model = { model = "gpt-5.6-luna" },
             system_prompt = system_prompt,
           },
+          {
+            provider = "openai",
+            name = "CodeGPT-5.6-Terra",
+            chat = false,
+            command = true,
+            model = { model = "gpt-5.6-terra" },
+            system_prompt = system_prompt,
+          },
+          -- {
+          --   provider = "xai",
+          --   name = "grok4.5",
+          --   chat = false,
+          --   command = true,
+          --   model = { model = "grok-5-6" },
+          --   system_prompt = system_prompt,
+          -- },
           -- {
           --   provider = "openai",
           --   name = "CodeGPT5.6-terra",
