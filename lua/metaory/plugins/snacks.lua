@@ -118,6 +118,9 @@ return {
     image = {
       enabled = true,
     },
+    input = {
+      enabled = true,
+    },
     picker = {
       prompt = " ", -- 
       sources = {},
@@ -265,6 +268,7 @@ return {
             ["<c-w>J"] = "layout_bottom",
             ["<c-w>K"] = "layout_top",
             ["<c-w>L"] = "layout_right",
+            -- ["<a-o>"] = { "opencode_send", mode = { "n", "i" } },
             ["?"] = "toggle_help_input",
             ["G"] = "list_bottom",
             ["gg"] = "list_top",
@@ -429,6 +433,17 @@ return {
           Variable = "󰀫 ",
         },
       },
+      -- actions = {
+      --   opencode_send = function(picker)
+      --     local items = vim.tbl_map(function(item)
+      --       return item.file
+      --           and require("opencode").format({ path = item.file, from = item.pos, to = item.end_pos })
+      --         or item.text
+      --     end, picker:selected({ fallback = true }))
+      --
+      --     require("opencode").prompt(table.concat(items, ", ") .. " ")
+      --   end,
+      -- },
     },
     bigfile = { enabled = true },
     quickfile = { enabled = true },

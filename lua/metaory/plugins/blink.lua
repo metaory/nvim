@@ -158,12 +158,16 @@ return {
 
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
         default = { "lsp", "path", "snippets", "buffer" },
+        -- per_filetype = {
+        --   opencode_ask = { "lsp", "buffer" },
+        -- },
         providers = {
           lsp = {
             name = "lsp",
             enabled = true,
             module = "blink.cmp.sources.lsp",
             score_offset = 90, -- the higher the number, the higher the priority
+            fallbacks = {},
           },
           path = {
             name = "Path",
@@ -207,7 +211,7 @@ return {
 
       opts.keymap = {
         preset = "default",
-      -- ["<C-y>"] = { "select_and_accept" },
+        -- ["<C-y>"] = { "select_and_accept" },
 
         ["<C-l>"] = { "snippet_forward", "fallback" },
         ["<C-h>"] = { "snippet_backward", "fallback" },
@@ -221,7 +225,7 @@ return {
         ["<C-f>"] = { "scroll_documentation_down", "fallback" },
 
         ["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
-      -- ["<C-e>"] = { "hide", "fallback" },
+        -- ["<C-e>"] = { "hide", "fallback" },
         ["<Tab>"] = { "select_and_accept", "snippet_forward", "fallback" },
         ["<S-Tab>"] = { "snippet_backward", "fallback" },
         -- ["<CR>"] = { "accept", "fallback" },

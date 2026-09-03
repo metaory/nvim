@@ -74,7 +74,7 @@ M.config = function()
       lualine_z = {
         components.location,
         components.scrollbar,
-        -- nvim_tree_shift,
+        -- { require("opencode").statusline },
       },
     },
   })
