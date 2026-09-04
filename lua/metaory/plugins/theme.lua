@@ -155,6 +155,63 @@ M.config = function()
       hl["FFFGitModified"] = { fg = "#152339" }
       hl["FFFGitSignDeleted"] = { fg = c.orange }
 
+      -- ~/.local/share/nvim/lazy/avante.nvim/lua/avante/highlights.lua
+      -- hl.AvanteSubtitle = { fg = c.magenta, bg = c.blue, bold = true }
+      -- hl.AvanteReversedSubtitle = { fg = c.magenta, bg = "NONE" }
+      -- hl.AvanteTitle = { fg = c.magenta }
+      -- hl.AvanteReversedTitle = { fg = c.magenta }
+      -- hl.AvanteSubtitle = { fg = c.magenta }
+      -- hl.AvanteReversedSubtitle = { fg = c.magenta }
+      -- hl.AvanteThirdTitle = { fg = c.magenta }
+      -- hl.AvanteReversedThirdTitle = { fg = c.magenta }
+      -- hl.AvanteSuggestion = { fg = c.magenta }
+      -- hl.AvanteAnnotation = { fg = c.magenta }
+      -- hl.AvantePopupHint = { fg = c.magenta }
+      -- hl.AvanteInlineHint = { fg = c.magenta }
+      -- hl.AvanteToBeDeleted = { fg = c.magenta }
+      -- hl.AvanteToBeDeletedWOStrikethrough = { fg = c.magenta }
+      -- hl.AvanteConfirmTitle = { fg = c.magenta }
+      -- hl.AvanteButtonDefault = { fg = c.magenta }
+      -- hl.AvanteButtonDefaultHover = { fg = c.magenta }
+      -- hl.AvanteButtonPrimary = { fg = c.magenta }
+      -- hl.AvanteButtonPrimaryHover = { fg = c.magenta }
+      -- hl.AvanteButtonDanger = { fg = c.magenta }
+      -- hl.AvanteButtonDangerHover = { fg = c.magenta }
+      -- hl.AvantePromptInput = { fg = c.magenta }
+      -- hl.AvantePromptInputBorder = { fg = c.magenta }
+      -- hl.AvanteSidebarWinSeparator = { fg = c.magenta }
+      -- hl.AvanteSidebarWinHorizontalSeparator = { fg = c.magenta }
+      -- hl.AvanteSidebarNormal = { fg = c.magenta }
+      -- hl.AvanteCommentFg = { fg = c.magenta }
+      -- hl.AvanteReversedNormal = { fg = c.magenta }
+
+      -- hl.TITLE                                   = { name = "AvanteTitle",                         fg                              = "#1e222a", bg            = "#98c379" },
+      -- hl.REVERSED_TITLE                          = { name = "AvanteReversedTitle",                 fg                      = "#98c379",         bg_link       = "NormalFloat" },
+      -- hl.SUBTITLE                                = { name = "AvanteSubtitle",                      fg                           = "#1e222a",    bg            = "#56b6c2" },
+      -- hl.REVERSED_SUBTITLE                       = { name = "AvanteReversedSubtitle",              fg                   = "#56b6c2",            bg_link       = "NormalFloat" },
+      -- hl.THIRD_TITLE                             = { name = "AvanteThirdTitle",                    fg                         = "#ABB2BF",      bg            = "#353B45" },
+      -- hl.REVERSED_THIRD_TITLE                    = { name = "AvanteReversedThirdTitle",            fg                 = "#353B45",              bg_link       = "NormalFloat" },
+      -- hl.SUGGESTION                              = { name = "AvanteSuggestion",                    link                       = "Comment" },
+      -- hl.ANNOTATION                              = { name = "AvanteAnnotation",                    link                       = "Comment" },
+      -- hl.POPUP_HINT                              = { name = "AvantePopupHint",                     link                        = "NormalFloat" },
+      -- hl.INLINE_HINT                             = { name = "AvanteInlineHint",                    link                       = "Keyword" },
+      -- hl.TO_BE_DELETED                           = { name = "AvanteToBeDeleted",                   bg                        = "#ffcccc",       strikethrough = true },
+      -- hl.TO_BE_DELETED_WITHOUT_STRIKETHROUGH     = { name = "AvanteToBeDeletedWOStrikethrough",    bg         = "#562C30" },
+      -- hl.CONFIRM_TITLE                           = { name = "AvanteConfirmTitle",                  fg                       = "#1e222a",        bg            = "#e06c75" },
+      -- hl.BUTTON_DEFAULT                          = { name = "AvanteButtonDefault",                 fg                      = "#1e222a",         bg            = "#ABB2BF" },
+      -- hl.BUTTON_DEFAULT_HOVER                    = { name = "AvanteButtonDefaultHover",            fg                 = "#1e222a",              bg            = "#a9cf8a" },
+      -- hl.BUTTON_PRIMARY                          = { name = "AvanteButtonPrimary",                 fg                      = "#1e222a",         bg            = "#ABB2BF" },
+      -- hl.BUTTON_PRIMARY_HOVER                    = { name = "AvanteButtonPrimaryHover",            fg                 = "#1e222a",              bg            = "#56b6c2" },
+      -- hl.BUTTON_DANGER                           = { name = "AvanteButtonDanger",                  fg                       = "#1e222a",        bg            = "#ABB2BF" },
+      -- hl.BUTTON_DANGER_HOVER                     = { name = "AvanteButtonDangerHover",             fg                  = "#1e222a",             bg            = "#e06c75" },
+      -- hl.AVANTE_PROMPT_INPUT                     = { name = "AvantePromptInput"                        },
+      -- hl.AVANTE_PROMPT_INPUT_BORDER              = { name = "AvantePromptInputBorder",             link                = "NormalFloat" },
+      -- hl.AVANTE_SIDEBAR_WIN_SEPARATOR            = { name = "AvanteSidebarWinSeparator",           fg_link_bg        = "NormalFloat",           bg_link   = "NormalFloat" },
+      -- hl.AVANTE_SIDEBAR_WIN_HORIZONTAL_SEPARATOR = { name = "AvanteSidebarWinHorizontalSeparator", fg_link = "WinSeparator",                    bg_link  = "NormalFloat" },
+      -- hl.AVANTE_SIDEBAR_NORMAL                   = { name = "AvanteSidebarNormal",                 link                    = "NormalFloat" },
+      -- hl.AVANTE_COMMENT_FG                       = { name = "AvanteCommentFg",                     fg_link                     = "Comment" },
+      -- hl.AVANTE_REVERSED_NORMAL                  = { name = "AvanteReversedNormal",                fg_link_bg = "Normal",                       bg_link_fg = "Normal" },
+
       -- Winbar styling.
       hl["WinBar"] = { fg = c.comment, bg = "NONE" }
       hl["WinBarNC"] = { fg = c.fg, bg = "NONE" }

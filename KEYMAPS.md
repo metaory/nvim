@@ -51,12 +51,17 @@ All keymaps from `lua/metaory/keymaps.lua` and plugin specs. **Default** = plugi
 | Core                        | `\G` / `\O` / `\X` / `\h` / `\H`            | —                        | Glyph / CursorLine / TSContext / TSHighlight / Hipatterns        |
 | Core                        | `\m` / `\Z` / `\T` / `\C` / `\w`            | —                        | MiniMap / Zoom / Trailspace / CursorWord / Wrap                  |
 | Core                        | `\c` / `\f` / `\V` / `\d` / `\L` / `\l`     | —                        | Conceal / cmdheight / verbose / diagnostic / LSP / numbers       |
-| **opencode.nvim (llm.lua)** |                                             |                          |                                                                  |
-| opencode.nvim               | `<C-g>a`                                    | —                        | Ask OpenCode (`@this`) (n,x)                                     |
-| opencode.nvim               | `<C-g>p`                                    | —                        | Select OpenCode prompt/command/server (n,x)                      |
-| opencode.nvim               | `<C-g><C-g>`                                | —                        | Operator: send motion/selection to OpenCode (n,x)                |
-| opencode.nvim               | `<C-g>t`                                    | —                        | Toggle OpenCode terminal (n,t)                                   |
-| opencode.nvim               | `<S-C-u>` / `<S-C-d>`                       | —                        | Scroll OpenCode session up / down (n)                            |
+| **avante.nvim (llm.lua)**   |                                             |                          |                                                                  |
+| avante.nvim                 | `<C-g>a`                                    | `<leader>aa`             | Ask Avante. n: file. x: selection                                |
+| avante.nvim                 | `<C-g><C-g>`                                | —                        | n: ask operator (motion). x: ask selection                       |
+| avante.nvim                 | `<C-g>e`                                    | `<leader>ae`             | n: edit operator (motion). x: edit selection                     |
+| avante.nvim                 | `<C-g>t`                                    | `<leader>at`             | Toggle Avante sidebar (n)                                        |
+| avante.nvim                 | `<C-g>p`                                    | `<leader>ah`             | Avante chat history (n)                                          |
+| avante.nvim                 | `<CR>` / `<M-s>` / `<S-CR>`                 | insert `<C-s>`           | Submit Avante prompt (n,i). `<C-s>` is tmux prefix               |
+| **gp.nvim (llm.lua)**       |                                             |                          |                                                                  |
+| gp.nvim                     | `<C-g>r`                                    | —                        | Rewrite (n,i)                                                    |
+| gp.nvim                     | `<C-g>i`                                    | —                        | Implement (n,i)                                                  |
+| **opencode.nvim (llm.lua)** | —                                           | —                        | Spec present, `enabled = false`                                  |
 | **blink.cmp**               |                                             |                          |                                                                  |
 | blink.cmp                   | `<C-y>`                                     | ✓                        | Select and accept completion                                     |
 | blink.cmp                   | `<Tab>` / `<S-Tab>`                         | snippet_forward/backward | Accept, snippet, or fallback                                     |
@@ -187,7 +192,7 @@ All keymaps from `lua/metaory/keymaps.lua` and plugin specs. **Default** = plugi
 
 - Leader: `<space>` (from options)
 - Second prefix: `\` (backslash) for toggles and utilities
-- AI prefix: `<C-g>` — shared by gp.nvim (`r`/`i`/`c`/`s`/`d`/`<C-g>`) and opencode.nvim (`a`/`p`/`<C-g>`/`t`)
+- AI prefix: `<C-g>` — gp.nvim (`r`/`i`) and avante.nvim (`a`/`e`/`p`/`t`/`<C-g>`). OpenCode spec is present but disabled.
 
 ## Modes
 
@@ -196,10 +201,18 @@ All keymaps from `lua/metaory/keymaps.lua` and plugin specs. **Default** = plugi
 
 ---
 
-| Keymap          | Mode | Action                                     | Context sent                                                       |
-| --------------- | ---- | ------------------------------------------ | ------------------------------------------------------------------ |
-| <C-g>a          | n, x | `ask("@this: ") → opens Ask input`         | `@this` = visual selection if in visual, else just the cursor line |
-| <C-g>p          | n, x | `select()`                                 | nothing — opens the picker (prompts/commands/servers)              |
-| <C-g><C-g>      | n, x | `operator("@this ")` (expr → `g@`)         | `@this` = operator: motion (n) or visual selection (x)             |
-| <C-g>t          | n, t | toggle terminal                            | —                                                                  |
-| <S-C-u>/<S-C-d> | n    | scroll                                     | —                                                                  |
+| Keymap     | Mode | Action                         | Context sent                                      |
+| ---------- | ---- | ------------------------------ | ------------------------------------------------- |
+| <C-g>a     | n    | `avante.api.ask()`             | current file                                      |
+| <C-g>a     | x    | ask selection                  | visual range (`line("v")` / `.`)                  |
+| <C-g><C-g> | n    | ask operator (`g@`)            | motion (`_` line, `ip`, `}`)                      |
+| <C-g><C-g> | x    | ask selection                  | visual range                                      |
+| <C-g>e     | n    | edit operator (`g@`)           | motion                                            |
+| <C-g>e     | x    | edit selection                 | visual range                                      |
+| <C-g>t     | n    | `:AvanteToggle`                | toggle Avante sidebar                             |
+| <C-g>p     | n    | `:AvanteHistory`               | picker of previous Avante chats                   |
+| <CR>       | n, i | Avante submit                  | Enter submits (insert too; newline via normal `o`) |
+| <M-s>      | i    | Avante submit                  | Alt+s in Avante input (overrides global save)      |
+| <S-CR>     | i    | Avante submit                  | Shift+Enter                                        |
+| <C-g>r     | n, i | `:GpRewrite ~`                 | rewrite with gp                                   |
+| <C-g>i     | n, i | `:GpImplement ~`               | implement with gp                                 |

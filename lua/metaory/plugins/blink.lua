@@ -158,9 +158,10 @@ return {
 
       opts.sources = vim.tbl_deep_extend("force", opts.sources or {}, {
         default = { "lsp", "path", "snippets", "buffer" },
-        -- per_filetype = {
-        --   opencode_ask = { "lsp", "buffer" },
-        -- },
+        per_filetype = {
+          Avante = { "avante_commands", "avante_mentions", "avante_files", "avante_shortcuts", "buffer" },
+          AvanteInput = { "avante_commands", "avante_mentions", "avante_files", "avante_shortcuts", "buffer" },
+        },
         providers = {
           lsp = {
             name = "lsp",
@@ -205,6 +206,30 @@ return {
             name = "LazyDev",
             module = "lazydev.integrations.blink",
             score_offset = 100, -- show at a higher priority than lsp
+          },
+          avante_commands = {
+            name = "avante_commands",
+            module = "blink.compat.source",
+            score_offset = 90,
+            opts = {},
+          },
+          avante_files = {
+            name = "avante_files",
+            module = "blink.compat.source",
+            score_offset = 100,
+            opts = {},
+          },
+          avante_mentions = {
+            name = "avante_mentions",
+            module = "blink.compat.source",
+            score_offset = 1000,
+            opts = {},
+          },
+          avante_shortcuts = {
+            name = "avante_shortcuts",
+            module = "blink.compat.source",
+            score_offset = 1000,
+            opts = {},
           },
         },
       })

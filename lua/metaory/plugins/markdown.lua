@@ -1,7 +1,7 @@
 return {
   {
     "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown", "mdx" },
+    ft = { "markdown", "mdx", "Avante" },
     after = { "nvim-treesitter" },
     requires = { "nvim-mini/mini.nvim", opt = true },
     config = function()
@@ -14,7 +14,7 @@ return {
       vim.api.nvim_set_hl(0, "@markup.raw", { link = "CodeInline" })
       vim.api.nvim_set_hl(0, "@markup.list", { link = "@markup.strong" })
       require("render-markdown").setup({
-        file_types = { "markdown", "mdx" },
+        file_types = { "markdown", "mdx", "Avante" },
         render_modes = true,
         sign = { enabled = false },
         anti_conceal = {},

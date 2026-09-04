@@ -189,6 +189,20 @@ M.config = function()
     { "g]", desc = "Move Right", icon = " " },
     { "gx", desc = "Browse", icon = " " },
   }, { mode = "n" })
+
+  -- C-g prefix (AI)
+  wk.add({
+    { "<C-g>", group = "AI", icon = "󰚩 ", mode = { "n", "x", "i" } },
+    { "<C-g>a", desc = "Avante ask", icon = "󰍩 ", mode = { "n", "x" } },
+    { "<C-g><C-g>", desc = "Ask operator", icon = "󰒕 ", mode = "n" },
+    { "<C-g><C-g>", desc = "Avante ask", icon = "󰍩 ", mode = "x" },
+    { "<C-g>e", desc = "Edit operator", icon = "󰏫 ", mode = "n" },
+    { "<C-g>e", desc = "Avante edit", icon = "󰏫 ", mode = "x" },
+    { "<C-g>t", desc = "Avante toggle", icon = "󰊓 ", mode = "n" },
+    { "<C-g>p", desc = "Avante history", icon = "󰋚 ", mode = "n" },
+    { "<C-g>r", desc = "Rewrite", icon = "󰑕 ", mode = { "n", "i" } },
+    { "<C-g>i", desc = "Implement", icon = " ", mode = { "n", "i" } },
+  })
 --                         
   --              ⛚ ⛛ ⎓ ⎇ ⌦ ⌧ ⌘   
   -- z prefix (scroll / fold) ⎋ ⫽       
