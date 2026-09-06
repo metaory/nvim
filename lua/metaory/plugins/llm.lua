@@ -1,4 +1,5 @@
 return {
+  --[[
   {
     "nickjvandyke/opencode.nvim",
     version = "*",
@@ -59,6 +60,8 @@ return {
       })
     end,
   },
+  --]]
+  --[[
   {
     "robitx/gp.nvim",
     config = function()
@@ -171,6 +174,7 @@ return {
       )
     end,
   },
+  --]]
   {
     "avante-corp/avante.nvim",
     event = "VeryLazy",
