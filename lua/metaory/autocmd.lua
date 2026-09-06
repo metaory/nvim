@@ -60,6 +60,20 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 })
 
 -- close some filetypes with <q>
+-- Track the last time the mode changed to normal (e.g. <Esc> from insert/visual)
+local lastEscTime = 0
+local ESC_DOUBLE_PRESS_MS = 400
+
+vim.api.nvim_create_autocmd("ModeChanged", {
+  pattern = { "i:n", "v:n", "V:n", "\22:n" },
+  callback = function()
+    lastEscTime = vim.uv.hrtime() / 1e6
+  end,
+})
+
+-- close some filetypes with <q>
+-- Double <Esc> closes: first <Esc> exits insert/visual natively, second <Esc> closes.
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "PlenaryTestPopup",
@@ -78,10 +92,14 @@ vim.api.nvim_create_autocmd("FileType", {
     "neotest-output-panel",
     "fugitiveblame",
     "CodeAction",
+    "Avante",
+    "AvanteInput",
+    "AvanteSelectedFiles",
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
     vim.keymap.set("n", "q", "<cmd>close<cr>", { buffer = event.buf, silent = true })
+    vim.keymap.set("n", "<Esc><Esc>", "<cmd>close<cr>", { buffer = event.buf, silent = true })
   end,
 })
 
@@ -89,7 +107,7 @@ local augroup = vim.api.nvim_create_augroup("CommandLineWindow", {})
 vim.api.nvim_create_autocmd("CmdwinEnter", {
   group = augroup,
   callback = function()
-    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close<cr>")
+    vim.api.nvim_buf_set_keymap(0, "n", "q", "<cmd>close<cr>", { silent = true })
   end,
 })
 
