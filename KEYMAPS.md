@@ -219,73 +219,102 @@ All keymaps from `lua/metaory/keymaps.lua` and plugin specs. Default = plugin de
 
 ## Free keymaps (normal mode)
 
-Keys not bound by this config in normal mode. "Vim default" = unbound by us but carries default behavior; remapping replaces it. Context-only bindings (blink insert, picker windows, octo buffers) do not count as taken.
+Keys not bound by this config in normal mode. "Vim default" = unbound by us but carries default behavior; remapping replaces it. Context-only bindings (blink insert, picker windows, octo buffers) do not count as taken. Plugin-wide global mappings (noice `<C-d>`/`<C-u>`, vim-tmux-navigator `<C-hjkl>`) DO count as taken.
 
 ### Ctrl
 
-| Key         | Status               | Vim default          |
-| ----------- | -------------------- | -------------------- |
-| `<C-b>`     | Free                 | Page back            |
-| `<C-c>`     | Free                 | Interrupt            |
-| `<C-d>`     | Free                 | Half-page down       |
-| `<C-f>`     | Free                 | Page forward         |
-| `<C-h>`     | Free                 | Like backspace       |
-| `<C-j>`     | Free                 | Like `<CR>`          |
-| `<C-k>`     | Free                 | Digraph entry        |
-| `<C-l>`     | Free                 | Redraw               |
-| `<C-n>`     | Free                 | Next line/completion |
-| `<C-o>`     | Free                 | Jumplist back        |
-| `<C-q>`     | Free                 | Flow control (stty)  |
-| `<C-r>`     | Free                 | Redo                 |
-| `<C-t>`     | Free                 | Tag jump             |
-| `<C-u>`     | Free                 | Half-page up         |
-| `<C-/>`     | Free                 | Same as `<C-_>`      |
-| `<C-space>` | Taken                | —                    |
-| `<C-s>`     | Tmux (prefix)        | Flow control (stty)  |
-| `<C-i>`     | Free (= `<Tab>`)     | Jumplist forward     |
-| `<C-a>`     | Taken (dial)         | —                    |
-| `<C-x>`     | Taken (dial)         | —                    |
-| `<C-p>`     | Taken (fff)          | —                    |
-| `<C-e>`     | Taken (scroll)       | —                    |
-| `<C-y>`     | Taken (scroll/cedit) | —                    |
-| `<C-g>`     | Taken (AI prefix)    | —                    |
-| `<C-m>`     | Reserved             | Same as `<CR>`       |
-| `<C-v>`     | Reserved             | Visual block         |
-| `<C-w>`     | Reserved             | Window prefix        |
-| `<C-z>`     | Reserved             | Suspend              |
-| `<C-]>`     | Reserved             | Tag jump             |
+| Key         | Status                      | Vim default          |
+| ----------- | --------------------------- | -------------------- |
+| `<C-b>`     | Free                        | Page back            |
+| `<C-c>`     | Free                        | Interrupt            |
+| `<C-f>`     | Free                        | Page forward         |
+| `<C-n>`     | Free                        | Next line/completion |
+| `<C-o>`     | Free                        | Jumplist back        |
+| `<C-q>`     | Free                        | Flow control (stty)  |
+| `<C-r>`     | Free                        | Redo                 |
+| `<C-s>`     | Free (tmux prefix)          | Flow control (stty)  |
+| `<C-t>`     | Free                        | Tag jump             |
+| `<C-space>` | Free                        | —                    |
+| `<C-/>`     | Free                        | Same as `<C-_>`      |
+| `<C-i>`     | Free (= `<Tab>`)            | Jumplist forward     |
+| `<C-a>`     | Taken (dial increment)      | Increment number     |
+| `<C-x>`     | Taken (dial decrement)      | Decrement number     |
+| `<C-p>`     | Taken (fff find files)      | Cursor up            |
+| `<C-e>`     | Taken (Nop'd)               | Scroll down 1 line   |
+| `<C-y>`     | Taken (scroll up 3, cedit)  | Scroll up 1 line     |
+| `<C-g>`     | Taken (AI prefix)           | File status/info     |
+| `<C-d>`     | Taken (noice scroll)        | Half-page down       |
+| `<C-u>`     | Taken (noice scroll)        | Half-page up         |
+| `<C-h>`     | Taken (tmux-navigator left) | Like backspace       |
+| `<C-j>`     | Taken (tmux-navigator down) | Like `<CR>`          |
+| `<C-k>`     | Taken (tmux-navigator up)   | Digraph entry        |
+| `<C-l>`     | Taken (tmux-navigator right)| Redraw               |
+| `<C-m>`     | Reserved                    | Same as `<CR>`       |
+| `<C-v>`     | Reserved                    | Visual block         |
+| `<C-w>`     | Reserved                    | Window prefix        |
+| `<C-z>`     | Reserved                    | Suspend              |
+| `<C-]>`     | Reserved                    | Tag jump             |
 
 ### Alt (Meta)
 
-| Key     | Status             |
-| ------- | ------------------ |
-| `<M-a>` | Free               |
-| `<M-c>` | Free               |
-| `<M-e>` | Free               |
-| `<M-i>` | Free               |
-| `<M-m>` | Free               |
-| `<M-n>` | Free               |
-| `<M-t>` | Free               |
-| `<M-u>` | Free               |
-| `<M-v>` | Free               |
-| `<M-w>` | Free               |
-| `<M-b>` | Free               |
-| `<M-z>` | Taken              |
-| `<M-l>` | Tmux (win next)    |
-| `<M-h>` | Tmux (win prev)    |
-| `<M-j>` | Taken (bn)         |
-| `<M-k>` | Taken (bp)         |
-| `<M-x>` | Taken (del buf)    |
-| `<M-y>` | Taken (yank line)  |
-| `<M-Y>` | Taken (yank file)  |
-| `<M-p>` | Taken (paste, i)   |
-| `<M-d>` | Taken (cmd)        |
-| `<M-s>` | Taken (save)       |
-| `<M-q>` | Taken (quit)       |
-| `<M-Q>` | Taken (exit all)   |
-| `<M-g>` | Taken (grep)       |
-| `<M-r>` | Taken (fff picker) |
-| `<M-o>` | Taken (old files)  |
-| `<M-f>` | Taken (fff files)  |
+| Key     | Status                        |
+| ------- | ----------------------------- |
+| `<M-a>` | Free                          |
+| `<M-b>` | Free (cmdline-only usage, c)  |
+| `<M-c>` | Free                          |
+| `<M-e>` | Free                          |
+| `<M-i>` | Free                          |
+| `<M-l>` | Free (tmux-resizer disabled)  |
+| `<M-m>` | Free                          |
+| `<M-n>` | Free                          |
+| `<M-t>` | Free                          |
+| `<M-u>` | Free                          |
+| `<M-v>` | Free                          |
+| `<M-w>` | Free                          |
+| `<M-z>` | Free                          |
+| `<M-h>` | Free (tmux-resizer disabled)  |
+| `<M-j>` | Taken (prev buffer; c: down)  |
+| `<M-k>` | Taken (next buffer; c: up)    |
+| `<M-x>` | Taken (delete buffer)         |
+| `<M-y>` | Taken (yank EOL/selection)    |
+| `<M-Y>` | Taken (yank whole file)       |
+| `<M-p>` | Taken (paste, i)              |
+| `<M-d>` | Taken (command line)          |
+| `<M-s>` | Taken (save; Avante input: submit) |
+| `<M-q>` | Taken (quit)                  |
+| `<M-Q>` | Taken (exit all)              |
+| `<M-g>` | Taken (grep cwd)              |
+| `<M-r>` | Taken (CONFLICT: resume vs recent) |
+| `<M-o>` | Taken (old files)             |
+| `<M-f>` | Taken (fff find files)        |
 
 Uppercase Alt: all free except `<M-Y>` and `<M-Q>`.
+
+## Conflicts found
+
+| Key      | Defined in                    | Action 1                          | Action 2                          | Winner                                             |
+| -------- | ----------------------------- | --------------------------------- | --------------------------------- | -------------------------------------------------- |
+| `<M-r>`  | keymaps.lua + snacks.lua      | Resume last picker                | Recent files                      | snacks.lua (loads after keymaps.lua)               |
+| `<M-s>`  | keymaps.lua + llm.lua         | Save file (global, n)             | Avante submit (buffer-local, i)   | No real conflict (different modes)                 |
+| `<C-e>`  | keymaps.lua + blink/snacks    | Nop (global, n)                   | blink hide docs (i), picker maximize | No real conflict (different modes/windows)       |
+| `<C-a>`  | dial + octo submit_win        | Increment (global, n)             | Approve review (octo buffer)      | No real conflict (octo buffer-local only)          |
+
+## Native keys overridden (normal mode, global)
+
+What the stock Vim behavior was, and what replaced it.
+
+| Key      | Native behavior        | Now bound to                     | Lost?                        |
+| -------- | ---------------------- | -------------------------------- | ---------------------------- |
+| `<C-a>`  | Increment number       | dial increment                   | No (dial is a superset)      |
+| `<C-x>`  | Decrement number       | dial decrement                   | No (dial is a superset)      |
+| `<C-p>`  | Cursor up              | fff find files                   | Yes (use `k` instead)        |
+| `<C-e>`  | Scroll down 1 line     | Nop                              | Yes (scroll down removed)    |
+| `<C-y>`  | Scroll up 1 line       | Scroll up 3 lines + cedit        | Partial (now 3 lines)        |
+| `<C-g>`  | Show file status/info  | AI prefix (`<C-g>a/e/t/p/…`)     | Yes                          |
+| `<C-d>`  | Half-page down         | noice scroll (fallback 10j+zz)   | Yes (different scroll)       |
+| `<C-u>`  | Half-page up           | noice scroll (fallback 10k+zz)   | Yes (different scroll)       |
+| `<C-h>`  | Like backspace         | tmux-navigator left pane         | Yes                          |
+| `<C-j>`  | Like `<CR>` (move down)| tmux-navigator down pane         | Yes                          |
+| `<C-k>`  | Digraph entry          | tmux-navigator up pane           | Yes                          |
+| `<C-l>`  | Redraw screen          | tmux-navigator right pane        | Yes                          |
+| `<C-M-*>`| (no native default)    | tmux resize (hjkl + HJKL)        | —                            |

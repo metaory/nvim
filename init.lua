@@ -11,6 +11,7 @@ require("hexocd-colors")
 require("metaory.lazy")
 require("metaory.options")
 require("metaory.keymaps")
+-- require("metaory.functions")
 require("metaory.autocmd")
 require("metaory.winbar")
 -- jackMort/ChatGPT.nvim

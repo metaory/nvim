@@ -1,3 +1,6 @@
+local l = "<Leader>"
+local lt = "\\"
+
 local keymap_del = function(t)
   local mode, lhs = unpack(t)
   pcall(vim.keymap.del, mode, lhs)
@@ -15,73 +18,9 @@ local keymap_set = function(t)
   pcall(vim.keymap.set, mode, lhs, rhs, opts)
 end
 
-local l = "<Leader>"
-local lt = "\\"
-local quit_gracefully = function()
-  local islast = #vim.api.nvim_list_wins() == 1
-  local buftype = vim.bo.buftype
-  local isnofile = buftype == "nofile"
-  local ishelp = buftype == "help"
-  vim.cmd((islast or isnofile or ishelp) and ":q" or ":bd")
-end
-local dd = function()
-  if vim.api.nvim_get_current_line():match("^%s*$") then
-    return '"_dd'
-  else
-    return "dd"
-  end
-end
-local function modify_line_end_delimiter(character)
-  local delimiters = { ",", ";" }
-  return function()
-    local line = vim.api.nvim_get_current_line()
-    local last_char = line:sub(-1)
-    if last_char == character then
-      vim.api.nvim_set_current_line(line:sub(1, #line - 1))
-    elseif vim.tbl_contains(delimiters, last_char) then
-      vim.api.nvim_set_current_line(line:sub(1, #line - 1) .. character)
-    else
-      vim.api.nvim_set_current_line(line .. character)
-    end
-  end
-end
-local close_other_buffers = function()
-  local current_buffer = vim.api.nvim_get_current_buf()
-  for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-    if bufnr ~= current_buffer then
-      vim.api.nvim_buf_delete(bufnr, {})
-    end
-  end
-end
-local open_chrome_devtools = function()
-  local filenameAndLine = vim.fn.expand("%:t") .. ":" .. vim.fn.line(".")
-  local script = [[
-    tell application "Arc"
-      activate
-      tell application "System Events"
-        keystroke "i" using {command down, option down}
-        delay 0.5
-        keystroke "p" using command down
-        delay 1
-        keystroke "<<filenameAndLine>>"
-      end tell
-    end tell
-  ]]
-  vim.system({ "osascript", "-e", script:gsub("<<filenameAndLine>>", filenameAndLine) })
-end
-local rightmouse_yank = function()
-  local pos = vim.fn.getmousepos()
-  if pos.winid ~= 0 then
-    vim.api.nvim_set_current_win(pos.winid)
-    vim.api.nvim_win_set_cursor(0, { pos.line, pos.column - 1 })
-  end
-  vim.cmd('normal! "+yi"')
-end
+vim.keymap.set("n", "<leader>H", require("metaory.functions.highlight_lines").add)
+vim.keymap.set("n", "<leader>h", require("metaory.functions.highlight_lines").clear)
 
--- vim.tbl_map(keymap_set, {
---   { 'j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], nil, expr = true },
---   { 'k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], nil, expr = true },
--- })
 vim.tbl_map(keymap_set, {
   { "<esc>", "<cmd>noh<cr><esc>", "Escape and clear hlsearch", mode = "i" },
   { "<esc>", "<cmd>noh<cr><esc>", "Escape and clear hlsearch", mode = "n" },
@@ -92,6 +31,13 @@ vim.tbl_map(keymap_set, {
   { "<leader><Tab>p", ":tabprevious<CR>", "Previous Tab" },
 })
 keymap_set({ "x", '"_x' })
+local dd = function()
+  if vim.api.nvim_get_current_line():match("^%s*$") then
+    return '"_dd'
+  else
+    return "dd"
+  end
+end
 keymap_set({ "dd", dd, nil, noremap = true, expr = true })
 vim.tbl_map(keymap_set, {
   { "Y", "y$" },
@@ -105,15 +51,8 @@ vim.tbl_map(keymap_set, {
   { "<C-y>", "3<C-y>", "Scroll screen up" },
   { "Q", "<Nop>" },
 })
--- vim.tbl_map(keymap_set, {
---   { '<leader><leader>', '<C-^>', 'Last Buffer' },
---   { '<leader>bn', '<cmd>enew<cr>', 'New File' },
---   { '<leader>bq', '<cmd>q<cr>', 'Quit File' },
---   { '<leader>bo', close_other_buffers, 'Close Other Buffers' },
---   { '<leader>bw', '<cmd>w<cr>', 'Write File' },
---   { '<leader>bW', '<cmd>wa<cr>', 'Write All Files' },
---   { '<leader>bQ', '<cmd>qa!<cr>', 'Quit nvim' },
--- })
+
+keymap_set({ "<leader>rc", require("metaory.functions.inspect_cmd"), "Inspect cmd output" })
 keymap_set({ "<leader>fn", "<cmd>lua Snacks.notifier.show_history()<cr>", "Noice" })
 if vim.opt.diff:get() then
   vim.tbl_map(keymap_set, {
@@ -122,18 +61,10 @@ if vim.opt.diff:get() then
     { "<leader>3", ":diffget REMOTE<CR>", "Take Remote" },
   })
 end
-local format_buf = function()
-  local ok, conform = pcall(require, "conform")
-  if ok and conform then
-    conform.format({ bufnr = 0, lsp_fallback = true, async = false })
-  else
-    vim.lsp.buf.format()
-  end
-end
 vim.tbl_map(keymap_set, {
   { "<leader>lj", "<cmd>%!jq<cr>", "[JSON] Format" },
   { "<leader>lJ", "<cmd>%!jq -c<cr>", "[JSON] Compact Format" },
-  { "<leader>lf", format_buf, "Format" },
+  { "<leader>lf", require("metaory.functions.format"), "Format" },
 })
 keymap_set({
   "<F10>",
@@ -160,17 +91,16 @@ vim.tbl_map(keymap_set, {
 })
 
 vim.tbl_map(keymap_set, {
-  { "<leader>c,", modify_line_end_delimiter(","), "[Add] ',' to end of line" },
-  { "<leader>c;", modify_line_end_delimiter(";"), "[Add] ';' to end of line" },
+  { "<leader>c,", require("metaory.functions.line_end_delimiter")(","), "[Add] ',' to end of line" },
+  { "<leader>c;", require("metaory.functions.line_end_delimiter")(";"), "[Add] ';' to end of line" },
 })
--- vim.tbl_map(keymap_set, { { '<leader>ol', ':Lazy<CR>', "Lazy 󰒲" } })
 vim.tbl_map(keymap_set, {
   { "<leader>cn", "*``cgn", "[Replace] Next Occurrence" },
   { "<leader>cN", "*``cgN", "[Replace] Next Occurrence (Backwards)" },
 })
 keymap_set({
   "<leader>oc",
-  open_chrome_devtools,
+  require("metaory.functions.open_browser"),
   'Open chrome dev tools and run "open file" with current file and line',
 })
 
@@ -212,6 +142,13 @@ vim.tbl_map(keymap_set, {
   { "<M-y>", [[<ESC>gg"+yGg;zz]], mode = "i", "I Yank whole file (S)" },
   { "<M-p>", [[<ESC>"+p]], mode = "i", "Paste (S)" },
 })
+local quit_gracefully = function()
+  local islast = #vim.api.nvim_list_wins() == 1
+  local buftype = vim.bo.buftype
+  local isnofile = buftype == "nofile"
+  local ishelp = buftype == "help"
+  vim.cmd((islast or isnofile or ishelp) and ":q" or ":bd")
+end
 vim.tbl_map(keymap_set, {
   { "<M-d>", "<ESC>:<C-y>", "Command" },
   { "<M-s>", "<ESC>:w<CR>", silent = true, "Save File" },
@@ -249,17 +186,23 @@ vim.tbl_map(keymap_set, {
   },
 })
 vim.tbl_map(keymap_set, {
-  { "<RightMouse>", rightmouse_yank, silent = true, "Delete Buffer" },
+  {
+    "<RightMouse>",
+    function()
+      local pos = vim.fn.getmousepos()
+      if pos.winid ~= 0 then
+        vim.api.nvim_set_current_win(pos.winid)
+        vim.api.nvim_win_set_cursor(0, { pos.line, pos.column - 1 })
+      end
+      vim.cmd('normal! "+yi"')
+    end,
+    silent = true,
+    "Delete Buffer",
+  },
 })
 vim.tbl_map(keymap_set, {
   { l .. "ct", [[:%s/\s\+$//e<CR>]], "Trim trailing" },
 })
--- vim.tbl_map(keymap_set, {
---   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "i" },
---   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "n" },
---   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "v" },
---   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "n" },
--- })
 vim.tbl_map(keymap_set, {
   { lt .. "G", [[<Cmd>call glyph_palette#apply()<CR>]], "Toggle Glyph" },
   { lt .. "s", '<cmd>lua require("kulala").scratchpad()<cr>', "Toggle scratchpad" },
@@ -287,3 +230,31 @@ vim.tbl_map(keymap_set, {
   { lt .. "L", [[:lua vim.cmd(#vim.lsp.get_clients() == 0 and 'LspStart' or 'LspStop')<CR>]], "Toggle LSP" },
   { lt .. "l", [[<Cmd>set rnu! | set nu!<CR>]], "Toggle Numbers" },
 })
+-- vim.tbl_map(keymap_set, {
+--   { 'j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], nil, expr = true },
+--   { 'k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], nil, expr = true },
+-- })
+-- vim.tbl_map(keymap_set, {
+--   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "i" },
+--   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "n" },
+--   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "v" },
+--   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "n" },
+-- })
+-- vim.tbl_map(keymap_set, { { '<leader>ol', ':Lazy<CR>', "Lazy 󰒲" } })
+-- local close_other_buffers = function()
+--   local current_buffer = vim.api.nvim_get_current_buf()
+--   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+--     if bufnr ~= current_buffer then
+--       vim.api.nvim_buf_delete(bufnr, {})
+--     end
+--   end
+-- end
+-- vim.tbl_map(keymap_set, {
+--   { '<leader><leader>', '<C-^>', 'Last Buffer' },
+--   { '<leader>bn', '<cmd>enew<cr>', 'New File' },
+--   { '<leader>bq', '<cmd>q<cr>', 'Quit File' },
+--   { '<leader>bo', close_other_buffers, 'Close Other Buffers' },
+--   { '<leader>bw', '<cmd>w<cr>', 'Write File' },
+--   { '<leader>bW', '<cmd>wa<cr>', 'Write All Files' },
+--   { '<leader>bQ', '<cmd>qa!<cr>', 'Quit nvim' },
+-- })

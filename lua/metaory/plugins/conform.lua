@@ -7,6 +7,8 @@ return {
     require("conform").setup({
       formatters_by_ft = lang.formatters_by_ft(),
       formatters = {
+        stylua = { args = { "--column-width", "200", "-" } },
+
         gofumpt = {
           env = {
             GOFUMPT_SPLIT_LONG_LINES = "on",
