@@ -156,6 +156,33 @@ M.config = function()
       hl["RenderMarkdownH4Bg"] = { bg = util.darken(c.green, 0.15) }
       hl["RenderMarkdownH5Bg"] = { bg = util.darken(c.purple, 0.15) }
       hl["RenderMarkdownH6Bg"] = { bg = util.darken(c.orange, 0.15) }
+
+      -- hl["@nospell.markdown_inline"] = { bg = c.yellow, bold = true }
+      -- hl["@spell.markdown"] = { bg = c.yellow, bold = true }
+      -- hl["@markup.raw"] = { bg = c.yellow, bold = true }
+      -- hl["@markup.raw.markdown"] = { bg = c.yellow, bold = true }
+      -- hl["@markup.raw.markdown_inline"] = { fg = c.red, bg = c.yellow, bold = true }
+      -- hl["@markup.raw.block.markdown"] = { bg = c.yellow, bold = true }
+      -- hl["CodeInline"] = { bg = c.yellow, bold = true }
+      -- hl["RenderMarkdownCodeInline"] = { bg = c.orange, bold = true }
+      -- hl["RenderMarkdownCode"] = { bg = c.yellow, bold = true }
+
+      -- hl["CodeInline"] = { bg = c.purple, bold = true }
+      -- hl["@markup.strong"] = { fg = c.orange, bold = true }
+      -- hl["@markup.italic"] = { fg = c.magenta, italic = true }
+      -- hl["@markup.muted"] = { fg = c.blue6 }
+      -- hl["@markup.raw.block.markdown"] = { bg = c.purple, bold = true }
+      -- hl["RenderMarkdownCode"] = { bg = XC.c15, bold = true }
+      -- hl["RenderMarkdownBullet"] = { fg = XC.sbg, default = true }
+      -- hl["@markup.list.markdown"] = { fg = XC.cy7, default = true }
+      -- hl["RenderMarkdownCode"] = { bg = XC.sk0 }
+      -- hl["CodeBlock"] = { bg = XC.sk1 }
+      -- hl["CodeInline"] = { bg = XC.wk1, fg = XC.wk7 }
+      -- hl["RenderMarkdownCodeInline"] = { link = "CodeInline" }
+      -- hl["@markup.list"] = { link = "@markup.strong" }
+      -- hl["@markup.raw"] = { link = "CodeInline" }
+
+      -- hl["RenderMarkdownCode"] = { bg = c.blue, bold = true }
       hl.DiffText = { bg = "#234E88" }
       hl.DiffChange = { bg = "#152339" }
       hl.DiffDelete = { bg = "#2C1F1C", fg = c.fg_gutter }
