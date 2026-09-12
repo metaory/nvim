@@ -132,12 +132,30 @@ M.config = function()
       hl.WhichKey = { bg = "NONE", fg = c.orange }
       hl["@markup.list"] = { link = "@markup.strong" }
       hl["@markup.list.markdown"] = { link = "@markup.strong" }
+      hl["@markup.heading.1"] = { fg = c.red, bold = true }
+      hl["@markup.heading.1.markdown"] = { fg = c.red, bold = true }
       hl["@markup.heading.2"] = { fg = c.blue5, bold = true }
       hl["@markup.heading.2.markdown"] = { fg = c.blue5, bold = true }
-      hl["@markup.heading.3"] = { link = "@markup.strong" }
-      hl["@markup.heading.3.markdown"] = { link = "@markup.strong" }
-      hl["@markup.heading.4"] = { link = "@markup.strong" }
-      hl["@markup.heading.4.markdown"] = { link = "@markup.strong" }
+      hl["@markup.heading.3"] = { fg = c.yellow, bold = true }
+      hl["@markup.heading.3.markdown"] = { fg = c.yellow, bold = true }
+      hl["@markup.heading.4"] = { fg = c.green, bold = true }
+      hl["@markup.heading.4.markdown"] = { fg = c.green, bold = true }
+      hl["@markup.heading.5"] = { fg = c.purple, bold = true }
+      hl["@markup.heading.5.markdown"] = { fg = c.purple, bold = true }
+      hl["@markup.heading.6"] = { fg = c.orange, bold = true }
+      hl["@markup.heading.6.markdown"] = { fg = c.orange, bold = true }
+      hl["RenderMarkdownH1"] = { fg = c.red, bold = true }
+      hl["RenderMarkdownH2"] = { fg = c.blue5, bold = true }
+      hl["RenderMarkdownH3"] = { fg = c.yellow, bold = true }
+      hl["RenderMarkdownH4"] = { fg = c.green, bold = true }
+      hl["RenderMarkdownH5"] = { fg = c.purple, bold = true }
+      hl["RenderMarkdownH6"] = { fg = c.orange, bold = true }
+      hl["RenderMarkdownH1Bg"] = { bg = util.darken(c.red, 0.15) }
+      hl["RenderMarkdownH2Bg"] = { bg = util.darken(c.blue5, 0.15) }
+      hl["RenderMarkdownH3Bg"] = { bg = util.darken(c.yellow, 0.15) }
+      hl["RenderMarkdownH4Bg"] = { bg = util.darken(c.green, 0.15) }
+      hl["RenderMarkdownH5Bg"] = { bg = util.darken(c.purple, 0.15) }
+      hl["RenderMarkdownH6Bg"] = { bg = util.darken(c.orange, 0.15) }
       hl.DiffText = { bg = "#234E88" }
       hl.DiffChange = { bg = "#152339" }
       hl.DiffDelete = { bg = "#2C1F1C", fg = c.fg_gutter }

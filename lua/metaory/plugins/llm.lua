@@ -6,7 +6,8 @@ return {
     build = "make",
     dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "folke/snacks.nvim" },
     opts = {
-      provider = "vercel",
+      -- provider = "vercel",
+      provider = "cheaper",
       mode = "agentic",
       instructions_file = "avante.md",
       providers = {
@@ -35,6 +36,19 @@ return {
         },
         morph = {
           model = "morph-v3-large",
+        },
+        cheaper = {
+          __inherited_from = "openai",
+          endpoint = "https://api.cheaperinference.com/v1",
+          api_key_name = "CHEAPER_INFERENCE_API_KEY",
+          model = "deepseek-v4-flash",
+          model_names = {
+            "deepseek-v4-flash", -- $0.071/M $0.143/M
+            "qwen3-6-35b-a3b", -- $0.070/M $0.700/M
+            "glm-5.3-flash", -- $0.105/M $0.350/M
+            "glm-5.3", -- $0.770/M $2.420/M
+          },
+          use_response_api = false,
         },
       },
       behaviour = {
