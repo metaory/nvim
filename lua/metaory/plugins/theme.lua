@@ -189,6 +189,7 @@ M.config = function()
       hl.DiffAdd = { bg = "#14233A" }
       hl.DiffviewDiffDeleteDim = { bg = "#2D1F1B" }
       hl.StatusLine = { bg = c.none }
+      hl["DiagnosticUnderlineHint"] = { fg = XC.cc7, bold = true, underline = false }
       hl["GrugFarResultsMatch"] = { bg = "#234E88" }
       hl["GrugFarResultsMatchRemoved"] = { bg = "#724022", fg = c.orange }
       hl["GrugFarResultsMatchAdded"] = { bg = "#234E88", fg = c.blue }

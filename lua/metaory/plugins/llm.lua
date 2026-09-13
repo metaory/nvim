@@ -44,11 +44,11 @@ return {
           model = "glm-5.3-flash",
           model_names = {
             "glm-5.3-flash", -- default   $0.06 / $0.201
-            "deepseek-v4.1-flash", -- task      $0.121 / $0.483
             "deepseek-v4-flash", -- smol      $0.054 / $0.108
             "deepseek-v4-flash-0731", -- tiny/commit $0.032 / $0.064
             "deepseek-v4-pro", -- plan      ~$0.462 / $1.27
             "kimi-k3", -- slow      ~$1.86 / $9.31
+            -- "deepseek/deepseek-v4.1-flash", -- task      $0.121 / $0.483
             -- "deepseek-v4-flash", -- $0.071/M $0.143/M
             -- "qwen3-6-35b-a3b", -- $0.070/M $0.700/M
             -- "glm-5.3-flash", -- $0.105/M $0.350/M

@@ -80,15 +80,27 @@ keymap_set({
   end,
   "",
 })
-vim.g.tmux_resizer_resize_count = 2
-vim.g.tmux_resizer_vertical_resize_count = 2
-vim.g.tmux_resizer_no_mappings = 1
+-- vim.g.tmux_resizer_resize_count = 2
+-- vim.g.tmux_resizer_vertical_resize_count = 2
+-- vim.g.tmux_resizer_no_mappings = 1
 vim.tbl_map(keymap_set, {
-  { "<C-M-k>", "<cmd>:TmuxResizeUp<CR>" },
-  { "<C-M-j>", "<cmd>:TmuxResizeDown<CR>" },
-  { "<C-M-h>", "<cmd>:TmuxResizeLeft<CR>" },
-  { "<C-M-l>", "<cmd>:TmuxResizeRight<CR>" },
+  -- { "<C-M-k>", "<cmd>:TmuxResizeUp<CR>"    },
+  -- { "<C-M-j>", "<cmd>:TmuxResizeDown<CR>"  },
+  -- { "<C-M-h>", "<cmd>:TmuxResizeLeft<CR>"  },
+  -- { "<C-M-l>", "<cmd>:TmuxResizeRight<CR>" },
+
+  { "<C-M-k>", [[<cmd>lua require("tmux").resize_top(step)<cr>]] },
+  { "<C-M-j>", [[<cmd>lua require("tmux").resize_bottom(step)<cr>]] },
+  { "<C-M-h>", [[<cmd>lua require("tmux").resize_left(step)<cr>]] },
+  { "<C-M-l>", [[<cmd>lua require("tmux").resize_right(step)<cr>]] },
+  -- [[<cmd>lua require("tmux").resize_to(direction, step)<cr>]], -- direction is "left", "right", "top", "bottom".
 })
+-- vim.tbl_map(keymap_set, {
+--   { "<C-M-J>", "<C-w>-" },
+--   { "<C-M-K>", "<C-w>+" },
+--   { "<C-M-H>", "<C-w><" },
+--   { "<C-M-L>", "<C-w>>" },
+-- })
 
 vim.tbl_map(keymap_set, {
   { "<leader>c,", require("metaory.functions.line_end_delimiter")(","), "[Add] ',' to end of line" },
@@ -125,12 +137,6 @@ vim.tbl_map(keymap_set, {
   { "<C-b>", "<Left>", mode = "c", silent = false },
   { "<M-b>", "<C-b>", mode = "c", silent = false },
   { "w!!", "!sudo tee %<CR>", mode = "c", silent = true },
-})
-vim.tbl_map(keymap_set, {
-  { "<C-M-J>", "<C-w>-" },
-  { "<C-M-K>", "<C-w>+" },
-  { "<C-M-H>", "<C-w><" },
-  { "<C-M-L>", "<C-w>>" },
 })
 vim.tbl_map(keymap_set, {
   { "<M-Y>", [[<ESC>gg"+yGg;zz]], mode = "n", "N Yank whole file (S)" },
