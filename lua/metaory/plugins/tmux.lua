@@ -23,13 +23,13 @@ return {
         -- overwrites vim.g.clipboard to redirect * and + to the system
         -- clipboard using tmux. If you sync your system clipboard without tmux,
         -- disable this option!
-        sync_clipboard = true,
+        sync_clipboard = false,
 
         -- synchronizes registers *, +, unnamed, and 0 till 9 with tmux buffers.
-        sync_registers = true,
+        sync_registers = false,
 
         -- synchronizes registers when pressing p and P.
-        sync_registers_keymap_put = true,
+        sync_registers_keymap_put = false,
 
         -- synchronizes registers when pressing (C-r) and ".
         sync_registers_keymap_reg = true,
