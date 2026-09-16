@@ -178,8 +178,6 @@ All keymaps from `lua/metaory/keymaps.lua` and plugin specs. Default = plugin de
 | mini.files      | `<leader>bw` (in mini.files)                | —              | Synchronize                                                      |
 | visual-surround |                                             |                |                                                                  |
 | visual-surround | `sc` / `sp` / `sb` / `st` / `sq` / `ss` (v) | —              | Surround with {} / () / [] / ` / " / '                           |
-| toggle          |                                             |                |                                                                  |
-| toggle          | `<leader>u*`                                | —              | Toggle option prefix; `<leader>us` status dashboard              |
 | venv-selector   |                                             |                |                                                                  |
 | venv-selector   | `<leader>cv`                                | —              | VenvSelect                                                       |
 | kulala          |                                             |                |                                                                  |

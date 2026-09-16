@@ -62,7 +62,6 @@ NVIM_APPNAME=metaory/dotfiles/.config/nvim nvim
 - [folke/which-key.nvim](https://dotfyle.com/plugins/folke/which-key.nvim)
 - [garrett-hopper/tailwind-tools.nvim](https://dotfyle.com/plugins/garrett-hopper/tailwind-tools.nvim)
 - [gbprod/substitute.nvim](https://dotfyle.com/plugins/gbprod/substitute.nvim)
-- [gregorias/toggle.nvim](https://dotfyle.com/plugins/gregorias/toggle.nvim)
 - [j-hui/fidget.nvim](https://dotfyle.com/plugins/j-hui/fidget.nvim)
 - [jay-babu/mason-nvim-dap.nvim](https://dotfyle.com/plugins/jay-babu/mason-nvim-dap.nvim)
 - [kkharji/sqlite.lua](https://dotfyle.com/plugins/kkharji/sqlite.lua)

@@ -246,6 +246,7 @@ M.config = function()
   -- localleader (\)
   local lt = '\\'
   wk.add({
+    { lt, group = "Toggle", icon = "󰨚 " },
     { lt .. "G", desc = "Glyph", icon = "󰀲 " },
     { lt .. ".", desc = "Scratch buffer", icon = "󰛳 " },
     { lt .. "S", desc = "Select scratch", icon = "󰛳 " },
