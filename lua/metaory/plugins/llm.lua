@@ -41,8 +41,11 @@ return {
           __inherited_from = "openai",
           endpoint = "https://api.cheaperinference.com/v1",
           api_key_name = "CHEAPER_INFERENCE_API_KEY",
-          model = "glm-5.3-flash",
+          model = "gpt-5.6-luna",
           model_names = {
+            "gpt-5.6-luna",
+            "gpt-5.6-sol",
+            "gpt-5.6-terra",
             "glm-5.3-flash", -- default   $0.06 / $0.201
             "deepseek-v4-flash", -- smol      $0.054 / $0.108
             "deepseek-v4-flash-0731", -- tiny/commit $0.032 / $0.064
@@ -64,7 +67,10 @@ return {
       },
       selector = { provider = "snacks" },
       input = { provider = "snacks" },
-      windows = { position = "right" },
+      windows = {
+        position = "right",
+        fillchars = "eob: ,horiz:━,horizup:┻,horizdown:┳,vert:┃,vertleft:┫,vertright:┣,verthoriz:╋",
+      },
       mappings = {
         submit = { normal = "<CR>", insert = "<CR>" },
       },
@@ -145,12 +151,36 @@ return {
       end, { desc = "Avante edit", silent = true })
       vim.keymap.set("n", "<C-g>t", "<cmd>AvanteToggle<cr>", { desc = "Avante toggle", silent = true })
       vim.keymap.set("n", "<C-g>p", "<cmd>AvanteHistory<cr>", { desc = "Avante history", silent = true })
+      local augroup = vim.api.nvim_create_augroup("MetaoryAvante", { clear = true })
+
+      local function highlight_sidebar(buf, normal, title, edge)
+        vim.schedule(function()
+          for _, win in ipairs(vim.fn.win_findbuf(buf)) do
+            local winhl = vim.wo[win].winhighlight:gsub("Normal:AvanteSidebarNormal", ("Normal:%s"):format(normal))
+            vim.wo[win].winhighlight = ("%s,AvanteSubtitle:%s,AvanteReversedSubtitle:%s"):format(winhl, title, edge)
+          end
+        end)
+      end
+
       vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
         pattern = { "AvanteInput", "AvantePromptInput" },
         callback = function(ev)
           for _, key in ipairs({ "<M-s>", "<S-CR>" }) do
             vim.keymap.set("i", key, "<CR>", { buffer = ev.buf, remap = true, silent = true, desc = "Avante submit" })
           end
+        end,
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        pattern = "AvanteTodos",
+        callback = function(ev) highlight_sidebar(ev.buf, "AvanteTodo", "AvanteTodoTitle", "AvanteTodoTitleEdge") end,
+      })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = augroup,
+        pattern = "AvanteSelectedFiles",
+        callback = function(ev)
+          highlight_sidebar(ev.buf, "AvanteSidebarNormal", "AvanteSelectedTitle", "AvanteSelectedTitleEdge")
         end,
       })
     end,

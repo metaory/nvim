@@ -98,6 +98,7 @@ vim.tbl_map(keymap_set, {
   { "<C-a>", "<Home>", mode = "c", silent = false },
   { "<C-b>", "<Left>", mode = "c", silent = false },
   { "<M-b>", "<C-b>", mode = "c", silent = false },
+  { "<M-e>", "<C-f>", mode = "c" },
   { "w!!", "!sudo tee %<CR>", mode = "c", silent = true },
 })
 vim.tbl_map(keymap_set, {
@@ -113,7 +114,22 @@ vim.tbl_map(keymap_set, {
   { "<M-d>", "<ESC>:<C-y>", "Command" },
   { "<M-s>", "<ESC>:w<CR>", silent = true, "Save File" },
   { "<M-Q>", ":q<CR>", mode = "n", silent = true, "Exit" },
-  { "<M-q>", ":close<CR>", mode = "n", silent = true, "close" },
+  {
+    "<M-q>",
+    function()
+      local wins = vim.tbl_filter(function(win)
+        return vim.api.nvim_win_get_config(win).relative == ""
+      end, vim.api.nvim_tabpage_list_wins(0))
+      if #wins > 1 then
+        vim.cmd.close()
+        return
+      end
+      vim.cmd(#vim.fn.getbufinfo({ buflisted = 1 }) > 1 and "bdelete" or "q")
+    end,
+    mode = "n",
+    silent = true,
+    "close",
+  },
   { "q", quit_gracefully, mode = "t" },
   { "<leader>q", quit_gracefully, silent = false, "Exit" },
 })
@@ -194,6 +210,9 @@ vim.api.nvim_command("exe 'set cedit=<C-y>'")
 vim.tbl_map(keymap_del, { { "n", "<leader>l" } })
 
 vim.tbl_map(keymap_set, {
+
+  { lt .. lt, [[<Cmd>AvanteAsk<CR>]], "Avante Ask" },
+
   { lt .. "G", [[<Cmd>call glyph_palette#apply()<CR>]], "Toggle Glyph" },
   { lt .. "s", '<cmd>lua require("kulala").scratchpad()<cr>', "Toggle scratchpad" },
   { lt .. "O", [[<Cmd>    set cursorline! | set cursorcolumn!<CR>]], "Toggle CursorLine" },

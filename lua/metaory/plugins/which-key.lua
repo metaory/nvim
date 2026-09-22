@@ -49,9 +49,9 @@ M.config = function()
   wk.add({
     { "<leader>*", hidden = true, nowait = false, remap = false },
     { "<leader><Tab>", group = "Tabs", icon = "󰓩 ", nowait = false, remap = false },
-  -- -- wk.add({
-    { "<leader>q",  desc = "Quit", icon = " " },
-  -- -- })
+    -- -- wk.add({
+    { "<leader>q", desc = "Quit", icon = " " },
+    -- -- })
     { "<leader>b", group = "Buffers", icon = " ", nowait = false, remap = false },
     { "<leader>c", group = "Code", icon = " ", nowait = false, remap = false },
     { "<leader>d", group = "Debug", icon = " ", nowait = false, remap = false },
@@ -97,8 +97,9 @@ M.config = function()
     { "<leader>lJ", desc = "JSON compact", icon = " " },
     { "<leader>R", group = "Kulala", icon = "󰛳 ", nowait = false, remap = false },
     { "<leader>o", group = "Open", icon = " ", nowait = false, remap = false },
-    { "<leader>oc", desc = "Chrome DevTools", icon = "󰖟 " },
-    { "<leader>ol", ':Lazy<CR>', desc = "Lazy", icon = "󰒲 " },
+    { "<leader>oc", desc = "Inspect cmd output", icon = "⤳ " },
+    { "<leader>ob", desc = "Open browser", icon = "󰖟 " },
+    { "<leader>ol", ":Lazy<CR>", desc = "Lazy", icon = "󰒲 " },
     { "<leader>t", group = "Test", icon = " ", nowait = false, remap = false },
     { "<leader>tn", desc = "Test nearest", icon = " " },
     { "<leader>tt", desc = "Test suite", icon = " " },
@@ -159,9 +160,9 @@ M.config = function()
 
     { "<leader>a", desc = "Code Action", icon = " " },
 
-    { '<leader><Tab>d', desc = 'tabclose', icon = '' },
-    { '<leader><Tab>n', desc = 'tabnext', icon = '' },
-    { '<leader><Tab>p', desc = 'tabprevious', icon = '' },
+    { "<leader><Tab>d", desc = "tabclose", icon = "" },
+    { "<leader><Tab>n", desc = "tabnext", icon = "" },
+    { "<leader><Tab>p", desc = "tabprevious", icon = "" },
   }, opts)
 
   -- g prefix (LSP / glance / inc-rename)
@@ -203,33 +204,32 @@ M.config = function()
     { "<C-g>r", desc = "Rewrite", icon = "󰑕 ", mode = { "n", "i" } },
     { "<C-g>i", desc = "Implement", icon = " ", mode = { "n", "i" } },
   })
---                         
+  --                         
   --              ⛚ ⛛ ⎓ ⎇ ⌦ ⌧ ⌘   
   -- z prefix (scroll / fold) ⎋ ⫽       
   wk.add({
-{ "<C-w>d", icon = "", desc = "Diagnostic" },
-{ "<C-w>h", icon = "", desc = "Go to the left window" },
-{ "<C-w>H", icon = "", desc = "Move window to far left" },
-{ "<C-w>j", icon = "", desc = "Go to the down window" },
-{ "<C-w>J", icon = "", desc = "Move window to far bottom" },
-{ "<C-w>k", icon = "", desc = "Go to the up window" },
-{ "<C-w>K", icon = "", desc = "Move window to far top" },
-{ "<C-w>l", icon = "", desc = "Go to the right window" },
-{ "<C-w>L", icon = "", desc = "Move window to far right" },
-{ "<C-w>o", icon = "", desc = "Close all other windows" },
-{ "<C-w>q", icon = "", desc = "Quit a window" },
-{ "<C-w>s", icon = "", desc = "Split window" },
-{ "<C-w>T", icon = "", desc = "Break out into a new tab" },
-{ "<C-w>v", icon = "", desc = "Split window vertically" },
-{ "<C-w>w", icon = "", desc = "Switch windows" },
-{ "<C-w>x", icon = "", desc = "Swap current with next" },
-{ "<C-w>+", icon = "", desc = "Increase height" },
-{ "<C-w>-", icon = "", desc = "Decrease height" },
-{ "<C-w><", icon = "", desc = "Decrease width" },
-{ "<C-w>=", icon = "", desc = "Equally high and wide" },
-{ "<C-w>>", icon = "", desc = "Increase width" },
+    { "<C-w>d", icon = "", desc = "Diagnostic" },
+    { "<C-w>h", icon = "", desc = "Go to the left window" },
+    { "<C-w>H", icon = "", desc = "Move window to far left" },
+    { "<C-w>j", icon = "", desc = "Go to the down window" },
+    { "<C-w>J", icon = "", desc = "Move window to far bottom" },
+    { "<C-w>k", icon = "", desc = "Go to the up window" },
+    { "<C-w>K", icon = "", desc = "Move window to far top" },
+    { "<C-w>l", icon = "", desc = "Go to the right window" },
+    { "<C-w>L", icon = "", desc = "Move window to far right" },
+    { "<C-w>o", icon = "", desc = "Close all other windows" },
+    { "<C-w>q", icon = "", desc = "Quit a window" },
+    { "<C-w>s", icon = "", desc = "Split window" },
+    { "<C-w>T", icon = "", desc = "Break out into a new tab" },
+    { "<C-w>v", icon = "", desc = "Split window vertically" },
+    { "<C-w>w", icon = "", desc = "Switch windows" },
+    { "<C-w>x", icon = "", desc = "Swap current with next" },
+    { "<C-w>+", icon = "", desc = "Increase height" },
+    { "<C-w>-", icon = "", desc = "Decrease height" },
+    { "<C-w><", icon = "", desc = "Decrease width" },
+    { "<C-w>=", icon = "", desc = "Equally high and wide" },
+    { "<C-w>>", icon = "", desc = "Increase width" },
   }, { mode = "n" })
-
 
   wk.add({
     { "zb", desc = "Scroll bottom", icon = " " },
@@ -244,7 +244,7 @@ M.config = function()
   }, { mode = "n" })
 
   -- localleader (\)
-  local lt = '\\'
+  local lt = "\\"
   wk.add({
     { lt, group = "Toggle", icon = "󰨚 " },
     { lt .. "G", desc = "Glyph", icon = "󰀲 " },

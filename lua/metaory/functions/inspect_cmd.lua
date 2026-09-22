@@ -41,7 +41,7 @@ return function()
       end
     end
 
-    vim.bo[bufnr].modifiable = false
+    vim.bo[bufnr].modifiable = true
 
     vim.keymap.set("n", "q", "<cmd>close<cr>", {
       buffer = bufnr,

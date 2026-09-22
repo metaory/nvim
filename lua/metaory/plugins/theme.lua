@@ -224,10 +224,20 @@ M.config = function()
       -- hl.AvanteButtonDanger = { fg = c.magenta }
       -- hl.AvanteButtonDangerHover = { fg = c.magenta }
       -- hl.AvantePromptInput = { fg = c.magenta }
-      -- hl.AvantePromptInputBorder = { fg = c.magenta }
-      -- hl.AvanteSidebarWinSeparator = { fg = c.magenta }
-      -- hl.AvanteSidebarWinHorizontalSeparator = { fg = c.magenta }
-      -- hl.AvanteSidebarNormal = { fg = c.magenta }
+
+      -- hl.AvantePromptInputBorder = { fg = util.darken(c.orange, 0.15), bg = "NONE" }
+      -- hl.AvanteSidebarWinSeparator = { fg = util.darken(c.orange, 0.15), bg = "NONE" }
+      -- hl.AvanteSidebarWinHorizontalSeparator = { fg = util.darken(c.orange, 0.15), bg = "NONE" }
+
+      hl.AvantePromptInputBorder = { fg = XC.wbg, bg = "NONE" }
+      hl.AvanteSidebarWinSeparator = { fg = XC.wbg, bg = "NONE" }
+      hl.AvanteSidebarWinHorizontalSeparator = { fg = XC.wbg, bg = "NONE" }
+      hl.AvanteSidebarNormal = { fg = c.fg, bg = XC.sk0 }
+      hl.AvanteTodo = { fg = XC.wbg, bg = XC.sk0 }
+      hl.AvanteTodoTitle = { fg = XC.wfg, bg = XC.wbg }
+      hl.AvanteTodoTitleEdge = { fg = XC.wbg, bg = XC.sk0 }
+      hl.AvanteSelectedTitle = { fg = XC.sfg, bg = XC.sbg }
+      hl.AvanteSelectedTitleEdge = { fg = XC.sbg, bg = XC.sk0 }
       -- hl.AvanteCommentFg = { fg = c.magenta }
       -- hl.AvanteReversedNormal = { fg = c.magenta }
 
