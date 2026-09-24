@@ -26,8 +26,7 @@ M.config = function()
       },
     },
     notify = {
-      enabled = true,
-      view = "mini",
+      enabled = false,
     },
     popupmenu = {
       enabled = true, -- enables the Noice popupmenu UI

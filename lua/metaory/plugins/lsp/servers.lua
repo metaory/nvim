@@ -5,6 +5,7 @@ M.setup = function()
   local handlers = require("metaory.plugins.lsp.handlers")
 
   require("lspconfig")
+  handlers.setup_diagnostics()
 
   for _, server in ipairs(lang.lsp_servers()) do
     if server.config then

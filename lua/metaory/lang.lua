@@ -1,18 +1,21 @@
 local M = {}
 
 local stacks = {
-  prettier = {
+  biome = {
     "typescript",
     "typescriptreact",
     "javascript",
     "javascriptreact",
-    "html",
     "css",
     "postcss",
+    "json",
+    "jsonc",
+  },
+  prettier = {
+    "html",
     "markdown",
     "astro",
     "mdx",
-    "json",
     "yaml",
   },
   vtsls = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
@@ -47,8 +50,8 @@ local langs = {
 }
 
 local servers = {
-  { name = "harper_ls", config = { filetypes = { "markdown" } } },
-  { name = "cssls", config = { filetypes = { "css", "scss", "less", "postcss" } } },
+  { name = "harper_ls" },
+  { name = "cssls" },
   { name = "stylelint_lsp" },
   { name = "tailwindcss" },
   { name = "oxlint", on_save = "LspOxlintFixAll" },
@@ -65,6 +68,13 @@ local essentials = { "vim", "vimdoc", "query" }
 
 local function merge(ft, patch)
   langs[ft] = vim.tbl_deep_extend("force", langs[ft] or {}, patch)
+end
+
+for _, ft in ipairs(stacks.biome) do
+  merge(ft, {
+    format = { "biome", "prettier", stop_after_first = true },
+    parser = langs[ft] and langs[ft].parser or ft,
+  })
 end
 
 for _, ft in ipairs(stacks.prettier) do
@@ -130,6 +140,10 @@ function M.fts_with_lsp()
   return fts
 end
 
+function M.stack(name)
+  return stacks[name]
+end
+
 function M.fts_emmet()
   return stacks.emmet
 end
@@ -171,18 +185,26 @@ function M.lsp_servers()
   return list
 end
 
+local no_format
 function M.lsp_no_format()
-  local map = {}
+  if no_format then
+    return no_format
+  end
+  no_format = {}
   for _, lang in pairs(langs) do
     if lang.lsp and lang.lsp_format == false then
-      map[lang.lsp] = true
+      no_format[lang.lsp] = true
     end
   end
-  return map
+  return no_format
 end
 
+local hooks
 function M.server_hooks()
-  local hooks = {}
+  if hooks then
+    return hooks
+  end
+  hooks = {}
   for _, server in ipairs(servers) do
     if server.on_save and on_save[server.on_save] then
       hooks[server.name] = on_save[server.on_save]

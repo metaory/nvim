@@ -4,7 +4,7 @@ return {
     "nvim-treesitter",
   },
   event = "InsertEnter",
-  ft = { "typescript", "typescriptreact", "javascript", "javascriptreact" },
+  ft = require("metaory.lang").stack("vtsls"),
   config = function()
     require("template-string").setup({})
   end,

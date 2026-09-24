@@ -91,8 +91,6 @@ M.config = function()
     { "<leader>lr", desc = "LSP Restart", icon = " " },
     { "<leader>le", desc = "Restart eslint_d", icon = " " },
     { "<leader>lf", desc = "Format", icon = " " },
-    { "<leader>lh", desc = "Inlay hints", icon = "󰨚 " },
-    { "<leader>lF", desc = "Auto format", icon = "󰨚 " },
     { "<leader>lj", desc = "JSON format", icon = " " },
     { "<leader>lJ", desc = "JSON compact", icon = " " },
     { "<leader>R", group = "Kulala", icon = "󰛳 ", nowait = false, remap = false },
@@ -266,6 +264,8 @@ M.config = function()
     { lt .. "d", desc = "Diagnostic", icon = " " },
     { lt .. "L", desc = "LSP", icon = " " },
     { lt .. "l", desc = "Numbers", icon = " " },
+    { lt .. "F", desc = "Autoformat", icon = "󰨚 " },
+    { lt .. "n", desc = "Inlay hints", icon = "󰨚 " },
     { lt .. "ct", desc = "Trim", icon = " " },
   }, { mode = "n" })
 end

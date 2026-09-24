@@ -7,13 +7,7 @@ return {
     require("conform").setup({
       formatters_by_ft = lang.formatters_by_ft(),
       formatters = {
-        stylua = { args = { "--column-width", "200", "-" } },
-
-        gofumpt = {
-          env = {
-            GOFUMPT_SPLIT_LONG_LINES = "on",
-          },
-        },
+        biome = { require_cwd = true },
         prettier = {
           options = {
             ft_parsers = { astro = "astro" },
@@ -26,15 +20,6 @@ return {
         end
         return { bufnr = buf, timeout_ms = 3000, lsp_format = false }
       end,
-    })
-
-    vim.keymap.set("n", "<leader>lF", function()
-      vim.g.disable_autoformat = not vim.g.disable_autoformat
-      vim.notify("Auto formatting is " .. (vim.g.disable_autoformat and "disabled" or "enabled"))
-    end, { desc = "Auto Formatting" })
-
-    require("which-key").add({
-      { "<leader>lF", icon = "󰨚 " },
     })
   end,
 }

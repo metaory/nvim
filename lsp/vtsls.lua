@@ -40,5 +40,5 @@ return {
       },
     },
   },
-  filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+  filetypes = require("metaory.lang").stack("vtsls"),
 }

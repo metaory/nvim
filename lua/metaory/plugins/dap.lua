@@ -10,7 +10,7 @@ local function get_args(config)
   return config
 end
 
-local js_fts = { "javascript", "javascriptreact", "typescript", "typescriptreact" }
+local js_fts = require("metaory.lang").stack("vtsls")
 
 local function setup_js(dap)
   dap.adapters["pwa-node"] = {

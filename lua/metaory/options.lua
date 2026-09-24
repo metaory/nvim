@@ -106,7 +106,7 @@ if vim.fn.executable("rg") then
 end
 
 vim.g.editorconfig = false
-
+vim.g.disable_autoformat = false
 vim.g.markdown_recommended_style = 0
 
 vim.o.formatexpr = "v:lua.require'metaory.utils'.formatexpr()"

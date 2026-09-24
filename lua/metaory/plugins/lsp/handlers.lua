@@ -1,9 +1,7 @@
 local M = {}
 
 M.lsp_keymaps = function(bufnr)
-  -- builtins
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { silent = true, buffer = bufnr, desc = "Go To Declaration" })
-  -- vim.keymap.set("n", "ga", vim.lsp.buf.code_action, { silent = true, buffer = bufnr, desc = "Code Action" })
   vim.keymap.set("n", "gh", vim.lsp.buf.hover, { silent = true, buffer = bufnr, desc = "Hover Symbol" })
   vim.keymap.set("n", "ge", vim.diagnostic.open_float, { silent = true, buffer = bufnr, desc = "Show Diagnostic" })
   vim.keymap.set("n", "gH", vim.lsp.buf.signature_help, { silent = true, buffer = bufnr, desc = "Signature Help" })
@@ -24,53 +22,18 @@ M.lsp_keymaps = function(bufnr)
 end
 
 function M.diagnostic_goto(next, severity)
-  severity = severity and vim.diagnostic.severity[severity] or nil
+  if type(severity) == "string" then
+    severity = vim.diagnostic.severity[severity]
+  end
   return function()
-    if next then
-      vim.diagnostic.jump({ count = 1 })
-    else
-      vim.diagnostic.jump({ count = -1 })
-    end
+    vim.diagnostic.jump({ count = next and 1 or -1, severity = severity })
   end
 end
 
 local lang = require("metaory.lang")
 
-local format_augroup = vim.api.nvim_create_augroup("LSPFormatting", {})
-
-M.on_attach = function(client, bufnr)
-  if lang.lsp_no_format()[client.name] then
-    client.server_capabilities.documentFormattingProvider = false
-    client.server_capabilities.documentRangeFormattingProvider = false
-  end
-
-  local hook = lang.server_hooks()[client.name]
-  if hook then
-    hook(client, bufnr)
-  end
-
-  if client.server_capabilities.documentFormattingProvider then
-    vim.api.nvim_clear_autocmds({
-      group = format_augroup,
-      buffer = bufnr,
-    })
-  end
-
-  if client:supports_method("textDocument/inlayHint") then
-    vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>lh", "", {
-      callback = function()
-        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-      end,
-      desc = "Inlay hints",
-    })
-    local wk = require("which-key")
-    wk.add({
-      { "<leader>lh", icon = "󰨚 " },
-    })
-  end
-
-  local config = {
-    -- disable virtual text
+M.setup_diagnostics = function()
+  vim.diagnostic.config({
     virtual_text = false,
     update_in_insert = true,
     underline = true,
@@ -97,8 +60,19 @@ M.on_attach = function(client, bufnr)
         [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
       },
     },
-  }
-  vim.diagnostic.config(config)
+  })
+end
+
+M.on_attach = function(client, bufnr)
+  if lang.lsp_no_format()[client.name] then
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end
+
+  local hook = lang.server_hooks()[client.name]
+  if hook then
+    hook(client, bufnr)
+  end
 
   M.lsp_keymaps(bufnr)
 end
@@ -141,18 +115,7 @@ end
 
 ---@param opts? lsp.Client.filter
 function M.get_clients(opts)
-  local ret = {} ---@type vim.lsp.Client[]
-  if vim.lsp.get_clients then
-    ret = vim.lsp.get_clients(opts)
-  else
-    ret = vim.lsp.get_clients()(opts)
-    if opts and opts.method then
-      ---@param client vim.lsp.Client
-      ret = vim.tbl_filter(function(client)
-        return client:supports_method(opts.method, opts.bufnr)
-      end, ret)
-    end
-  end
+  local ret = vim.lsp.get_clients(opts)
   return opts and opts.filter and vim.tbl_filter(opts.filter, ret) or ret
 end
 

@@ -19,9 +19,12 @@ function _G.RunVimTest(cmd_name)
   end
 end
 
+local lang = require("metaory.lang")
+local test_fts = vim.list_extend(vim.deepcopy(lang.stack("vtsls")), { "go", "python" })
+
 return {
   "vim-test/vim-test",
-  ft = { "typescript", "typescriptreact", "javascript", "javascriptreact", "go", "python" },
+  ft = test_fts,
   cmd = { "TestNearest", "TestSuite", "TestFile", "TestLast" },
   dependencies = {
     "preservim/vimux",

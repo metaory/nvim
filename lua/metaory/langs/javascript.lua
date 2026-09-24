@@ -99,4 +99,12 @@ function M.goto_exported_symbol()
   end
 end
 
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = require("metaory.lang").stack("vtsls"),
+  callback = function(ev)
+    vim.keymap.set("i", "t", M.add_async, { buffer = ev.buf })
+    vim.keymap.set("n", "<leader>k", M.goto_exported_symbol, { buffer = ev.buf })
+  end,
+})
+
 return M

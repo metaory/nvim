@@ -1,3 +1,5 @@
+require("metaory.langs.javascript")
+
 -- Highlighted Yank
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
   callback = function()

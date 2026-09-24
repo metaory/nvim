@@ -17,6 +17,17 @@ local keymap_set = function(t)
   opts.mode = nil
   pcall(vim.keymap.set, mode, lhs, rhs, opts)
 end
+local toggle_set = function(t)
+  local lhs, rhs, desc = unpack(t)
+  keymap_set({
+    lhs,
+    function()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(rhs, true, false, true), "nx", false)
+      Snacks.notify(desc, { title = "Toggle" })
+    end,
+    desc,
+  })
+end
 
 local quit_gracefully = function()
   local islast = #vim.api.nvim_list_wins() == 1
@@ -210,9 +221,12 @@ vim.api.nvim_command("exe 'set cedit=<C-y>'")
 vim.tbl_map(keymap_del, { { "n", "<leader>l" } })
 
 vim.tbl_map(keymap_set, {
-
   { lt .. lt, [[<Cmd>AvanteAsk<CR>]], "Avante Ask" },
+  { lt .. "i", require("metaory.functions.highlight_lines").add, "Highlight matches" },
+  { lt .. "I", require("metaory.functions.highlight_lines").clear, "Clear Highlights" },
+})
 
+vim.tbl_map(toggle_set, {
   { lt .. "G", [[<Cmd>call glyph_palette#apply()<CR>]], "Toggle Glyph" },
   { lt .. "s", '<cmd>lua require("kulala").scratchpad()<cr>', "Toggle scratchpad" },
   { lt .. "O", [[<Cmd>    set cursorline! | set cursorcolumn!<CR>]], "Toggle CursorLine" },
@@ -224,33 +238,23 @@ vim.tbl_map(keymap_set, {
   { lt .. "T", [[<Cmd>lua vim.b.minitrailspace_disable = not vim.b.minitrailspace_disable<CR>]], "Toggle Trailspace" },
   { lt .. "C", [[<Cmd>lua vim.b.minicursorword_disable = not vim.b.minicursorword_disable<CR>]], "Toggle CursorWord" },
   { lt .. "w", [[:setlocal nowrap!<CR>]], "Toggle Wrap" },
-  { lt .. "i", require("metaory.functions.highlight_lines").add, "Highlight matches" },
-  { lt .. "I", require("metaory.functions.highlight_lines").clear, "Clear Highlights" },
   { lt .. "c", [[:setlocal conceallevel=<C-r>=&conceallevel == 0 ? 3 : 0<CR><CR>]], "Toggle 'conceallevel'" },
   { lt .. "f", [[:set cmdheight=<C-r>=&cmdheight ? 0 : 1<CR><CR>]], "Toggle cmdheight" },
   { lt .. "V", [[:set verbose=<C-r>=&verbose > 3 ? 3 : 9<CR><CR>]], "Toggle verbose" },
   { lt .. "d", [[:lua vim.diagnostic[vim.diagnostic.is_disabled() and 'enable' or 'disable']()<CR>]], "Toggle 'diagnostic'" },
   { lt .. "L", [[:lua vim.cmd(#vim.lsp.get_clients() == 0 and 'LspStart' or 'LspStop')<CR>]], "Toggle LSP" },
   { lt .. "l", [[<Cmd>set rnu! | set nu! | set signcolumn=no <CR>]], "Toggle Gutter" },
+  { lt .. "F", [[<Cmd>lua vim.g.disable_autoformat = not vim.g.disable_autoformat<CR>]], "Toggle Autoformat" },
+  { lt .. "n", [[<Cmd>lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())<CR>]], "Toggle Inlay hints" },
 })
 
--- #############################################################################
--- ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
--- #############################################################################
-
--- vim.keymap.set("n", lt .. "i", require("metaory.functions.highlight_lines").add)
--- vim.keymap.set("n", lt .. "I", require("metaory.functions.highlight_lines").clear)
+-- reference: count-aware j/k
 -- vim.tbl_map(keymap_set, {
 --   { 'j', [[(v:count > 1 ? 'm`' . v:count : '') . 'gj']], nil, expr = true },
 --   { 'k', [[(v:count > 1 ? 'm`' . v:count : '') . 'gk']], nil, expr = true },
 -- })
--- vim.tbl_map(keymap_set, {
---   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "i" },
---   { "<C-g>r", [[<cmd>GpRewrite js<cr>]], "Rewrite ~", mode = "n" },
---   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "v" },
---   { "<C-g>i", [[<cmd>GpImplement<cr>]], "Implement ~", mode = "n" },
--- })
--- vim.tbl_map(keymap_set, { { '<leader>ol', ':Lazy<CR>', "Lazy 󰒲" } })
+
+-- reference: buffer helpers
 -- local close_other_buffers = function()
 --   local current_buffer = vim.api.nvim_get_current_buf()
 --   for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
@@ -268,6 +272,8 @@ vim.tbl_map(keymap_set, {
 --   { '<leader>bW', '<cmd>wa<cr>', 'Write All Files' },
 --   { '<leader>bQ', '<cmd>qa!<cr>', 'Quit nvim' },
 -- })
+
+-- reference: window resize
 -- vim.tbl_map(keymap_set, {
 --   { "<C-M-J>", "<C-w>-" },
 --   { "<C-M-K>", "<C-w>+" },
@@ -277,10 +283,10 @@ vim.tbl_map(keymap_set, {
 -- vim.g.tmux_resizer_resize_count = 2
 -- vim.g.tmux_resizer_vertical_resize_count = 2
 -- vim.g.tmux_resizer_no_mappings = 1
--- { "<C-M-k>", "<cmd>:TmuxResizeUp<CR>"    },
--- { "<C-M-j>", "<cmd>:TmuxResizeDown<CR>"  },
--- { "<C-M-h>", "<cmd>:TmuxResizeLeft<CR>"  },
--- { "<C-M-l>", "<cmd>:TmuxResizeRight<CR>" },
--- [[<cmd>lua require("tmux").resize_to(direction, step)<cr>]], -- direction is "left", "right", "top", "bottom".
--- { '<C-e>', '<ESC>g$i', mode = 'i', silent = false },
--- { 'gj', 'mzJ`z', 'Join Line Below' },
+-- { "<C-M-k>", "<cmd>:TmuxResizeUp<CR>" }
+-- { "<C-M-j>", "<cmd>:TmuxResizeDown<CR>" }
+-- { "<C-M-h>", "<cmd>:TmuxResizeLeft<CR>" }
+-- { "<C-M-l>", "<cmd>:TmuxResizeRight<CR>" }
+-- { '<C-e>', '<ESC>g$i', mode = 'i', silent = false }
+-- { 'gj', 'mzJ`z', 'Join Line Below' }
+-- { '<leader>ol', ':Lazy<CR>', "Lazy" }
