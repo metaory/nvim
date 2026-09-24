@@ -231,7 +231,7 @@ vim.tbl_map(keymap_set, {
   { lt .. "V", [[:set verbose=<C-r>=&verbose > 3 ? 3 : 9<CR><CR>]], "Toggle verbose" },
   { lt .. "d", [[:lua vim.diagnostic[vim.diagnostic.is_disabled() and 'enable' or 'disable']()<CR>]], "Toggle 'diagnostic'" },
   { lt .. "L", [[:lua vim.cmd(#vim.lsp.get_clients() == 0 and 'LspStart' or 'LspStop')<CR>]], "Toggle LSP" },
-  { lt .. "l", [[<Cmd>set rnu! | set nu!<CR>]], "Toggle Numbers" },
+  { lt .. "l", [[<Cmd>set rnu! | set nu! | set signcolumn=no <CR>]], "Toggle Gutter" },
 })
 
 -- #############################################################################
