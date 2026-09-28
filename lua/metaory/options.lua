@@ -5,6 +5,10 @@ local function list(value, str, sep)
   return str ~= "" and table.concat({ value, str }, sep) or value
 end
 
+vim.lsp.set_log_level("debug")
+vim.opt.verbose = 9
+vim.opt.verbosefile = "/tmp/nvim-verbose.log"
+
 vim.opt.helpheight = 30
 vim.opt.fillchars = {
   horiz = "─",

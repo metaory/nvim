@@ -4,7 +4,12 @@ return {
     event = "VeryLazy",
     version = false,
     build = "make",
-    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim", "folke/snacks.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "folke/snacks.nvim",
+      { "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
+    },
     opts = {
       -- provider = "vercel",
       provider = "cheaper",
