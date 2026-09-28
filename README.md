@@ -27,6 +27,8 @@ NVIM_APPNAME=metaory/dotfiles/.config/nvim nvim
 ## Plugins
 
 - [2kabhishek/nerdy.nvim](https://dotfyle.com/plugins/2kabhishek/nerdy.nvim)
+- [ColinKennedy/mega.cmdparse](https://dotfyle.com/plugins/ColinKennedy/mega.cmdparse)
+- [ColinKennedy/mega.logging](https://dotfyle.com/plugins/ColinKennedy/mega.logging)
 - [FabijanZulj/blame.nvim](https://dotfyle.com/plugins/FabijanZulj/blame.nvim)
 - [MagicDuck/grug-far.nvim](https://dotfyle.com/plugins/MagicDuck/grug-far.nvim)
 - [MeanderingProgrammer/render-markdown.nvim](https://dotfyle.com/plugins/MeanderingProgrammer/render-markdown.nvim)
