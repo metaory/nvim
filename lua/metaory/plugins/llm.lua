@@ -23,7 +23,7 @@ return {
           model = "zai/glm-5.3-flash",
           model_names = {
             "zai/glm-5.3-flash",
-            "alibaba/qwen3.8-flash",
+            "alibaba/qwen3.8-27b",
             "alibaba/qwen3.7-flash",
           },
           use_response_api = false,
@@ -43,16 +43,16 @@ return {
           __inherited_from = "openai",
           endpoint = "https://api.cheaperinference.com/v1",
           api_key_name = "CHEAPER_INFERENCE_API_KEY",
-          model = "gpt-5.6-luna",
+          model = "gpt-oss-120b",
           model_names = {
-            "gpt-5.6-luna",
-            "gpt-5.6-sol",
-            "gpt-5.6-terra",
+            "gpt-6-luna",
+            "gpt.6-sol",
+            "gpt.6-terra",
             "glm-5.3-flash", -- default   $0.06 / $0.201
             "deepseek-v4-flash", -- smol      $0.054 / $0.108
             "deepseek-v4-flash-0731", -- tiny/commit $0.032 / $0.064
             "deepseek-v4-pro", -- plan      ~$0.462 / $1.27
-            "kimi-k3", -- slow      ~$1.86 / $9.31
+            -- "kimi-k3", -- slow      ~$1.86 / $9.31
             -- "deepseek/deepseek-v4.1-flash", -- task      $0.121 / $0.483
             -- "deepseek-v4-flash", -- $0.071/M $0.143/M
             -- "qwen3-6-35b-a3b", -- $0.070/M $0.700/M
