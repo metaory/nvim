@@ -39,7 +39,7 @@ NVIM_APPNAME=metaory/dotfiles/.config/nvim nvim
 - [Pocco81/auto-save.nvim](https://dotfyle.com/plugins/Pocco81/auto-save.nvim)
 - [aaronik/treewalker.nvim](https://dotfyle.com/plugins/aaronik/treewalker.nvim)
 - [alibaba/qwen3.7-flash](https://dotfyle.com/plugins/alibaba/qwen3.7-flash)
-- [alibaba/qwen3.8-flash](https://dotfyle.com/plugins/alibaba/qwen3.8-flash)
+- [alibaba/qwen3.8-27b](https://dotfyle.com/plugins/alibaba/qwen3.8-27b)
 - [aserowy/tmux.nvim](https://dotfyle.com/plugins/aserowy/tmux.nvim)
 - [avante-corp/avante.nvim](https://dotfyle.com/plugins/avante-corp/avante.nvim)
 - [axelvc/template-string.nvim](https://dotfyle.com/plugins/axelvc/template-string.nvim)
