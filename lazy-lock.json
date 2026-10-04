@@ -1,5 +1,6 @@
 {
   "LuaSnip": { "branch": "master", "commit": "0abc8f390b278c3b4aabc4c004ac8a088b65cf24" },
+  "ascii-mermaid": { "branch": "master", "commit": "a91a0c7baec6392212c59221bc67389bb617feb7" },
   "auto-save.nvim": { "branch": "main", "commit": "979b6c82f60cfa80f4cf437d77446d0ded0addf0" },
   "avante.nvim": { "branch": "main", "commit": "421209b946d208b2ab27ca95378c2b0073188ae6" },
   "blame.nvim": { "branch": "main", "commit": "179da7aaacce7c52874af636255ede72dd6fe796" },

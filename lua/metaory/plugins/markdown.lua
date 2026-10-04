@@ -83,4 +83,29 @@ return {
       })
     end,
   },
+  {
+    "kais-radwan/ascii-mermaid",
+    ft = "markdown",
+    config = function()
+      local vertical = { lr = "TD", rl = "TD", bt = "TD" }
+      local function top_down(source, kind)
+        return source:gsub("^(%s*" .. kind .. "%s+)(%a+)", function(head, dir)
+          return head .. (vertical[dir:lower()] or dir)
+        end, 1)
+      end
+      require("ascii-mermaid").setup({
+        auto = true,
+        use_ascii = false,
+        display_mode = "replace",
+        padding_x = 2,
+        padding_y = 1,
+      })
+      local render = require("ascii-mermaid.render")
+      local draw = render.render
+      render.render = function(source, opts, callback)
+        opts.boxBorderPadding = 0
+        draw(top_down(top_down(source, "graph"), "flowchart"), opts, callback)
+      end
+    end,
+  },
 }
