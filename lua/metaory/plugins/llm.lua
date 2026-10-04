@@ -46,12 +46,12 @@ return {
           model = "gpt-oss-120b",
           model_names = {
             "gpt-6-luna",
-            "gpt.6-sol",
-            "gpt.6-terra",
-            "glm-5.3-flash", -- default   $0.06 / $0.201
             "deepseek-v4-flash", -- smol      $0.054 / $0.108
             "deepseek-v4-flash-0731", -- tiny/commit $0.032 / $0.064
             "deepseek-v4-pro", -- plan      ~$0.462 / $1.27
+            "gpt.6-sol",
+            "gpt.6-terra",
+            "glm-5.3-flash", -- default   $0.06 / $0.201
             -- "kimi-k3", -- slow      ~$1.86 / $9.31
             -- "deepseek/deepseek-v4.1-flash", -- task      $0.121 / $0.483
             -- "deepseek-v4-flash", -- $0.071/M $0.143/M
