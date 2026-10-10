@@ -8,11 +8,11 @@ return {
       formatters_by_ft = lang.formatters_by_ft(),
       formatters = {
         biome = { require_cwd = true },
-        prettier = {
-          options = {
-            ft_parsers = { astro = "astro" },
-          },
-        },
+        -- prettier = {
+        --   options = {
+        --     ft_parsers = { astro = "astro" },
+        --   },
+        -- },
       },
       format_on_save = function(buf)
         if vim.g.disable_autoformat then
