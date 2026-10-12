@@ -12,8 +12,8 @@ end
 vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("metaory.plugins", {
-  concurrency = 3,
-  timeout = 600000,
+  concurrency = 6,
+  timeout = 1000000,
   install = { colorscheme = { "tokyonight" } },
   -- lockfile = "~/dotfiles/nix/module/nvim/config/lazy-lock.json",
   ui = {
@@ -30,7 +30,7 @@ require("lazy").setup("metaory.plugins", {
     },
   },
   checker = {
-    concurrency = 3,
+    concurrency = 6,
   },
   dev = {
     path = "~/playgrounds/play-js",

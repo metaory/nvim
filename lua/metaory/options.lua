@@ -6,7 +6,28 @@ local function list(value, str, sep)
 end
 
 vim.lsp.set_log_level("debug")
-vim.opt.verbose = 9
+--[[
+NOTE: LOG LEVELS
+  0	Disabled. Normal operation.
+  1	Enables Lua tracing for assignments to options, mappings, etc. No messages are produced by the verbosity level itself.
+  2	Logs sourced files and ShaDa (session/history data) reads and writes.
+  3	Logs UI information and terminal capabilities.
+  4	Logs shell commands executed by Neovim.
+  5	Logs searched tag files and include files.
+  6	No additional message category; includes lower levels.
+  7	No additional message category; includes lower levels.
+  8	Logs files for which an autocommand group is executed.
+  9	Logs individual autocommands as they execute.
+  10 No additional message category; includes lower levels.
+  11 Logs the process of finding items in a path.
+  12 Logs Vimscript function calls.
+  13 Logs exceptions being thrown, caught, completed, or discarded.
+  14 Logs pending commands in a :finally clause.
+  15 Logs Ex commands from scripts, truncated to 200 characters.
+  16 Logs Ex commands without the level-15 truncation.
+]]
+
+vim.opt.verbose = 4
 vim.opt.verbosefile = "/tmp/nvim-verbose.log"
 
 vim.opt.helpheight = 30
