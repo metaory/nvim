@@ -32,7 +32,7 @@ return {
   config = function()
     vim.keymap.set("n", "<leader>tn", RunVimTest("TestNearest"), { desc = "Run nearest test" })
     vim.keymap.set("n", "<leader>tt", RunVimTest("TestSuite"), { desc = "Run the nearest test suite" })
-    vim.keymap.set("n", "<leader>tf", RunVimTest("TestSutie"), { desc = "Run all tests in the current file" })
+    vim.keymap.set("n", "<leader>tf", RunVimTest("TestFile"), { desc = "Run all tests in the current file" })
     vim.keymap.set("n", "<leader>tr", RunVimTest("TestLast"), { desc = "Run last test again" })
     vim.cmd("let test#strategy = 'vimux'")
     vim.cmd("let g:test#javascript#vitest#executable = 'yarn test'")
