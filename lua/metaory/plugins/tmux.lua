@@ -1,7 +1,38 @@
+local function layout_panes(cell, panes)
+  if cell.t ~= "p" then
+    for _, child in ipairs(cell.c or {}) do
+      layout_panes(child, panes)
+    end
+    return
+  end
+  panes[#panes + 1] = {
+    id = tonumber(tostring(cell.I or cell.i):match("%d+")),
+    x = cell.x,
+    y = cell.y,
+    width = cell.w,
+    height = cell.h,
+  }
+end
+
+-- tmux 3.8 #{window_layout} is JSON. Plugin still expects the old string.
+local function json_layout(display)
+  if type(display) ~= "string" or display:sub(1, 1) ~= "{" then
+    return
+  end
+  local ok, data = pcall(vim.json.decode, display)
+  local root = ok and data and data.L
+  if type(root) ~= "table" then
+    return
+  end
+  local panes = {}
+  layout_panes(root, panes)
+  return #panes > 0 and { width = root.w, height = root.h, panes = panes } or nil
+end
+
 return {
   "aserowy/tmux.nvim",
   config = function()
-    return require("tmux").setup({
+    require("tmux").setup({
       copy_sync = {
         -- enables copy sync. by default, all registers are synchronized.
         -- to control which registers are synced, see the `sync_*` options.
@@ -70,6 +101,11 @@ return {
         enable_default_keybindings = false,
       },
     })
+    local parse = require("tmux.layout.parse")
+    local legacy = parse.parse
+    parse.parse = function(display)
+      return json_layout(display) or legacy(display)
+    end
   end,
 }
 --   "RyanMillerC/better-vim-tmux-resizer",
