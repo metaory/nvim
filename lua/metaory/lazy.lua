@@ -13,7 +13,7 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("metaory.plugins", {
   concurrency = 6,
-  timeout = 1000000,
+  timeout = 2000000,
   install = { colorscheme = { "tokyonight" } },
   -- lockfile = "~/dotfiles/nix/module/nvim/config/lazy-lock.json",
   ui = {
